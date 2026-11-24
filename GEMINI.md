@@ -24,3 +24,8 @@ Mobile Station is an Indian direct-to-consumer (D2C) electronics & tech accessor
 - **No Hardcoded Hex Values**: All colors, radii, fonts, shadows, and z-index values must reference CSS custom properties in `apps/storefront/src/styles/tokens.css` or semantic Tailwind utilities in `apps/storefront/tailwind.config.ts`.
 - **Logo Visibility**: The metallic silver `STATION` wordmark requires dark contrast (`--color-obsidian-900` `#0B0F17`). Never place `mobile-station-wordmark.png` directly over pure white backgrounds.
 - **Currency & GST**: Store all prices as integer **paise** (₹499 = `49900`) to avoid floating-point errors. Electronics default to **18% GST** (verify HSN per category). Display MRP strikethrough, active price, `% OFF`, warranty duration, and "What's in the Box" clearly.
+
+## 4. Git & GitHub Commit Standard (`elsesourav`)
+
+- Commit each completed logical step cleanly using Conventional Commits (`chore(...)`, `feat(...)`, `style(...)`, `docs(...)`, `fix(...)`) and push to `origin main` (`https://github.com/elsesourav/mobile-station.git`) once the remote repository is created.
+- Never commit `.env`, `.env.local`, `.medusa/`, `node_modules/`, or `*.db` files.

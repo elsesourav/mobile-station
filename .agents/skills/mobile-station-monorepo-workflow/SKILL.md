@@ -26,7 +26,7 @@ Mobile Station uses dedicated ports in `docker-compose.yml` so it can run alongs
 - Meilisearch: `localhost:7700`
 - MinIO S3 Storage: `localhost:9100` (API) / `localhost:9101` (Console)
 
-## Verification Workflow
+## Verification & Git Workflow
 1. Start local infra: `pnpm infra:up`
 2. Regenerate icons/OG if brand assets changed: `pnpm assets:brand`
 3. Verify types, lint, and tests from root:
@@ -34,3 +34,4 @@ Mobile Station uses dedicated ports in `docker-compose.yml` so it can run alongs
    - `pnpm lint`
    - `pnpm test`
    - `pnpm build`
+4. Commit each finished logical step with a descriptive Conventional Commit message and push to `origin main` (`elsesourav/mobile-station`).
