@@ -15,7 +15,7 @@
     "backend:dev": "turbo dev --filter=@mobile-station/backend",
     "backend:build": "turbo build --filter=@mobile-station/backend",
     "backend:migrate": "pnpm --filter @mobile-station/backend db:migrate",
-    "backend:seed": "pnpm --filter @mobile-station/backend exec ./src/scripts/seed-electronics-catalog.ts",
+    "backend:seed": "pnpm --filter @mobile-station/backend exec medusa exec ./src/scripts/seed-electronics-catalog.ts",
     "storefront:dev": "pnpm --filter @mobile-station/storefront dev",
     "storefront:build": "pnpm --filter @mobile-station/storefront build",
     "storefront:test": "pnpm --filter @mobile-station/storefront test",
