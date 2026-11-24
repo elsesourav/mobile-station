@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ann_gst_itc",
+    "text": "Claim 18% GST Input Tax Credit — Add GSTIN at Checkout",
+    "badge": "B2B READY",
+    "route": "/policies/gst-invoicing",
+    "is_active": true
+  },
+  {
+    "id": "ann_obd",
+    "text": "Insured Open-Box Delivery on Smartphones & Laptops ₹25,000+",
+    "badge": "SAFE TECH",
+    "route": "/policies/open-box-delivery",
+    "is_active": true
+  },
+  {
+    "id": "ann_emi",
+    "text": "No-Cost EMI Available via UPI, Credit & Debit Cards (Code: TECH500)",
+    "badge": "NO-COST EMI",
+    "route": "/offers",
+    "is_active": true
+  },
+  {
+    "id": "ann_muzaffarpur",
+    "text": "Same-Day Store Pickup Available in Muzaffarpur (842001 / 842002)",
+    "badge": "BIHAR HUB",
+    "route": "/stores/muzaffarpur",
+    "is_active": true
+  }
+]

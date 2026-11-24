@@ -1,0 +1,582 @@
+{
+  "version": "1.0.0",
+  "currency": "INR",
+  "note": "All monetary prices are integer paise (e.g. 7990000 = ₹79,900). Image URLs map cleanly to Cloudinary public_ids under folder 'mobile-station/products/' once uploaded.",
+  "products": [
+    {
+      "handle": "apple-iphone-16-5g",
+      "title": "Apple iPhone 16 5G",
+      "subtitle": "A18 Chip · Camera Control · 48MP Fusion Camera",
+      "category_handle": "smartphones",
+      "subcategory_handle": "apple-iphones",
+      "description": "Apple iPhone 16 featuring the A18 chip, 6.1-inch Super Retina XDR OLED display, Camera Control button, and 48MP Fusion camera with 2x optical-quality Telephoto. Supplied factory-sealed with official 1-year Apple India warranty.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "Apple",
+        "model_number": "MYEC3HN/A",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Apple India Authorized Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["iPhone 16", "USB-C Charge Cable (1m)", "Documentation (Power adapter sold separately)"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": ["A18 Bionic Chip", "6.1\" Super Retina XDR", "48MP Fusion Camera", "Camera Control Button"],
+        "specs": {
+          "ram_gb": 8,
+          "storage_gb": 128,
+          "display_size_inches": 6.1,
+          "display_type": "Super Retina XDR OLED",
+          "refresh_rate_hz": 60,
+          "processor": "Apple A18 (3nm)",
+          "rear_camera": "48MP Fusion + 12MP Ultra Wide",
+          "front_camera": "12MP TrueDepth",
+          "battery_mah": 3561,
+          "charging_watt": 25,
+          "network": "5G",
+          "sim_type": "Dual SIM (Nano + eSIM)",
+          "os": "iOS 18",
+          "ip_rating": "IP68"
+        }
+      },
+      "variants": [
+        { "title": "128GB / Ultramarine", "sku": "MS-APL-IP16-128-ULT", "price_paise": 7490000, "mrp_paise": 7990000, "stock": 14, "options": { "Storage": "128GB", "Color": "Ultramarine" } },
+        { "title": "256GB / Black", "sku": "MS-APL-IP16-256-BLK", "price_paise": 8490000, "mrp_paise": 8990000, "stock": 9, "options": { "Storage": "256GB", "Color": "Black" } }
+      ]
+    },
+    {
+      "handle": "oneplus-13r-5g",
+      "title": "OnePlus 13R 5G",
+      "subtitle": "Snapdragon 8 Gen 3 · 6000mAh Battery · 80W SUPERVOOC",
+      "category_handle": "smartphones",
+      "subcategory_handle": "5g-smartphones",
+      "description": "OnePlus 13R 5G engineered for sustained flagship performance with Snapdragon 8 Gen 3, 1.5K 120Hz ProXDR AMOLED display, 6000mAh silicon-nano battery, and 80W fast charger included in the box.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "OnePlus",
+        "model_number": "CPH2691",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year OnePlus India Manufacturer Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["OnePlus 13R 5G", "80W SUPERVOOC Adapter", "Type-A to Type-C Cable", "Protective Case", "Pre-applied Screen Protector", "SIM Ejector Tool"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": ["Snapdragon 8 Gen 3", "120Hz 1.5K ProXDR AMOLED", "6000mAh + 80W Charger Included", "50MP Sony LYT-700 OIS"],
+        "specs": {
+          "ram_gb": 12,
+          "storage_gb": 256,
+          "display_size_inches": 6.78,
+          "display_type": "LTPO 4.1 AMOLED",
+          "refresh_rate_hz": 120,
+          "processor": "Snapdragon 8 Gen 3",
+          "rear_camera": "50MP OIS + 50MP Telephoto + 8MP UW",
+          "front_camera": "16MP",
+          "battery_mah": 6000,
+          "charging_watt": 80,
+          "network": "5G",
+          "sim_type": "Dual Nano SIM",
+          "os": "OxygenOS 15 (Android 15)",
+          "ip_rating": "IP65"
+        }
+      },
+      "variants": [
+        { "title": "12GB + 256GB / Nebula Noir", "sku": "MS-OPL-13R-256-BLK", "price_paise": 4299900, "mrp_paise": 4499900, "stock": 18, "options": { "Variant": "12GB / 256GB", "Color": "Nebula Noir" } },
+        { "title": "16GB + 512GB / Astral Trail", "sku": "MS-OPL-13R-512-SLV", "price_paise": 4999900, "mrp_paise": 5199900, "stock": 8, "options": { "Variant": "16GB / 512GB", "Color": "Astral Trail" } }
+      ]
+    },
+    {
+      "handle": "samsung-galaxy-a35-5g",
+      "title": "Samsung Galaxy A35 5G",
+      "subtitle": "120Hz Super AMOLED · Gorilla Glass Victus+ · IP67",
+      "category_handle": "smartphones",
+      "subcategory_handle": "5g-smartphones",
+      "description": "Samsung Galaxy A35 5G with 6.6-inch FHD+ 120Hz Super AMOLED Vision Booster display, 50MP Nightography OIS camera, Knox Vault security, and 4 generations of OS upgrades.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "Samsung",
+        "model_number": "SM-A356ELVKINS",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Samsung India Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["Galaxy A35 5G", "USB-C to USB-C Data Cable", "SIM Ejection Pin", "Quick Start Guide"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": ["120Hz Super AMOLED", "IP67 Water & Dust Resistant", "50MP OIS Nightography", "Samsung Knox Vault"],
+        "specs": {
+          "ram_gb": 8,
+          "storage_gb": 128,
+          "display_size_inches": 6.6,
+          "display_type": "Super AMOLED",
+          "refresh_rate_hz": 120,
+          "processor": "Exynos 1380 (5nm)",
+          "rear_camera": "50MP OIS + 8MP UW + 5MP Macro",
+          "front_camera": "13MP",
+          "battery_mah": 5000,
+          "charging_watt": 25,
+          "network": "5G",
+          "sim_type": "Hybrid Dual SIM",
+          "os": "One UI (Android)",
+          "ip_rating": "IP67"
+        }
+      },
+      "variants": [
+        { "title": "8GB + 128GB / Awesome Navy", "sku": "MS-SAM-A35-128-NVY", "price_paise": 2599900, "mrp_paise": 3399900, "stock": 22, "options": { "Variant": "8GB / 128GB", "Color": "Awesome Navy" } },
+        { "title": "8GB + 256GB / Awesome Iceblue", "sku": "MS-SAM-A35-256-ICE", "price_paise": 2899900, "mrp_paise": 3699900, "stock": 12, "options": { "Variant": "8GB / 256GB", "Color": "Awesome Iceblue" } }
+      ]
+    },
+    {
+      "handle": "apple-ipad-air-m2-11",
+      "title": "Apple iPad Air 11-inch (M2)",
+      "subtitle": "Apple M2 Chip · Liquid Retina Display · Apple Pencil Pro Ready",
+      "category_handle": "tablets",
+      "subcategory_handle": "apple-ipads",
+      "description": "Supercharged by the Apple M2 chip, the 11-inch iPad Air delivers blazing performance for creators, note-taking students, and multitasking workflows with landscape 12MP Ultra Wide front camera and Wi-Fi 6E.",
+      "metadata": {
+        "category_type": "tablets",
+        "brand": "Apple",
+        "model_number": "MUWC3HN/A",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Apple India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["iPad Air 11-inch", "USB-C Charge Cable (1m)", "20W USB-C Power Adapter"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": ["Apple M2 8-Core CPU", "11\" Liquid Retina P3", "20W Charger Included", "Supports Apple Pencil Pro"],
+        "specs": {
+          "ram_gb": 8,
+          "storage_gb": 128,
+          "display_size_inches": 11.0,
+          "display_type": "Liquid Retina IPS",
+          "refresh_rate_hz": 60,
+          "processor": "Apple M2",
+          "connectivity": "Wi-Fi Only",
+          "stylus_support": true,
+          "battery_mah": 7606,
+          "os": "iPadOS 18"
+        }
+      },
+      "variants": [
+        { "title": "128GB Wi-Fi / Space Grey", "sku": "MS-APL-IPADAIR-128-GRY", "price_paise": 5790000, "mrp_paise": 5990000, "stock": 10, "options": { "Storage": "128GB Wi-Fi", "Color": "Space Grey" } },
+        { "title": "256GB Wi-Fi / Starlight", "sku": "MS-APL-IPADAIR-256-STR", "price_paise": 6790000, "mrp_paise": 6990000, "stock": 6, "options": { "Storage": "256GB Wi-Fi", "Color": "Starlight" } }
+      ]
+    },
+    {
+      "handle": "xiaomi-pad-7-snapdragon",
+      "title": "Xiaomi Pad 7 (3.2K 144Hz Display)",
+      "subtitle": "Snapdragon 7+ Gen 3 · 8850mAh · Quad Dolby Atmos Speakers",
+      "category_handle": "tablets",
+      "subcategory_handle": "android-tablets",
+      "description": "Built for productivity and entertainment with an ultra-sharp 11.2-inch 3.2K 144Hz anti-glare crystal-clear display, Snapdragon 7+ Gen 3 processor, and 45W turbo charging.",
+      "metadata": {
+        "category_type": "tablets",
+        "brand": "Xiaomi",
+        "model_number": "XMPAD7-256",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Xiaomi India Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["Xiaomi Pad 7", "45W Power Adapter", "USB Type-C Cable", "Quick Start Guide"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": ["3.2K 144Hz 3:2 Display", "Snapdragon 7+ Gen 3", "8850mAh + 45W Adapter", "Quad Dolby Atmos Audio"],
+        "specs": {
+          "ram_gb": 8,
+          "storage_gb": 128,
+          "display_size_inches": 11.2,
+          "display_type": "3.2K CrystalRes LCD",
+          "refresh_rate_hz": 144,
+          "processor": "Snapdragon 7+ Gen 3",
+          "connectivity": "Wi-Fi Only",
+          "stylus_support": true,
+          "battery_mah": 8850,
+          "os": "HyperOS 2 (Android)"
+        }
+      },
+      "variants": [
+        { "title": "8GB + 128GB / Graphite Grey", "sku": "MS-XIA-PAD7-128-GRY", "price_paise": 2799900, "mrp_paise": 3499900, "stock": 15, "options": { "Variant": "8GB / 128GB", "Color": "Graphite Grey" } },
+        { "title": "12GB + 256GB / Mirage Purple", "sku": "MS-XIA-PAD7-256-PRP", "price_paise": 3099900, "mrp_paise": 3799900, "stock": 11, "options": { "Variant": "12GB / 256GB", "Color": "Mirage Purple" } }
+      ]
+    },
+    {
+      "handle": "apple-macbook-air-13-m3",
+      "title": "Apple MacBook Air 13-inch (M3)",
+      "subtitle": "16GB Unified Memory · 18h Battery · Liquid Retina",
+      "category_handle": "laptops",
+      "subcategory_handle": "macbooks",
+      "description": "The ultra-portable Apple MacBook Air powered by the M3 chip with 16GB unified memory standard, silent fanless aluminum unibody, MagSafe 3 fast charging, and up to 18 hours of battery life.",
+      "metadata": {
+        "category_type": "laptops",
+        "brand": "Apple",
+        "model_number": "MC8K4HN/A",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Apple India Carry-In Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["MacBook Air 13-inch", "30W or 35W Dual USB-C Power Adapter", "USB-C to MagSafe 3 Cable (2m)"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": ["Apple M3 8-Core CPU / 10-Core GPU", "16GB Unified RAM", "1.24 kg Fanless Unibody", "18-Hour Battery Life"],
+        "specs": {
+          "processor_brand": "Apple",
+          "processor_model": "Apple M3",
+          "ram_gb": 16,
+          "ram_type": "Unified Memory",
+          "ssd_gb": 256,
+          "gpu": "8-Core / 10-Core Apple GPU",
+          "display_size_inches": 13.6,
+          "display_resolution": "2560 x 1664 Liquid Retina",
+          "refresh_rate_hz": 60,
+          "os": "macOS Sequoia",
+          "weight_kg": 1.24,
+          "battery_whr": 52.6,
+          "ports": ["MagSafe 3", "2x Thunderbolt / USB 4", "3.5mm Headphone Jack"],
+          "use_case": "ultrabook"
+        }
+      },
+      "variants": [
+        { "title": "16GB / 256GB SSD / Midnight", "sku": "MS-APL-MBA13M3-256-MDN", "price_paise": 10790000, "mrp_paise": 11490000, "stock": 7, "options": { "Memory / SSD": "16GB / 256GB", "Color": "Midnight" } },
+        { "title": "16GB / 512GB SSD / Starlight", "sku": "MS-APL-MBA13M3-512-STR", "price_paise": 12690000, "mrp_paise": 13490000, "stock": 5, "options": { "Memory / SSD": "16GB / 512GB", "Color": "Starlight" } }
+      ]
+    },
+    {
+      "handle": "lenovo-loq-rtx-4050-gaming",
+      "title": "Lenovo LOQ Gaming Laptop (i5-13450HX / RTX 4050)",
+      "subtitle": "16GB DDR5 · 512GB Gen4 SSD · 144Hz 100% sRGB",
+      "category_handle": "laptops",
+      "subcategory_handle": "gaming-laptops",
+      "description": "High-wattage 13th Gen Intel Core i5-13450HX paired with NVIDIA GeForce RTX 4050 6GB GDDR6 (105W TGP), MUX switch, hyperchamber thermal cooling, and a color-accurate 15.6-inch 144Hz 100% sRGB display.",
+      "metadata": {
+        "category_type": "laptops",
+        "brand": "Lenovo",
+        "model_number": "83DV007GIN",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Lenovo Onsite Warranty + 1 Year ADP",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["Lenovo LOQ 15IRX9 Laptop", "170W Slim Tip Power Adapter", "User Manual"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": ["Intel Core i5-13450HX", "RTX 4050 6GB (105W TGP)", "15.6\" FHD 144Hz 100% sRGB", "16GB DDR5 Expandable"],
+        "specs": {
+          "processor_brand": "Intel",
+          "processor_model": "Intel Core i5-13450HX",
+          "ram_gb": 16,
+          "ram_type": "DDR5-4800",
+          "ssd_gb": 512,
+          "gpu": "NVIDIA GeForce RTX 4050 6GB",
+          "display_size_inches": 15.6,
+          "display_resolution": "1920 x 1080 FHD IPS 100% sRGB",
+          "refresh_rate_hz": 144,
+          "os": "Windows 11 Home",
+          "weight_kg": 2.38,
+          "battery_whr": 60,
+          "ports": ["3x USB-A 3.2", "1x USB-C PD + DP 1.4", "HDMI 2.1", "RJ-45 Ethernet", "3.5mm Audio"],
+          "use_case": "gaming"
+        }
+      },
+      "variants": [
+        { "title": "16GB / 512GB / RTX 4050 / Luna Grey", "sku": "MS-LEN-LOQ-4050-GRY", "price_paise": 7899000, "mrp_paise": 9999000, "stock": 6, "options": { "Config": "i5-13450HX / RTX 4050", "Color": "Luna Grey" } }
+      ]
+    },
+    {
+      "handle": "sony-wh-1000xm5-anc",
+      "title": "Sony WH-1000XM5 Wireless ANC Headphones",
+      "subtitle": "Industry-Leading Dual-Processor ANC · 30h Battery · LDAC",
+      "category_handle": "audio",
+      "subcategory_handle": "over-ear-headphones",
+      "description": "Sony WH-1000XM5 wireless noise cancelling headphones powered by 8 microphones, Dual Noise Sensor technology, Integrated Processor V1, multipoint Bluetooth 5.2, and crystal-clear AI call beamforming.",
+      "metadata": {
+        "category_type": "audio",
+        "brand": "Sony",
+        "model_number": "WH1000XM5/B",
+        "hsn_code": "8518",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Sony India Authorized Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["WH-1000XM5 Headphones", "Collapsible Carrying Case", "3.5mm Audio Connection Cable", "USB-C Charging Cable"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": ["8-Mic Adaptive ANC", "30-Hour Playback + 3-Min Quick Charge", "LDAC Hi-Res Wireless", "Multipoint 2-Device Connect"],
+        "specs": {
+          "form_factor": "over_ear",
+          "driver_size_mm": 30,
+          "anc": true,
+          "anc_db": 45,
+          "bluetooth_version": "5.2",
+          "codecs": ["LDAC", "AAC", "SBC"],
+          "playtime_hours": 30,
+          "fast_charge_summary": "3 mins charge = 3 hours playback",
+          "water_resistance": "None",
+          "connector": "Bluetooth + 3.5mm"
+        }
+      },
+      "variants": [
+        { "title": "Black", "sku": "MS-SNY-XM5-BLK", "price_paise": 2599000, "mrp_paise": 3499000, "stock": 12, "options": { "Color": "Black" } },
+        { "title": "Platinum Silver", "sku": "MS-SNY-XM5-SLV", "price_paise": 2599000, "mrp_paise": 3499000, "stock": 8, "options": { "Color": "Platinum Silver" } }
+      ]
+    },
+    {
+      "handle": "oneplus-buds-3-tws",
+      "title": "OnePlus Buds 3 TWS Earbuds",
+      "subtitle": "49dB Adaptive ANC · Dual Coaxial Drivers · 44h Battery",
+      "category_handle": "audio",
+      "subcategory_handle": "tws-earbuds",
+      "description": "Flagship dual-driver TWS earbuds combining a 10.4mm woofer and 6mm tweeter with LHDC 5.0 Hi-Res audio, up to 49dB smart adaptive ANC, sliding volume touch control, and IP55 sweat/rain resistance.",
+      "metadata": {
+        "category_type": "audio",
+        "brand": "OnePlus",
+        "model_number": "E509A",
+        "hsn_code": "8518",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year OnePlus India Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["OnePlus Buds 3 & Charging Case", "3 Pairs Silicone Ear Tips (S/M/L)", "USB-C Short Charging Cable", "User Manual"],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": ["49dB Smart Adaptive ANC", "10.4mm + 6mm Dual Drivers", "44 Hours Total Battery", "IP55 Dust & Water Resistant"],
+        "specs": {
+          "form_factor": "tws_earbuds",
+          "driver_size_mm": 10.4,
+          "anc": true,
+          "anc_db": 49,
+          "bluetooth_version": "5.3",
+          "codecs": ["LHDC 5.0", "AAC", "SBC"],
+          "playtime_hours": 44,
+          "fast_charge_summary": "10 mins charge = 7 hours",
+          "water_resistance": "IP55",
+          "connector": "Bluetooth",
+          "low_latency_ms": 94
+        }
+      },
+      "variants": [
+        { "title": "Metallic Gray", "sku": "MS-OPL-BUDS3-GRY", "price_paise": 499900, "mrp_paise": 649900, "stock": 35, "options": { "Color": "Metallic Gray" } },
+        { "title": "Splendid Blue", "sku": "MS-OPL-BUDS3-BLU", "price_paise": 499900, "mrp_paise": 649900, "stock": 28, "options": { "Color": "Splendid Blue" } }
+      ]
+    },
+    {
+      "handle": "keychron-k2-pro-qmk-mechanical-keyboard",
+      "title": "Keychron K2 Pro QMK/VIA Wireless Mechanical Keyboard",
+      "subtitle": "75% Hot-Swappable · PBT Keycaps · Mac & Windows",
+      "category_handle": "keyboards-mice",
+      "subcategory_handle": "mechanical-keyboards",
+      "description": "Custom-grade 75% compact wireless mechanical keyboard with open-source QMK/VIA key remapping, hot-swappable PCB, double-shot OSA PBT keycaps, sound-absorbing foam, and Bluetooth 5.1 + USB-C wired connectivity.",
+      "metadata": {
+        "category_type": "keyboards-mice",
+        "brand": "Keychron",
+        "model_number": "K2P-H3",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Keychron India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["Keychron K2 Pro Keyboard", "USB-A to USB-C Braided Cable", "Keycap Puller", "Switch Puller", "Extra Mac & Windows Keycaps"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": ["QMK / VIA Programmable", "Hot-Swappable Switches", "OSA Double-Shot PBT Keycaps", "3-Device Bluetooth + Wired"],
+        "specs": {
+          "peripheral_type": "keyboard",
+          "switch_type": "mechanical_brown",
+          "hot_swappable": true,
+          "layout": "compact_75",
+          "connectivity": "Bluetooth + Wired",
+          "polling_rate_hz": 1000,
+          "weight_grams": 1070,
+          "backlight": "RGB",
+          "os_compatibility": ["macOS", "Windows", "Linux"]
+        }
+      },
+      "variants": [
+        { "title": "Keychron K Pro Brown (Tactile) / RGB", "sku": "MS-KEY-K2P-BRN-RGB", "price_paise": 949900, "mrp_paise": 1149900, "stock": 16, "options": { "Switch": "K Pro Brown", "Backlight": "RGB" } },
+        { "title": "Keychron K Pro Red (Linear) / RGB", "sku": "MS-KEY-K2P-RED-RGB", "price_paise": 949900, "mrp_paise": 1149900, "stock": 12, "options": { "Switch": "K Pro Red", "Backlight": "RGB" } }
+      ]
+    },
+    {
+      "handle": "logitech-mx-master-3s-wireless-mouse",
+      "title": "Logitech MX Master 3S Wireless Performance Mouse",
+      "subtitle": "8000 DPI Darkfield Sensor · Quiet Clicks · MagSpeed Scroll",
+      "category_handle": "keyboards-mice",
+      "subcategory_handle": "wireless-gaming-mice",
+      "description": "Flagship productivity mouse featuring an 8000 DPI glass-tracking sensor, ultra-quiet tactile clicks, electromagnetic MagSpeed scroll wheel (1,000 lines/sec), and multi-computer Flow control over Bluetooth or Logi Bolt.",
+      "metadata": {
+        "category_type": "keyboards-mice",
+        "brand": "Logitech",
+        "model_number": "910-006561",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Logitech India Hardware Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["MX Master 3S Mouse", "Logi Bolt USB Receiver", "USB-C Charging Cable", "User Documentation"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": ["8000 DPI Tracks on Glass", "MagSpeed 1000-Line/Sec Wheel", "90% Quieter Tactile Clicks", "70 Days USB-C Battery"],
+        "specs": {
+          "peripheral_type": "mouse",
+          "switch_type": "optical",
+          "connectivity": "Tri-Mode (2.4G + BT + Wired)",
+          "max_dpi": 8000,
+          "sensor": "Darkfield High Precision",
+          "weight_grams": 141,
+          "os_compatibility": ["Windows", "macOS", "Linux", "iPadOS"]
+        }
+      },
+      "variants": [
+        { "title": "Graphite", "sku": "MS-LOG-MX3S-GRP", "price_paise": 899500, "mrp_paise": 1099500, "stock": 24, "options": { "Color": "Graphite" } },
+        { "title": "Pale Grey", "sku": "MS-LOG-MX3S-GRY", "price_paise": 899500, "mrp_paise": 1099500, "stock": 10, "options": { "Color": "Pale Grey" } }
+      ]
+    },
+    {
+      "handle": "anker-nano-ii-65w-gan-charger",
+      "title": "Anker 735 (Nano II) 65W 3-Port GaN Fast Charger",
+      "subtitle": "2x USB-C + 1x USB-A · PPS 45W · Laptops & Phones",
+      "category_handle": "power-charging",
+      "subcategory_handle": "gan-fast-chargers",
+      "description": "Compact GaN II charger delivering up to 65W single-port USB-C Power Delivery to charge a MacBook Air, Dell XPS, iPad, or Samsung/iPhone simultaneously with ActiveShield 2.0 temperature monitoring.",
+      "metadata": {
+        "category_type": "power-charging",
+        "brand": "Anker",
+        "model_number": "A2667",
+        "hsn_code": "8504",
+        "gst_rate_percent": 18,
+        "warranty_months": 18,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "18 Months Anker India Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["Anker 65W GaN II 3-Port Charger (Indian BIS Plug)", "Welcome Guide"],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": ["65W GaN II Compact Brick", "Charges Laptop + Phone + Watch", "Samsung Super Fast Charging PPS", "BIS Certified Indian Plug"],
+        "specs": {
+          "device_type": "gan_charger",
+          "output_wattage": 65,
+          "ports_summary": "2x USB-C PD + 1x USB-A",
+          "protocols": ["USB-PD 3.0", "PPS", "Quick Charge 3.0"],
+          "bis_certified": true
+        }
+      },
+      "variants": [
+        { "title": "65W 3-Port / Matte Black", "sku": "MS-ANK-65W3P-BLK", "price_paise": 349900, "mrp_paise": 499900, "stock": 40, "options": { "Color": "Matte Black" } }
+      ]
+    },
+    {
+      "handle": "sandisk-extreme-portable-ssd-1tb",
+      "title": "SanDisk Extreme Portable NVMe SSD 1TB (1050MB/s)",
+      "subtitle": "IP65 Water & Drop Resistant · USB 3.2 Gen 2 · 5-Yr Warranty",
+      "category_handle": "accessories-storage",
+      "subcategory_handle": "ssds-pen-drives-sd",
+      "description": "Rugged pocket-sized NVMe solid state drive delivering up to 1050MB/s read and 1000MB/s write speeds with IP65 dust/water protection, 3-meter drop resistance, and hardware 256-bit AES encryption.",
+      "metadata": {
+        "category_type": "accessories-storage",
+        "brand": "SanDisk",
+        "model_number": "SDSSDE61-1T00-G25",
+        "hsn_code": "8523",
+        "gst_rate_percent": 18,
+        "warranty_months": 60,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "5 Years SanDisk India Limited Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["SanDisk Extreme Portable SSD", "USB-C to USB-C Cable", "USB-C to USB-A Adapter", "Safety & Warranty Guide"],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": ["1050MB/s NVMe Speeds", "IP65 Water & 3m Drop Safe", "Works with iPhone 15/16 ProRes", "5-Year Brand Warranty"],
+        "specs": {
+          "accessory_type": "ssd_hdd",
+          "compatible_devices": ["MacBook", "Windows Laptop", "iPhone 15/16 Pro", "iPad USB-C"],
+          "material": "Silicone Shell + Forged Aluminum",
+          "capacity_gb": 1000,
+          "read_speed_mbps": 1050,
+          "write_speed_mbps": 1000,
+          "interface": "USB 3.2 Gen 2 (USB-C)"
+        }
+      },
+      "variants": [
+        { "title": "1TB / Black", "sku": "MS-SND-EXT1TB-BLK", "price_paise": 949900, "mrp_paise": 1450000, "stock": 19, "options": { "Capacity": "1TB" } },
+        { "title": "2TB / Black", "sku": "MS-SND-EXT2TB-BLK", "price_paise": 1649900, "mrp_paise": 2400000, "stock": 7, "options": { "Capacity": "2TB" } }
+      ]
+    },
+    {
+      "handle": "spigen-ultra-hybrid-magsafe-iphone-16",
+      "title": "Spigen Ultra Hybrid MagFit Case for iPhone 16",
+      "subtitle": "Anti-Yellowing PC Back · Air Cushion Corners · Strong MagSafe",
+      "category_handle": "accessories-storage",
+      "subcategory_handle": "phone-cases-covers",
+      "description": "Precision-molded hybrid clear bumper case with integrated magnetic ring for MagSafe chargers/wallets, raised camera lip protection, and tactile Camera Control cutout.",
+      "metadata": {
+        "category_type": "accessories-storage",
+        "brand": "Spigen",
+        "model_number": "ACS08213",
+        "hsn_code": "3926",
+        "gst_rate_percent": 18,
+        "warranty_months": 6,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "6 Months Spigen Authentic Defect Replacement",
+        "condition": "brand_new_sealed",
+        "in_the_box": ["Spigen Ultra Hybrid MagFit Case"],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": ["Built-in MagSafe Magnet Ring", "Military-Grade Air Cushion", "Raised Camera & Screen Lip", "Crystal Clear PC Back"],
+        "specs": {
+          "accessory_type": "case_cover",
+          "compatible_devices": ["Apple iPhone 16"],
+          "material": "TPU Bumper + Polycarbonate Back",
+          "magsafe_compatible": true
+        }
+      },
+      "variants": [
+        { "title": "Zero One / Frost Black", "sku": "MS-SPG-IP16-Z1-BLK", "price_paise": 169900, "mrp_paise": 249900, "stock": 45, "options": { "Finish": "Zero One Black" } },
+        { "title": "Crystal Clear", "sku": "MS-SPG-IP16-CLR", "price_paise": 149900, "mrp_paise": 219900, "stock": 52, "options": { "Finish": "Crystal Clear" } }
+      ]
+    }
+  ]
+}

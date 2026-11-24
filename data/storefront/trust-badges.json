@@ -1,0 +1,38 @@
+[
+  {
+    "id": "badge_brand_warranty",
+    "title": "100% Official Brand Warranty",
+    "subtitle": "Factory-sealed Indian retail units backed by authorized brand service centers across India.",
+    "icon_key": "shield-check",
+    "cta_route": "/policies/warranty",
+    "display_order": 1,
+    "is_active": true
+  },
+  {
+    "id": "badge_open_box",
+    "title": "Insured Open-Box Delivery",
+    "subtitle": "Verify seal, IMEI, screen, and box contents at your doorstep before sharing your delivery OTP on orders ₹25,000+.",
+    "icon_key": "package-check",
+    "cta_route": "/policies/open-box-delivery",
+    "display_order": 2,
+    "is_active": true
+  },
+  {
+    "id": "badge_gst_invoice",
+    "title": "18% GST Tax Invoice (ITC Ready)",
+    "subtitle": "Enter your GSTIN at checkout to claim business Input Tax Credit with instant downloadable PDF invoices.",
+    "icon_key": "file-text",
+    "cta_route": "/policies/gst-invoicing",
+    "display_order": 3,
+    "is_active": true
+  },
+  {
+    "id": "badge_bihar_flagship",
+    "title": "Muzaffarpur Flagship & Repair Hub",
+    "subtitle": "Backed by our Motijheel & Club Road brick-and-mortar tech centers in Bihar with Pan-India express shipping.",
+    "icon_key": "store",
+    "cta_route": "/stores/muzaffarpur",
+    "display_order": 4,
+    "is_active": true
+  }
+]

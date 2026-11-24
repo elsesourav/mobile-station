@@ -1,0 +1,22 @@
+{
+  "brands": [
+    { "handle": "apple", "name": "Apple", "categories": ["smartphones", "tablets", "laptops", "audio", "power-charging", "accessories-storage"], "warranty_support": "Apple India Authorized Service" },
+    { "handle": "samsung", "name": "Samsung", "categories": ["smartphones", "tablets", "laptops", "audio", "accessories-storage"], "warranty_support": "Samsung India Authorized Care" },
+    { "handle": "oneplus", "name": "OnePlus", "categories": ["smartphones", "tablets", "audio", "power-charging"], "warranty_support": "OnePlus India Service" },
+    { "handle": "xiaomi", "name": "Xiaomi", "categories": ["smartphones", "tablets", "audio", "power-charging"], "warranty_support": "Mi Authorized Service Center" },
+    { "handle": "realme", "name": "Realme", "categories": ["smartphones", "tablets", "audio"], "warranty_support": "Realme India Care" },
+    { "handle": "lenovo", "name": "Lenovo", "categories": ["laptops", "tablets"], "warranty_support": "Lenovo Onsite & Carry-In India" },
+    { "handle": "asus", "name": "ASUS", "categories": ["laptops", "keyboards-mice"], "warranty_support": "ASUS India Authorized Service" },
+    { "handle": "hp", "name": "HP", "categories": ["laptops", "keyboards-mice"], "warranty_support": "HP India Onsite Support" },
+    { "handle": "sony", "name": "Sony", "categories": ["audio"], "warranty_support": "Sony India Authorized Service" },
+    { "handle": "boat", "name": "boAt", "categories": ["audio", "power-charging", "accessories-storage"], "warranty_support": "boAt 1-Year Pickup & Drop Warranty" },
+    { "handle": "jbl", "name": "JBL", "categories": ["audio"], "warranty_support": "Harman India Service" },
+    { "handle": "keychron", "name": "Keychron", "categories": ["keyboards-mice"], "warranty_support": "Keychron India 1-Year Replacement" },
+    { "handle": "logitech", "name": "Logitech", "categories": ["keyboards-mice", "accessories-storage"], "warranty_support": "Logitech 1–3 Year Brand Warranty" },
+    { "handle": "razer", "name": "Razer", "categories": ["keyboards-mice", "audio"], "warranty_support": "Razer India 2-Year Warranty" },
+    { "handle": "anker", "name": "Anker", "categories": ["power-charging", "audio"], "warranty_support": "Anker 18-Month Brand Warranty" },
+    { "handle": "belkin", "name": "Belkin", "categories": ["power-charging", "accessories-storage"], "warranty_support": "Belkin 2-Year Warranty" },
+    { "handle": "spigen", "name": "Spigen", "categories": ["accessories-storage", "power-charging"], "warranty_support": "Spigen Authentic Protection" },
+    { "handle": "sandisk", "name": "SanDisk", "categories": ["accessories-storage"], "warranty_support": "SanDisk 5-Year Limited Warranty" }
+  ]
+}

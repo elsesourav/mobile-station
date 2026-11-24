@@ -1,0 +1,39 @@
+{
+  "facet_schemas_by_category": {
+    "smartphones": {
+      "filters": ["brand", "ram_gb", "storage_gb", "network", "refresh_rate_hz", "price_range", "in_stock"],
+      "quick_card_specs": ["ram_gb", "storage_gb", "battery_mah"],
+      "compare_fields": ["processor", "display_size_inches", "display_type", "refresh_rate_hz", "ram_gb", "storage_gb", "rear_camera", "front_camera", "battery_mah", "charging_watt", "network", "os"]
+    },
+    "tablets": {
+      "filters": ["brand", "ram_gb", "storage_gb", "connectivity", "stylus_support", "display_size_inches", "price_range"],
+      "quick_card_specs": ["display_size_inches", "ram_gb", "storage_gb"],
+      "compare_fields": ["processor", "display_size_inches", "display_type", "refresh_rate_hz", "ram_gb", "storage_gb", "connectivity", "stylus_support", "battery_mah", "os"]
+    },
+    "laptops": {
+      "filters": ["brand", "processor_brand", "use_case", "ram_gb", "ssd_gb", "display_size_inches", "price_range"],
+      "quick_card_specs": ["processor_model", "ram_gb", "ssd_gb"],
+      "compare_fields": ["processor_model", "ram_gb", "ram_type", "ssd_gb", "gpu", "display_size_inches", "display_resolution", "refresh_rate_hz", "weight_kg", "battery_whr", "os"]
+    },
+    "audio": {
+      "filters": ["brand", "form_factor", "anc", "connector", "playtime_hours", "water_resistance", "price_range"],
+      "quick_card_specs": ["form_factor", "anc_db", "playtime_hours"],
+      "compare_fields": ["form_factor", "driver_size_mm", "anc", "anc_db", "bluetooth_version", "codecs", "playtime_hours", "water_resistance", "low_latency_ms"]
+    },
+    "keyboards-mice": {
+      "filters": ["brand", "peripheral_type", "switch_type", "connectivity", "layout", "hot_swappable", "max_dpi", "price_range"],
+      "quick_card_specs": ["switch_type", "connectivity", "layout"],
+      "compare_fields": ["peripheral_type", "switch_type", "hot_swappable", "layout", "connectivity", "polling_rate_hz", "max_dpi", "weight_grams", "backlight"]
+    },
+    "power-charging": {
+      "filters": ["brand", "device_type", "output_wattage", "capacity_mah", "bis_certified", "price_range"],
+      "quick_card_specs": ["device_type", "output_wattage", "ports_summary"],
+      "compare_fields": ["device_type", "output_wattage", "capacity_mah", "ports_summary", "protocols", "cable_rating_watt", "bis_certified"]
+    },
+    "accessories-storage": {
+      "filters": ["brand", "accessory_type", "capacity_gb", "magsafe_compatible", "interface", "price_range"],
+      "quick_card_specs": ["accessory_type", "material", "capacity_gb"],
+      "compare_fields": ["accessory_type", "compatible_devices", "material", "capacity_gb", "read_speed_mbps", "interface", "magsafe_compatible"]
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "version": "1.0.0",
+  "market": "IN",
+  "currency": "INR",
+  "root_categories": [
+    {
+      "id": "cat_smartphones",
+      "handle": "smartphones",
+      "name": "Mobiles & Smartphones",
+      "subtitle": "5G Flagships, Budget & Camera Phones",
+      "description": "Genuine 5G Android smartphones, Apple iPhones, and high-value flagship phones with official brand warranty and Open-Box Delivery.",
+      "default_hsn": "8517",
+      "gst_rate_percent": 18,
+      "icon": "Smartphone",
+      "rank": 1,
+      "subcategories": [
+        { "id": "cat_smartphones_5g", "handle": "5g-smartphones", "name": "5G Smartphones", "hsn": "8517" },
+        { "id": "cat_smartphones_iphone", "handle": "apple-iphones", "name": "Apple iPhones", "hsn": "8517" },
+        { "id": "cat_smartphones_gaming", "handle": "gaming-phones", "name": "Gaming Phones", "hsn": "8517" },
+        { "id": "cat_smartphones_budget", "handle": "phones-under-15000", "name": "Phones Under ₹15,000", "hsn": "8517" }
+      ]
+    },
+    {
+      "id": "cat_tablets",
+      "handle": "tablets",
+      "name": "Tablets & E-Readers",
+      "subtitle": "iPads, Android Tablets & Styluses",
+      "description": "Productivity tablets, Apple iPads, drawing tablets, and Wi-Fi + 5G learning tablets with official brand warranty.",
+      "default_hsn": "8471",
+      "gst_rate_percent": 18,
+      "icon": "Tablet",
+      "rank": 2,
+      "subcategories": [
+        { "id": "cat_tablets_ipad", "handle": "apple-ipads", "name": "Apple iPads", "hsn": "8471" },
+        { "id": "cat_tablets_android", "handle": "android-tablets", "name": "Android Tablets", "hsn": "8471" },
+        { "id": "cat_tablets_stylus", "handle": "tablet-styluses-cases", "name": "Styluses & Keyboard Folios", "hsn": "8471" }
+      ]
+    },
+    {
+      "id": "cat_laptops",
+      "handle": "laptops",
+      "name": "Laptops & Monitors",
+      "subtitle": "Thin & Light, Gaming, MacBooks & Displays",
+      "description": "High-performance laptops for students, creators, developers, and gamers alongside crisp 4K and gaming monitors.",
+      "default_hsn": "8471",
+      "gst_rate_percent": 18,
+      "icon": "Laptop",
+      "rank": 3,
+      "subcategories": [
+        { "id": "cat_laptops_thin", "handle": "thin-light-laptops", "name": "Thin & Light Laptops", "hsn": "8471" },
+        { "id": "cat_laptops_gaming", "handle": "gaming-laptops", "name": "Gaming & RTX Laptops", "hsn": "8471" },
+        { "id": "cat_laptops_macbook", "handle": "macbooks", "name": "Apple MacBooks", "hsn": "8471" },
+        { "id": "cat_laptops_monitors", "handle": "monitors", "name": "Computer Monitors", "hsn": "8528" }
+      ]
+    },
+    {
+      "id": "cat_audio",
+      "handle": "audio",
+      "name": "Earphones & Audio",
+      "subtitle": "TWS Earbuds, ANC Headphones & Speakers",
+      "description": "Active noise-cancelling TWS earbuds, wireless neckbands, wired studio earphones, over-ear headphones, and Bluetooth speakers.",
+      "default_hsn": "8518",
+      "gst_rate_percent": 18,
+      "icon": "Headphones",
+      "rank": 4,
+      "subcategories": [
+        { "id": "cat_audio_tws", "handle": "tws-earbuds", "name": "TWS Earbuds", "hsn": "8518" },
+        { "id": "cat_audio_neckbands", "handle": "neckbands", "name": "Wireless Neckbands", "hsn": "8518" },
+        { "id": "cat_audio_wired", "handle": "wired-earphones", "name": "Wired Earphones (3.5mm / Type-C)", "hsn": "8518" },
+        { "id": "cat_audio_headphones", "handle": "over-ear-headphones", "name": "Over-Ear & Gaming Headsets", "hsn": "8518" },
+        { "id": "cat_audio_speakers", "handle": "bluetooth-speakers", "name": "Bluetooth Speakers & Soundbars", "hsn": "8518" }
+      ]
+    },
+    {
+      "id": "cat_keyboards_mice",
+      "handle": "keyboards-mice",
+      "name": "Keyboards & Mice",
+      "subtitle": "Mechanical Keyboards, Gaming & Office Mice",
+      "description": "Hot-swappable mechanical keyboards, ergonomic wireless mice, high-DPI gaming mice, and wireless desk combos.",
+      "default_hsn": "8471",
+      "gst_rate_percent": 18,
+      "icon": "Keyboard",
+      "rank": 5,
+      "subcategories": [
+        { "id": "cat_km_mech", "handle": "mechanical-keyboards", "name": "Mechanical Keyboards", "hsn": "8471" },
+        { "id": "cat_km_wireless_kb", "handle": "wireless-keyboards", "name": "Wireless & Office Keyboards", "hsn": "8471" },
+        { "id": "cat_km_mice", "handle": "wireless-gaming-mice", "name": "Wireless & Gaming Mice", "hsn": "8471" },
+        { "id": "cat_km_combos", "handle": "keyboard-mouse-combos", "name": "Keyboard & Mouse Combos", "hsn": "8471" }
+      ]
+    },
+    {
+      "id": "cat_power_charging",
+      "handle": "power-charging",
+      "name": "Chargers, Power Banks & Cables",
+      "subtitle": "GaN Fast Chargers, 20000mAh Banks & USB-C",
+      "description": "BIS-certified GaN PD fast chargers, magnetic wireless chargers, 10000–20000mAh power banks, braided cables, and USB-C hubs.",
+      "default_hsn": "8504",
+      "gst_rate_percent": 18,
+      "icon": "BatteryCharging",
+      "rank": 6,
+      "subcategories": [
+        { "id": "cat_pc_gan", "handle": "gan-fast-chargers", "name": "GaN & PD Fast Chargers", "hsn": "8504" },
+        { "id": "cat_pc_powerbank", "handle": "power-banks", "name": "Power Banks", "hsn": "8507" },
+        { "id": "cat_pc_cables", "handle": "charging-cables-hdmi", "name": "USB-C, Lightning & HDMI Cables", "hsn": "8544" },
+        { "id": "cat_pc_hubs", "handle": "usbc-hubs-docks", "name": "USB-C Hubs & Multi-Port Docks", "hsn": "8471" }
+      ]
+    },
+    {
+      "id": "cat_accessories_storage",
+      "handle": "accessories-storage",
+      "name": "Accessories, Protection & Storage",
+      "subtitle": "Cases, Tempered Glass, SSDs & Desk Gear",
+      "description": "MagSafe & shockproof mobile covers, 9H tempered glass, laptop stands, sleeves, portable NVMe SSDs, SD cards, and smartwatches.",
+      "default_hsn": "3926",
+      "gst_rate_percent": 18,
+      "icon": "ShieldCheck",
+      "rank": 7,
+      "subcategories": [
+        { "id": "cat_as_cases", "handle": "phone-cases-covers", "name": "Phone Cases & MagSafe Covers", "hsn": "3926" },
+        { "id": "cat_as_glass", "handle": "screen-protectors", "name": "Tempered Glass & Screen Guards", "hsn": "3919" },
+        { "id": "cat_as_storage", "handle": "ssds-pen-drives-sd", "name": "Portable SSDs, Pen Drives & SD Cards", "hsn": "8523" },
+        { "id": "cat_as_desk", "handle": "stands-sleeves-wearables", "name": "Laptop Stands, Sleeves & Smartwatches", "hsn": "7616" }
+      ]
+    }
+  ]
+}
