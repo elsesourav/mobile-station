@@ -1,0 +1,40 @@
+{
+  "name": "mobile-station",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20.0.0 <=24.x"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "backend:dev": "turbo dev --filter=@mobile-station/backend",
+    "backend:build": "turbo build --filter=@mobile-station/backend",
+    "backend:migrate": "pnpm --filter @mobile-station/backend db:migrate",
+    "backend:seed": "pnpm --filter @mobile-station/backend exec ./src/scripts/seed-electronics-catalog.ts",
+    "storefront:dev": "pnpm --filter @mobile-station/storefront dev",
+    "storefront:build": "pnpm --filter @mobile-station/storefront build",
+    "storefront:test": "pnpm --filter @mobile-station/storefront test",
+    "storefront:test:e2e": "pnpm --filter @mobile-station/storefront test:e2e",
+    "storefront:typecheck": "pnpm --filter @mobile-station/storefront typecheck",
+    "storefront:lint": "pnpm --filter @mobile-station/storefront lint",
+    "assets:brand": "python3 scripts/generate-brand-assets.py",
+    "infra:up": "docker compose up -d postgres redis meilisearch minio minio-init",
+    "infra:down": "docker compose down",
+    "infra:logs": "docker compose logs -f"
+  },
+  "pnpm": {
+    "overrides": {
+      "tsconfig-paths": "^4.2.0"
+    }
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,36 @@
+# Dependencies & caches
+node_modules/
+.pnpm-store/
+.turbo/
+.next/
+.medusa/
+dist/
+build/
+coverage/
+
+# Environment & secrets (NEVER commit)
+.env
+.env.*
+!.env.example
+apps/*/.env
+apps/*/.env.*
+!apps/*/.env.example
+
+# Local SQLite / transient DB files (Postgres is canonical)
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs & OS artifacts
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+
+# Test & QA outputs
+playwright-report/
+test-results/
+tmp/
