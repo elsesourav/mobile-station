@@ -1,7 +1,10 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "currency": "INR",
-  "note": "All monetary prices are integer paise (e.g. 7990000 = ₹79,900). Image URLs map cleanly to Cloudinary public_ids under folder 'mobile-station/products/' once uploaded.",
+  "market": "IN",
+  "default_hub": "Mobile Station Muzaffarpur Hub (842001)",
+  "note": "All monetary prices are integer paise (e.g. 7490000 = ₹74,900). Every product & category visual is hosted on Mobile Station Cloudinary (ekbuxdbd) with per-variant demo inventory and stock tracking policies.",
+  "total_products": 51,
   "products": [
     {
       "handle": "apple-iphone-16-5g",
@@ -20,12 +23,21 @@
         "warranty_type": "brand_authorized",
         "warranty_summary": "1 Year Apple India Authorized Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["iPhone 16", "USB-C Charge Cable (1m)", "Documentation (Power adapter sold separately)"],
+        "in_the_box": [
+          "iPhone 16",
+          "USB-C Charge Cable (1m)",
+          "Documentation (Power adapter sold separately)"
+        ],
         "requires_imei_or_serial": true,
         "requires_open_box_delivery": true,
         "emi_eligible": true,
         "cod_eligible": false,
-        "key_highlights": ["A18 Bionic Chip", "6.1\" Super Retina XDR", "48MP Fusion Camera", "Camera Control Button"],
+        "key_highlights": [
+          "A18 Bionic Chip",
+          "6.1\" Super Retina XDR",
+          "48MP Fusion Camera",
+          "Camera Control Button"
+        ],
         "specs": {
           "ram_gb": 8,
           "storage_gb": 128,
@@ -41,11 +53,44 @@
           "sim_type": "Dual SIM (Nano + eSIM)",
           "os": "iOS 18",
           "ip_rating": "IP68"
+        },
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-01"
         }
       },
       "variants": [
-        { "title": "128GB / Ultramarine", "sku": "MS-APL-IP16-128-ULT", "price_paise": 7490000, "mrp_paise": 7990000, "stock": 14, "options": { "Storage": "128GB", "Color": "Ultramarine" } },
-        { "title": "256GB / Black", "sku": "MS-APL-IP16-256-BLK", "price_paise": 8490000, "mrp_paise": 8990000, "stock": 9, "options": { "Storage": "256GB", "Color": "Black" } }
+        {
+          "title": "128GB / Ultramarine",
+          "sku": "MS-APL-IP16-128-ULT",
+          "price_paise": 7490000,
+          "mrp_paise": 7990000,
+          "stock": 14,
+          "options": {
+            "Storage": "128GB",
+            "Color": "Ultramarine"
+          }
+        },
+        {
+          "title": "256GB / Black",
+          "sku": "MS-APL-IP16-256-BLK",
+          "price_paise": 8490000,
+          "mrp_paise": 8990000,
+          "stock": 9,
+          "options": {
+            "Storage": "256GB",
+            "Color": "Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553609/mobile-station/products/apple-iphone-16-5g.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553609/mobile-station/products/apple-iphone-16-5g.webp"
       ]
     },
     {
@@ -65,12 +110,24 @@
         "warranty_type": "brand_authorized",
         "warranty_summary": "1 Year OnePlus India Manufacturer Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["OnePlus 13R 5G", "80W SUPERVOOC Adapter", "Type-A to Type-C Cable", "Protective Case", "Pre-applied Screen Protector", "SIM Ejector Tool"],
+        "in_the_box": [
+          "OnePlus 13R 5G",
+          "80W SUPERVOOC Adapter",
+          "Type-A to Type-C Cable",
+          "Protective Case",
+          "Pre-applied Screen Protector",
+          "SIM Ejector Tool"
+        ],
         "requires_imei_or_serial": true,
         "requires_open_box_delivery": true,
         "emi_eligible": true,
         "cod_eligible": false,
-        "key_highlights": ["Snapdragon 8 Gen 3", "120Hz 1.5K ProXDR AMOLED", "6000mAh + 80W Charger Included", "50MP Sony LYT-700 OIS"],
+        "key_highlights": [
+          "Snapdragon 8 Gen 3",
+          "120Hz 1.5K ProXDR AMOLED",
+          "6000mAh + 80W Charger Included",
+          "50MP Sony LYT-700 OIS"
+        ],
         "specs": {
           "ram_gb": 12,
           "storage_gb": 256,
@@ -86,11 +143,44 @@
           "sim_type": "Dual Nano SIM",
           "os": "OxygenOS 15 (Android 15)",
           "ip_rating": "IP65"
+        },
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-05"
         }
       },
       "variants": [
-        { "title": "12GB + 256GB / Nebula Noir", "sku": "MS-OPL-13R-256-BLK", "price_paise": 4299900, "mrp_paise": 4499900, "stock": 18, "options": { "Variant": "12GB / 256GB", "Color": "Nebula Noir" } },
-        { "title": "16GB + 512GB / Astral Trail", "sku": "MS-OPL-13R-512-SLV", "price_paise": 4999900, "mrp_paise": 5199900, "stock": 8, "options": { "Variant": "16GB / 512GB", "Color": "Astral Trail" } }
+        {
+          "title": "12GB + 256GB / Nebula Noir",
+          "sku": "MS-OPL-13R-256-BLK",
+          "price_paise": 4299900,
+          "mrp_paise": 4499900,
+          "stock": 18,
+          "options": {
+            "Variant": "12GB / 256GB",
+            "Color": "Nebula Noir"
+          }
+        },
+        {
+          "title": "16GB + 512GB / Astral Trail",
+          "sku": "MS-OPL-13R-512-SLV",
+          "price_paise": 4999900,
+          "mrp_paise": 5199900,
+          "stock": 8,
+          "options": {
+            "Variant": "16GB / 512GB",
+            "Color": "Astral Trail"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553622/mobile-station/products/oneplus-13r-5g.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553622/mobile-station/products/oneplus-13r-5g.webp"
       ]
     },
     {
@@ -98,7 +188,7 @@
       "title": "Samsung Galaxy A35 5G",
       "subtitle": "120Hz Super AMOLED · Gorilla Glass Victus+ · IP67",
       "category_handle": "smartphones",
-      "subcategory_handle": "5g-smartphones",
+      "subcategory_handle": "samsung-galaxy",
       "description": "Samsung Galaxy A35 5G with 6.6-inch FHD+ 120Hz Super AMOLED Vision Booster display, 50MP Nightography OIS camera, Knox Vault security, and 4 generations of OS upgrades.",
       "metadata": {
         "category_type": "smartphones",
@@ -110,12 +200,22 @@
         "warranty_type": "brand_authorized",
         "warranty_summary": "1 Year Samsung India Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["Galaxy A35 5G", "USB-C to USB-C Data Cable", "SIM Ejection Pin", "Quick Start Guide"],
+        "in_the_box": [
+          "Galaxy A35 5G",
+          "USB-C to USB-C Data Cable",
+          "SIM Ejection Pin",
+          "Quick Start Guide"
+        ],
         "requires_imei_or_serial": true,
         "requires_open_box_delivery": true,
         "emi_eligible": true,
         "cod_eligible": false,
-        "key_highlights": ["120Hz Super AMOLED", "IP67 Water & Dust Resistant", "50MP OIS Nightography", "Samsung Knox Vault"],
+        "key_highlights": [
+          "120Hz Super AMOLED",
+          "IP67 Water & Dust Resistant",
+          "50MP OIS Nightography",
+          "Samsung Knox Vault"
+        ],
         "specs": {
           "ram_gb": 8,
           "storage_gb": 128,
@@ -131,182 +231,1023 @@
           "sim_type": "Hybrid Dual SIM",
           "os": "One UI (Android)",
           "ip_rating": "IP67"
+        },
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-08"
         }
       },
       "variants": [
-        { "title": "8GB + 128GB / Awesome Navy", "sku": "MS-SAM-A35-128-NVY", "price_paise": 2599900, "mrp_paise": 3399900, "stock": 22, "options": { "Variant": "8GB / 128GB", "Color": "Awesome Navy" } },
-        { "title": "8GB + 256GB / Awesome Iceblue", "sku": "MS-SAM-A35-256-ICE", "price_paise": 2899900, "mrp_paise": 3699900, "stock": 12, "options": { "Variant": "8GB / 256GB", "Color": "Awesome Iceblue" } }
+        {
+          "title": "8GB + 128GB / Awesome Navy",
+          "sku": "MS-SAM-A35-128-NVY",
+          "price_paise": 2599900,
+          "mrp_paise": 3399900,
+          "stock": 22,
+          "options": {
+            "Variant": "8GB / 128GB",
+            "Color": "Awesome Navy"
+          }
+        },
+        {
+          "title": "8GB + 256GB / Awesome Iceblue",
+          "sku": "MS-SAM-A35-256-ICE",
+          "price_paise": 2899900,
+          "mrp_paise": 3699900,
+          "stock": 12,
+          "options": {
+            "Variant": "8GB / 256GB",
+            "Color": "Awesome Iceblue"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553613/mobile-station/products/samsung-galaxy-a35-5g.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553613/mobile-station/products/samsung-galaxy-a35-5g.webp"
       ]
     },
     {
-      "handle": "apple-ipad-air-m2-11",
-      "title": "Apple iPad Air 11-inch (M2)",
-      "subtitle": "Apple M2 Chip · Liquid Retina Display · Apple Pencil Pro Ready",
-      "category_handle": "tablets",
-      "subcategory_handle": "apple-ipads",
-      "description": "Supercharged by the Apple M2 chip, the 11-inch iPad Air delivers blazing performance for creators, note-taking students, and multitasking workflows with landscape 12MP Ultra Wide front camera and Wi-Fi 6E.",
+      "handle": "apple-iphone-16-pro-5g",
+      "title": "Apple iPhone 16 Pro 5G",
+      "subtitle": "A18 Pro · Grade 5 Titanium · 120Hz ProMotion · 5x Telephoto",
+      "category_handle": "smartphones",
+      "subcategory_handle": "apple-iphones",
+      "description": "Apple iPhone 16 Pro crafted in aerospace Grade 5 Titanium with the A18 Pro chip, 6.3-inch 120Hz Super Retina XDR LTPO display, 48MP Fusion camera with 5x tetraprism telephoto, and Camera Control. Factory sealed with 1-Year Apple India warranty and IMEI-tracked billing.",
       "metadata": {
-        "category_type": "tablets",
+        "category_type": "smartphones",
         "brand": "Apple",
-        "model_number": "MUWC3HN/A",
-        "hsn_code": "8471",
+        "model_number": "MYND3HN/A",
+        "hsn_code": "8517",
         "gst_rate_percent": 18,
         "warranty_months": 12,
         "warranty_type": "brand_authorized",
-        "warranty_summary": "1 Year Apple India Official Warranty",
+        "warranty_summary": "1 Year Apple India Authorized Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["iPad Air 11-inch", "USB-C Charge Cable (1m)", "20W USB-C Power Adapter"],
+        "in_the_box": [
+          "iPhone 16 Pro",
+          "USB-C Charge Cable (1m)",
+          "Documentation (Adapter sold separately)"
+        ],
         "requires_imei_or_serial": true,
         "requires_open_box_delivery": true,
         "emi_eligible": true,
         "cod_eligible": false,
-        "key_highlights": ["Apple M2 8-Core CPU", "11\" Liquid Retina P3", "20W Charger Included", "Supports Apple Pencil Pro"],
+        "key_highlights": [
+          "A18 Pro 3nm Chip",
+          "6.3\" 120Hz ProMotion",
+          "Grade 5 Titanium",
+          "48MP + 5x Telephoto"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-02"
+        },
         "specs": {
           "ram_gb": 8,
           "storage_gb": 128,
-          "display_size_inches": 11.0,
-          "display_type": "Liquid Retina IPS",
-          "refresh_rate_hz": 60,
-          "processor": "Apple M2",
-          "connectivity": "Wi-Fi Only",
-          "stylus_support": true,
-          "battery_mah": 7606,
-          "os": "iPadOS 18"
+          "display_size_inches": 6.3,
+          "display_type": "Super Retina XDR LTPO OLED",
+          "refresh_rate_hz": 120,
+          "processor": "Apple A18 Pro (3nm)",
+          "rear_camera": "48MP Fusion + 48MP UW + 12MP 5x Telephoto",
+          "front_camera": "12MP TrueDepth",
+          "battery_mah": 3582,
+          "charging_watt": 25,
+          "network": "5G",
+          "sim_type": "Dual SIM (Nano + eSIM)",
+          "os": "iOS 18",
+          "ip_rating": "IP68"
         }
       },
       "variants": [
-        { "title": "128GB Wi-Fi / Space Grey", "sku": "MS-APL-IPADAIR-128-GRY", "price_paise": 5790000, "mrp_paise": 5990000, "stock": 10, "options": { "Storage": "128GB Wi-Fi", "Color": "Space Grey" } },
-        { "title": "256GB Wi-Fi / Starlight", "sku": "MS-APL-IPADAIR-256-STR", "price_paise": 6790000, "mrp_paise": 6990000, "stock": 6, "options": { "Storage": "256GB Wi-Fi", "Color": "Starlight" } }
+        {
+          "title": "128GB / Desert Titanium",
+          "sku": "MS-APL-IP16P-128-DES",
+          "price_paise": 11290000,
+          "mrp_paise": 11990000,
+          "stock": 10,
+          "options": {
+            "Storage": "128GB",
+            "Color": "Desert Titanium"
+          }
+        },
+        {
+          "title": "256GB / Natural Titanium",
+          "sku": "MS-APL-IP16P-256-NAT",
+          "price_paise": 12290000,
+          "mrp_paise": 12990000,
+          "stock": 7,
+          "options": {
+            "Storage": "256GB",
+            "Color": "Natural Titanium"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553610/mobile-station/products/apple-iphone-16-pro-5g.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553610/mobile-station/products/apple-iphone-16-pro-5g.jpg"
       ]
     },
     {
-      "handle": "xiaomi-pad-7-snapdragon",
-      "title": "Xiaomi Pad 7 (3.2K 144Hz Display)",
-      "subtitle": "Snapdragon 7+ Gen 3 · 8850mAh · Quad Dolby Atmos Speakers",
-      "category_handle": "tablets",
-      "subcategory_handle": "android-tablets",
-      "description": "Built for productivity and entertainment with an ultra-sharp 11.2-inch 3.2K 144Hz anti-glare crystal-clear display, Snapdragon 7+ Gen 3 processor, and 45W turbo charging.",
+      "handle": "samsung-galaxy-s24-ultra-5g",
+      "title": "Samsung Galaxy S24 Ultra 5G (Galaxy AI)",
+      "subtitle": "Snapdragon 8 Gen 3 · Built-in S Pen · 200MP Quad Telephoto",
+      "category_handle": "smartphones",
+      "subcategory_handle": "samsung-galaxy",
+      "description": "Samsung Galaxy S24 Ultra 5G in armored Titanium frame featuring Corning Gorilla Armor anti-reflective 6.8-inch QHD+ 120Hz Dynamic AMOLED 2X display, built-in S Pen, 200MP Quad Telephoto pro-grade camera system, and Galaxy AI suite.",
       "metadata": {
-        "category_type": "tablets",
+        "category_type": "smartphones",
+        "brand": "Samsung",
+        "model_number": "SM-S928BZTQINS",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Samsung India Care Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Galaxy S24 Ultra with Embedded S Pen",
+          "USB-C to USB-C Data Cable",
+          "SIM Ejection Pin",
+          "Quick Start Guide (45W Charger sold separately)"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "200MP + 5x Optical Zoom",
+          "Built-in S Pen + Galaxy AI",
+          "Snapdragon 8 Gen 3",
+          "Gorilla Armor Titanium"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-03"
+        },
+        "specs": {
+          "ram_gb": 12,
+          "storage_gb": 256,
+          "display_size_inches": 6.8,
+          "display_type": "QHD+ Dynamic AMOLED 2X",
+          "refresh_rate_hz": 120,
+          "processor": "Snapdragon 8 Gen 3 for Galaxy",
+          "rear_camera": "200MP OIS + 50MP 5x + 10MP 3x + 12MP UW",
+          "front_camera": "12MP",
+          "battery_mah": 5000,
+          "charging_watt": 45,
+          "network": "5G",
+          "sim_type": "Dual Nano SIM + eSIM",
+          "os": "One UI 6.1 (Android 14)",
+          "ip_rating": "IP68"
+        }
+      },
+      "variants": [
+        {
+          "title": "12GB + 256GB / Titanium Gray",
+          "sku": "MS-SAM-S24U-256-GRY",
+          "price_paise": 10499900,
+          "mrp_paise": 12999900,
+          "stock": 8,
+          "options": {
+            "Variant": "12GB / 256GB",
+            "Color": "Titanium Gray"
+          }
+        },
+        {
+          "title": "12GB + 512GB / Titanium Black",
+          "sku": "MS-SAM-S24U-512-BLK",
+          "price_paise": 11499900,
+          "mrp_paise": 13999900,
+          "stock": 5,
+          "options": {
+            "Variant": "12GB / 512GB",
+            "Color": "Titanium Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553612/mobile-station/products/samsung-galaxy-s24-ultra-5g.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553612/mobile-station/products/samsung-galaxy-s24-ultra-5g.webp"
+      ]
+    },
+    {
+      "handle": "vivo-x200-5g",
+      "title": "Vivo X200 5G (ZEISS Telephoto)",
+      "subtitle": "Dimensity 9400 3nm · Triple 50MP ZEISS · 5800mAh + 90W Charger",
+      "category_handle": "smartphones",
+      "subcategory_handle": "5g-smartphones",
+      "description": "Vivo X200 5G co-engineered with ZEISS T* optics delivers breathtaking 3x Sony IMX882 APO telephoto portraits, flagship MediaTek Dimensity 9400 (3nm) silicon, IP68 + IP69 water resistance, and a 5800mAh semi-solid battery with 90W FlashCharge adapter in the box.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "Vivo",
+        "model_number": "V2415",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Vivo India Authorized Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Vivo X200 5G",
+          "90W FlashCharge Power Adapter",
+          "USB Type-C Cable",
+          "Protective Case",
+          "Pre-applied Screen Film",
+          "SIM Ejector Pin"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Triple 50MP ZEISS Camera",
+          "Dimensity 9400 (3nm)",
+          "5800mAh + 90W Charger In-Box",
+          "IP68 + IP69 Protection"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-04"
+        },
+        "specs": {
+          "ram_gb": 12,
+          "storage_gb": 256,
+          "display_size_inches": 6.67,
+          "display_type": "1.5K Quad-Curved AMOLED",
+          "refresh_rate_hz": 120,
+          "processor": "MediaTek Dimensity 9400 (3nm)",
+          "rear_camera": "50MP Sony IMX921 OIS + 50MP 3x ZEISS + 50MP UW",
+          "front_camera": "32MP",
+          "battery_mah": 5800,
+          "charging_watt": 90,
+          "network": "5G",
+          "sim_type": "Dual Nano SIM",
+          "os": "Funtouch OS 15 (Android 15)",
+          "ip_rating": "IP68 / IP69"
+        }
+      },
+      "variants": [
+        {
+          "title": "12GB + 256GB / Natural Green",
+          "sku": "MS-VIV-X200-256-GRN",
+          "price_paise": 6599900,
+          "mrp_paise": 6999900,
+          "stock": 12,
+          "options": {
+            "Variant": "12GB / 256GB",
+            "Color": "Natural Green"
+          }
+        },
+        {
+          "title": "16GB + 512GB / Cosmos Black",
+          "sku": "MS-VIV-X200-512-BLK",
+          "price_paise": 7199900,
+          "mrp_paise": 7799900,
+          "stock": 7,
+          "options": {
+            "Variant": "16GB / 512GB",
+            "Color": "Cosmos Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553614/mobile-station/products/vivo-x200-5g.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553614/mobile-station/products/vivo-x200-5g.jpg"
+      ]
+    },
+    {
+      "handle": "vivo-v40-pro-5g",
+      "title": "Vivo V40 Pro 5G (ZEISS Aura Light)",
+      "subtitle": "Triple 50MP ZEISS Portrait · 5500mAh Battery · 80W FlashCharge",
+      "category_handle": "smartphones",
+      "subcategory_handle": "5g-smartphones",
+      "description": "Ultra-slim camera specialist co-engineered with ZEISS featuring triple 50MP lenses, Studio-Quality Smart Aura Light Portrait, MediaTek Dimensity 9200+ speed, and an IP68 waterproof curved AMOLED body packing a 5500mAh battery.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "Vivo",
+        "model_number": "V2347",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Vivo India Authorized Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Vivo V40 Pro 5G",
+          "80W FlashCharge Adapter",
+          "USB-C Cable",
+          "Protective Cover",
+          "SIM Ejector Pin",
+          "Quick Start Guide"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Triple 50MP ZEISS + 50MP Selfie",
+          "5500mAh + 80W Charger",
+          "Dimensity 9200+",
+          "IP68 Dust & Water Resistant"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-06"
+        },
+        "specs": {
+          "ram_gb": 8,
+          "storage_gb": 256,
+          "display_size_inches": 6.78,
+          "display_type": "1.5K Curved AMOLED",
+          "refresh_rate_hz": 120,
+          "processor": "MediaTek Dimensity 9200+",
+          "rear_camera": "50MP OIS + 50MP 2x Telephoto + 50MP UW",
+          "front_camera": "50MP ZEISS Group Selfie",
+          "battery_mah": 5500,
+          "charging_watt": 80,
+          "network": "5G",
+          "sim_type": "Dual Nano SIM",
+          "os": "Funtouch OS 14 (Android 14)",
+          "ip_rating": "IP68"
+        }
+      },
+      "variants": [
+        {
+          "title": "8GB + 256GB / Ganges Blue",
+          "sku": "MS-VIV-V40P-256-BLU",
+          "price_paise": 4999900,
+          "mrp_paise": 5499900,
+          "stock": 14,
+          "options": {
+            "Variant": "8GB / 256GB",
+            "Color": "Ganges Blue"
+          }
+        },
+        {
+          "title": "12GB + 512GB / Titanium Grey",
+          "sku": "MS-VIV-V40P-512-GRY",
+          "price_paise": 5599900,
+          "mrp_paise": 5999900,
+          "stock": 9,
+          "options": {
+            "Variant": "12GB / 512GB",
+            "Color": "Titanium Grey"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553616/mobile-station/products/vivo-v40-pro-5g.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553616/mobile-station/products/vivo-v40-pro-5g.jpg"
+      ]
+    },
+    {
+      "handle": "oppo-find-x8-5g",
+      "title": "Oppo Find X8 5G (Hasselblad Master)",
+      "subtitle": "Dimensity 9400 · 5630mAh + 80W Wired & 50W AirVOOC · Hasselblad 3x",
+      "category_handle": "smartphones",
+      "subcategory_handle": "5g-smartphones",
+      "description": "Oppo Find X8 5G pairs a precision flat 6.59-inch 4500-nit AMOLED display with triple 50MP Hasselblad cameras (Sony LYT-700 OIS + 3x periscope telephoto), Dimensity 9400 flagship performance, and a 5630mAh silicon-carbon battery.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "Oppo",
+        "model_number": "CPH2651",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Oppo India Service Care Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Oppo Find X8 5G",
+          "80W SUPERVOOC Power Adapter",
+          "USB-C Data Cable",
+          "Protective Case",
+          "SIM Ejector Tool"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Hasselblad 50MP Periscope",
+          "5630mAh + 80W Charger",
+          "6.59\" 120Hz Flat AMOLED",
+          "IP68 / IP69 Rated"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-07"
+        },
+        "specs": {
+          "ram_gb": 12,
+          "storage_gb": 256,
+          "display_size_inches": 6.59,
+          "display_type": "1.5K Flat ProXDR AMOLED",
+          "refresh_rate_hz": 120,
+          "processor": "MediaTek Dimensity 9400",
+          "rear_camera": "50MP Sony LYT-700 OIS + 50MP 3x Periscope + 50MP UW",
+          "front_camera": "32MP",
+          "battery_mah": 5630,
+          "charging_watt": 80,
+          "network": "5G",
+          "sim_type": "Dual Nano SIM + eSIM",
+          "os": "ColorOS 15 (Android 15)",
+          "ip_rating": "IP68 / IP69"
+        }
+      },
+      "variants": [
+        {
+          "title": "12GB + 256GB / Star Grey",
+          "sku": "MS-OPP-FX8-256-GRY",
+          "price_paise": 6999900,
+          "mrp_paise": 7499900,
+          "stock": 9,
+          "options": {
+            "Variant": "12GB / 256GB",
+            "Color": "Star Grey"
+          }
+        },
+        {
+          "title": "16GB + 512GB / Space Black",
+          "sku": "MS-OPP-FX8-512-BLK",
+          "price_paise": 7999900,
+          "mrp_paise": 8499900,
+          "stock": 6,
+          "options": {
+            "Variant": "16GB / 512GB",
+            "Color": "Space Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553618/mobile-station/products/oppo-find-x8-5g.png",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553618/mobile-station/products/oppo-find-x8-5g.png"
+      ]
+    },
+    {
+      "handle": "oppo-reno-13-5g",
+      "title": "Oppo Reno 13 5G (IP69 Underwater Camera)",
+      "subtitle": "Dimensity 8350 · Aerospace Aluminum Frame · 5600mAh + 80W Charger",
+      "category_handle": "smartphones",
+      "subcategory_handle": "5g-smartphones",
+      "description": "Oppo Reno 13 5G built with one-piece sculpted glass and aerospace-grade aluminum achieving IP66, IP68, and IP69 durability ratings for true underwater photography, powered by Dimensity 8350 and a 5600mAh fast-charging battery.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "Oppo",
+        "model_number": "CPH2689",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Oppo India Service Care Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Oppo Reno 13 5G",
+          "80W SUPERVOOC Adapter",
+          "USB Cable",
+          "Protective Case",
+          "SIM Ejector Pin"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "IP66 / IP68 / IP69 Waterproof",
+          "50MP OIS + 50MP Selfie",
+          "5600mAh + 80W Charger",
+          "Dimensity 8350 5G"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-09"
+        },
+        "specs": {
+          "ram_gb": 8,
+          "storage_gb": 128,
+          "display_size_inches": 6.59,
+          "display_type": "1.5K Flat AMOLED",
+          "refresh_rate_hz": 120,
+          "processor": "MediaTek Dimensity 8350",
+          "rear_camera": "50MP OIS + 8MP Ultra-Wide + 2MP",
+          "front_camera": "50MP AF",
+          "battery_mah": 5600,
+          "charging_watt": 80,
+          "network": "5G",
+          "sim_type": "Dual Nano SIM",
+          "os": "ColorOS 15 (Android 15)",
+          "ip_rating": "IP66 / IP68 / IP69"
+        }
+      },
+      "variants": [
+        {
+          "title": "8GB + 128GB / Luminous Blue",
+          "sku": "MS-OPP-R13-128-BLU",
+          "price_paise": 3799900,
+          "mrp_paise": 4199900,
+          "stock": 16,
+          "options": {
+            "Variant": "8GB / 128GB",
+            "Color": "Luminous Blue"
+          }
+        },
+        {
+          "title": "8GB + 256GB / Ivory White",
+          "sku": "MS-OPP-R13-256-WHT",
+          "price_paise": 3999900,
+          "mrp_paise": 4399900,
+          "stock": 11,
+          "options": {
+            "Variant": "8GB / 256GB",
+            "Color": "Ivory White"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553620/mobile-station/products/oppo-reno-13-5g.png",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553620/mobile-station/products/oppo-reno-13-5g.png"
+      ]
+    },
+    {
+      "handle": "oneplus-13-5g",
+      "title": "OnePlus 13 5G (Snapdragon 8 Elite)",
+      "subtitle": "Hasselblad Triple 50MP · 6000mAh Si-Carbon · 100W SUPERVOOC In-Box",
+      "category_handle": "smartphones",
+      "subcategory_handle": "5g-smartphones",
+      "description": "OnePlus 13 5G flagship powered by Snapdragon 8 Elite (3nm), DisplayMate A++ 2K 120Hz ProXDR screen with Aqua Touch 2.0, Hasselblad 3x periscope camera system, IP68 + IP69 rating, and 100W charger included.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "OnePlus",
+        "model_number": "CPH2649",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year OnePlus India Manufacturer Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "OnePlus 13 5G",
+          "100W SUPERVOOC Power Adapter",
+          "USB-A to USB-C Cable",
+          "Protective Case",
+          "SIM Tray Ejector",
+          "Red Cable Club Welcome Card"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Snapdragon 8 Elite 3nm",
+          "6000mAh + 100W Charger In-Box",
+          "Hasselblad 50MP Triple",
+          "IP68 + IP69 Certified"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-10"
+        },
+        "specs": {
+          "ram_gb": 12,
+          "storage_gb": 256,
+          "display_size_inches": 6.82,
+          "display_type": "2K LTPO 4.1 ProXDR AMOLED",
+          "refresh_rate_hz": 120,
+          "processor": "Qualcomm Snapdragon 8 Elite",
+          "rear_camera": "50MP OIS + 50MP 3x Periscope + 50MP UW",
+          "front_camera": "32MP",
+          "battery_mah": 6000,
+          "charging_watt": 100,
+          "network": "5G",
+          "sim_type": "Dual Nano SIM + eSIM",
+          "os": "OxygenOS 15 (Android 15)",
+          "ip_rating": "IP68 / IP69"
+        }
+      },
+      "variants": [
+        {
+          "title": "12GB + 256GB / Midnight Ocean",
+          "sku": "MS-OPL-13-256-BLU",
+          "price_paise": 6999900,
+          "mrp_paise": 7299900,
+          "stock": 11,
+          "options": {
+            "Variant": "12GB / 256GB",
+            "Color": "Midnight Ocean"
+          }
+        },
+        {
+          "title": "16GB + 512GB / Arctic Dawn",
+          "sku": "MS-OPL-13-512-WHT",
+          "price_paise": 7699900,
+          "mrp_paise": 7999900,
+          "stock": 6,
+          "options": {
+            "Variant": "16GB / 512GB",
+            "Color": "Arctic Dawn"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553621/mobile-station/products/oneplus-13-5g.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553621/mobile-station/products/oneplus-13-5g.webp"
+      ]
+    },
+    {
+      "handle": "nothing-phone-2a-plus-5g",
+      "title": "Nothing Phone (2a) Plus 5G",
+      "subtitle": "Glyph Interface · Dimensity 7350 Pro · Dual 50MP + 50MP Selfie",
+      "category_handle": "smartphones",
+      "subcategory_handle": "gaming-phones",
+      "description": "Iconic transparent design with signature Glyph LED Interface, clean ad-free Nothing OS, MediaTek Dimensity 7350 Pro 5G chipset, triple 50MP camera setup (main + ultra-wide + 4K selfie), and 5000mAh 50W fast-charging battery.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "Nothing",
+        "model_number": "A142P",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Nothing India Authorized Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Nothing Phone (2a) Plus",
+          "Nothing USB-C to USB-C Cable",
+          "SIM Ejector Tool",
+          "Pre-applied Screen Protector",
+          "Safety Card (Power adapter sold separately)"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Signature Glyph Interface",
+          "Dimensity 7350 Pro 5G",
+          "Dual 50MP + 50MP 4K Selfie",
+          "Zero-Bloatware Nothing OS"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-11"
+        },
+        "specs": {
+          "ram_gb": 8,
+          "storage_gb": 256,
+          "display_size_inches": 6.7,
+          "display_type": "FHD+ Flexible AMOLED",
+          "refresh_rate_hz": 120,
+          "processor": "MediaTek Dimensity 7350 Pro 5G",
+          "rear_camera": "50MP OIS + 50MP Ultra-Wide",
+          "front_camera": "50MP (4K Video)",
+          "battery_mah": 5000,
+          "charging_watt": 50,
+          "network": "5G",
+          "sim_type": "Dual Nano SIM",
+          "os": "Nothing OS 2.6 (Android 14)",
+          "ip_rating": "IP54"
+        }
+      },
+      "variants": [
+        {
+          "title": "8GB + 256GB / Metallic Grey",
+          "sku": "MS-NTH-P2AP-256-GRY",
+          "price_paise": 2599900,
+          "mrp_paise": 2999900,
+          "stock": 19,
+          "options": {
+            "Variant": "8GB / 256GB",
+            "Color": "Metallic Grey"
+          }
+        },
+        {
+          "title": "12GB + 256GB / Black",
+          "sku": "MS-NTH-P2AP-12G-BLK",
+          "price_paise": 2799900,
+          "mrp_paise": 3199900,
+          "stock": 12,
+          "options": {
+            "Variant": "12GB / 256GB",
+            "Color": "Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553623/mobile-station/products/nothing-phone-2a-plus-5g.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553623/mobile-station/products/nothing-phone-2a-plus-5g.jpg"
+      ]
+    },
+    {
+      "handle": "google-pixel-9-5g",
+      "title": "Google Pixel 9 5G (Gemini AI)",
+      "subtitle": "Google Tensor G4 · 6.3\" Actua OLED · 7 Years of OS Upgrades",
+      "category_handle": "smartphones",
+      "subcategory_handle": "5g-smartphones",
+      "description": "Google Pixel 9 5G featuring satin metal frame and polished sculpted back glass, 6.3-inch 120Hz Actua OLED display, Tensor G4 processor with built-in Gemini AI, 50MP Main + 48MP Macro Ultra-Wide cameras, and 7 years of guaranteed OS & Pixel Drops.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "Google",
+        "model_number": "GA05842-IN",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Google Pixel India Authorized Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Google Pixel 9",
+          "1m USB-C to USB-C Cable (USB 2.0)",
+          "SIM Tool",
+          "Quick Start Guide (Wall charger sold separately)"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Google Tensor G4 + 12GB RAM",
+          "50MP + 48MP Ultra-Wide Macro",
+          "7 Years Android OS Updates",
+          "IP68 Gorilla Glass Victus 2"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-12"
+        },
+        "specs": {
+          "ram_gb": 12,
+          "storage_gb": 256,
+          "display_size_inches": 6.3,
+          "display_type": "Actua OLED (2700 nits)",
+          "refresh_rate_hz": 120,
+          "processor": "Google Tensor G4 + Titan M2",
+          "rear_camera": "50MP Octa PD OIS + 48MP Quad PD UW",
+          "front_camera": "10.5MP Dual PD AF",
+          "battery_mah": 4700,
+          "charging_watt": 27,
+          "network": "5G",
+          "sim_type": "Dual SIM (Nano + eSIM)",
+          "os": "Android 14 (7-Yr Support)",
+          "ip_rating": "IP68"
+        }
+      },
+      "variants": [
+        {
+          "title": "12GB + 256GB / Obsidian",
+          "sku": "MS-GGL-PX9-256-OBS",
+          "price_paise": 7499900,
+          "mrp_paise": 7999900,
+          "stock": 9,
+          "options": {
+            "Variant": "12GB / 256GB",
+            "Color": "Obsidian"
+          }
+        },
+        {
+          "title": "12GB + 256GB / Porcelain",
+          "sku": "MS-GGL-PX9-256-PRC",
+          "price_paise": 7499900,
+          "mrp_paise": 7999900,
+          "stock": 6,
+          "options": {
+            "Variant": "12GB / 256GB",
+            "Color": "Porcelain"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553625/mobile-station/products/google-pixel-9-5g.png",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553625/mobile-station/products/google-pixel-9-5g.png"
+      ]
+    },
+    {
+      "handle": "xiaomi-14-civi-5g",
+      "title": "Xiaomi 14 CIVI 5G (Leica Optics)",
+      "subtitle": "Leica Summilux Triple Camera · Snapdragon 8s Gen 3 · Dual 32MP Selfie",
+      "category_handle": "smartphones",
+      "subcategory_handle": "5g-smartphones",
+      "description": "Featherlight 1.5K quad-curved Xiaomi 14 CIVI co-engineered with Leica Summilux optics (50MP Light Fusion 800 + 50MP 2x Portrait + 12MP UW), dual 32MP selfie cameras for vlogging, Snapdragon 8s Gen 3, and 67W charger inside the retail box.",
+      "metadata": {
+        "category_type": "smartphones",
         "brand": "Xiaomi",
-        "model_number": "XMPAD7-256",
-        "hsn_code": "8471",
+        "model_number": "24053PY09I",
+        "hsn_code": "8517",
         "gst_rate_percent": 18,
         "warranty_months": 12,
         "warranty_type": "brand_authorized",
-        "warranty_summary": "1 Year Xiaomi India Warranty",
+        "warranty_summary": "1 Year Mi Authorized India Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["Xiaomi Pad 7", "45W Power Adapter", "USB Type-C Cable", "Quick Start Guide"],
+        "in_the_box": [
+          "Xiaomi 14 CIVI",
+          "67W Turbo Charger",
+          "USB-C Cable",
+          "Protective Cover",
+          "SIM Ejector",
+          "Warranty Card"
+        ],
         "requires_imei_or_serial": true,
         "requires_open_box_delivery": true,
         "emi_eligible": true,
         "cod_eligible": false,
-        "key_highlights": ["3.2K 144Hz 3:2 Display", "Snapdragon 7+ Gen 3", "8850mAh + 45W Adapter", "Quad Dolby Atmos Audio"],
+        "key_highlights": [
+          "Leica Summilux Triple 50MP",
+          "Snapdragon 8s Gen 3",
+          "Dual 32MP 4K Selfie",
+          "67W Turbo Charger In-Box"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-13"
+        },
+        "specs": {
+          "ram_gb": 8,
+          "storage_gb": 256,
+          "display_size_inches": 6.55,
+          "display_type": "1.5K Quad-Curved AMOLED",
+          "refresh_rate_hz": 120,
+          "processor": "Snapdragon 8s Gen 3",
+          "rear_camera": "50MP Leica OIS + 50MP 2x + 12MP UW",
+          "front_camera": "Dual 32MP + 32MP UW",
+          "battery_mah": 4700,
+          "charging_watt": 67,
+          "network": "5G",
+          "sim_type": "Dual Nano SIM",
+          "os": "Xiaomi HyperOS (Android 14)",
+          "ip_rating": "Splash Resistant"
+        }
+      },
+      "variants": [
+        {
+          "title": "8GB + 256GB / Cruise Blue",
+          "sku": "MS-XIA-14CV-256-BLU",
+          "price_paise": 4299900,
+          "mrp_paise": 5499900,
+          "stock": 13,
+          "options": {
+            "Variant": "8GB / 256GB",
+            "Color": "Cruise Blue"
+          }
+        },
+        {
+          "title": "12GB + 512GB / Matcha Green",
+          "sku": "MS-XIA-14CV-512-GRN",
+          "price_paise": 4799900,
+          "mrp_paise": 5999900,
+          "stock": 7,
+          "options": {
+            "Variant": "12GB / 512GB",
+            "Color": "Matcha Green"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553628/mobile-station/products/xiaomi-14-civi-5g.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553628/mobile-station/products/xiaomi-14-civi-5g.jpg"
+      ]
+    },
+    {
+      "handle": "realme-gt-6t-5g",
+      "title": "Realme GT 6T 5G (120W SUPERVOOC)",
+      "subtitle": "Snapdragon 7+ Gen 3 · 6000-nit LTPO AMOLED · 5500mAh + 120W Charger",
+      "category_handle": "smartphones",
+      "subcategory_handle": "gaming-phones",
+      "description": "High-framerate gaming & performance smartphone sporting the Snapdragon 7+ Gen 3 flagship-grade chip, 10014mm² Iceberg Vapor Cooling Chamber, 6000-nit 8T LTPO AMOLED screen, and blazing 120W GaN charger bundled in box.",
+      "metadata": {
+        "category_type": "smartphones",
+        "brand": "Realme",
+        "model_number": "RMX3853",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Realme India Authorized Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Realme GT 6T 5G",
+          "120W SUPERVOOC Adapter",
+          "USB-C Cable",
+          "Protective Case",
+          "SIM Needle"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Snapdragon 7+ Gen 3 (1.5M AnTuTu)",
+          "120W GaN Charger In-Box",
+          "6000-nit 8T LTPO AMOLED",
+          "5500mAh + VC Cooling"
+        ],
+        "stock_details": {
+          "tracking_mode": "imei_serialized",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-VAULT-A1-14"
+        },
         "specs": {
           "ram_gb": 8,
           "storage_gb": 128,
-          "display_size_inches": 11.2,
-          "display_type": "3.2K CrystalRes LCD",
-          "refresh_rate_hz": 144,
+          "display_size_inches": 6.78,
+          "display_type": "1.5K 8T LTPO AMOLED",
+          "refresh_rate_hz": 120,
           "processor": "Snapdragon 7+ Gen 3",
-          "connectivity": "Wi-Fi Only",
-          "stylus_support": true,
-          "battery_mah": 8850,
-          "os": "HyperOS 2 (Android)"
+          "rear_camera": "50MP Sony LYT-600 OIS + 8MP UW",
+          "front_camera": "32MP",
+          "battery_mah": 5500,
+          "charging_watt": 120,
+          "network": "5G",
+          "sim_type": "Dual Nano SIM",
+          "os": "Realme UI 5.0 (Android 14)",
+          "ip_rating": "IP65"
         }
       },
       "variants": [
-        { "title": "8GB + 128GB / Graphite Grey", "sku": "MS-XIA-PAD7-128-GRY", "price_paise": 2799900, "mrp_paise": 3499900, "stock": 15, "options": { "Variant": "8GB / 128GB", "Color": "Graphite Grey" } },
-        { "title": "12GB + 256GB / Mirage Purple", "sku": "MS-XIA-PAD7-256-PRP", "price_paise": 3099900, "mrp_paise": 3799900, "stock": 11, "options": { "Variant": "12GB / 256GB", "Color": "Mirage Purple" } }
-      ]
-    },
-    {
-      "handle": "apple-macbook-air-13-m3",
-      "title": "Apple MacBook Air 13-inch (M3)",
-      "subtitle": "16GB Unified Memory · 18h Battery · Liquid Retina",
-      "category_handle": "laptops",
-      "subcategory_handle": "macbooks",
-      "description": "The ultra-portable Apple MacBook Air powered by the M3 chip with 16GB unified memory standard, silent fanless aluminum unibody, MagSafe 3 fast charging, and up to 18 hours of battery life.",
-      "metadata": {
-        "category_type": "laptops",
-        "brand": "Apple",
-        "model_number": "MC8K4HN/A",
-        "hsn_code": "8471",
-        "gst_rate_percent": 18,
-        "warranty_months": 12,
-        "warranty_type": "brand_authorized",
-        "warranty_summary": "1 Year Apple India Carry-In Warranty",
-        "condition": "brand_new_sealed",
-        "in_the_box": ["MacBook Air 13-inch", "30W or 35W Dual USB-C Power Adapter", "USB-C to MagSafe 3 Cable (2m)"],
-        "requires_imei_or_serial": true,
-        "requires_open_box_delivery": true,
-        "emi_eligible": true,
-        "cod_eligible": false,
-        "key_highlights": ["Apple M3 8-Core CPU / 10-Core GPU", "16GB Unified RAM", "1.24 kg Fanless Unibody", "18-Hour Battery Life"],
-        "specs": {
-          "processor_brand": "Apple",
-          "processor_model": "Apple M3",
-          "ram_gb": 16,
-          "ram_type": "Unified Memory",
-          "ssd_gb": 256,
-          "gpu": "8-Core / 10-Core Apple GPU",
-          "display_size_inches": 13.6,
-          "display_resolution": "2560 x 1664 Liquid Retina",
-          "refresh_rate_hz": 60,
-          "os": "macOS Sequoia",
-          "weight_kg": 1.24,
-          "battery_whr": 52.6,
-          "ports": ["MagSafe 3", "2x Thunderbolt / USB 4", "3.5mm Headphone Jack"],
-          "use_case": "ultrabook"
+        {
+          "title": "8GB + 128GB / Razor Green",
+          "sku": "MS-RLM-GT6T-128-GRN",
+          "price_paise": 2899900,
+          "mrp_paise": 3399900,
+          "stock": 20,
+          "options": {
+            "Variant": "8GB / 128GB",
+            "Color": "Razor Green"
+          }
+        },
+        {
+          "title": "12GB + 256GB / Fluid Silver",
+          "sku": "MS-RLM-GT6T-256-SLV",
+          "price_paise": 3299900,
+          "mrp_paise": 3799900,
+          "stock": 14,
+          "options": {
+            "Variant": "12GB / 256GB",
+            "Color": "Fluid Silver"
+          }
         }
-      },
-      "variants": [
-        { "title": "16GB / 256GB SSD / Midnight", "sku": "MS-APL-MBA13M3-256-MDN", "price_paise": 10790000, "mrp_paise": 11490000, "stock": 7, "options": { "Memory / SSD": "16GB / 256GB", "Color": "Midnight" } },
-        { "title": "16GB / 512GB SSD / Starlight", "sku": "MS-APL-MBA13M3-512-STR", "price_paise": 12690000, "mrp_paise": 13490000, "stock": 5, "options": { "Memory / SSD": "16GB / 512GB", "Color": "Starlight" } }
-      ]
-    },
-    {
-      "handle": "lenovo-loq-rtx-4050-gaming",
-      "title": "Lenovo LOQ Gaming Laptop (i5-13450HX / RTX 4050)",
-      "subtitle": "16GB DDR5 · 512GB Gen4 SSD · 144Hz 100% sRGB",
-      "category_handle": "laptops",
-      "subcategory_handle": "gaming-laptops",
-      "description": "High-wattage 13th Gen Intel Core i5-13450HX paired with NVIDIA GeForce RTX 4050 6GB GDDR6 (105W TGP), MUX switch, hyperchamber thermal cooling, and a color-accurate 15.6-inch 144Hz 100% sRGB display.",
-      "metadata": {
-        "category_type": "laptops",
-        "brand": "Lenovo",
-        "model_number": "83DV007GIN",
-        "hsn_code": "8471",
-        "gst_rate_percent": 18,
-        "warranty_months": 12,
-        "warranty_type": "brand_authorized",
-        "warranty_summary": "1 Year Lenovo Onsite Warranty + 1 Year ADP",
-        "condition": "brand_new_sealed",
-        "in_the_box": ["Lenovo LOQ 15IRX9 Laptop", "170W Slim Tip Power Adapter", "User Manual"],
-        "requires_imei_or_serial": true,
-        "requires_open_box_delivery": true,
-        "emi_eligible": true,
-        "cod_eligible": false,
-        "key_highlights": ["Intel Core i5-13450HX", "RTX 4050 6GB (105W TGP)", "15.6\" FHD 144Hz 100% sRGB", "16GB DDR5 Expandable"],
-        "specs": {
-          "processor_brand": "Intel",
-          "processor_model": "Intel Core i5-13450HX",
-          "ram_gb": 16,
-          "ram_type": "DDR5-4800",
-          "ssd_gb": 512,
-          "gpu": "NVIDIA GeForce RTX 4050 6GB",
-          "display_size_inches": 15.6,
-          "display_resolution": "1920 x 1080 FHD IPS 100% sRGB",
-          "refresh_rate_hz": 144,
-          "os": "Windows 11 Home",
-          "weight_kg": 2.38,
-          "battery_whr": 60,
-          "ports": ["3x USB-A 3.2", "1x USB-C PD + DP 1.4", "HDMI 2.1", "RJ-45 Ethernet", "3.5mm Audio"],
-          "use_case": "gaming"
-        }
-      },
-      "variants": [
-        { "title": "16GB / 512GB / RTX 4050 / Luna Grey", "sku": "MS-LEN-LOQ-4050-GRY", "price_paise": 7899000, "mrp_paise": 9999000, "stock": 6, "options": { "Config": "i5-13450HX / RTX 4050", "Color": "Luna Grey" } }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553630/mobile-station/products/realme-gt-6t-5g.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553630/mobile-station/products/realme-gt-6t-5g.webp"
       ]
     },
     {
@@ -326,28 +1267,73 @@
         "warranty_type": "brand_authorized",
         "warranty_summary": "1 Year Sony India Authorized Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["WH-1000XM5 Headphones", "Collapsible Carrying Case", "3.5mm Audio Connection Cable", "USB-C Charging Cable"],
+        "in_the_box": [
+          "WH-1000XM5 Headphones",
+          "Collapsible Carrying Case",
+          "3.5mm Audio Connection Cable",
+          "USB-C Charging Cable"
+        ],
         "requires_imei_or_serial": true,
         "requires_open_box_delivery": false,
         "emi_eligible": true,
         "cod_eligible": false,
-        "key_highlights": ["8-Mic Adaptive ANC", "30-Hour Playback + 3-Min Quick Charge", "LDAC Hi-Res Wireless", "Multipoint 2-Device Connect"],
+        "key_highlights": [
+          "8-Mic Adaptive ANC",
+          "30-Hour Playback + 3-Min Quick Charge",
+          "LDAC Hi-Res Wireless",
+          "Multipoint 2-Device Connect"
+        ],
         "specs": {
           "form_factor": "over_ear",
           "driver_size_mm": 30,
           "anc": true,
           "anc_db": 45,
           "bluetooth_version": "5.2",
-          "codecs": ["LDAC", "AAC", "SBC"],
+          "codecs": [
+            "LDAC",
+            "AAC",
+            "SBC"
+          ],
           "playtime_hours": 30,
           "fast_charge_summary": "3 mins charge = 3 hours playback",
           "water_resistance": "None",
           "connector": "Bluetooth + 3.5mm"
+        },
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-AUDIO-C1-01"
         }
       },
       "variants": [
-        { "title": "Black", "sku": "MS-SNY-XM5-BLK", "price_paise": 2599000, "mrp_paise": 3499000, "stock": 12, "options": { "Color": "Black" } },
-        { "title": "Platinum Silver", "sku": "MS-SNY-XM5-SLV", "price_paise": 2599000, "mrp_paise": 3499000, "stock": 8, "options": { "Color": "Platinum Silver" } }
+        {
+          "title": "Black",
+          "sku": "MS-SNY-XM5-BLK",
+          "price_paise": 2599000,
+          "mrp_paise": 3499000,
+          "stock": 12,
+          "options": {
+            "Color": "Black"
+          }
+        },
+        {
+          "title": "Platinum Silver",
+          "sku": "MS-SNY-XM5-SLV",
+          "price_paise": 2599000,
+          "mrp_paise": 3499000,
+          "stock": 8,
+          "options": {
+            "Color": "Platinum Silver"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553655/mobile-station/products/sony-wh-1000xm5-anc.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553655/mobile-station/products/sony-wh-1000xm5-anc.webp"
       ]
     },
     {
@@ -367,29 +1353,1464 @@
         "warranty_type": "brand_authorized",
         "warranty_summary": "1 Year OnePlus India Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["OnePlus Buds 3 & Charging Case", "3 Pairs Silicone Ear Tips (S/M/L)", "USB-C Short Charging Cable", "User Manual"],
+        "in_the_box": [
+          "OnePlus Buds 3 & Charging Case",
+          "3 Pairs Silicone Ear Tips (S/M/L)",
+          "USB-C Short Charging Cable",
+          "User Manual"
+        ],
         "requires_imei_or_serial": false,
         "requires_open_box_delivery": false,
         "emi_eligible": true,
         "cod_eligible": true,
-        "key_highlights": ["49dB Smart Adaptive ANC", "10.4mm + 6mm Dual Drivers", "44 Hours Total Battery", "IP55 Dust & Water Resistant"],
+        "key_highlights": [
+          "49dB Smart Adaptive ANC",
+          "10.4mm + 6mm Dual Drivers",
+          "44 Hours Total Battery",
+          "IP55 Dust & Water Resistant"
+        ],
         "specs": {
           "form_factor": "tws_earbuds",
           "driver_size_mm": 10.4,
           "anc": true,
           "anc_db": 49,
           "bluetooth_version": "5.3",
-          "codecs": ["LHDC 5.0", "AAC", "SBC"],
+          "codecs": [
+            "LHDC 5.0",
+            "AAC",
+            "SBC"
+          ],
           "playtime_hours": 44,
           "fast_charge_summary": "10 mins charge = 7 hours",
           "water_resistance": "IP55",
           "connector": "Bluetooth",
           "low_latency_ms": 94
+        },
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-AUDIO-C1-03"
         }
       },
       "variants": [
-        { "title": "Metallic Gray", "sku": "MS-OPL-BUDS3-GRY", "price_paise": 499900, "mrp_paise": 649900, "stock": 35, "options": { "Color": "Metallic Gray" } },
-        { "title": "Splendid Blue", "sku": "MS-OPL-BUDS3-BLU", "price_paise": 499900, "mrp_paise": 649900, "stock": 28, "options": { "Color": "Splendid Blue" } }
+        {
+          "title": "Metallic Gray",
+          "sku": "MS-OPL-BUDS3-GRY",
+          "price_paise": 499900,
+          "mrp_paise": 649900,
+          "stock": 35,
+          "options": {
+            "Color": "Metallic Gray"
+          }
+        },
+        {
+          "title": "Splendid Blue",
+          "sku": "MS-OPL-BUDS3-BLU",
+          "price_paise": 499900,
+          "mrp_paise": 649900,
+          "stock": 28,
+          "options": {
+            "Color": "Splendid Blue"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553651/mobile-station/products/oneplus-buds-3-tws.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553651/mobile-station/products/oneplus-buds-3-tws.jpg"
+      ]
+    },
+    {
+      "handle": "apple-airpods-pro-2-usbc",
+      "title": "Apple AirPods Pro (2nd Gen) USB-C MagSafe",
+      "subtitle": "H2 Chip · 2x Active Noise Cancellation · Precision Finding Case",
+      "category_handle": "audio",
+      "subcategory_handle": "tws-earbuds",
+      "description": "Apple AirPods Pro (2nd Generation) with MagSafe Charging Case (USB-C), powered by the H2 chip for up to 2x stronger Active Noise Cancellation, Adaptive Audio, Conversation Awareness, and IP54 dust & sweat resistance.",
+      "metadata": {
+        "category_type": "audio",
+        "brand": "Apple",
+        "model_number": "MTJV3HN/A",
+        "hsn_code": "8518",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Apple India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "AirPods Pro (2nd Gen)",
+          "MagSafe Charging Case (USB-C) with Lanyard Loop",
+          "Silicone Ear Tips (XS, S, M, L)",
+          "USB-C Charge Cable"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": [
+          "H2 Chip 2x Pro ANC",
+          "USB-C MagSafe + Speaker Case",
+          "Spatial Audio + Adaptive Mode",
+          "IP54 Dust & Sweat Resistant"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-AUDIO-C1-02"
+        },
+        "specs": {
+          "form_factor": "tws_earbuds",
+          "driver_size_mm": 11,
+          "anc": true,
+          "bluetooth_version": "5.3",
+          "codecs": [
+            "AAC"
+          ],
+          "playtime_hours": 30,
+          "water_resistance": "IP54",
+          "connector": "Bluetooth"
+        }
+      },
+      "variants": [
+        {
+          "title": "USB-C MagSafe Edition / White",
+          "sku": "MS-APL-APP2-USBC-WHT",
+          "price_paise": 2290000,
+          "mrp_paise": 2490000,
+          "stock": 22,
+          "options": {
+            "Edition": "USB-C MagSafe",
+            "Color": "White"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553647/mobile-station/products/apple-airpods-pro-2-usbc.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553647/mobile-station/products/apple-airpods-pro-2-usbc.jpg"
+      ]
+    },
+    {
+      "handle": "samsung-galaxy-buds3-pro",
+      "title": "Samsung Galaxy Buds3 Pro (Galaxy AI ANC)",
+      "subtitle": "Blade Lights · 2-Way Planar Tweeter + Woofer · 24-Bit 96kHz Hi-Fi",
+      "category_handle": "audio",
+      "subcategory_handle": "tws-earbuds",
+      "description": "Reimagined stem design with luminous Blade Lights, dual amplifier powering a 10.5mm dynamic woofer + 6.1mm planar tweeter, Galaxy AI real-time Adaptive ANC and Siren Detect, plus IP57 water & dust immersion protection.",
+      "metadata": {
+        "category_type": "audio",
+        "brand": "Samsung",
+        "model_number": "SM-R630NZAAINU",
+        "hsn_code": "8518",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Samsung India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Galaxy Buds3 Pro Earbuds",
+          "Translucent Lid Charging Case",
+          "Ear Tips (S, M, L)",
+          "USB Type-C Cable",
+          "Quick Start Guide"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": [
+          "Dual-Amp 2-Way Planar Speaker",
+          "24-bit 96kHz SSC UHQ",
+          "Galaxy AI Adaptive ANC",
+          "IP57 Immersion Resistant"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-AUDIO-C1-04"
+        },
+        "specs": {
+          "form_factor": "tws_earbuds",
+          "driver_size_mm": 10.5,
+          "anc": true,
+          "bluetooth_version": "5.4",
+          "codecs": [
+            "SSC UHQ",
+            "AAC",
+            "SBC"
+          ],
+          "playtime_hours": 30,
+          "water_resistance": "IP57",
+          "connector": "Bluetooth"
+        }
+      },
+      "variants": [
+        {
+          "title": "Silver",
+          "sku": "MS-SAM-BUDS3P-SLV",
+          "price_paise": 1699900,
+          "mrp_paise": 1999900,
+          "stock": 16,
+          "options": {
+            "Color": "Silver"
+          }
+        },
+        {
+          "title": "White",
+          "sku": "MS-SAM-BUDS3P-WHT",
+          "price_paise": 1699900,
+          "mrp_paise": 1999900,
+          "stock": 12,
+          "options": {
+            "Color": "White"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553648/mobile-station/products/samsung-galaxy-buds3-pro.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553648/mobile-station/products/samsung-galaxy-buds3-pro.webp"
+      ]
+    },
+    {
+      "handle": "nothing-ear-a-tws",
+      "title": "Nothing Ear (a) Wireless ANC Earbuds",
+      "subtitle": "45dB Smart ANC · LDAC Hi-Res Audio · 42.5-Hour Total Playtime",
+      "category_handle": "audio",
+      "subcategory_handle": "tws-earbuds",
+      "description": "Signature transparent pocket-friendly bubble case housing 11mm dynamic drivers certified for Hi-Res Wireless Audio over LDAC, up to 45dB Smart Adaptive ANC, Dual Device Connection, and 42.5 hours total listening time.",
+      "metadata": {
+        "category_type": "audio",
+        "brand": "Nothing",
+        "model_number": "B162",
+        "hsn_code": "8518",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Nothing India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Nothing Ear (a) Earbuds",
+          "Charging Case",
+          "Ear Tips (S, M, L)",
+          "USB-C Cable",
+          "Safety & Warranty Guide"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": [
+          "45dB Smart Adaptive ANC",
+          "LDAC Hi-Res 11mm Driver",
+          "42.5H Battery + Fast Charge",
+          "Dual Multipoint Pairing"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-AUDIO-C1-05"
+        },
+        "specs": {
+          "form_factor": "tws_earbuds",
+          "driver_size_mm": 11,
+          "anc": true,
+          "anc_db": 45,
+          "bluetooth_version": "5.3",
+          "codecs": [
+            "LDAC",
+            "AAC",
+            "SBC"
+          ],
+          "playtime_hours": 42.5,
+          "water_resistance": "IP54",
+          "connector": "Bluetooth"
+        }
+      },
+      "variants": [
+        {
+          "title": "White",
+          "sku": "MS-NTH-EARA-WHT",
+          "price_paise": 599900,
+          "mrp_paise": 799900,
+          "stock": 24,
+          "options": {
+            "Color": "White"
+          }
+        },
+        {
+          "title": "Yellow",
+          "sku": "MS-NTH-EARA-YLW",
+          "price_paise": 599900,
+          "mrp_paise": 799900,
+          "stock": 14,
+          "options": {
+            "Color": "Yellow"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553652/mobile-station/products/nothing-ear-a-tws.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553652/mobile-station/products/nothing-ear-a-tws.webp"
+      ]
+    },
+    {
+      "handle": "boat-nirvana-ion-anc-tws",
+      "title": "boAt Nirvana Ion ANC Wireless Earbuds",
+      "subtitle": "32dB Hybrid ANC · 120 Hours Playback · ENx Quad Mic · BEAST Mode",
+      "category_handle": "audio",
+      "subcategory_handle": "tws-earbuds",
+      "description": "High-value daily TWS earbuds delivering 32dB Active Noise Cancellation, crystal-clear ENx 4-mic calling, dual EQ (boAt Signature & Balanced), 60ms low-latency BEAST gaming mode, and up to 120 hours combined battery.",
+      "metadata": {
+        "category_type": "audio",
+        "brand": "boAt",
+        "model_number": "NIRVANA ION ANC",
+        "hsn_code": "8518",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year boAt Pickup & Drop Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Nirvana Ion ANC Earbuds",
+          "Pocket Charging Case",
+          "Type-C Charging Cable",
+          "Extra Earbuds Tips",
+          "1-Yr Warranty Card"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "32dB Hybrid ANC",
+          "120H Mega Playback",
+          "60ms Gaming Mode",
+          "ENx 4-Mic Calling"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-AUDIO-C1-06"
+        },
+        "specs": {
+          "form_factor": "tws_earbuds",
+          "driver_size_mm": 10,
+          "anc": true,
+          "anc_db": 32,
+          "bluetooth_version": "5.2",
+          "codecs": [
+            "AAC",
+            "SBC"
+          ],
+          "playtime_hours": 120,
+          "water_resistance": "IPX4",
+          "connector": "Bluetooth",
+          "low_latency_ms": 60
+        }
+      },
+      "variants": [
+        {
+          "title": "Quartz Black",
+          "sku": "MS-BOT-NION-BLK",
+          "price_paise": 229900,
+          "mrp_paise": 999000,
+          "stock": 38,
+          "options": {
+            "Color": "Quartz Black"
+          }
+        },
+        {
+          "title": "Ivory White",
+          "sku": "MS-BOT-NION-WHT",
+          "price_paise": 229900,
+          "mrp_paise": 999000,
+          "stock": 26,
+          "options": {
+            "Color": "Ivory White"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553654/mobile-station/products/boat-nirvana-ion-anc-tws.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553654/mobile-station/products/boat-nirvana-ion-anc-tws.webp"
+      ]
+    },
+    {
+      "handle": "sennheiser-accentum-plus-anc",
+      "title": "Sennheiser ACCENTUM Plus Wireless ANC",
+      "subtitle": "50-Hour Battery · Adaptive Hybrid ANC · aptX Adaptive · Hard Case",
+      "category_handle": "audio",
+      "subcategory_handle": "over-ear-headphones",
+      "description": "German-engineered 37mm transducers delivering crisp audiophile acoustics paired with 50 hours of playback, hybrid adaptive ANC, aptX Adaptive codec, USB-C + 3.5mm lossless wired mode, touch earcup controls, and zippered carry case.",
+      "metadata": {
+        "category_type": "audio",
+        "brand": "Sennheiser",
+        "model_number": "700176",
+        "hsn_code": "8518",
+        "gst_rate_percent": 18,
+        "warranty_months": 24,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "2 Years Sennheiser India Brand Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "ACCENTUM Plus Headphones",
+          "Zippered Travel Case",
+          "USB-C Charging & Audio Cable",
+          "3.5mm Auxiliary Cable",
+          "Quick Guide"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": [
+          "2-Year Brand Warranty",
+          "50H ANC Battery (10m = 5H)",
+          "aptX Adaptive + USB-C Audio",
+          "Travel Hard Case Included"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-AUDIO-C1-07"
+        },
+        "specs": {
+          "form_factor": "over_ear",
+          "driver_size_mm": 37,
+          "anc": true,
+          "bluetooth_version": "5.2",
+          "codecs": [
+            "aptX Adaptive",
+            "aptX",
+            "AAC",
+            "SBC"
+          ],
+          "playtime_hours": 50,
+          "connector": "Bluetooth + 3.5mm"
+        }
+      },
+      "variants": [
+        {
+          "title": "Matte Black",
+          "sku": "MS-SEN-ACCPL-BLK",
+          "price_paise": 1499000,
+          "mrp_paise": 1599000,
+          "stock": 12,
+          "options": {
+            "Color": "Black"
+          }
+        },
+        {
+          "title": "White",
+          "sku": "MS-SEN-ACCPL-WHT",
+          "price_paise": 1499000,
+          "mrp_paise": 1599000,
+          "stock": 7,
+          "options": {
+            "Color": "White"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553656/mobile-station/products/sennheiser-accentum-plus-anc.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553656/mobile-station/products/sennheiser-accentum-plus-anc.webp"
+      ]
+    },
+    {
+      "handle": "oneplus-bullets-wireless-z2-anc",
+      "title": "OnePlus Bullets Wireless Z2 ANC Neckband",
+      "subtitle": "45dB Hybrid ANC · 12.4mm Bass Driver · 10-Min Charge = 20 Hours",
+      "category_handle": "audio",
+      "subcategory_handle": "neckbands",
+      "description": "Magnetic instant-switch wireless neckband packing 45dB Hybrid Active Noise Cancellation, booming 12.4mm dynamic driver, 3-mic AI call noise reduction, IP55 sweat/rain rating, and super-fast 10-minute USB-C boost for 20 hours audio.",
+      "metadata": {
+        "category_type": "audio",
+        "brand": "OnePlus",
+        "model_number": "E306A",
+        "hsn_code": "8518",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year OnePlus India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Bullets Wireless Z2 ANC",
+          "3x Silicone Eartips (S, M, L)",
+          "USB-C Charging Cable",
+          "User & Safety Card"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "45dB Hybrid ANC Neckband",
+          "10m Fast Charge = 20H",
+          "12.4mm Bass + 3-Mic AI",
+          "IP55 Magnetic Control"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-AUDIO-C1-08"
+        },
+        "specs": {
+          "form_factor": "neckband",
+          "driver_size_mm": 12.4,
+          "anc": true,
+          "anc_db": 45,
+          "bluetooth_version": "5.2",
+          "codecs": [
+            "AAC",
+            "SBC"
+          ],
+          "playtime_hours": 28,
+          "water_resistance": "IP55",
+          "connector": "Bluetooth"
+        }
+      },
+      "variants": [
+        {
+          "title": "Booming Black",
+          "sku": "MS-OPL-BWZ2A-BLK",
+          "price_paise": 189900,
+          "mrp_paise": 249900,
+          "stock": 34,
+          "options": {
+            "Color": "Booming Black"
+          }
+        },
+        {
+          "title": "Grand Green",
+          "sku": "MS-OPL-BWZ2A-GRN",
+          "price_paise": 189900,
+          "mrp_paise": 249900,
+          "stock": 21,
+          "options": {
+            "Color": "Grand Green"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553658/mobile-station/products/oneplus-bullets-wireless-z2-anc.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553658/mobile-station/products/oneplus-bullets-wireless-z2-anc.webp"
+      ]
+    },
+    {
+      "handle": "apple-earpods-usb-c",
+      "title": "Apple EarPods (USB-C) Wired Lossless",
+      "subtitle": "Built-In DAC · Studio Call Microphone · Works with iPhone, Mac & Android",
+      "category_handle": "audio",
+      "subcategory_handle": "wired-earphones",
+      "description": "Original Apple EarPods with USB-C connector, featuring zero-latency wired audio with built-in DAC, studio-clarity inline microphone for Zoom/calls, volume rocker, and universal compatibility across USB-C iPhones, iPads, Macs, and Android flagships.",
+      "metadata": {
+        "category_type": "audio",
+        "brand": "Apple",
+        "model_number": "MTJY3ZM/A",
+        "hsn_code": "8518",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Apple India Authorized Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Apple EarPods with USB-C Connector"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "Zero-Latency USB-C DAC",
+          "Clear Broadcast Inline Mic",
+          "Works on iPhone 15/16 & Android",
+          "Zero Charging Needed"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-AUDIO-C1-09"
+        },
+        "specs": {
+          "form_factor": "wired_earphone",
+          "anc": false,
+          "connector": "USB-C"
+        }
+      },
+      "variants": [
+        {
+          "title": "USB-C Connector / White",
+          "sku": "MS-APL-EARPOD-USBC",
+          "price_paise": 199000,
+          "mrp_paise": 219000,
+          "stock": 45,
+          "options": {
+            "Connector": "USB-C",
+            "Color": "White"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553660/mobile-station/products/apple-earpods-usb-c.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553660/mobile-station/products/apple-earpods-usb-c.jpg"
+      ]
+    },
+    {
+      "handle": "jbl-flip-6-bluetooth-speaker",
+      "title": "JBL Flip 6 Portable Waterproof Speaker",
+      "subtitle": "30W JBL Original Pro Sound · IP67 Waterproof · 12-Hour Playtime",
+      "category_handle": "audio",
+      "subcategory_handle": "bluetooth-speakers",
+      "description": "Bold 2-way portable speaker engineering a dedicated racetrack woofer (20W), separate crisp tweeter (10W), and dual pumping passive bass radiators inside an IP67 waterproof and dustproof chassis with 12 hours USB-C battery.",
+      "metadata": {
+        "category_type": "audio",
+        "brand": "JBL",
+        "model_number": "JBLFLIP6BLUIN",
+        "hsn_code": "8518",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Harman India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "JBL Flip 6 Speaker",
+          "USB Type-C Braided Cable",
+          "Safety Sheet & Warranty Card"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": [
+          "30W 2-Way Pro Speaker",
+          "IP67 Waterproof & Dustproof",
+          "12 Hours Playtime + PartyBoost",
+          "USB-C Protection Alert"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 2,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-AUDIO-C1-10"
+        },
+        "specs": {
+          "form_factor": "speaker",
+          "anc": false,
+          "bluetooth_version": "5.1",
+          "playtime_hours": 12,
+          "water_resistance": "IP67",
+          "connector": "Bluetooth"
+        }
+      },
+      "variants": [
+        {
+          "title": "Squad Blue",
+          "sku": "MS-JBL-FLIP6-BLU",
+          "price_paise": 999900,
+          "mrp_paise": 1499900,
+          "stock": 17,
+          "options": {
+            "Color": "Blue"
+          }
+        },
+        {
+          "title": "Midnight Black",
+          "sku": "MS-JBL-FLIP6-BLK",
+          "price_paise": 999900,
+          "mrp_paise": 1499900,
+          "stock": 14,
+          "options": {
+            "Color": "Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553661/mobile-station/products/jbl-flip-6-bluetooth-speaker.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553661/mobile-station/products/jbl-flip-6-bluetooth-speaker.webp"
+      ]
+    },
+    {
+      "handle": "apple-macbook-air-13-m3",
+      "title": "Apple MacBook Air 13-inch (M3)",
+      "subtitle": "16GB Unified Memory · 18h Battery · Liquid Retina",
+      "category_handle": "laptops",
+      "subcategory_handle": "macbooks",
+      "description": "The ultra-portable Apple MacBook Air powered by the M3 chip with 16GB unified memory standard, silent fanless aluminum unibody, MagSafe 3 fast charging, and up to 18 hours of battery life.",
+      "metadata": {
+        "category_type": "laptops",
+        "brand": "Apple",
+        "model_number": "MC8K4HN/A",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Apple India Carry-In Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "MacBook Air 13-inch",
+          "30W or 35W Dual USB-C Power Adapter",
+          "USB-C to MagSafe 3 Cable (2m)"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Apple M3 8-Core CPU / 10-Core GPU",
+          "16GB Unified RAM",
+          "1.24 kg Fanless Unibody",
+          "18-Hour Battery Life"
+        ],
+        "specs": {
+          "processor_brand": "Apple",
+          "processor_model": "Apple M3",
+          "ram_gb": 16,
+          "ram_type": "Unified Memory",
+          "ssd_gb": 256,
+          "gpu": "8-Core / 10-Core Apple GPU",
+          "display_size_inches": 13.6,
+          "display_resolution": "2560 x 1664 Liquid Retina",
+          "refresh_rate_hz": 60,
+          "os": "macOS Sequoia",
+          "weight_kg": 1.24,
+          "battery_whr": 52.6,
+          "ports": [
+            "MagSafe 3",
+            "2x Thunderbolt / USB 4",
+            "3.5mm Headphone Jack"
+          ],
+          "use_case": "ultrabook"
+        },
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 2,
+          "safety_stock": 1,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-TECH-B2-01"
+        }
+      },
+      "variants": [
+        {
+          "title": "16GB / 256GB SSD / Midnight",
+          "sku": "MS-APL-MBA13M3-256-MDN",
+          "price_paise": 10790000,
+          "mrp_paise": 11490000,
+          "stock": 7,
+          "options": {
+            "Memory / SSD": "16GB / 256GB",
+            "Color": "Midnight"
+          }
+        },
+        {
+          "title": "16GB / 512GB SSD / Starlight",
+          "sku": "MS-APL-MBA13M3-512-STR",
+          "price_paise": 12690000,
+          "mrp_paise": 13490000,
+          "stock": 5,
+          "options": {
+            "Memory / SSD": "16GB / 512GB",
+            "Color": "Starlight"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553640/mobile-station/products/apple-macbook-air-13-m3.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553640/mobile-station/products/apple-macbook-air-13-m3.jpg"
+      ]
+    },
+    {
+      "handle": "lenovo-loq-rtx-4050-gaming",
+      "title": "Lenovo LOQ Gaming Laptop (i5-13450HX / RTX 4050)",
+      "subtitle": "16GB DDR5 · 512GB Gen4 SSD · 144Hz 100% sRGB",
+      "category_handle": "laptops",
+      "subcategory_handle": "gaming-laptops",
+      "description": "High-wattage 13th Gen Intel Core i5-13450HX paired with NVIDIA GeForce RTX 4050 6GB GDDR6 (105W TGP), MUX switch, hyperchamber thermal cooling, and a color-accurate 15.6-inch 144Hz 100% sRGB display.",
+      "metadata": {
+        "category_type": "laptops",
+        "brand": "Lenovo",
+        "model_number": "83DV007GIN",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Lenovo Onsite Warranty + 1 Year ADP",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Lenovo LOQ 15IRX9 Laptop",
+          "170W Slim Tip Power Adapter",
+          "User Manual"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Intel Core i5-13450HX",
+          "RTX 4050 6GB (105W TGP)",
+          "15.6\" FHD 144Hz 100% sRGB",
+          "16GB DDR5 Expandable"
+        ],
+        "specs": {
+          "processor_brand": "Intel",
+          "processor_model": "Intel Core i5-13450HX",
+          "ram_gb": 16,
+          "ram_type": "DDR5-4800",
+          "ssd_gb": 512,
+          "gpu": "NVIDIA GeForce RTX 4050 6GB",
+          "display_size_inches": 15.6,
+          "display_resolution": "1920 x 1080 FHD IPS 100% sRGB",
+          "refresh_rate_hz": 144,
+          "os": "Windows 11 Home",
+          "weight_kg": 2.38,
+          "battery_whr": 60,
+          "ports": [
+            "3x USB-A 3.2",
+            "1x USB-C PD + DP 1.4",
+            "HDMI 2.1",
+            "RJ-45 Ethernet",
+            "3.5mm Audio"
+          ],
+          "use_case": "gaming"
+        },
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 2,
+          "safety_stock": 1,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-TECH-B2-03"
+        }
+      },
+      "variants": [
+        {
+          "title": "16GB / 512GB / RTX 4050 / Luna Grey",
+          "sku": "MS-LEN-LOQ-4050-GRY",
+          "price_paise": 7899000,
+          "mrp_paise": 9999000,
+          "stock": 6,
+          "options": {
+            "Config": "i5-13450HX / RTX 4050",
+            "Color": "Luna Grey"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553642/mobile-station/products/lenovo-loq-rtx-4050-gaming.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553642/mobile-station/products/lenovo-loq-rtx-4050-gaming.jpg"
+      ]
+    },
+    {
+      "handle": "asus-vivobook-16-oled",
+      "title": "ASUS Vivobook 16 OLED Creator Laptop",
+      "subtitle": "16\" 16:10 OLED · 16GB RAM · 512GB NVMe SSD · MS Office Included",
+      "category_handle": "laptops",
+      "subcategory_handle": "thin-light-laptops",
+      "description": "ASUS Vivobook 16 OLED pairs a factory-calibrated 16-inch 16:10 OLED Pantone Validated panel with 16GB high-speed memory, 512GB PCIe 4.0 NVMe SSD, 180-degree lay-flat ErgoLift hinge, and official Windows 11 + Office Home & Student.",
+      "metadata": {
+        "category_type": "laptops",
+        "brand": "ASUS",
+        "model_number": "M1605NAQ-IN2541WS",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year ASUS India Onsite Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "ASUS Vivobook 16 OLED Laptop",
+          "65W AC Power Adapter",
+          "User Guide & Warranty Card"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "16\" 100% DCI-P3 OLED",
+          "16GB RAM + 512GB Gen4 SSD",
+          "MIL-STD-810H Durable Body",
+          "MS Office + Win 11 Included"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 2,
+          "safety_stock": 1,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-TECH-B2-02"
+        },
+        "specs": {
+          "processor_brand": "AMD",
+          "processor_model": "AMD Ryzen 5 / Core Ultra 5 Series",
+          "ram_gb": 16,
+          "ram_type": "DDR5",
+          "ssd_gb": 512,
+          "gpu": "Integrated Graphics",
+          "display_size_inches": 16,
+          "display_resolution": "1920x1200 OLED (16:10)",
+          "refresh_rate_hz": 60,
+          "os": "Windows 11 Home",
+          "weight_kg": 1.75,
+          "battery_whr": 50,
+          "use_case": "creator"
+        }
+      },
+      "variants": [
+        {
+          "title": "16GB / 512GB / Cool Silver",
+          "sku": "MS-ASU-VB16O-512-SLV",
+          "price_paise": 6499000,
+          "mrp_paise": 8499000,
+          "stock": 8,
+          "options": {
+            "Config": "16GB / 512GB",
+            "Color": "Cool Silver"
+          }
+        },
+        {
+          "title": "16GB / 1TB / Indie Black",
+          "sku": "MS-ASU-VB16O-1TB-BLK",
+          "price_paise": 7199000,
+          "mrp_paise": 9199000,
+          "stock": 5,
+          "options": {
+            "Config": "16GB / 1TB",
+            "Color": "Indie Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553643/mobile-station/products/asus-vivobook-16-oled.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553643/mobile-station/products/asus-vivobook-16-oled.jpg"
+      ]
+    },
+    {
+      "handle": "hp-pavilion-aero-13-ryzen7",
+      "title": "HP Pavilion Aero 13 Featherweight (970g)",
+      "subtitle": "AMD Ryzen 7 8840U · Under 1 kg Magnesium Body · 16GB + 512GB SSD",
+      "category_handle": "laptops",
+      "subcategory_handle": "thin-light-laptops",
+      "description": "HP’s sub-1 kg (970g) executive ultrabook engineered from recycled magnesium-aluminum, featuring the AMD Ryzen 7 8840U AI processor, 13.3-inch 400-nit WUXGA anti-glare micro-edge screen, 16GB LPDDR5x RAM, and Poly Studio dual speakers.",
+      "metadata": {
+        "category_type": "laptops",
+        "brand": "HP",
+        "model_number": "13-bg0017AU",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year HP India Onsite Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "HP Pavilion Aero 13 Laptop",
+          "65W USB-C Power Adapter",
+          "Setup Guide & HP Warranty Card"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Ultra-Light 970g Magnesium Body",
+          "Ryzen 7 8840U AI Processor",
+          "13.3\" 400-nit 100% sRGB IPS",
+          "16GB LPDDR5x + USB-C Charge"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 2,
+          "safety_stock": 1,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-TECH-B2-04"
+        },
+        "specs": {
+          "processor_brand": "AMD",
+          "processor_model": "AMD Ryzen 7 8840U",
+          "ram_gb": 16,
+          "ram_type": "LPDDR5x",
+          "ssd_gb": 512,
+          "gpu": "AMD Radeon 780M",
+          "display_size_inches": 13.3,
+          "display_resolution": "1920x1200 (16:10, 400 nits)",
+          "refresh_rate_hz": 60,
+          "os": "Windows 11 Home + Office 2021",
+          "weight_kg": 0.97,
+          "battery_whr": 43,
+          "use_case": "ultrabook"
+        }
+      },
+      "variants": [
+        {
+          "title": "16GB / 512GB / Natural Silver",
+          "sku": "MS-HP-AERO13-512-SLV",
+          "price_paise": 7899000,
+          "mrp_paise": 9350000,
+          "stock": 7,
+          "options": {
+            "Config": "16GB / 512GB",
+            "Color": "Natural Silver"
+          }
+        },
+        {
+          "title": "16GB / 1TB / Warm Gold",
+          "sku": "MS-HP-AERO13-1TB-GLD",
+          "price_paise": 8599000,
+          "mrp_paise": 9999000,
+          "stock": 4,
+          "options": {
+            "Config": "16GB / 1TB",
+            "Color": "Warm Gold"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553645/mobile-station/products/hp-pavilion-aero-13-ryzen7.png",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553645/mobile-station/products/hp-pavilion-aero-13-ryzen7.png"
+      ]
+    },
+    {
+      "handle": "lg-ultragear-27-180hz-monitor",
+      "title": "LG UltraGear 27\" 180Hz IPS Gaming Monitor",
+      "subtitle": "27\" Full HD IPS · 180Hz · 1ms GtG · NVIDIA G-SYNC Compatible",
+      "category_handle": "laptops",
+      "subcategory_handle": "monitors",
+      "description": "LG UltraGear 27GS60F-B 27-inch esports monitor delivering 180Hz refresh rate with 1ms GtG response time, sRGB 99% color fidelity, HDR10 support, and 3-side virtually borderless anti-glare IPS panel for console and PC desks.",
+      "metadata": {
+        "category_type": "laptops",
+        "brand": "LG",
+        "model_number": "27GS60F-B",
+        "hsn_code": "8528",
+        "gst_rate_percent": 18,
+        "warranty_months": 36,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "3 Years LG India Onsite Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "LG UltraGear 27\" Monitor Panel",
+          "Stand Base & Neck",
+          "DisplayPort Cable",
+          "Power Adapter & Cord"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": [
+          "27\" IPS 180Hz Refresh Rate",
+          "True 1ms GtG Response",
+          "99% sRGB + HDR10",
+          "3-Year Onsite Brand Warranty"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 2,
+          "safety_stock": 1,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-TECH-B2-05"
+        },
+        "specs": {
+          "processor_brand": "Intel",
+          "processor_model": "180Hz Display Controller",
+          "display_size_inches": 27,
+          "display_resolution": "1920x1080 FHD IPS",
+          "refresh_rate_hz": 180,
+          "weight_kg": 4.5,
+          "use_case": "gaming"
+        }
+      },
+      "variants": [
+        {
+          "title": "27\" 180Hz FHD IPS / Matte Black",
+          "sku": "MS-LG-UG27-180-BLK",
+          "price_paise": 1599000,
+          "mrp_paise": 2200000,
+          "stock": 9,
+          "options": {
+            "Size": "27-inch IPS 180Hz",
+            "Color": "Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553646/mobile-station/products/lg-ultragear-27-180hz-monitor.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553646/mobile-station/products/lg-ultragear-27-180hz-monitor.jpg"
+      ]
+    },
+    {
+      "handle": "apple-ipad-air-m2-11",
+      "title": "Apple iPad Air 11-inch (M2)",
+      "subtitle": "Apple M2 Chip · Liquid Retina Display · Apple Pencil Pro Ready",
+      "category_handle": "tablets",
+      "subcategory_handle": "apple-ipads",
+      "description": "Supercharged by the Apple M2 chip, the 11-inch iPad Air delivers blazing performance for creators, note-taking students, and multitasking workflows with landscape 12MP Ultra Wide front camera and Wi-Fi 6E.",
+      "metadata": {
+        "category_type": "tablets",
+        "brand": "Apple",
+        "model_number": "MUWC3HN/A",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Apple India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "iPad Air 11-inch",
+          "USB-C Charge Cable (1m)",
+          "20W USB-C Power Adapter"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Apple M2 8-Core CPU",
+          "11\" Liquid Retina P3",
+          "20W Charger Included",
+          "Supports Apple Pencil Pro"
+        ],
+        "specs": {
+          "ram_gb": 8,
+          "storage_gb": 128,
+          "display_size_inches": 11,
+          "display_type": "Liquid Retina IPS",
+          "refresh_rate_hz": 60,
+          "processor": "Apple M2",
+          "connectivity": "Wi-Fi Only",
+          "stylus_support": true,
+          "battery_mah": 7606,
+          "os": "iPadOS 18"
+        },
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-TECH-B1-01"
+        }
+      },
+      "variants": [
+        {
+          "title": "128GB Wi-Fi / Space Grey",
+          "sku": "MS-APL-IPADAIR-128-GRY",
+          "price_paise": 5790000,
+          "mrp_paise": 5990000,
+          "stock": 10,
+          "options": {
+            "Storage": "128GB Wi-Fi",
+            "Color": "Space Grey"
+          }
+        },
+        {
+          "title": "256GB Wi-Fi / Starlight",
+          "sku": "MS-APL-IPADAIR-256-STR",
+          "price_paise": 6790000,
+          "mrp_paise": 6990000,
+          "stock": 6,
+          "options": {
+            "Storage": "256GB Wi-Fi",
+            "Color": "Starlight"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553631/mobile-station/products/apple-ipad-air-m2-11.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553631/mobile-station/products/apple-ipad-air-m2-11.jpg"
+      ]
+    },
+    {
+      "handle": "xiaomi-pad-7-snapdragon",
+      "title": "Xiaomi Pad 7 (3.2K 144Hz Display)",
+      "subtitle": "Snapdragon 7+ Gen 3 · 8850mAh · Quad Dolby Atmos Speakers",
+      "category_handle": "tablets",
+      "subcategory_handle": "android-tablets",
+      "description": "Built for productivity and entertainment with an ultra-sharp 11.2-inch 3.2K 144Hz anti-glare crystal-clear display, Snapdragon 7+ Gen 3 processor, and 45W turbo charging.",
+      "metadata": {
+        "category_type": "tablets",
+        "brand": "Xiaomi",
+        "model_number": "XMPAD7-256",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Xiaomi India Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Xiaomi Pad 7",
+          "45W Power Adapter",
+          "USB Type-C Cable",
+          "Quick Start Guide"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "3.2K 144Hz 3:2 Display",
+          "Snapdragon 7+ Gen 3",
+          "8850mAh + 45W Adapter",
+          "Quad Dolby Atmos Audio"
+        ],
+        "specs": {
+          "ram_gb": 8,
+          "storage_gb": 128,
+          "display_size_inches": 11.2,
+          "display_type": "3.2K CrystalRes LCD",
+          "refresh_rate_hz": 144,
+          "processor": "Snapdragon 7+ Gen 3",
+          "connectivity": "Wi-Fi Only",
+          "stylus_support": true,
+          "battery_mah": 8850,
+          "os": "HyperOS 2 (Android)"
+        },
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-TECH-B1-04"
+        }
+      },
+      "variants": [
+        {
+          "title": "8GB + 128GB / Graphite Grey",
+          "sku": "MS-XIA-PAD7-128-GRY",
+          "price_paise": 2799900,
+          "mrp_paise": 3499900,
+          "stock": 15,
+          "options": {
+            "Variant": "8GB / 128GB",
+            "Color": "Graphite Grey"
+          }
+        },
+        {
+          "title": "12GB + 256GB / Mirage Purple",
+          "sku": "MS-XIA-PAD7-256-PRP",
+          "price_paise": 3099900,
+          "mrp_paise": 3799900,
+          "stock": 11,
+          "options": {
+            "Variant": "12GB / 256GB",
+            "Color": "Mirage Purple"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553636/mobile-station/products/xiaomi-pad-7-snapdragon.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553636/mobile-station/products/xiaomi-pad-7-snapdragon.jpg"
+      ]
+    },
+    {
+      "handle": "apple-ipad-10th-gen",
+      "title": "Apple iPad (10th Gen) 10.9\" Wi-Fi",
+      "subtitle": "A14 Bionic · USB-C · Landscape 12MP Center Stage Camera",
+      "category_handle": "tablets",
+      "subcategory_handle": "apple-ipads",
+      "description": "All-screen 10.9-inch Liquid Retina iPad powered by the A14 Bionic chip, USB-C port, Touch ID top button, Wi-Fi 6, and Apple Pencil compatibility — ideal for students, classes, and everyday sketching.",
+      "metadata": {
+        "category_type": "tablets",
+        "brand": "Apple",
+        "model_number": "MPQ13HN/A",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Apple India Carry-In Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "iPad (10th Gen)",
+          "USB-C Charge Cable (1m)",
+          "20W USB-C Power Adapter",
+          "Documentation"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "10.9\" Liquid Retina Display",
+          "A14 Bionic + USB-C",
+          "20W Charger Included in Box",
+          "Touch ID + Landscape 12MP"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-TECH-B1-02"
+        },
+        "specs": {
+          "ram_gb": 4,
+          "storage_gb": 64,
+          "display_size_inches": 10.9,
+          "display_type": "Liquid Retina IPS",
+          "refresh_rate_hz": 60,
+          "processor": "Apple A14 Bionic",
+          "connectivity": "Wi-Fi Only",
+          "stylus_support": true,
+          "battery_mah": 7606,
+          "os": "iPadOS 18"
+        }
+      },
+      "variants": [
+        {
+          "title": "64GB Wi-Fi / Blue",
+          "sku": "MS-APL-IPAD10-64-BLU",
+          "price_paise": 3290000,
+          "mrp_paise": 3490000,
+          "stock": 18,
+          "options": {
+            "Storage": "64GB",
+            "Color": "Blue"
+          }
+        },
+        {
+          "title": "256GB Wi-Fi / Silver",
+          "sku": "MS-APL-IPAD10-256-SLV",
+          "price_paise": 4690000,
+          "mrp_paise": 4990000,
+          "stock": 10,
+          "options": {
+            "Storage": "256GB",
+            "Color": "Silver"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553634/mobile-station/products/apple-ipad-10th-gen.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553634/mobile-station/products/apple-ipad-10th-gen.jpg"
+      ]
+    },
+    {
+      "handle": "samsung-galaxy-tab-s9-fe",
+      "title": "Samsung Galaxy Tab S9 FE (S Pen Included)",
+      "subtitle": "10.9\" 90Hz Display · IP68 Water Resistant · Stylus Included in Box",
+      "category_handle": "tablets",
+      "subcategory_handle": "android-tablets",
+      "description": "Samsung Galaxy Tab S9 FE brings flagship IP68 dust and water resistance together with a crisp 10.9-inch 90Hz Vision Booster display, Exynos 1380 Octa-Core processor, 8000mAh all-day battery, and an official IP68 S Pen right in the box.",
+      "metadata": {
+        "category_type": "tablets",
+        "brand": "Samsung",
+        "model_number": "SM-X510NZAAINU",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Samsung India Care Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Galaxy Tab S9 FE",
+          "S Pen Stylus (Box Included)",
+          "USB Type-C Data Cable",
+          "Ejection Pin",
+          "Quick Start Guide"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "S Pen Included in Box",
+          "IP68 Waterproof Tablet & Stylus",
+          "10.9\" 90Hz Display",
+          "8000mAh + microSD Expandable"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 3,
+          "safety_stock": 1,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-TECH-B1-03"
+        },
+        "specs": {
+          "ram_gb": 6,
+          "storage_gb": 128,
+          "display_size_inches": 10.9,
+          "display_type": "WUXGA+ IPS 90Hz",
+          "refresh_rate_hz": 90,
+          "processor": "Samsung Exynos 1380",
+          "connectivity": "Wi-Fi Only",
+          "stylus_support": true,
+          "battery_mah": 8000,
+          "os": "One UI 6.1 (Android 14)"
+        }
+      },
+      "variants": [
+        {
+          "title": "6GB + 128GB Wi-Fi / Gray",
+          "sku": "MS-SAM-TS9FE-128-GRY",
+          "price_paise": 3499900,
+          "mrp_paise": 3699900,
+          "stock": 12,
+          "options": {
+            "Variant": "6GB / 128GB Wi-Fi",
+            "Color": "Gray"
+          }
+        },
+        {
+          "title": "8GB + 256GB Wi-Fi / Mint",
+          "sku": "MS-SAM-TS9FE-256-MNT",
+          "price_paise": 4299900,
+          "mrp_paise": 4499900,
+          "stock": 7,
+          "options": {
+            "Variant": "8GB / 256GB Wi-Fi",
+            "Color": "Mint"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553638/mobile-station/products/samsung-galaxy-tab-s9-fe.png",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553638/mobile-station/products/samsung-galaxy-tab-s9-fe.png"
       ]
     },
     {
@@ -409,12 +2830,23 @@
         "warranty_type": "brand_authorized",
         "warranty_summary": "1 Year Keychron India Official Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["Keychron K2 Pro Keyboard", "USB-A to USB-C Braided Cable", "Keycap Puller", "Switch Puller", "Extra Mac & Windows Keycaps"],
+        "in_the_box": [
+          "Keychron K2 Pro Keyboard",
+          "USB-A to USB-C Braided Cable",
+          "Keycap Puller",
+          "Switch Puller",
+          "Extra Mac & Windows Keycaps"
+        ],
         "requires_imei_or_serial": true,
         "requires_open_box_delivery": false,
         "emi_eligible": true,
         "cod_eligible": true,
-        "key_highlights": ["QMK / VIA Programmable", "Hot-Swappable Switches", "OSA Double-Shot PBT Keycaps", "3-Device Bluetooth + Wired"],
+        "key_highlights": [
+          "QMK / VIA Programmable",
+          "Hot-Swappable Switches",
+          "OSA Double-Shot PBT Keycaps",
+          "3-Device Bluetooth + Wired"
+        ],
         "specs": {
           "peripheral_type": "keyboard",
           "switch_type": "mechanical_brown",
@@ -424,12 +2856,49 @@
           "polling_rate_hz": 1000,
           "weight_grams": 1070,
           "backlight": "RGB",
-          "os_compatibility": ["macOS", "Windows", "Linux"]
+          "os_compatibility": [
+            "macOS",
+            "Windows",
+            "Linux"
+          ]
+        },
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-PERIPH-D1-01"
         }
       },
       "variants": [
-        { "title": "Keychron K Pro Brown (Tactile) / RGB", "sku": "MS-KEY-K2P-BRN-RGB", "price_paise": 949900, "mrp_paise": 1149900, "stock": 16, "options": { "Switch": "K Pro Brown", "Backlight": "RGB" } },
-        { "title": "Keychron K Pro Red (Linear) / RGB", "sku": "MS-KEY-K2P-RED-RGB", "price_paise": 949900, "mrp_paise": 1149900, "stock": 12, "options": { "Switch": "K Pro Red", "Backlight": "RGB" } }
+        {
+          "title": "Keychron K Pro Brown (Tactile) / RGB",
+          "sku": "MS-KEY-K2P-BRN-RGB",
+          "price_paise": 949900,
+          "mrp_paise": 1149900,
+          "stock": 16,
+          "options": {
+            "Switch": "K Pro Brown",
+            "Backlight": "RGB"
+          }
+        },
+        {
+          "title": "Keychron K Pro Red (Linear) / RGB",
+          "sku": "MS-KEY-K2P-RED-RGB",
+          "price_paise": 949900,
+          "mrp_paise": 1149900,
+          "stock": 12,
+          "options": {
+            "Switch": "K Pro Red",
+            "Backlight": "RGB"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553662/mobile-station/products/keychron-k2-pro-qmk-mechanical-keyboard.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553662/mobile-station/products/keychron-k2-pro-qmk-mechanical-keyboard.webp"
       ]
     },
     {
@@ -449,12 +2918,22 @@
         "warranty_type": "brand_authorized",
         "warranty_summary": "1 Year Logitech India Hardware Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["MX Master 3S Mouse", "Logi Bolt USB Receiver", "USB-C Charging Cable", "User Documentation"],
+        "in_the_box": [
+          "MX Master 3S Mouse",
+          "Logi Bolt USB Receiver",
+          "USB-C Charging Cable",
+          "User Documentation"
+        ],
         "requires_imei_or_serial": true,
         "requires_open_box_delivery": false,
         "emi_eligible": true,
         "cod_eligible": true,
-        "key_highlights": ["8000 DPI Tracks on Glass", "MagSpeed 1000-Line/Sec Wheel", "90% Quieter Tactile Clicks", "70 Days USB-C Battery"],
+        "key_highlights": [
+          "8000 DPI Tracks on Glass",
+          "MagSpeed 1000-Line/Sec Wheel",
+          "90% Quieter Tactile Clicks",
+          "70 Days USB-C Battery"
+        ],
         "specs": {
           "peripheral_type": "mouse",
           "switch_type": "optical",
@@ -462,12 +2941,366 @@
           "max_dpi": 8000,
           "sensor": "Darkfield High Precision",
           "weight_grams": 141,
-          "os_compatibility": ["Windows", "macOS", "Linux", "iPadOS"]
+          "os_compatibility": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "iPadOS"
+          ]
+        },
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-PERIPH-D1-04"
         }
       },
       "variants": [
-        { "title": "Graphite", "sku": "MS-LOG-MX3S-GRP", "price_paise": 899500, "mrp_paise": 1099500, "stock": 24, "options": { "Color": "Graphite" } },
-        { "title": "Pale Grey", "sku": "MS-LOG-MX3S-GRY", "price_paise": 899500, "mrp_paise": 1099500, "stock": 10, "options": { "Color": "Pale Grey" } }
+        {
+          "title": "Graphite",
+          "sku": "MS-LOG-MX3S-GRP",
+          "price_paise": 899500,
+          "mrp_paise": 1099500,
+          "stock": 24,
+          "options": {
+            "Color": "Graphite"
+          }
+        },
+        {
+          "title": "Pale Grey",
+          "sku": "MS-LOG-MX3S-GRY",
+          "price_paise": 899500,
+          "mrp_paise": 1099500,
+          "stock": 10,
+          "options": {
+            "Color": "Pale Grey"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553667/mobile-station/products/logitech-mx-master-3s-wireless-mouse.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553667/mobile-station/products/logitech-mx-master-3s-wireless-mouse.webp"
+      ]
+    },
+    {
+      "handle": "keychron-v1-max-75-mechanical-keyboard",
+      "title": "Keychron V1 Max Gasket Tri-Mode Mechanical",
+      "subtitle": "2.4GHz 1000Hz + BT 5.1 + USB-C · QMK/VIA · Gasket Mount Knob",
+      "category_handle": "keyboards-mice",
+      "subcategory_handle": "mechanical-keyboards",
+      "description": "Custom 75% gasket-mount wireless mechanical keyboard boasting 1000Hz 2.4GHz low-latency gaming dongle (USB-C + USB-A), triple-device Bluetooth 5.1, sound-absorbing foams, OSA double-shot PBT keycaps, programmable rotary knob, and full QMK/VIA support.",
+      "metadata": {
+        "category_type": "keyboards-mice",
+        "brand": "Keychron",
+        "model_number": "V1M-D3-IN",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Keychron India Official Replacement",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Keychron V1 Max Assembled Keyboard",
+          "Type-C & Type-A 2.4GHz Receivers",
+          "USB-C Coiled/Straight Cable",
+          "Switch & Keycap Puller",
+          "Extra Mac/Win Keycaps"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": [
+          "1000Hz 2.4GHz + BT + Wired",
+          "Gasket Mount + Rotary Knob",
+          "Hot-Swappable Gateron Jupiter",
+          "QMK / VIA Mac + Windows"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-PERIPH-D1-02"
+        },
+        "specs": {
+          "peripheral_type": "keyboard",
+          "switch_type": "mechanical_brown",
+          "hot_swappable": true,
+          "layout": "compact_75",
+          "connectivity": "Tri-Mode (2.4G + BT + Wired)",
+          "polling_rate_hz": 1000,
+          "backlight": "RGB",
+          "os_compatibility": [
+            "macOS",
+            "Windows",
+            "Linux"
+          ]
+        }
+      },
+      "variants": [
+        {
+          "title": "Gateron Jupiter Brown / Carbon Black",
+          "sku": "MS-KEY-V1M-BRN",
+          "price_paise": 1149900,
+          "mrp_paise": 1399900,
+          "stock": 11,
+          "options": {
+            "Switch": "Jupiter Brown",
+            "Color": "Carbon Black"
+          }
+        },
+        {
+          "title": "Gateron Jupiter Red / Carbon Black",
+          "sku": "MS-KEY-V1M-RED",
+          "price_paise": 1149900,
+          "mrp_paise": 1399900,
+          "stock": 8,
+          "options": {
+            "Switch": "Jupiter Red",
+            "Color": "Carbon Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553664/mobile-station/products/keychron-v1-max-75-mechanical-keyboard.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553664/mobile-station/products/keychron-v1-max-75-mechanical-keyboard.webp"
+      ]
+    },
+    {
+      "handle": "razer-blackwidow-v4-75-mechanical-keyboard",
+      "title": "Razer BlackWidow V4 75% Hot-Swappable",
+      "subtitle": "Aluminum Case · Razer Gen-3 Tactile Switches · Magnetic Wrist Rest",
+      "category_handle": "keyboards-mice",
+      "subcategory_handle": "mechanical-keyboards",
+      "description": "Enthusiast-grade Razer BlackWidow V4 75% mechanical gaming keyboard featuring gasket-mounted FR4 plate, pre-applied PCB tape & dual-layer dampening foam, factory-lubed Razer Orange Tactile Gen-3 switches, doubleshot ABS keycaps, and up to 8000Hz HyperPolling.",
+      "metadata": {
+        "category_type": "keyboards-mice",
+        "brand": "Razer",
+        "model_number": "RZ03-05000100-R3M1",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 24,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "2 Years Razer India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Razer BlackWidow V4 75% Keyboard",
+          "Magnetic Plush Leatherette Wrist Rest",
+          "Detachable Braided USB-C Cable",
+          "Switch Puller",
+          "Stickers & Guide"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": true,
+        "cod_eligible": true,
+        "key_highlights": [
+          "Hot-Swappable 3/5-Pin PCB",
+          "Plush Magnetic Wrist Rest Included",
+          "Chroma RGB + Underglow",
+          "8000Hz Wired HyperPolling"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-PERIPH-D1-03"
+        },
+        "specs": {
+          "peripheral_type": "keyboard",
+          "switch_type": "mechanical_brown",
+          "hot_swappable": true,
+          "layout": "compact_75",
+          "connectivity": "Wired USB",
+          "polling_rate_hz": 8000,
+          "backlight": "RGB",
+          "os_compatibility": [
+            "Windows",
+            "macOS"
+          ]
+        }
+      },
+      "variants": [
+        {
+          "title": "Razer Orange Tactile / Black",
+          "sku": "MS-RAZ-BWV4-75-BLK",
+          "price_paise": 1699900,
+          "mrp_paise": 2199900,
+          "stock": 7,
+          "options": {
+            "Switch": "Razer Orange Tactile",
+            "Color": "Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553666/mobile-station/products/razer-blackwidow-v4-75-mechanical-keyboard.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553666/mobile-station/products/razer-blackwidow-v4-75-mechanical-keyboard.jpg"
+      ]
+    },
+    {
+      "handle": "logitech-g304-lightspeed-gaming-mouse",
+      "title": "Logitech G304 LIGHTSPEED Wireless Gaming Mouse",
+      "subtitle": "HERO 12,000 DPI Sensor · 1ms Wireless · 99g Featherweight · 250H AA",
+      "category_handle": "keyboards-mice",
+      "subcategory_handle": "wireless-gaming-mice",
+      "description": "India’s #1 esports wireless gaming mouse combining the ultra-efficient HERO 12K sensor with pro-grade 1ms LIGHTSPEED 2.4GHz wireless performance, 6 programmable buttons, onboard memory, and 250 hours play from one AA cell.",
+      "metadata": {
+        "category_type": "keyboards-mice",
+        "brand": "Logitech",
+        "model_number": "910-005284",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 24,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "2 Years Logitech India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Logitech G304 Gaming Mouse",
+          "LIGHTSPEED USB Nano Receiver",
+          "Receiver Extender Cable",
+          "1x AA Battery",
+          "User Guide"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "12,000 DPI HERO Sensor",
+          "1ms LIGHTSPEED 2.4GHz Wireless",
+          "250H on Single AA Battery",
+          "2-Year Logitech Warranty"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-PERIPH-D1-05"
+        },
+        "specs": {
+          "peripheral_type": "mouse",
+          "connectivity": "2.4GHz Wireless",
+          "polling_rate_hz": 1000,
+          "max_dpi": 12000,
+          "sensor": "Logitech HERO 12K Optical",
+          "weight_grams": 99,
+          "backlight": "None",
+          "os_compatibility": [
+            "Windows",
+            "macOS",
+            "ChromeOS"
+          ]
+        }
+      },
+      "variants": [
+        {
+          "title": "Black",
+          "sku": "MS-LOG-G304-BLK",
+          "price_paise": 249500,
+          "mrp_paise": 379500,
+          "stock": 42,
+          "options": {
+            "Color": "Black"
+          }
+        },
+        {
+          "title": "White",
+          "sku": "MS-LOG-G304-WHT",
+          "price_paise": 269500,
+          "mrp_paise": 379500,
+          "stock": 24,
+          "options": {
+            "Color": "White"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553668/mobile-station/products/logitech-g304-lightspeed-gaming-mouse.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553668/mobile-station/products/logitech-g304-lightspeed-gaming-mouse.webp"
+      ]
+    },
+    {
+      "handle": "logitech-mk295-silent-wireless-combo",
+      "title": "Logitech MK295 Silent Wireless Keyboard & Mouse",
+      "subtitle": "SilentTouch 90% Quieter Keys · Spill-Resistant Full Size · 36M Battery",
+      "category_handle": "keyboards-mice",
+      "subcategory_handle": "keyboard-mouse-combos",
+      "description": "Productivity desk upgrade featuring Logitech SilentTouch technology cutting 90% of keystroke and mouse click noise, full-size spill-resistant keyboard with number pad and 8 media hotkeys, compact silent mouse, and tiny 2.4GHz nano dongle.",
+      "metadata": {
+        "category_type": "keyboards-mice",
+        "brand": "Logitech",
+        "model_number": "920-009814",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Logitech India Hardware Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "MK295 Silent Keyboard",
+          "M220 Silent Mouse",
+          "USB Nano Receiver",
+          "2x AAA + 1x AA Batteries Included"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "90% Quieter SilentTouch Tech",
+          "Spill-Proof Full 104-Key Layout",
+          "Batteries + USB Dongle Included",
+          "10m Lag-Free Wireless"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 5,
+          "safety_stock": 2,
+          "restock_lead_days": 3,
+          "return_window_days": 7,
+          "warehouse_bin": "MZP-PERIPH-D1-06"
+        },
+        "specs": {
+          "peripheral_type": "combo",
+          "switch_type": "membrane",
+          "layout": "full_100",
+          "connectivity": "2.4GHz Wireless",
+          "backlight": "None",
+          "os_compatibility": [
+            "Windows",
+            "ChromeOS"
+          ]
+        }
+      },
+      "variants": [
+        {
+          "title": "Graphite Full-Size Combo",
+          "sku": "MS-LOG-MK295-GRP",
+          "price_paise": 269500,
+          "mrp_paise": 349500,
+          "stock": 31,
+          "options": {
+            "Color": "Graphite"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553671/mobile-station/products/logitech-mk295-silent-wireless-combo.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553671/mobile-station/products/logitech-mk295-silent-wireless-combo.jpg"
       ]
     },
     {
@@ -487,22 +3320,409 @@
         "warranty_type": "brand_authorized",
         "warranty_summary": "18 Months Anker India Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["Anker 65W GaN II 3-Port Charger (Indian BIS Plug)", "Welcome Guide"],
+        "in_the_box": [
+          "Anker 65W GaN II 3-Port Charger (Indian BIS Plug)",
+          "Welcome Guide"
+        ],
         "requires_imei_or_serial": false,
         "requires_open_box_delivery": false,
         "emi_eligible": false,
         "cod_eligible": true,
-        "key_highlights": ["65W GaN II Compact Brick", "Charges Laptop + Phone + Watch", "Samsung Super Fast Charging PPS", "BIS Certified Indian Plug"],
+        "key_highlights": [
+          "65W GaN II Compact Brick",
+          "Charges Laptop + Phone + Watch",
+          "Samsung Super Fast Charging PPS",
+          "BIS Certified Indian Plug"
+        ],
         "specs": {
           "device_type": "gan_charger",
           "output_wattage": 65,
           "ports_summary": "2x USB-C PD + 1x USB-A",
-          "protocols": ["USB-PD 3.0", "PPS", "Quick Charge 3.0"],
+          "protocols": [
+            "USB-PD 3.0",
+            "PPS",
+            "Quick Charge 3.0"
+          ],
+          "bis_certified": true
+        },
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 10,
+          "safety_stock": 4,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-POWER-E1-01"
+        }
+      },
+      "variants": [
+        {
+          "title": "65W 3-Port / Matte Black",
+          "sku": "MS-ANK-65W3P-BLK",
+          "price_paise": 349900,
+          "mrp_paise": 499900,
+          "stock": 40,
+          "options": {
+            "Color": "Matte Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553672/mobile-station/products/anker-nano-ii-65w-gan-charger.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553672/mobile-station/products/anker-nano-ii-65w-gan-charger.webp"
+      ]
+    },
+    {
+      "handle": "apple-20w-usbc-power-adapter",
+      "title": "Apple 20W USB-C Power Adapter (India BIS)",
+      "subtitle": "Official Apple Original Fast Charger · 0–50% iPhone Charge in 30 Min",
+      "category_handle": "power-charging",
+      "subcategory_handle": "gan-fast-chargers",
+      "description": "Genuine Indian BIS-certified Apple 20W USB-C wall adapter engineered for optimal battery health and fast USB Power Delivery across iPhone 16/15/14, iPad, Apple Watch Fast Charger, and AirPods.",
+      "metadata": {
+        "category_type": "power-charging",
+        "brand": "Apple",
+        "model_number": "MHJD3HN/A",
+        "hsn_code": "8504",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Apple India Authorized Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Apple 20W USB-C Power Adapter (Indian Pin)",
+          "Warranty Booklet (Cable sold separately)"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "100% Genuine Apple BIS Plug",
+          "USB-PD Fast Charge 0–50% in 30m",
+          "Protects iPhone Battery Health",
+          "1-Year Apple Care Replaceable"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 10,
+          "safety_stock": 4,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-POWER-E1-02"
+        },
+        "specs": {
+          "device_type": "gan_charger",
+          "output_wattage": 20,
+          "ports_summary": "1x USB-C PD (20W)",
+          "protocols": [
+            "USB-PD"
+          ],
           "bis_certified": true
         }
       },
       "variants": [
-        { "title": "65W 3-Port / Matte Black", "sku": "MS-ANK-65W3P-BLK", "price_paise": 349900, "mrp_paise": 499900, "stock": 40, "options": { "Color": "Matte Black" } }
+        {
+          "title": "20W India 2-Pin Plug / White",
+          "sku": "MS-APL-20W-ADPT",
+          "price_paise": 189900,
+          "mrp_paise": 219000,
+          "stock": 64,
+          "options": {
+            "Output": "20W USB-C",
+            "Color": "White"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553673/mobile-station/products/apple-20w-usbc-power-adapter.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553673/mobile-station/products/apple-20w-usbc-power-adapter.jpg"
+      ]
+    },
+    {
+      "handle": "samsung-45w-pd-super-fast-charger",
+      "title": "Samsung 45W PD Adapter + 5A USB-C Cable",
+      "subtitle": "Super Fast Charging 2.0 (PPS) · Includes Genuine 1.8m 5A C-to-C Cable",
+      "category_handle": "power-charging",
+      "subcategory_handle": "gan-fast-chargers",
+      "description": "Official Samsung 45W USB-C PD/PPS adapter engineered for Super Fast Charging 2.0 on Galaxy S24 Ultra, S23 Ultra, Tab S9 series, and laptops — includes an extra-long 1.8m genuine 5A Type-C to Type-C cable in box.",
+      "metadata": {
+        "category_type": "power-charging",
+        "brand": "Samsung",
+        "model_number": "EP-T4511XBNGIN",
+        "hsn_code": "8504",
+        "gst_rate_percent": 18,
+        "warranty_months": 6,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "6 Months Samsung India Care Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Samsung 45W PD Power Adapter",
+          "1.8m 5A USB-C to USB-C Cable",
+          "User Manual"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "Super Fast Charging 2.0 (45W PPS)",
+          "5A 1.8m C-to-C Cable Included",
+          "Low Standby (<5mW) BIS Rated",
+          "Overcurrent & Thermal Safe"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 10,
+          "safety_stock": 4,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-POWER-E1-03"
+        },
+        "specs": {
+          "device_type": "gan_charger",
+          "output_wattage": 45,
+          "ports_summary": "1x USB-C PD 3.0 / PPS (45W)",
+          "protocols": [
+            "USB-PD 3.0",
+            "PPS",
+            "SFC 2.0"
+          ],
+          "cable_length_m": 1.8,
+          "bis_certified": true
+        }
+      },
+      "variants": [
+        {
+          "title": "45W + 5A Cable / Black",
+          "sku": "MS-SAM-45W-T4511",
+          "price_paise": 279900,
+          "mrp_paise": 349900,
+          "stock": 38,
+          "options": {
+            "Edition": "With 5A Cable",
+            "Color": "Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553674/mobile-station/products/samsung-45w-pd-super-fast-charger.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553674/mobile-station/products/samsung-45w-pd-super-fast-charger.webp"
+      ]
+    },
+    {
+      "handle": "portronics-luxcell-bind-20k-powerbank",
+      "title": "Portronics Luxcell Bind 20000mAh Power Bank",
+      "subtitle": "22.5W Mach Fast Charge · Built-In USB-C + 8-Pin Cables · LED Meter",
+      "category_handle": "power-charging",
+      "subcategory_handle": "power-banks",
+      "description": "Airline-approved compact 20,000mAh Li-Polymer power bank featuring integrated Type-C and Lightning braided output cables plus Type-C PD (20W) and USB-A (22.5W) ports so you never carry spare charging cords.",
+      "metadata": {
+        "category_type": "power-charging",
+        "brand": "Portronics",
+        "model_number": "POR-2394",
+        "hsn_code": "8507",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Portronics India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Luxcell Bind 20K Power Bank (Built-in Type-C + Lightning Cables)",
+          "USB-C Recharge Cable",
+          "Warranty Card"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "20,000mAh Flight-Safe Capacity",
+          "Built-In Type-C & iPhone Cables",
+          "22.5W Dual Fast Charging",
+          "Digital Battery % LED"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 10,
+          "safety_stock": 4,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-POWER-E1-04"
+        },
+        "specs": {
+          "device_type": "power_bank",
+          "output_wattage": 22.5,
+          "capacity_mah": 20000,
+          "ports_summary": "Built-in Type-C & Lightning + 1x USB-C + 1x USB-A",
+          "protocols": [
+            "USB-PD",
+            "QC 3.0",
+            "22.5W Mach"
+          ],
+          "bis_certified": true
+        }
+      },
+      "variants": [
+        {
+          "title": "20,000mAh Built-in Cables / Black",
+          "sku": "MS-PRT-LUX20K-BLK",
+          "price_paise": 169900,
+          "mrp_paise": 299900,
+          "stock": 40,
+          "options": {
+            "Capacity": "20,000mAh",
+            "Color": "Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553676/mobile-station/products/portronics-luxcell-bind-20k-powerbank.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553676/mobile-station/products/portronics-luxcell-bind-20k-powerbank.webp"
+      ]
+    },
+    {
+      "handle": "belkin-connect-usb-c-hub-7in1",
+      "title": "Belkin Connect 7-in-1 USB-C Multiport Hub",
+      "subtitle": "4K HDMI · 100W PD Pass-Through · SD + microSD · 2x USB-A · 3.5mm Aux",
+      "category_handle": "power-charging",
+      "subcategory_handle": "usbc-hubs-docks",
+      "description": "Aluminum unibody Belkin Connect 7-in-1 workstation dongle converting one MacBook, iPad, or Windows USB-C port into 4K HDMI video output, dual USB 3.0 Type-A (5Gbps), full SD/microSD card slots, 3.5mm audio, and 100W PD pass-through power.",
+      "metadata": {
+        "category_type": "power-charging",
+        "brand": "Belkin",
+        "model_number": "AVC009btSGY",
+        "hsn_code": "8471",
+        "gst_rate_percent": 18,
+        "warranty_months": 24,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "2 Years Belkin India Replacement Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Belkin Connect 7-in-1 USB-C Multiport Hub",
+          "Quick Setup Guide"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "4K HDMI Video Output",
+          "100W Power Delivery Pass-Through",
+          "SD + microSD + 2x USB-A + 3.5mm",
+          "2-Year Belkin Official Warranty"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 10,
+          "safety_stock": 4,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-POWER-E1-05"
+        },
+        "specs": {
+          "device_type": "hub_dock",
+          "output_wattage": 100,
+          "ports_summary": "4K HDMI, 2x USB-A 3.0, SD 3.0, microSD 3.0, 3.5mm, USB-C PD 100W",
+          "protocols": [
+            "USB 3.2 Gen 1 (5Gbps)",
+            "HDMI 4K",
+            "USB-PD 3.0"
+          ],
+          "bis_certified": true
+        }
+      },
+      "variants": [
+        {
+          "title": "7-in-1 Space Gray",
+          "sku": "MS-BLK-HUB7N1-GRY",
+          "price_paise": 379900,
+          "mrp_paise": 599900,
+          "stock": 19,
+          "options": {
+            "Configuration": "7-in-1 4K HDMI",
+            "Color": "Space Gray"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553677/mobile-station/products/belkin-connect-usb-c-hub-7in1.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553677/mobile-station/products/belkin-connect-usb-c-hub-7in1.jpg"
+      ]
+    },
+    {
+      "handle": "anker-333-100w-usbc-cable",
+      "title": "Anker 333 100W Braided USB-C Cable (1.8m)",
+      "subtitle": "E-Marker 5A Chipset · Double-Braided Nylon · 12,000-Bend Lifespan",
+      "category_handle": "power-charging",
+      "subcategory_handle": "charging-cables-hdmi",
+      "description": "Extra-durable 1.8m (6ft) double-braided nylon USB-C to USB-C cable with certified E-Marker chipset safely sustaining up to 100W (20V/5A) Power Delivery across laptops, tablets, power banks, and smartphones.",
+      "metadata": {
+        "category_type": "power-charging",
+        "brand": "Anker",
+        "model_number": "A8757011",
+        "hsn_code": "8544",
+        "gst_rate_percent": 18,
+        "warranty_months": 18,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "18 Months Anker India Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Anker 333 USB-C to USB-C 100W Cable (1.8m)",
+          "Hook-and-Loop Travel Strap"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "100W 5A Certified E-Marker",
+          "6ft (1.8m) Braided Nylon",
+          "12,000-Bend Heavy Duty Stress Test",
+          "MacBook / iPhone / Galaxy Ready"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Muzaffarpur Flagship Hub (842001)",
+          "low_stock_threshold": 10,
+          "safety_stock": 4,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-POWER-E1-06"
+        },
+        "specs": {
+          "device_type": "cable",
+          "output_wattage": 100,
+          "cable_length_m": 1.8,
+          "cable_rating_watt": 100,
+          "ports_summary": "USB-C to USB-C (5A PD)",
+          "protocols": [
+            "USB-PD 100W",
+            "PPS"
+          ],
+          "bis_certified": true
+        }
+      },
+      "variants": [
+        {
+          "title": "1.8m (6ft) Single / Obsidian Black",
+          "sku": "MS-ANK-333C-18M-BLK",
+          "price_paise": 119900,
+          "mrp_paise": 179900,
+          "stock": 54,
+          "options": {
+            "Length": "1.8m",
+            "Color": "Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553678/mobile-station/products/anker-333-100w-usbc-cable.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553678/mobile-station/products/anker-333-100w-usbc-cable.webp"
       ]
     },
     {
@@ -522,25 +3742,71 @@
         "warranty_type": "brand_authorized",
         "warranty_summary": "5 Years SanDisk India Limited Warranty",
         "condition": "brand_new_sealed",
-        "in_the_box": ["SanDisk Extreme Portable SSD", "USB-C to USB-C Cable", "USB-C to USB-A Adapter", "Safety & Warranty Guide"],
+        "in_the_box": [
+          "SanDisk Extreme Portable SSD",
+          "USB-C to USB-C Cable",
+          "USB-C to USB-A Adapter",
+          "Safety & Warranty Guide"
+        ],
         "requires_imei_or_serial": true,
         "requires_open_box_delivery": false,
         "emi_eligible": true,
         "cod_eligible": true,
-        "key_highlights": ["1050MB/s NVMe Speeds", "IP65 Water & 3m Drop Safe", "Works with iPhone 15/16 ProRes", "5-Year Brand Warranty"],
+        "key_highlights": [
+          "1050MB/s NVMe Speeds",
+          "IP65 Water & 3m Drop Safe",
+          "Works with iPhone 15/16 ProRes",
+          "5-Year Brand Warranty"
+        ],
         "specs": {
           "accessory_type": "ssd_hdd",
-          "compatible_devices": ["MacBook", "Windows Laptop", "iPhone 15/16 Pro", "iPad USB-C"],
+          "compatible_devices": [
+            "MacBook",
+            "Windows Laptop",
+            "iPhone 15/16 Pro",
+            "iPad USB-C"
+          ],
           "material": "Silicone Shell + Forged Aluminum",
           "capacity_gb": 1000,
           "read_speed_mbps": 1050,
           "write_speed_mbps": 1000,
           "interface": "USB 3.2 Gen 2 (USB-C)"
+        },
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 8,
+          "safety_stock": 3,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-ACC-F1-03"
         }
       },
       "variants": [
-        { "title": "1TB / Black", "sku": "MS-SND-EXT1TB-BLK", "price_paise": 949900, "mrp_paise": 1450000, "stock": 19, "options": { "Capacity": "1TB" } },
-        { "title": "2TB / Black", "sku": "MS-SND-EXT2TB-BLK", "price_paise": 1649900, "mrp_paise": 2400000, "stock": 7, "options": { "Capacity": "2TB" } }
+        {
+          "title": "1TB / Black",
+          "sku": "MS-SND-EXT1TB-BLK",
+          "price_paise": 949900,
+          "mrp_paise": 1450000,
+          "stock": 19,
+          "options": {
+            "Capacity": "1TB"
+          }
+        },
+        {
+          "title": "2TB / Black",
+          "sku": "MS-SND-EXT2TB-BLK",
+          "price_paise": 1649900,
+          "mrp_paise": 2400000,
+          "stock": 7,
+          "options": {
+            "Capacity": "2TB"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553682/mobile-station/products/sandisk-extreme-portable-ssd-1tb.jpg",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553682/mobile-station/products/sandisk-extreme-portable-ssd-1tb.jpg"
       ]
     },
     {
@@ -560,22 +3826,371 @@
         "warranty_type": "brand_authorized",
         "warranty_summary": "6 Months Spigen Authentic Defect Replacement",
         "condition": "brand_new_sealed",
-        "in_the_box": ["Spigen Ultra Hybrid MagFit Case"],
+        "in_the_box": [
+          "Spigen Ultra Hybrid MagFit Case"
+        ],
         "requires_imei_or_serial": false,
         "requires_open_box_delivery": false,
         "emi_eligible": false,
         "cod_eligible": true,
-        "key_highlights": ["Built-in MagSafe Magnet Ring", "Military-Grade Air Cushion", "Raised Camera & Screen Lip", "Crystal Clear PC Back"],
+        "key_highlights": [
+          "Built-in MagSafe Magnet Ring",
+          "Military-Grade Air Cushion",
+          "Raised Camera & Screen Lip",
+          "Crystal Clear PC Back"
+        ],
         "specs": {
           "accessory_type": "case_cover",
-          "compatible_devices": ["Apple iPhone 16"],
+          "compatible_devices": [
+            "Apple iPhone 16"
+          ],
           "material": "TPU Bumper + Polycarbonate Back",
           "magsafe_compatible": true
+        },
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 8,
+          "safety_stock": 3,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-ACC-F1-01"
         }
       },
       "variants": [
-        { "title": "Zero One / Frost Black", "sku": "MS-SPG-IP16-Z1-BLK", "price_paise": 169900, "mrp_paise": 249900, "stock": 45, "options": { "Finish": "Zero One Black" } },
-        { "title": "Crystal Clear", "sku": "MS-SPG-IP16-CLR", "price_paise": 149900, "mrp_paise": 219900, "stock": 52, "options": { "Finish": "Crystal Clear" } }
+        {
+          "title": "Zero One / Frost Black",
+          "sku": "MS-SPG-IP16-Z1-BLK",
+          "price_paise": 169900,
+          "mrp_paise": 249900,
+          "stock": 45,
+          "options": {
+            "Finish": "Zero One Black"
+          }
+        },
+        {
+          "title": "Crystal Clear",
+          "sku": "MS-SPG-IP16-CLR",
+          "price_paise": 149900,
+          "mrp_paise": 219900,
+          "stock": 52,
+          "options": {
+            "Finish": "Crystal Clear"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553680/mobile-station/products/spigen-ultra-hybrid-magsafe-iphone-16.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553680/mobile-station/products/spigen-ultra-hybrid-magsafe-iphone-16.webp"
+      ]
+    },
+    {
+      "handle": "spigen-glas-tr-ez-fit-tempered-glass",
+      "title": "Spigen Glas.tR EZ Fit 9H Tempered Glass (2-Pack)",
+      "subtitle": "Auto-Alignment EZ-Fit Tray · Case-Friendly Edge · Oleophobic 9H Armor",
+      "category_handle": "accessories-storage",
+      "subcategory_handle": "screen-protectors",
+      "description": "Hassle-free zero-bubble tempered glass screen protection packaged with Spigen’s patented EZ Fit alignment applicator frame, 9H scratch-resistant aluminosilicate glass, crystal HD clarity, and fingerprint-repellent oleophobic coating.",
+      "metadata": {
+        "category_type": "accessories-storage",
+        "brand": "Spigen",
+        "model_number": "AGL08120",
+        "hsn_code": "3919",
+        "gst_rate_percent": 18,
+        "warranty_months": 6,
+        "warranty_type": "replacement_only",
+        "warranty_summary": "6 Months Spigen Authentic Guarantee",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "2x Glas.tR 9H Tempered Glass with Auto-Alignment Trays",
+          "Squeegee Card",
+          "2x Wet Wipes & Microfiber Cloth",
+          "Dust Removal Stickers"
+        ],
+        "requires_imei_or_serial": false,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "30-Sec Auto-Align EZ Fit Tray",
+          "2x Tempered Glass Packs Inside",
+          "9H Scratch & Impact Hardness",
+          "Spigen Case-Friendly Edges"
+        ],
+        "stock_details": {
+          "tracking_mode": "sku_quantity",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 8,
+          "safety_stock": 3,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-ACC-F1-02"
+        },
+        "specs": {
+          "accessory_type": "tempered_glass",
+          "compatible_devices": [
+            "Apple iPhone 16",
+            "Apple iPhone 16 Pro"
+          ],
+          "material": "9H Aluminosilicate Tempered Glass"
+        }
+      },
+      "variants": [
+        {
+          "title": "iPhone 16 Pro / Clear 2-Pack",
+          "sku": "MS-SPG-EZF-IP16P",
+          "price_paise": 129900,
+          "mrp_paise": 179900,
+          "stock": 48,
+          "options": {
+            "Model": "iPhone 16 Pro (2-Pack)"
+          }
+        },
+        {
+          "title": "iPhone 16 / Clear 2-Pack",
+          "sku": "MS-SPG-EZF-IP16",
+          "price_paise": 129900,
+          "mrp_paise": 179900,
+          "stock": 52,
+          "options": {
+            "Model": "iPhone 16 (2-Pack)"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553681/mobile-station/products/spigen-glas-tr-ez-fit-tempered-glass.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553681/mobile-station/products/spigen-glas-tr-ez-fit-tempered-glass.webp"
+      ]
+    },
+    {
+      "handle": "sandisk-ultra-dual-drive-luxe-128gb",
+      "title": "SanDisk Ultra Dual Drive Luxe USB-C + USB-A",
+      "subtitle": "All-Metal Swivel OTG · Up to 400MB/s Read · Smartphone & Laptop Backup",
+      "category_handle": "accessories-storage",
+      "subcategory_handle": "ssds-pen-drives-sd",
+      "description": "Premium cast all-metal 2-in-1 swivel flash drive moving high-resolution 4K video and photos seamlessly between Type-C smartphones/MacBooks and traditional USB-A desktops at up to 400MB/s read speed with SanDisk Memory Zone backup.",
+      "metadata": {
+        "category_type": "accessories-storage",
+        "brand": "SanDisk",
+        "model_number": "SDDDC4-128G-I35",
+        "hsn_code": "8523",
+        "gst_rate_percent": 18,
+        "warranty_months": 60,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "5 Years SanDisk India Limited Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "SanDisk Ultra Dual Drive Luxe Flash Drive"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": false,
+        "emi_eligible": false,
+        "cod_eligible": true,
+        "key_highlights": [
+          "Reversible USB-C + USB-A Metal Body",
+          "Up to 400MB/s USB 3.2 Gen 1",
+          "Keyring Swivel Protection",
+          "5-Year SanDisk Official Warranty"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 8,
+          "safety_stock": 3,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-ACC-F1-04"
+        },
+        "specs": {
+          "accessory_type": "pen_drive_sd",
+          "material": "Brushed Cast Metal",
+          "capacity_gb": 128,
+          "read_speed_mbps": 400,
+          "interface": "USB 3.2 Gen 1 (Type-C & Type-A)"
+        }
+      },
+      "variants": [
+        {
+          "title": "128GB / Metallic Silver",
+          "sku": "MS-SND-LUXE-128GB",
+          "price_paise": 139900,
+          "mrp_paise": 210000,
+          "stock": 46,
+          "options": {
+            "Capacity": "128GB",
+            "Color": "Metallic Silver"
+          }
+        },
+        {
+          "title": "256GB / Metallic Silver",
+          "sku": "MS-SND-LUXE-256GB",
+          "price_paise": 239900,
+          "mrp_paise": 360000,
+          "stock": 28,
+          "options": {
+            "Capacity": "256GB",
+            "Color": "Metallic Silver"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553685/mobile-station/products/sandisk-ultra-dual-drive-luxe-128gb.png",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553685/mobile-station/products/sandisk-ultra-dual-drive-luxe-128gb.png"
+      ]
+    },
+    {
+      "handle": "apple-watch-series-10-gps",
+      "title": "Apple Watch Series 10 GPS (Jet Black Aluminium)",
+      "subtitle": "S10 SiP · Widest-Angle OLED · ECG + Depth Gauge · 30m Fast Charge",
+      "category_handle": "accessories-storage",
+      "subcategory_handle": "smartwatches-wearables",
+      "description": "Thinnest Apple Watch ever built (9.7mm) sporting Apple’s largest, brightest wide-angle Always-On OLED display, S10 SiP 4-core Neural Engine, ECG & Sleep Apnea detection, water depth gauge (up to 6m), and 0–80% charging in 30 minutes.",
+      "metadata": {
+        "category_type": "accessories-storage",
+        "brand": "Apple",
+        "model_number": "MWWP3HN/A",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Apple India Authorized Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Apple Watch Series 10 Aluminium Case",
+          "Black Sport Band Strap",
+          "Apple Watch Magnetic Fast Charger to USB-C Cable (1m)"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "Slim 9.7mm Wide-Angle OLED",
+          "S10 SiP + Double Tap Gesture",
+          "ECG + Swim Depth & Temp Sensor",
+          "0–80% Fast Charge in 30 Min"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 8,
+          "safety_stock": 3,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-VAULT-A1-15"
+        },
+        "specs": {
+          "accessory_type": "smartwatch",
+          "material": "100% Recycled Aluminum Case",
+          "water_resistance": "WR50 + IP6X",
+          "battery_days": 1.5
+        }
+      },
+      "variants": [
+        {
+          "title": "42mm GPS / Jet Black Sport Band",
+          "sku": "MS-APL-AWS10-42-BLK",
+          "price_paise": 4490000,
+          "mrp_paise": 4690000,
+          "stock": 9,
+          "options": {
+            "Size": "42mm GPS",
+            "Color": "Jet Black"
+          }
+        },
+        {
+          "title": "46mm GPS / Jet Black Sport Band",
+          "sku": "MS-APL-AWS10-46-BLK",
+          "price_paise": 4790000,
+          "mrp_paise": 4990000,
+          "stock": 11,
+          "options": {
+            "Size": "46mm GPS",
+            "Color": "Jet Black"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553686/mobile-station/products/apple-watch-series-10-gps.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553686/mobile-station/products/apple-watch-series-10-gps.webp"
+      ]
+    },
+    {
+      "handle": "samsung-galaxy-watch7-bluetooth",
+      "title": "Samsung Galaxy Watch7 Bluetooth (Galaxy AI)",
+      "subtitle": "3nm Penta-Core W1000 · Dual-Frequency GPS · Sapphire Crystal · BioActive",
+      "category_handle": "accessories-storage",
+      "subcategory_handle": "smartwatches-wearables",
+      "description": "Next-generation Galaxy Watch7 engineered with Samsung’s first 3nm smartwatch processor, ultra-accurate dual-frequency GPS (L1 + L5) for outdoor workouts, upgraded BioActive Sensor, Sapphire Crystal glass, and Galaxy AI Energy Score.",
+      "metadata": {
+        "category_type": "accessories-storage",
+        "brand": "Samsung",
+        "model_number": "SM-L310NZGAINS",
+        "hsn_code": "8517",
+        "gst_rate_percent": 18,
+        "warranty_months": 12,
+        "warranty_type": "brand_authorized",
+        "warranty_summary": "1 Year Samsung India Official Warranty",
+        "condition": "brand_new_sealed",
+        "in_the_box": [
+          "Galaxy Watch7 Case",
+          "Sport Watch Strap",
+          "Magnetic USB-C Wireless Fast Charger",
+          "Quick Start Guide"
+        ],
+        "requires_imei_or_serial": true,
+        "requires_open_box_delivery": true,
+        "emi_eligible": true,
+        "cod_eligible": false,
+        "key_highlights": [
+          "3nm Exynos W1000 Speed",
+          "Dual-Frequency GPS (L1+L5)",
+          "Sapphire Crystal + 5ATM / IP68",
+          "Wear OS 5 + Galaxy AI Health"
+        ],
+        "stock_details": {
+          "tracking_mode": "serial_tracked",
+          "warehouse_hub": "Club Road Tech Center (842002)",
+          "low_stock_threshold": 8,
+          "safety_stock": 3,
+          "restock_lead_days": 2,
+          "return_window_days": 10,
+          "warehouse_bin": "MZP-VAULT-A1-16"
+        },
+        "specs": {
+          "accessory_type": "smartwatch",
+          "material": "Armor Aluminum + Sapphire Crystal",
+          "water_resistance": "5ATM + IP68 + MIL-STD-810H",
+          "battery_days": 2
+        }
+      },
+      "variants": [
+        {
+          "title": "40mm Bluetooth / Green",
+          "sku": "MS-SAM-GW7-40-GRN",
+          "price_paise": 2699900,
+          "mrp_paise": 2999900,
+          "stock": 13,
+          "options": {
+            "Size": "40mm Bluetooth",
+            "Color": "Green"
+          }
+        },
+        {
+          "title": "44mm Bluetooth / Silver",
+          "sku": "MS-SAM-GW7-44-SLV",
+          "price_paise": 2999900,
+          "mrp_paise": 3299900,
+          "stock": 10,
+          "options": {
+            "Size": "44mm Bluetooth",
+            "Color": "Silver"
+          }
+        }
+      ],
+      "thumbnail": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553687/mobile-station/products/samsung-galaxy-watch7-bluetooth.webp",
+      "images": [
+        "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553687/mobile-station/products/samsung-galaxy-watch7-bluetooth.webp"
       ]
     }
   ]

@@ -9,30 +9,33 @@
     "bg_color": "#0B0F17",
     "accent_color": "#E5A01D",
     "display_order": 1,
-    "is_active": true
+    "is_active": true,
+    "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553698/mobile-station/banners/hero_flagship_mobiles.jpg"
   },
   {
     "id": "hero_laptops_workstation",
     "tag": "PRO WORK & GAMING RIGS",
     "title": "Laptops Built to Ship & Dominate.",
-    "subtitle": "Apple MacBook Air M3, Lenovo Legion RTX, and ASUS Zenbook OLED with 18% GST Business Invoice.",
+    "subtitle": "Apple MacBook Air M3, Lenovo LOQ RTX Gaming, ASUS Vivobook OLED, and HP Aero with 18% GST Business Invoice.",
     "cta_text": "Explore Laptops",
     "cta_route": "/categories/laptops",
     "bg_color": "#131A26",
     "accent_color": "#E5A01D",
     "display_order": 2,
-    "is_active": true
+    "is_active": true,
+    "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553700/mobile-station/banners/hero_laptops_workstation.jpg"
   },
   {
     "id": "hero_peripherals_audio",
     "tag": "DESK & AUDIO UPGRADES",
     "title": "Mechanical Precision & Pure ANC Audio.",
-    "subtitle": "Keychron Q/K-series keyboards, Logitech MX & G-Pro mice, Sony ANC headphones, and 65W GaN fast chargers.",
+    "subtitle": "Keychron QMK/VIA mechanical keyboards, Logitech MX & Lightspeed mice, Sony & Sennheiser ANC headphones, and GaN chargers.",
     "cta_text": "Browse Peripherals",
     "cta_route": "/categories/keyboards-mice",
     "bg_color": "#0F172A",
     "accent_color": "#CBD5E1",
     "display_order": 3,
-    "is_active": true
+    "is_active": true,
+    "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553702/mobile-station/banners/hero_peripherals_audio.jpg"
   }
 ]

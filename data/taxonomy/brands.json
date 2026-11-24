@@ -106,6 +106,14 @@
       "featured": true
     },
     {
+      "handle": "lg",
+      "name": "LG",
+      "categories": ["laptops"],
+      "warranty_support": "LG India 3-Year Onsite Display Care",
+      "official_domain": "lg.com/in",
+      "featured": true
+    },
+    {
       "handle": "sony",
       "name": "Sony",
       "categories": ["audio"],

@@ -23,12 +23,43 @@
         "return_window_days": 7
       },
       "subcategories": [
-        { "id": "cat_smartphones_iphone", "handle": "apple-iphones", "name": "Apple iPhones", "hsn": "8517", "tracking_mode": "imei_serialized" },
-        { "id": "cat_smartphones_samsung", "handle": "samsung-galaxy", "name": "Samsung Galaxy Series", "hsn": "8517", "tracking_mode": "imei_serialized" },
-        { "id": "cat_smartphones_5g", "handle": "5g-smartphones", "name": "Flagship 5G (Vivo, Oppo, Pixel, OnePlus)", "hsn": "8517", "tracking_mode": "imei_serialized" },
-        { "id": "cat_smartphones_gaming", "handle": "gaming-phones", "name": "Performance & Nothing 5G", "hsn": "8517", "tracking_mode": "imei_serialized" },
-        { "id": "cat_smartphones_budget", "handle": "phones-under-15000", "name": "Value 5G Under ₹20,000", "hsn": "8517", "tracking_mode": "imei_serialized" }
-      ]
+        {
+          "id": "cat_smartphones_iphone",
+          "handle": "apple-iphones",
+          "name": "Apple iPhones",
+          "hsn": "8517",
+          "tracking_mode": "imei_serialized"
+        },
+        {
+          "id": "cat_smartphones_samsung",
+          "handle": "samsung-galaxy",
+          "name": "Samsung Galaxy Series",
+          "hsn": "8517",
+          "tracking_mode": "imei_serialized"
+        },
+        {
+          "id": "cat_smartphones_5g",
+          "handle": "5g-smartphones",
+          "name": "Flagship 5G (Vivo, Oppo, Pixel, OnePlus)",
+          "hsn": "8517",
+          "tracking_mode": "imei_serialized"
+        },
+        {
+          "id": "cat_smartphones_gaming",
+          "handle": "gaming-phones",
+          "name": "Performance & Nothing 5G",
+          "hsn": "8517",
+          "tracking_mode": "imei_serialized"
+        },
+        {
+          "id": "cat_smartphones_budget",
+          "handle": "phones-under-15000",
+          "name": "Value 5G Under ₹20,000",
+          "hsn": "8517",
+          "tracking_mode": "imei_serialized"
+        }
+      ],
+      "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553688/mobile-station/categories/smartphones.jpg"
     },
     {
       "id": "cat_tablets",
@@ -49,10 +80,29 @@
         "return_window_days": 7
       },
       "subcategories": [
-        { "id": "cat_tablets_ipad", "handle": "apple-ipads", "name": "Apple iPads", "hsn": "8471", "tracking_mode": "serial_tracked" },
-        { "id": "cat_tablets_android", "handle": "android-tablets", "name": "Android Tablets (Samsung, OnePlus, Xiaomi)", "hsn": "8471", "tracking_mode": "serial_tracked" },
-        { "id": "cat_tablets_stylus", "handle": "tablet-styluses-cases", "name": "Styluses & Keyboard Folios", "hsn": "8471", "tracking_mode": "sku_quantity" }
-      ]
+        {
+          "id": "cat_tablets_ipad",
+          "handle": "apple-ipads",
+          "name": "Apple iPads",
+          "hsn": "8471",
+          "tracking_mode": "serial_tracked"
+        },
+        {
+          "id": "cat_tablets_android",
+          "handle": "android-tablets",
+          "name": "Android Tablets (Samsung, OnePlus, Xiaomi)",
+          "hsn": "8471",
+          "tracking_mode": "serial_tracked"
+        },
+        {
+          "id": "cat_tablets_stylus",
+          "handle": "tablet-styluses-cases",
+          "name": "Styluses & Keyboard Folios",
+          "hsn": "8471",
+          "tracking_mode": "sku_quantity"
+        }
+      ],
+      "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553690/mobile-station/categories/tablets.jpg"
     },
     {
       "id": "cat_laptops",
@@ -73,11 +123,36 @@
         "return_window_days": 7
       },
       "subcategories": [
-        { "id": "cat_laptops_macbook", "handle": "macbooks", "name": "Apple MacBooks", "hsn": "8471", "tracking_mode": "serial_tracked" },
-        { "id": "cat_laptops_thin", "handle": "thin-light-laptops", "name": "Thin & Light Ultrabooks", "hsn": "8471", "tracking_mode": "serial_tracked" },
-        { "id": "cat_laptops_gaming", "handle": "gaming-laptops", "name": "Gaming & RTX Laptops", "hsn": "8471", "tracking_mode": "serial_tracked" },
-        { "id": "cat_laptops_monitors", "handle": "monitors", "name": "Computer Monitors", "hsn": "8528", "tracking_mode": "serial_tracked" }
-      ]
+        {
+          "id": "cat_laptops_macbook",
+          "handle": "macbooks",
+          "name": "Apple MacBooks",
+          "hsn": "8471",
+          "tracking_mode": "serial_tracked"
+        },
+        {
+          "id": "cat_laptops_thin",
+          "handle": "thin-light-laptops",
+          "name": "Thin & Light Ultrabooks",
+          "hsn": "8471",
+          "tracking_mode": "serial_tracked"
+        },
+        {
+          "id": "cat_laptops_gaming",
+          "handle": "gaming-laptops",
+          "name": "Gaming & RTX Laptops",
+          "hsn": "8471",
+          "tracking_mode": "serial_tracked"
+        },
+        {
+          "id": "cat_laptops_monitors",
+          "handle": "monitors",
+          "name": "Computer Monitors",
+          "hsn": "8528",
+          "tracking_mode": "serial_tracked"
+        }
+      ],
+      "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553691/mobile-station/categories/laptops.jpg"
     },
     {
       "id": "cat_audio",
@@ -98,12 +173,43 @@
         "return_window_days": 7
       },
       "subcategories": [
-        { "id": "cat_audio_tws", "handle": "tws-earbuds", "name": "TWS Earbuds (AirPods, Galaxy Buds, Nothing, OnePlus)", "hsn": "8518", "tracking_mode": "serial_tracked" },
-        { "id": "cat_audio_headphones", "handle": "over-ear-headphones", "name": "ANC Over-Ear Headphones (Sony, Sennheiser)", "hsn": "8518", "tracking_mode": "serial_tracked" },
-        { "id": "cat_audio_neckbands", "handle": "neckbands", "name": "Wireless Neckbands", "hsn": "8518", "tracking_mode": "sku_quantity" },
-        { "id": "cat_audio_wired", "handle": "wired-earphones", "name": "Wired Earphones (USB-C / 3.5mm)", "hsn": "8518", "tracking_mode": "sku_quantity" },
-        { "id": "cat_audio_speakers", "handle": "bluetooth-speakers", "name": "Bluetooth Speakers & Party Audio", "hsn": "8518", "tracking_mode": "serial_tracked" }
-      ]
+        {
+          "id": "cat_audio_tws",
+          "handle": "tws-earbuds",
+          "name": "TWS Earbuds (AirPods, Galaxy Buds, Nothing, OnePlus)",
+          "hsn": "8518",
+          "tracking_mode": "serial_tracked"
+        },
+        {
+          "id": "cat_audio_headphones",
+          "handle": "over-ear-headphones",
+          "name": "ANC Over-Ear Headphones (Sony, Sennheiser)",
+          "hsn": "8518",
+          "tracking_mode": "serial_tracked"
+        },
+        {
+          "id": "cat_audio_neckbands",
+          "handle": "neckbands",
+          "name": "Wireless Neckbands",
+          "hsn": "8518",
+          "tracking_mode": "sku_quantity"
+        },
+        {
+          "id": "cat_audio_wired",
+          "handle": "wired-earphones",
+          "name": "Wired Earphones (USB-C / 3.5mm)",
+          "hsn": "8518",
+          "tracking_mode": "sku_quantity"
+        },
+        {
+          "id": "cat_audio_speakers",
+          "handle": "bluetooth-speakers",
+          "name": "Bluetooth Speakers & Party Audio",
+          "hsn": "8518",
+          "tracking_mode": "serial_tracked"
+        }
+      ],
+      "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553692/mobile-station/categories/audio.webp"
     },
     {
       "id": "cat_keyboards_mice",
@@ -124,11 +230,36 @@
         "return_window_days": 7
       },
       "subcategories": [
-        { "id": "cat_km_mech", "handle": "mechanical-keyboards", "name": "Mechanical Keyboards", "hsn": "8471", "tracking_mode": "serial_tracked" },
-        { "id": "cat_km_wireless_kb", "handle": "wireless-keyboards", "name": "Wireless & Compact Keyboards", "hsn": "8471", "tracking_mode": "sku_quantity" },
-        { "id": "cat_km_mice", "handle": "wireless-gaming-mice", "name": "Wireless & Gaming Mice", "hsn": "8471", "tracking_mode": "sku_quantity" },
-        { "id": "cat_km_combos", "handle": "keyboard-mouse-combos", "name": "Keyboard & Mouse Combos", "hsn": "8471", "tracking_mode": "sku_quantity" }
-      ]
+        {
+          "id": "cat_km_mech",
+          "handle": "mechanical-keyboards",
+          "name": "Mechanical Keyboards",
+          "hsn": "8471",
+          "tracking_mode": "serial_tracked"
+        },
+        {
+          "id": "cat_km_wireless_kb",
+          "handle": "wireless-keyboards",
+          "name": "Wireless & Compact Keyboards",
+          "hsn": "8471",
+          "tracking_mode": "sku_quantity"
+        },
+        {
+          "id": "cat_km_mice",
+          "handle": "wireless-gaming-mice",
+          "name": "Wireless & Gaming Mice",
+          "hsn": "8471",
+          "tracking_mode": "sku_quantity"
+        },
+        {
+          "id": "cat_km_combos",
+          "handle": "keyboard-mouse-combos",
+          "name": "Keyboard & Mouse Combos",
+          "hsn": "8471",
+          "tracking_mode": "sku_quantity"
+        }
+      ],
+      "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553693/mobile-station/categories/keyboards-mice.webp"
     },
     {
       "id": "cat_power_charging",
@@ -149,11 +280,36 @@
         "return_window_days": 10
       },
       "subcategories": [
-        { "id": "cat_pc_gan", "handle": "gan-fast-chargers", "name": "GaN & PD Fast Chargers", "hsn": "8504", "tracking_mode": "sku_quantity" },
-        { "id": "cat_pc_powerbank", "handle": "power-banks", "name": "Fast Charging & MagSafe Power Banks", "hsn": "8507", "tracking_mode": "sku_quantity" },
-        { "id": "cat_pc_cables", "handle": "charging-cables-hdmi", "name": "USB-C, Lightning & Display Cables", "hsn": "8544", "tracking_mode": "sku_quantity" },
-        { "id": "cat_pc_hubs", "handle": "usbc-hubs-docks", "name": "USB-C Hubs & Laptop Docks", "hsn": "8471", "tracking_mode": "sku_quantity" }
-      ]
+        {
+          "id": "cat_pc_gan",
+          "handle": "gan-fast-chargers",
+          "name": "GaN & PD Fast Chargers",
+          "hsn": "8504",
+          "tracking_mode": "sku_quantity"
+        },
+        {
+          "id": "cat_pc_powerbank",
+          "handle": "power-banks",
+          "name": "Fast Charging & MagSafe Power Banks",
+          "hsn": "8507",
+          "tracking_mode": "sku_quantity"
+        },
+        {
+          "id": "cat_pc_cables",
+          "handle": "charging-cables-hdmi",
+          "name": "USB-C, Lightning & Display Cables",
+          "hsn": "8544",
+          "tracking_mode": "sku_quantity"
+        },
+        {
+          "id": "cat_pc_hubs",
+          "handle": "usbc-hubs-docks",
+          "name": "USB-C Hubs & Laptop Docks",
+          "hsn": "8471",
+          "tracking_mode": "sku_quantity"
+        }
+      ],
+      "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553695/mobile-station/categories/power-charging.webp"
     },
     {
       "id": "cat_accessories_storage",
@@ -174,12 +330,43 @@
         "return_window_days": 10
       },
       "subcategories": [
-        { "id": "cat_as_cases", "handle": "phone-cases-covers", "name": "Phone Cases & MagSafe Covers", "hsn": "3926", "tracking_mode": "sku_quantity" },
-        { "id": "cat_as_glass", "handle": "screen-protectors", "name": "Tempered Glass & Camera Protectors", "hsn": "3919", "tracking_mode": "sku_quantity" },
-        { "id": "cat_as_storage", "handle": "ssds-pen-drives-sd", "name": "Portable SSDs, Pen Drives & SD Cards", "hsn": "8523", "tracking_mode": "serial_tracked" },
-        { "id": "cat_as_wearables", "handle": "smartwatches-wearables", "name": "Smartwatches & Fitness Wearables", "hsn": "8517", "tracking_mode": "serial_tracked" },
-        { "id": "cat_as_desk", "handle": "stands-sleeves-wearables", "name": "Laptop Stands, Car Mounts & Sleeves", "hsn": "7616", "tracking_mode": "sku_quantity" }
-      ]
+        {
+          "id": "cat_as_cases",
+          "handle": "phone-cases-covers",
+          "name": "Phone Cases & MagSafe Covers",
+          "hsn": "3926",
+          "tracking_mode": "sku_quantity"
+        },
+        {
+          "id": "cat_as_glass",
+          "handle": "screen-protectors",
+          "name": "Tempered Glass & Camera Protectors",
+          "hsn": "3919",
+          "tracking_mode": "sku_quantity"
+        },
+        {
+          "id": "cat_as_storage",
+          "handle": "ssds-pen-drives-sd",
+          "name": "Portable SSDs, Pen Drives & SD Cards",
+          "hsn": "8523",
+          "tracking_mode": "serial_tracked"
+        },
+        {
+          "id": "cat_as_wearables",
+          "handle": "smartwatches-wearables",
+          "name": "Smartwatches & Fitness Wearables",
+          "hsn": "8517",
+          "tracking_mode": "serial_tracked"
+        },
+        {
+          "id": "cat_as_desk",
+          "handle": "stands-sleeves-wearables",
+          "name": "Laptop Stands, Car Mounts & Sleeves",
+          "hsn": "7616",
+          "tracking_mode": "sku_quantity"
+        }
+      ],
+      "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553696/mobile-station/categories/accessories-storage.jpg"
     }
   ]
 }
