@@ -1,0 +1,38 @@
+export const MOBILE_STATION_BRAND = {
+  name: 'Mobile Station',
+  shortName: 'MS',
+  tagline: 'Genuine Smartphones, Laptops, Tablets, Audio & Tech Peripherals',
+  originCity: 'Muzaffarpur, Bihar',
+  flagshipLocation: {
+    name: 'Mobile Station — Motijheel Flagship Hub',
+    addressLine1: 'Shop No. 01, Rama Market, Motijheel Road',
+    city: 'Muzaffarpur',
+    state: 'Bihar',
+    pincode: '842001',
+    hours: '10:00 AM – 8:00 PM (All Days)',
+  },
+  secondaryLocation: {
+    name: 'Mobile Station — Club Road Express Center',
+    addressLine1: 'Pani Tanki Chowk, Mithanpura, Club Road',
+    city: 'Muzaffarpur',
+    state: 'Bihar',
+    pincode: '842002',
+  },
+  palette: {
+    obsidian: '#0B0F17',
+    obsidianElevated: '#131A26',
+    goldPrimary: '#E5A01D',
+    goldDarkTextSafe: '#B4690E',
+    chromeLight: '#E2E8F0',
+    chromeBorder: '#CBD5E1',
+    canvasLight: '#F8FAFC',
+  },
+  assets: {
+    icon: '/brand/mobile-station-icon.png',
+    wordmark: '/brand/mobile-station-wordmark.png',
+    ogImage: '/og-image.png',
+    appleTouchIcon: '/apple-touch-icon.png',
+    faviconIco: '/favicon.ico',
+    manifest: '/manifest.json',
+  },
+} as const
