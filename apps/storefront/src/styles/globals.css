@@ -1,0 +1,125 @@
+/* =============================================================================
+   MOBILE STATION — Storefront Global Styles
+   Consumes canonical design tokens from ./tokens.css
+   ============================================================================= */
+
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    min-height: 100%;
+  }
+
+  body {
+    background-color: var(--color-surface-canvas);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.55;
+    min-height: 100dvh;
+    min-width: 320px;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.18;
+    color: var(--color-text-primary);
+  }
+
+  code,
+  kbd,
+  .font-spec {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* Sleek Chrome & Obsidian Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(15, 23, 42, 0.28);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-gold-600);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer components {
+  .page-container {
+    width: 100%;
+    max-width: var(--max-content-width);
+    margin-inline: auto;
+    padding-inline: var(--space-md);
+  }
+
+  @media (min-width: 641px) {
+    .page-container {
+      padding-inline: var(--space-lg);
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .page-container {
+      padding-inline: var(--space-xl);
+    }
+  }
+
+  /* Metallic brushed border accent used on flagship hero cards & badges */
+  .ms-gold-ring {
+    border: 1px solid rgba(229, 160, 29, 0.38);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .ms-spec-row:nth-child(odd) {
+    background-color: var(--color-surface-muted);
+  }
+}
