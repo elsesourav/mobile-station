@@ -56,6 +56,16 @@ export const b2bGstDetailsSchema = z.object({
   { message: 'Both GSTIN and Registered Business Name are required for a B2B GST invoice' }
 )
 
+export const electronicsStockDetailsSchema = z.object({
+  tracking_mode: z.enum(['imei_serialized', 'serial_tracked', 'sku_quantity']).default('sku_quantity'),
+  warehouse_hub: z.string().trim().min(2).default('Muzaffarpur Flagship Hub (842001)'),
+  warehouse_bin: z.string().trim().min(2),
+  low_stock_threshold: z.number().int().min(1).max(100).default(5),
+  safety_stock: z.number().int().min(0).max(50).default(2),
+  restock_lead_days: z.number().int().min(1).max(30).default(3),
+  return_window_days: z.number().int().min(0).max(30).default(7),
+})
+
 export const electronicsMetadataSchema = z.object({
   category_type: z.enum([
     'smartphones',
@@ -80,6 +90,7 @@ export const electronicsMetadataSchema = z.object({
   emi_eligible: z.boolean().default(true),
   cod_eligible: z.boolean().default(true),
   key_highlights: z.array(z.string().trim().min(1)).optional(),
+  stock_details: electronicsStockDetailsSchema.optional(),
   specs: z.record(z.unknown()).optional(),
 }).passthrough()
 

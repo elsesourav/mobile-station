@@ -1,125 +1,184 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "market": "IN",
   "currency": "INR",
+  "warehouse_hub_default": "Muzaffarpur Flagship Hub (842001)",
   "root_categories": [
     {
       "id": "cat_smartphones",
       "handle": "smartphones",
       "name": "Mobiles & Smartphones",
-      "subtitle": "5G Flagships, Budget & Camera Phones",
-      "description": "Genuine 5G Android smartphones, Apple iPhones, and high-value flagship phones with official brand warranty and Open-Box Delivery.",
+      "subtitle": "iPhone, Galaxy, Vivo, Oppo, OnePlus, Nothing & Pixel",
+      "description": "Factory-sealed 5G flagship, camera, gaming, and value smartphones from Apple, Samsung, Vivo, Oppo, OnePlus, Nothing, Google Pixel, Xiaomi, and Realme with IMEI billing and insured Open-Box Delivery.",
       "default_hsn": "8517",
       "gst_rate_percent": 18,
       "icon": "Smartphone",
       "rank": 1,
+      "inventory_policy": {
+        "tracking_mode": "imei_serialized",
+        "warehouse_zone": "MZP-VAULT-A1",
+        "default_low_stock_threshold": 3,
+        "default_safety_stock": 1,
+        "requires_open_box_delivery": true,
+        "return_window_days": 7
+      },
       "subcategories": [
-        { "id": "cat_smartphones_5g", "handle": "5g-smartphones", "name": "5G Smartphones", "hsn": "8517" },
-        { "id": "cat_smartphones_iphone", "handle": "apple-iphones", "name": "Apple iPhones", "hsn": "8517" },
-        { "id": "cat_smartphones_gaming", "handle": "gaming-phones", "name": "Gaming Phones", "hsn": "8517" },
-        { "id": "cat_smartphones_budget", "handle": "phones-under-15000", "name": "Phones Under ₹15,000", "hsn": "8517" }
+        { "id": "cat_smartphones_iphone", "handle": "apple-iphones", "name": "Apple iPhones", "hsn": "8517", "tracking_mode": "imei_serialized" },
+        { "id": "cat_smartphones_samsung", "handle": "samsung-galaxy", "name": "Samsung Galaxy Series", "hsn": "8517", "tracking_mode": "imei_serialized" },
+        { "id": "cat_smartphones_5g", "handle": "5g-smartphones", "name": "Flagship 5G (Vivo, Oppo, Pixel, OnePlus)", "hsn": "8517", "tracking_mode": "imei_serialized" },
+        { "id": "cat_smartphones_gaming", "handle": "gaming-phones", "name": "Performance & Nothing 5G", "hsn": "8517", "tracking_mode": "imei_serialized" },
+        { "id": "cat_smartphones_budget", "handle": "phones-under-15000", "name": "Value 5G Under ₹20,000", "hsn": "8517", "tracking_mode": "imei_serialized" }
       ]
     },
     {
       "id": "cat_tablets",
       "handle": "tablets",
       "name": "Tablets & E-Readers",
-      "subtitle": "iPads, Android Tablets & Styluses",
-      "description": "Productivity tablets, Apple iPads, drawing tablets, and Wi-Fi + 5G learning tablets with official brand warranty.",
+      "subtitle": "Apple iPads, Galaxy Tabs, Xiaomi Pads & Styluses",
+      "description": "Productivity tablets, Apple iPads, OnePlus & Xiaomi tablets, and precision styluses verified via Serial Number at dispatch with official brand care.",
       "default_hsn": "8471",
       "gst_rate_percent": 18,
       "icon": "Tablet",
       "rank": 2,
+      "inventory_policy": {
+        "tracking_mode": "serial_tracked",
+        "warehouse_zone": "MZP-TECH-B1",
+        "default_low_stock_threshold": 3,
+        "default_safety_stock": 1,
+        "requires_open_box_delivery": true,
+        "return_window_days": 7
+      },
       "subcategories": [
-        { "id": "cat_tablets_ipad", "handle": "apple-ipads", "name": "Apple iPads", "hsn": "8471" },
-        { "id": "cat_tablets_android", "handle": "android-tablets", "name": "Android Tablets", "hsn": "8471" },
-        { "id": "cat_tablets_stylus", "handle": "tablet-styluses-cases", "name": "Styluses & Keyboard Folios", "hsn": "8471" }
+        { "id": "cat_tablets_ipad", "handle": "apple-ipads", "name": "Apple iPads", "hsn": "8471", "tracking_mode": "serial_tracked" },
+        { "id": "cat_tablets_android", "handle": "android-tablets", "name": "Android Tablets (Samsung, OnePlus, Xiaomi)", "hsn": "8471", "tracking_mode": "serial_tracked" },
+        { "id": "cat_tablets_stylus", "handle": "tablet-styluses-cases", "name": "Styluses & Keyboard Folios", "hsn": "8471", "tracking_mode": "sku_quantity" }
       ]
     },
     {
       "id": "cat_laptops",
       "handle": "laptops",
       "name": "Laptops & Monitors",
-      "subtitle": "Thin & Light, Gaming, MacBooks & Displays",
-      "description": "High-performance laptops for students, creators, developers, and gamers alongside crisp 4K and gaming monitors.",
+      "subtitle": "MacBooks, Ultrabooks, RTX Gaming & OLED Displays",
+      "description": "Apple MacBooks, Lenovo LOQ/IdeaPad, ASUS Vivobook OLED, HP Aero, and ultra-crisp monitors with Serial tracking and 18% GST Business ITC invoice.",
       "default_hsn": "8471",
       "gst_rate_percent": 18,
       "icon": "Laptop",
       "rank": 3,
+      "inventory_policy": {
+        "tracking_mode": "serial_tracked",
+        "warehouse_zone": "MZP-TECH-B2",
+        "default_low_stock_threshold": 2,
+        "default_safety_stock": 1,
+        "requires_open_box_delivery": true,
+        "return_window_days": 7
+      },
       "subcategories": [
-        { "id": "cat_laptops_thin", "handle": "thin-light-laptops", "name": "Thin & Light Laptops", "hsn": "8471" },
-        { "id": "cat_laptops_gaming", "handle": "gaming-laptops", "name": "Gaming & RTX Laptops", "hsn": "8471" },
-        { "id": "cat_laptops_macbook", "handle": "macbooks", "name": "Apple MacBooks", "hsn": "8471" },
-        { "id": "cat_laptops_monitors", "handle": "monitors", "name": "Computer Monitors", "hsn": "8528" }
+        { "id": "cat_laptops_macbook", "handle": "macbooks", "name": "Apple MacBooks", "hsn": "8471", "tracking_mode": "serial_tracked" },
+        { "id": "cat_laptops_thin", "handle": "thin-light-laptops", "name": "Thin & Light Ultrabooks", "hsn": "8471", "tracking_mode": "serial_tracked" },
+        { "id": "cat_laptops_gaming", "handle": "gaming-laptops", "name": "Gaming & RTX Laptops", "hsn": "8471", "tracking_mode": "serial_tracked" },
+        { "id": "cat_laptops_monitors", "handle": "monitors", "name": "Computer Monitors", "hsn": "8528", "tracking_mode": "serial_tracked" }
       ]
     },
     {
       "id": "cat_audio",
       "handle": "audio",
-      "name": "Earphones & Audio",
-      "subtitle": "TWS Earbuds, ANC Headphones & Speakers",
-      "description": "Active noise-cancelling TWS earbuds, wireless neckbands, wired studio earphones, over-ear headphones, and Bluetooth speakers.",
+      "name": "Earphones, Headphones & Audio",
+      "subtitle": "AirPods, Buds, ANC Headphones & Portable Speakers",
+      "description": "True wireless earbuds, active noise-cancelling over-ear headphones, neckbands, Type-C/3.5mm wired earphones, and rugged Bluetooth speakers.",
       "default_hsn": "8518",
       "gst_rate_percent": 18,
       "icon": "Headphones",
       "rank": 4,
+      "inventory_policy": {
+        "tracking_mode": "serial_tracked",
+        "warehouse_zone": "MZP-AUDIO-C1",
+        "default_low_stock_threshold": 5,
+        "default_safety_stock": 2,
+        "requires_open_box_delivery": false,
+        "return_window_days": 7
+      },
       "subcategories": [
-        { "id": "cat_audio_tws", "handle": "tws-earbuds", "name": "TWS Earbuds", "hsn": "8518" },
-        { "id": "cat_audio_neckbands", "handle": "neckbands", "name": "Wireless Neckbands", "hsn": "8518" },
-        { "id": "cat_audio_wired", "handle": "wired-earphones", "name": "Wired Earphones (3.5mm / Type-C)", "hsn": "8518" },
-        { "id": "cat_audio_headphones", "handle": "over-ear-headphones", "name": "Over-Ear & Gaming Headsets", "hsn": "8518" },
-        { "id": "cat_audio_speakers", "handle": "bluetooth-speakers", "name": "Bluetooth Speakers & Soundbars", "hsn": "8518" }
+        { "id": "cat_audio_tws", "handle": "tws-earbuds", "name": "TWS Earbuds (AirPods, Galaxy Buds, Nothing, OnePlus)", "hsn": "8518", "tracking_mode": "serial_tracked" },
+        { "id": "cat_audio_headphones", "handle": "over-ear-headphones", "name": "ANC Over-Ear Headphones (Sony, Sennheiser)", "hsn": "8518", "tracking_mode": "serial_tracked" },
+        { "id": "cat_audio_neckbands", "handle": "neckbands", "name": "Wireless Neckbands", "hsn": "8518", "tracking_mode": "sku_quantity" },
+        { "id": "cat_audio_wired", "handle": "wired-earphones", "name": "Wired Earphones (USB-C / 3.5mm)", "hsn": "8518", "tracking_mode": "sku_quantity" },
+        { "id": "cat_audio_speakers", "handle": "bluetooth-speakers", "name": "Bluetooth Speakers & Party Audio", "hsn": "8518", "tracking_mode": "serial_tracked" }
       ]
     },
     {
       "id": "cat_keyboards_mice",
       "handle": "keyboards-mice",
       "name": "Keyboards & Mice",
-      "subtitle": "Mechanical Keyboards, Gaming & Office Mice",
-      "description": "Hot-swappable mechanical keyboards, ergonomic wireless mice, high-DPI gaming mice, and wireless desk combos.",
+      "subtitle": "Mechanical Keyboards, Productivity & Gaming Mice",
+      "description": "Hot-swappable Keychron QMK/VIA mechanical keyboards, Logitech MX productivity and Lightspeed gaming mice, Razer headsets/keyboards, and Portronics wireless desk sets.",
       "default_hsn": "8471",
       "gst_rate_percent": 18,
       "icon": "Keyboard",
       "rank": 5,
+      "inventory_policy": {
+        "tracking_mode": "sku_quantity",
+        "warehouse_zone": "MZP-PERIPH-D1",
+        "default_low_stock_threshold": 5,
+        "default_safety_stock": 2,
+        "requires_open_box_delivery": false,
+        "return_window_days": 7
+      },
       "subcategories": [
-        { "id": "cat_km_mech", "handle": "mechanical-keyboards", "name": "Mechanical Keyboards", "hsn": "8471" },
-        { "id": "cat_km_wireless_kb", "handle": "wireless-keyboards", "name": "Wireless & Office Keyboards", "hsn": "8471" },
-        { "id": "cat_km_mice", "handle": "wireless-gaming-mice", "name": "Wireless & Gaming Mice", "hsn": "8471" },
-        { "id": "cat_km_combos", "handle": "keyboard-mouse-combos", "name": "Keyboard & Mouse Combos", "hsn": "8471" }
+        { "id": "cat_km_mech", "handle": "mechanical-keyboards", "name": "Mechanical Keyboards", "hsn": "8471", "tracking_mode": "serial_tracked" },
+        { "id": "cat_km_wireless_kb", "handle": "wireless-keyboards", "name": "Wireless & Compact Keyboards", "hsn": "8471", "tracking_mode": "sku_quantity" },
+        { "id": "cat_km_mice", "handle": "wireless-gaming-mice", "name": "Wireless & Gaming Mice", "hsn": "8471", "tracking_mode": "sku_quantity" },
+        { "id": "cat_km_combos", "handle": "keyboard-mouse-combos", "name": "Keyboard & Mouse Combos", "hsn": "8471", "tracking_mode": "sku_quantity" }
       ]
     },
     {
       "id": "cat_power_charging",
       "handle": "power-charging",
       "name": "Chargers, Power Banks & Cables",
-      "subtitle": "GaN Fast Chargers, 20000mAh Banks & USB-C",
-      "description": "BIS-certified GaN PD fast chargers, magnetic wireless chargers, 10000–20000mAh power banks, braided cables, and USB-C hubs.",
+      "subtitle": "GaN Fast Chargers, 20000mAh Power Banks & USB-C",
+      "description": "BIS-certified Apple/Samsung/OnePlus/Anker GaN PD & SuperVOOC adapters, MagSafe power banks, 100W braided Type-C cables, and multi-port USB-C hubs.",
       "default_hsn": "8504",
       "gst_rate_percent": 18,
       "icon": "BatteryCharging",
       "rank": 6,
+      "inventory_policy": {
+        "tracking_mode": "sku_quantity",
+        "warehouse_zone": "MZP-POWER-E1",
+        "default_low_stock_threshold": 10,
+        "default_safety_stock": 4,
+        "requires_open_box_delivery": false,
+        "return_window_days": 10
+      },
       "subcategories": [
-        { "id": "cat_pc_gan", "handle": "gan-fast-chargers", "name": "GaN & PD Fast Chargers", "hsn": "8504" },
-        { "id": "cat_pc_powerbank", "handle": "power-banks", "name": "Power Banks", "hsn": "8507" },
-        { "id": "cat_pc_cables", "handle": "charging-cables-hdmi", "name": "USB-C, Lightning & HDMI Cables", "hsn": "8544" },
-        { "id": "cat_pc_hubs", "handle": "usbc-hubs-docks", "name": "USB-C Hubs & Multi-Port Docks", "hsn": "8471" }
+        { "id": "cat_pc_gan", "handle": "gan-fast-chargers", "name": "GaN & PD Fast Chargers", "hsn": "8504", "tracking_mode": "sku_quantity" },
+        { "id": "cat_pc_powerbank", "handle": "power-banks", "name": "Fast Charging & MagSafe Power Banks", "hsn": "8507", "tracking_mode": "sku_quantity" },
+        { "id": "cat_pc_cables", "handle": "charging-cables-hdmi", "name": "USB-C, Lightning & Display Cables", "hsn": "8544", "tracking_mode": "sku_quantity" },
+        { "id": "cat_pc_hubs", "handle": "usbc-hubs-docks", "name": "USB-C Hubs & Laptop Docks", "hsn": "8471", "tracking_mode": "sku_quantity" }
       ]
     },
     {
       "id": "cat_accessories_storage",
       "handle": "accessories-storage",
-      "name": "Accessories, Protection & Storage",
-      "subtitle": "Cases, Tempered Glass, SSDs & Desk Gear",
-      "description": "MagSafe & shockproof mobile covers, 9H tempered glass, laptop stands, sleeves, portable NVMe SSDs, SD cards, and smartwatches.",
+      "name": "Cases, Storage & Wearables",
+      "subtitle": "Spigen Cases, Tempered Glass, Portable SSDs & Smartwatches",
+      "description": "Shockproof MagSafe cases, EZ-Fit 9H tempered glass, rugged NVMe SSDs, OTG pen drives, aluminum laptop stands, and AMOLED smartwatches.",
       "default_hsn": "3926",
       "gst_rate_percent": 18,
       "icon": "ShieldCheck",
       "rank": 7,
+      "inventory_policy": {
+        "tracking_mode": "sku_quantity",
+        "warehouse_zone": "MZP-ACC-F1",
+        "default_low_stock_threshold": 8,
+        "default_safety_stock": 3,
+        "requires_open_box_delivery": false,
+        "return_window_days": 10
+      },
       "subcategories": [
-        { "id": "cat_as_cases", "handle": "phone-cases-covers", "name": "Phone Cases & MagSafe Covers", "hsn": "3926" },
-        { "id": "cat_as_glass", "handle": "screen-protectors", "name": "Tempered Glass & Screen Guards", "hsn": "3919" },
-        { "id": "cat_as_storage", "handle": "ssds-pen-drives-sd", "name": "Portable SSDs, Pen Drives & SD Cards", "hsn": "8523" },
-        { "id": "cat_as_desk", "handle": "stands-sleeves-wearables", "name": "Laptop Stands, Sleeves & Smartwatches", "hsn": "7616" }
+        { "id": "cat_as_cases", "handle": "phone-cases-covers", "name": "Phone Cases & MagSafe Covers", "hsn": "3926", "tracking_mode": "sku_quantity" },
+        { "id": "cat_as_glass", "handle": "screen-protectors", "name": "Tempered Glass & Camera Protectors", "hsn": "3919", "tracking_mode": "sku_quantity" },
+        { "id": "cat_as_storage", "handle": "ssds-pen-drives-sd", "name": "Portable SSDs, Pen Drives & SD Cards", "hsn": "8523", "tracking_mode": "serial_tracked" },
+        { "id": "cat_as_wearables", "handle": "smartwatches-wearables", "name": "Smartwatches & Fitness Wearables", "hsn": "8517", "tracking_mode": "serial_tracked" },
+        { "id": "cat_as_desk", "handle": "stands-sleeves-wearables", "name": "Laptop Stands, Car Mounts & Sleeves", "hsn": "7616", "tracking_mode": "sku_quantity" }
       ]
     }
   ]

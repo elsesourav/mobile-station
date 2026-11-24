@@ -1,22 +1,205 @@
 {
+  "version": "1.1.0",
   "brands": [
-    { "handle": "apple", "name": "Apple", "categories": ["smartphones", "tablets", "laptops", "audio", "power-charging", "accessories-storage"], "warranty_support": "Apple India Authorized Service" },
-    { "handle": "samsung", "name": "Samsung", "categories": ["smartphones", "tablets", "laptops", "audio", "accessories-storage"], "warranty_support": "Samsung India Authorized Care" },
-    { "handle": "oneplus", "name": "OnePlus", "categories": ["smartphones", "tablets", "audio", "power-charging"], "warranty_support": "OnePlus India Service" },
-    { "handle": "xiaomi", "name": "Xiaomi", "categories": ["smartphones", "tablets", "audio", "power-charging"], "warranty_support": "Mi Authorized Service Center" },
-    { "handle": "realme", "name": "Realme", "categories": ["smartphones", "tablets", "audio"], "warranty_support": "Realme India Care" },
-    { "handle": "lenovo", "name": "Lenovo", "categories": ["laptops", "tablets"], "warranty_support": "Lenovo Onsite & Carry-In India" },
-    { "handle": "asus", "name": "ASUS", "categories": ["laptops", "keyboards-mice"], "warranty_support": "ASUS India Authorized Service" },
-    { "handle": "hp", "name": "HP", "categories": ["laptops", "keyboards-mice"], "warranty_support": "HP India Onsite Support" },
-    { "handle": "sony", "name": "Sony", "categories": ["audio"], "warranty_support": "Sony India Authorized Service" },
-    { "handle": "boat", "name": "boAt", "categories": ["audio", "power-charging", "accessories-storage"], "warranty_support": "boAt 1-Year Pickup & Drop Warranty" },
-    { "handle": "jbl", "name": "JBL", "categories": ["audio"], "warranty_support": "Harman India Service" },
-    { "handle": "keychron", "name": "Keychron", "categories": ["keyboards-mice"], "warranty_support": "Keychron India 1-Year Replacement" },
-    { "handle": "logitech", "name": "Logitech", "categories": ["keyboards-mice", "accessories-storage"], "warranty_support": "Logitech 1–3 Year Brand Warranty" },
-    { "handle": "razer", "name": "Razer", "categories": ["keyboards-mice", "audio"], "warranty_support": "Razer India 2-Year Warranty" },
-    { "handle": "anker", "name": "Anker", "categories": ["power-charging", "audio"], "warranty_support": "Anker 18-Month Brand Warranty" },
-    { "handle": "belkin", "name": "Belkin", "categories": ["power-charging", "accessories-storage"], "warranty_support": "Belkin 2-Year Warranty" },
-    { "handle": "spigen", "name": "Spigen", "categories": ["accessories-storage", "power-charging"], "warranty_support": "Spigen Authentic Protection" },
-    { "handle": "sandisk", "name": "SanDisk", "categories": ["accessories-storage"], "warranty_support": "SanDisk 5-Year Limited Warranty" }
+    {
+      "handle": "apple",
+      "name": "Apple",
+      "categories": ["smartphones", "tablets", "laptops", "audio", "power-charging", "accessories-storage"],
+      "warranty_support": "Apple India Authorized Service (1-Year Carry-In)",
+      "official_domain": "apple.com/in",
+      "featured": true
+    },
+    {
+      "handle": "samsung",
+      "name": "Samsung",
+      "categories": ["smartphones", "tablets", "laptops", "audio", "power-charging", "accessories-storage"],
+      "warranty_support": "Samsung India Authorized Care (1-Year Standard)",
+      "official_domain": "samsung.com/in",
+      "featured": true
+    },
+    {
+      "handle": "vivo",
+      "name": "Vivo",
+      "categories": ["smartphones", "audio", "power-charging"],
+      "warranty_support": "Vivo India Authorized Service (1-Year Handset + 6-Month Inbox Accessories)",
+      "official_domain": "vivo.com/in",
+      "featured": true
+    },
+    {
+      "handle": "oppo",
+      "name": "Oppo",
+      "categories": ["smartphones", "tablets", "audio"],
+      "warranty_support": "Oppo India Service Care (1-Year Manufacturer Warranty)",
+      "official_domain": "oppo.com/in",
+      "featured": true
+    },
+    {
+      "handle": "oneplus",
+      "name": "OnePlus",
+      "categories": ["smartphones", "tablets", "audio", "power-charging"],
+      "warranty_support": "OnePlus India Service (1-Year Official Warranty)",
+      "official_domain": "oneplus.in",
+      "featured": true
+    },
+    {
+      "handle": "nothing",
+      "name": "Nothing",
+      "categories": ["smartphones", "audio", "accessories-storage"],
+      "warranty_support": "Nothing India Authorized Service Centers (1-Year Official)",
+      "official_domain": "in.nothing.tech",
+      "featured": true
+    },
+    {
+      "handle": "google",
+      "name": "Google",
+      "categories": ["smartphones", "audio"],
+      "warranty_support": "Google Pixel India F1/Authorized Mail-In & Walk-In Service",
+      "official_domain": "store.google.com/in",
+      "featured": true
+    },
+    {
+      "handle": "xiaomi",
+      "name": "Xiaomi",
+      "categories": ["smartphones", "tablets", "audio", "power-charging"],
+      "warranty_support": "Mi Authorized Service Center India (1-Year Warranty)",
+      "official_domain": "mi.com/in",
+      "featured": true
+    },
+    {
+      "handle": "realme",
+      "name": "Realme",
+      "categories": ["smartphones", "tablets", "audio", "power-charging"],
+      "warranty_support": "Realme India Care (1-Year Handset Warranty)",
+      "official_domain": "realme.com/in",
+      "featured": true
+    },
+    {
+      "handle": "motorola",
+      "name": "Motorola",
+      "categories": ["smartphones", "audio"],
+      "warranty_support": "Motorola India Authorized Service Network",
+      "official_domain": "motorola.in",
+      "featured": false
+    },
+    {
+      "handle": "lenovo",
+      "name": "Lenovo",
+      "categories": ["laptops", "tablets"],
+      "warranty_support": "Lenovo Onsite & Accidental Damage Care India",
+      "official_domain": "lenovo.com/in",
+      "featured": true
+    },
+    {
+      "handle": "asus",
+      "name": "ASUS",
+      "categories": ["laptops", "keyboards-mice"],
+      "warranty_support": "ASUS India Onsite Pickup & Warranty",
+      "official_domain": "asus.com/in",
+      "featured": true
+    },
+    {
+      "handle": "hp",
+      "name": "HP",
+      "categories": ["laptops", "keyboards-mice"],
+      "warranty_support": "HP India 1-Year Onsite Support",
+      "official_domain": "hp.com/in-en",
+      "featured": true
+    },
+    {
+      "handle": "sony",
+      "name": "Sony",
+      "categories": ["audio"],
+      "warranty_support": "Sony India Authorized Service (1-Year Official)",
+      "official_domain": "sony.co.in",
+      "featured": true
+    },
+    {
+      "handle": "sennheiser",
+      "name": "Sennheiser",
+      "categories": ["audio"],
+      "warranty_support": "Sennheiser India 2-Year Brand Warranty",
+      "official_domain": "sennheiser-hearing.com",
+      "featured": true
+    },
+    {
+      "handle": "jbl",
+      "name": "JBL",
+      "categories": ["audio"],
+      "warranty_support": "Harman India Service (1-Year Official Warranty)",
+      "official_domain": "in.jbl.com",
+      "featured": true
+    },
+    {
+      "handle": "boat",
+      "name": "boAt",
+      "categories": ["audio", "power-charging", "accessories-storage"],
+      "warranty_support": "boAt 1-Year Pickup & Drop Warranty",
+      "official_domain": "boat-lifestyle.com",
+      "featured": true
+    },
+    {
+      "handle": "keychron",
+      "name": "Keychron",
+      "categories": ["keyboards-mice"],
+      "warranty_support": "Keychron India 1-Year Replacement Warranty",
+      "official_domain": "keychron.in",
+      "featured": true
+    },
+    {
+      "handle": "logitech",
+      "name": "Logitech",
+      "categories": ["keyboards-mice", "accessories-storage"],
+      "warranty_support": "Logitech India 1–3 Year Hardware Warranty",
+      "official_domain": "logitech.com/en-in",
+      "featured": true
+    },
+    {
+      "handle": "razer",
+      "name": "Razer",
+      "categories": ["keyboards-mice", "audio"],
+      "warranty_support": "Razer India 2-Year Authorized Warranty",
+      "official_domain": "razer.com",
+      "featured": false
+    },
+    {
+      "handle": "anker",
+      "name": "Anker",
+      "categories": ["power-charging", "audio"],
+      "warranty_support": "Anker 18-Month Brand Replacement Warranty",
+      "official_domain": "ankerindia.com",
+      "featured": true
+    },
+    {
+      "handle": "belkin",
+      "name": "Belkin",
+      "categories": ["power-charging", "accessories-storage"],
+      "warranty_support": "Belkin 2-Year Connected Equipment Warranty",
+      "official_domain": "belkin.com/in",
+      "featured": true
+    },
+    {
+      "handle": "portronics",
+      "name": "Portronics",
+      "categories": ["power-charging", "keyboards-mice", "accessories-storage"],
+      "warranty_support": "Portronics India 1-Year Official Warranty",
+      "official_domain": "portronics.com",
+      "featured": true
+    },
+    {
+      "handle": "spigen",
+      "name": "Spigen",
+      "categories": ["accessories-storage", "power-charging"],
+      "warranty_support": "Spigen India Original Authentic Protection",
+      "official_domain": "spigen.in",
+      "featured": true
+    },
+    {
+      "handle": "sandisk",
+      "name": "SanDisk",
+      "categories": ["accessories-storage"],
+      "warranty_support": "SanDisk India 5-Year Limited Hardware Warranty",
+      "official_domain": "sandisk.com",
+      "featured": true
+    }
   ]
 }

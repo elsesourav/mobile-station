@@ -31,9 +31,9 @@
       "compare_fields": ["device_type", "output_wattage", "capacity_mah", "ports_summary", "protocols", "cable_rating_watt", "bis_certified"]
     },
     "accessories-storage": {
-      "filters": ["brand", "accessory_type", "capacity_gb", "magsafe_compatible", "interface", "price_range"],
+      "filters": ["brand", "accessory_type", "capacity_gb", "magsafe_compatible", "interface", "water_resistance", "price_range", "in_stock"],
       "quick_card_specs": ["accessory_type", "material", "capacity_gb"],
-      "compare_fields": ["accessory_type", "compatible_devices", "material", "capacity_gb", "read_speed_mbps", "interface", "magsafe_compatible"]
+      "compare_fields": ["accessory_type", "compatible_devices", "material", "capacity_gb", "read_speed_mbps", "interface", "magsafe_compatible", "battery_days", "water_resistance"]
     }
   }
 }

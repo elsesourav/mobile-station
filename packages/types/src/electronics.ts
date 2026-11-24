@@ -11,6 +11,18 @@ export type WarrantyType = 'brand_authorized' | 'seller_warranty' | 'replacement
 
 export type ProductCondition = 'brand_new_sealed' | 'open_box_verified' | 'certified_refurbished'
 
+export type InventoryTrackingMode = 'imei_serialized' | 'serial_tracked' | 'sku_quantity'
+
+export interface ElectronicsStockDetails {
+  tracking_mode: InventoryTrackingMode
+  warehouse_hub: string
+  warehouse_bin: string
+  low_stock_threshold: number
+  safety_stock: number
+  restock_lead_days: number
+  return_window_days: number
+}
+
 export interface ElectronicsComplianceMetadata {
   brand: string
   model_number: string
@@ -26,6 +38,7 @@ export interface ElectronicsComplianceMetadata {
   emi_eligible: boolean
   cod_eligible: boolean
   country_of_origin?: string
+  stock_details?: ElectronicsStockDetails
 }
 
 export interface MobileSpecs {
@@ -115,7 +128,7 @@ export interface PowerChargerSpecs {
 }
 
 export interface AccessoryStorageSpecs {
-  accessory_type?: 'case_cover' | 'tempered_glass' | 'laptop_sleeve' | 'stand_mount' | 'ssd_hdd' | 'pen_drive_sd' | 'cleaning_kit'
+  accessory_type?: 'case_cover' | 'tempered_glass' | 'laptop_sleeve' | 'stand_mount' | 'ssd_hdd' | 'pen_drive_sd' | 'smartwatch' | 'cleaning_kit'
   compatible_devices?: string[]
   material?: string
   capacity_gb?: number
@@ -123,6 +136,9 @@ export interface AccessoryStorageSpecs {
   write_speed_mbps?: number
   interface?: string
   magsafe_compatible?: boolean
+  display_size_inches?: number
+  water_resistance?: string
+  battery_days?: number
 }
 
 export interface ElectronicsProductMetadata extends Partial<ElectronicsComplianceMetadata> {
