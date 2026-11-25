@@ -3,6 +3,13 @@ import type { MedusaRequest, MedusaResponse, MedusaNextFunction } from '@medusaj
 import { Sentry } from '../instrument'
 
 export default defineMiddlewares({
+  routes: [
+    {
+      matcher: '/admin/showcase/upload',
+      methods: ['POST'],
+      bodyParser: { sizeLimit: '50mb' },
+    },
+  ],
   errorHandler: async (
     err: Error & { status?: number; statusCode?: number },
     req: MedusaRequest,

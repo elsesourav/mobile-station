@@ -26,8 +26,10 @@ import type {
   StorefrontProduct,
   StorefrontTrustBadge,
 } from '@/lib/catalog'
+import type { ShowcaseEntryDTO } from '@mobile-station/types'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
 import { ProductCard } from '@/components/ProductCard'
+import { ShowcaseSpotlightSection } from '@/components/ShowcaseSection'
 
 const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Smartphone,
@@ -61,6 +63,7 @@ interface CatalogBrowserProps {
   heroBanners: StorefrontHeroBanner[]
   trustBadges: StorefrontTrustBadge[]
   offers: StorefrontOffer[]
+  featuredShowcase?: ShowcaseEntryDTO[]
 }
 
 export function CatalogBrowser({
@@ -70,6 +73,7 @@ export function CatalogBrowser({
   heroBanners,
   trustBadges,
   offers,
+  featuredShowcase = [],
 }: CatalogBrowserProps) {
   const [heroIdx, setHeroIdx] = useState(0)
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
@@ -462,6 +466,20 @@ export function CatalogBrowser({
           </>
         )}
       </section>
+
+      <div className="border-t border-chrome-200 bg-surface-muted/40">
+        <ShowcaseSpotlightSection
+          title="Verified Video Feedback &amp; Muzaffarpur Store Visits"
+          subtitle="Real open-box IMEI inspections, buyer unboxings, and Motijheel (842001) &amp; Club Road (842002) desk experiences uploaded by our hub team."
+          badgeLabel="Community &amp; Hub Proof"
+          badgeKind="feedback"
+          items={featuredShowcase}
+          primaryHref="/feedback"
+          primaryLabel="Watch Customer Video Feedback"
+          secondaryHref="/gallery"
+          secondaryLabel="Explore Store Visit Gallery"
+        />
+      </div>
     </StorefrontChrome>
   )
 }

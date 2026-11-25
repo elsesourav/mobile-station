@@ -2,7 +2,11 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ArrowLeft, Clock, MapPin, PackageCheck, ShieldCheck, Store } from 'lucide-react'
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
+import { fetchShowcaseFeed } from '@/lib/showcase'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
+import { ShowcaseSpotlightSection } from '@/components/ShowcaseSection'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Muzaffarpur Flagship Hub & Tech Centers',
@@ -10,7 +14,11 @@ export const metadata: Metadata = {
     'Visit Mobile Station at Motijheel (842001) & Club Road (842002) in Muzaffarpur, Bihar for instant pickup, open-box testing, and authorized warranty assistance.',
 }
 
-export default function MuzaffarpurHubPage() {
+export default async function MuzaffarpurHubPage() {
+  const { items: storeVisitItems } = await fetchShowcaseFeed({
+    entry_type: 'store_visit',
+    limit: 3,
+  })
   return (
     <StorefrontChrome>
       <section className="bg-obsidian-900 text-ink-inverse border-b border-obsidian-800">
@@ -111,6 +119,20 @@ export default function MuzaffarpurHubPage() {
           </div>
         </article>
       </section>
+
+      <div className="border-t border-chrome-200 bg-surface-muted/40">
+        <ShowcaseSpotlightSection
+          title="Recent Store Visits &amp; Open-Box Desk Highlights"
+          subtitle="Live customer pickups, sealed IMEI checks, and Keychron / Sony audio demos from Motijheel (842001) &amp; Club Road (842002)."
+          badgeLabel="Live Hub Gallery"
+          badgeKind="gallery"
+          items={storeVisitItems}
+          primaryHref="/gallery"
+          primaryLabel="Open Full Store Gallery"
+          secondaryHref="/feedback"
+          secondaryLabel="Customer Video Feedback"
+        />
+      </div>
     </StorefrontChrome>
   )
 }

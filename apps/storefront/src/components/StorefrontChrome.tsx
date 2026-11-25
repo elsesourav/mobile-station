@@ -140,7 +140,19 @@ export function StorefrontChrome({
             )}
           </form>
 
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            <Link
+              href="/feedback"
+              className="hidden xl:inline-flex items-center rounded-full border border-obsidian-700 bg-obsidian-800 px-3 py-1 text-xs text-chrome-200 hover:border-gold-500 hover:text-gold-500 transition whitespace-nowrap"
+            >
+              Video Reviews
+            </Link>
+            <Link
+              href="/gallery"
+              className="hidden xl:inline-flex items-center rounded-full border border-obsidian-700 bg-obsidian-800 px-3 py-1 text-xs text-chrome-200 hover:border-gold-500 hover:text-gold-500 transition whitespace-nowrap"
+            >
+              Store Gallery
+            </Link>
             <Link
               href="/offers"
               className="hidden lg:inline-flex items-center rounded-full border border-obsidian-700 bg-obsidian-800 px-3 py-1 text-xs text-chrome-200 hover:border-gold-500 hover:text-gold-500 transition whitespace-nowrap"
@@ -309,6 +321,16 @@ export function StorefrontChrome({
               <li>
                 <Link href="/offers" className="hover:text-gold-500">
                   Active Bank & Promo Offers
+                </Link>
+              </li>
+              <li>
+                <Link href="/feedback" className="hover:text-gold-500">
+                  Customer Video Feedback
+                </Link>
+              </li>
+              <li>
+                <Link href="/gallery" className="hover:text-gold-500">
+                  Muzaffarpur Store Visit Gallery
                 </Link>
               </li>
             </ul>

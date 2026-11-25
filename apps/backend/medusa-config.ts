@@ -88,11 +88,11 @@ export default defineConfig({
     databaseUrl: normalizedDatabaseUrl,
     redisUrl: process.env.REDIS_URL,
     http: {
-      storeCors: process.env.STORE_CORS || 'http://localhost:3000',
+      storeCors: process.env.STORE_CORS || 'http://localhost:3000,http://localhost:3001',
       adminCors: process.env.ADMIN_CORS || 'http://localhost:5173,http://localhost:9000',
       authCors:
         process.env.AUTH_CORS ||
-        'http://localhost:3000,http://localhost:5173,http://localhost:9000',
+        'http://localhost:3000,http://localhost:3001,http://localhost:5173,http://localhost:9000',
       jwtSecret: process.env.JWT_SECRET || 'mobile-station-dev-jwt-secret-change-in-prod',
       cookieSecret: process.env.COOKIE_SECRET || 'mobile-station-dev-cookie-secret-change-in-prod',
     },
@@ -112,6 +112,9 @@ export default defineConfig({
     },
   },
   modules: [
+    {
+      resolve: './src/modules/showcase',
+    },
     {
       resolve: '@medusajs/medusa/file',
       options: {

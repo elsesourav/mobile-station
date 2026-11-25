@@ -1,0 +1,35 @@
+import { model } from '@medusajs/framework/utils'
+import {
+  SHOWCASE_CATEGORIES,
+  SHOWCASE_ENTRY_TYPES,
+  SHOWCASE_HUB_LOCATIONS,
+  SHOWCASE_MEDIA_KINDS,
+  SHOWCASE_STATUSES,
+} from '@mobile-station/types'
+
+export const ShowcaseEntry = model.define('showcase_entry', {
+  id: model.id().primaryKey(),
+  entry_type: model.enum([...SHOWCASE_ENTRY_TYPES]),
+  category: model.enum([...SHOWCASE_CATEGORIES]),
+  media_kind: model.enum([...SHOWCASE_MEDIA_KINDS]).default('video'),
+  status: model.enum([...SHOWCASE_STATUSES]).default('published'),
+  title: model.text().searchable(),
+  quote_or_caption: model.text().searchable(),
+  author_name: model.text().searchable(),
+  author_city: model.text().default('Muzaffarpur, Bihar'),
+  hub_location: model.enum([...SHOWCASE_HUB_LOCATIONS]).default('motijheel-842001'),
+  rating: model.number().nullable(),
+  product_handle: model.text().nullable(),
+  product_title: model.text().nullable(),
+  media_url: model.text().nullable(),
+  media_public_id: model.text().nullable(),
+  thumbnail_url: model.text().nullable(),
+  duration_seconds: model.float().nullable(),
+  media_width: model.number().nullable(),
+  media_height: model.number().nullable(),
+  mime_type: model.text().nullable(),
+  is_featured: model.boolean().default(false),
+  is_verified_buyer: model.boolean().default(true),
+  display_order: model.number().default(100),
+  visited_at: model.dateTime().nullable(),
+})

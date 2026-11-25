@@ -6,7 +6,10 @@ import {
   getProductByHandle,
   getProductsByCategory,
 } from '@/lib/catalog'
+import { fetchShowcaseFeed } from '@/lib/showcase'
 import { ProductDetailClient } from '@/components/ProductDetailClient'
+
+export const revalidate = 30
 
 export function generateStaticParams() {
   return ALL_PRODUCTS.map((p) => ({ handle: p.handle }))
@@ -39,8 +42,17 @@ export default async function ProductPage({
   const related = getProductsByCategory(product.category_handle)
     .filter((p) => p.handle !== product.handle)
     .slice(0, 4)
+  const { items: productShowcase } = await fetchShowcaseFeed({
+    product_handle: product.handle,
+    limit: 3,
+  })
 
   return (
-    <ProductDetailClient product={product} category={category} relatedProducts={related} />
+    <ProductDetailClient
+      product={product}
+      category={category}
+      relatedProducts={related}
+      productShowcase={productShowcase}
+    />
   )
 }

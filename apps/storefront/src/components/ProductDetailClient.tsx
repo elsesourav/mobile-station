@@ -20,14 +20,17 @@ import {
   type StorefrontProduct,
 } from '@/lib/catalog'
 import { discountPercent, formatINR, monthlyEmiPreview } from '@/lib/format'
+import type { ShowcaseEntryDTO } from '@mobile-station/types'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
 import { ProductCard } from '@/components/ProductCard'
+import { ShowcaseSpotlightSection } from '@/components/ShowcaseSection'
 import { useCart } from '@/components/CartContext'
 
 interface ProductDetailClientProps {
   product: StorefrontProduct
   category?: StorefrontCategory
   relatedProducts: StorefrontProduct[]
+  productShowcase?: ShowcaseEntryDTO[]
 }
 
 const SPEC_LABELS: Record<string, string> = {
@@ -179,6 +182,7 @@ export function ProductDetailClient({
   product,
   category,
   relatedProducts,
+  productShowcase = [],
 }: ProductDetailClientProps) {
   const [variantIdx, setVariantIdx] = useState(0)
   const [pincode, setPincode] = useState('842001')
@@ -475,6 +479,21 @@ export function ProductDetailClient({
             </div>
           </div>
         </section>
+
+        {/* Linked Customer Video Feedback */}
+        {productShowcase.length > 0 && (
+          <div className="rounded-lg border border-chrome-200 bg-surface-muted/40 overflow-hidden">
+            <ShowcaseSpotlightSection
+              title={`Verified Customer Feedback for ${product.title}`}
+              subtitle="Recorded unboxings and Muzaffarpur / Pan-India buyer impressions."
+              badgeLabel="Customer Video & Buyer Proof"
+              badgeKind="feedback"
+              items={productShowcase}
+              primaryHref="/feedback"
+              primaryLabel="View All Video Reviews"
+            />
+          </div>
+        )}
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
