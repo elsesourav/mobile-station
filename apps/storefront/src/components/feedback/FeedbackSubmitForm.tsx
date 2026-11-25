@@ -222,7 +222,7 @@ export function FeedbackSubmitForm() {
           value={formState.quote_or_caption}
           onChange={(e) => setFormState((prev) => ({ ...prev, quote_or_caption: e.target.value }))}
           placeholder="Tell fellow tech buyers about box sealing, delivery speed, GST invoice ITC, or store demo help..."
-          className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-ink-primary focus:border-gold-500 focus:outline-none"
+          className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-ink-primary focus:border-gold-500 focus:outline-none ms-scrollbar"
         />
       </label>
 

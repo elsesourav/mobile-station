@@ -12,9 +12,35 @@ interface CategoryProductRailProps {
   products: StorefrontProduct[]
 }
 
+function RailArrowButton({
+  direction,
+  categoryName,
+  onClick,
+}: {
+  direction: 'prev' | 'next'
+  categoryName: string
+  onClick: () => void
+}) {
+  const isPrev = direction === 'prev'
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={`Scroll ${categoryName} ${isPrev ? 'left' : 'right'}`}
+      title={isPrev ? 'Scroll left' : 'Scroll right'}
+      className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 z-20 items-center justify-center w-8 h-8 rounded-full bg-surface-card/95 backdrop-blur-xs text-ink-primary border border-chrome-300 shadow-card cursor-pointer opacity-0 pointer-events-none transition-all duration-200 ease-out group-hover/rail:opacity-100 group-hover/rail:translate-x-0 group-hover/rail:pointer-events-auto group-focus-within/rail:opacity-100 group-focus-within/rail:translate-x-0 group-focus-within/rail:pointer-events-auto hover:bg-obsidian-900 hover:text-gold-500 hover:border-gold-500 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 ${
+        isPrev ? 'left-1.5 -translate-x-1.5' : 'right-1.5 translate-x-1.5'
+      }`}
+    >
+      {isPrev ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+    </button>
+  )
+}
+
 /**
- * Horizontal category product strip with touch/mouse drag-to-scroll on mobile
- * and circular left/right slider arrows on tablet and desktop viewports.
+ * Horizontal category product strip with touch/mouse drag-to-scroll on mobile/tablet
+ * and hover-activated UI-themed slider arrows on desktop.
  */
 export function CategoryProductRail({ category, products }: CategoryProductRailProps) {
   const railRef = useRef<HTMLDivElement>(null)
@@ -88,7 +114,7 @@ export function CategoryProductRail({ category, products }: CategoryProductRailP
   return (
     <section
       aria-label={`${category.name} products`}
-      className="page-container py-5 space-y-3.5"
+      className="group/rail page-container py-5 space-y-3.5"
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5 min-w-0">
@@ -114,29 +140,21 @@ export function CategoryProductRail({ category, products }: CategoryProductRailP
         </Link>
       </div>
 
-      <div className="relative group/rail">
+      <div className="relative">
         {canScrollLeft && (
-          <button
-            type="button"
+          <RailArrowButton
+            direction="prev"
+            categoryName={category.name}
             onClick={() => scrollByDirection('prev')}
-            aria-label={`Scroll ${category.name} left`}
-            title="Scroll left"
-            className="hidden md:flex absolute left-1.5 top-1/2 -translate-y-1/2 z-20 items-center justify-center w-9 h-9 rounded-full bg-obsidian-900/90 text-ink-inverse border border-gold-500/40 shadow-card hover:border-gold-500 hover:scale-105 active:scale-95 transition"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
+          />
         )}
 
         {canScrollRight && (
-          <button
-            type="button"
+          <RailArrowButton
+            direction="next"
+            categoryName={category.name}
             onClick={() => scrollByDirection('next')}
-            aria-label={`Scroll ${category.name} right`}
-            title="Scroll right"
-            className="hidden md:flex absolute right-1.5 top-1/2 -translate-y-1/2 z-20 items-center justify-center w-9 h-9 rounded-full bg-obsidian-900/90 text-ink-inverse border border-gold-500/40 shadow-card hover:border-gold-500 hover:scale-105 active:scale-95 transition"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+          />
         )}
 
         <div
@@ -148,7 +166,7 @@ export function CategoryProductRail({ category, products }: CategoryProductRailP
           onMouseLeave={stopDrag}
           onClickCapture={handleTrackClickCapture}
           onDragStart={(e) => e.preventDefault()}
-          className="flex gap-3 sm:gap-4 overflow-x-auto touch-pan-x no-scrollbar scroll-smooth snap-x snap-mandatory cursor-grab active:cursor-grabbing py-0.5"
+          className="flex gap-3 sm:gap-4 overflow-x-auto touch-pan-x ms-scrollbar-x scroll-smooth snap-x snap-mandatory cursor-grab active:cursor-grabbing pt-0.5 pb-2.5"
         >
           {products.map((product) => (
             <MinimalProductCard

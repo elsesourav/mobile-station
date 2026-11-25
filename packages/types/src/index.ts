@@ -1,4 +1,5 @@
 export * from './electronics'
+export * from './recommendations'
 export * from './validations'
 export * from './showcase'
 export * from './store-catalog'

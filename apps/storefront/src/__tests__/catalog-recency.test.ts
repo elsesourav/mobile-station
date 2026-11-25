@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { StorefrontProduct } from '@mobile-station/types'
 import { ALL_PRODUCTS, sortProductsByRecency } from '../lib/catalog'
+import { resolveRecentProductsLimit } from '../components/catalog/RecentProductsLazyGrid'
 
 function mockDatedProduct(
   handle: string,
@@ -43,6 +44,13 @@ describe('Homepage recent product ordering and caps', () => {
     const sorted = sortProductsByRecency(ALL_PRODUCTS)
     expect(sorted.length).toBe(ALL_PRODUCTS.length)
     expect(sorted[0].handle).toBe(ALL_PRODUCTS[0].handle)
-    expect(sorted.slice(0, 30).length).toBe(30)
+  })
+
+  it('caps recent products to 50 on mobile and 100 on desktop bounded by available total', () => {
+    expect(resolveRecentProductsLimit(false, 120)).toBe(50)
+    expect(resolveRecentProductsLimit(true, 120)).toBe(100)
+    expect(resolveRecentProductsLimit(false, 51)).toBe(50)
+    expect(resolveRecentProductsLimit(true, 51)).toBe(51)
+    expect(resolveRecentProductsLimit(false, 20)).toBe(20)
   })
 })

@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google'
 import React from 'react'
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
 import { CartProvider } from '@/components/CartContext'
+import { BehaviorProvider } from '@/context/BehaviorContext'
 import { HeaderScrollProvider } from '@/context/HeaderScrollContext'
 import '../styles/globals.css'
 
@@ -86,9 +87,11 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-surface-canvas text-ink-primary antialiased">
-        <CartProvider>
-          <HeaderScrollProvider>{children}</HeaderScrollProvider>
-        </CartProvider>
+        <BehaviorProvider>
+          <CartProvider>
+            <HeaderScrollProvider>{children}</HeaderScrollProvider>
+          </CartProvider>
+        </BehaviorProvider>
       </body>
     </html>
   )

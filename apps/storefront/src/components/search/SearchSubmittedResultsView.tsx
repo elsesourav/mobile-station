@@ -46,7 +46,7 @@ export function SearchSubmittedResultsView({
         </div>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+      <div className="flex gap-2 overflow-x-auto pb-2 ms-scrollbar-x">
         {categoryOptions.map((cat) => {
           const isSelected = selectedCategory === cat.handle
           return (

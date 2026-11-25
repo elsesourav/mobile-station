@@ -5,6 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowLeft, Search, X } from 'lucide-react'
 import type { StorefrontProduct } from '@mobile-station/types'
 import { useCart } from '@/components/CartContext'
+import { useOptionalBehavior } from '@/context/BehaviorContext'
+import { EMPTY_BEHAVIOR_PROFILE } from '@/lib/recommendations/behavior'
+import { getHomeRecommendations } from '@/lib/recommendations/engine'
 import {
   buildSearchCategoryOptions,
   computeSearchResults,
@@ -27,7 +30,8 @@ import type { SearchClientViewProps, SearchSortOption } from '@/types/search'
 export function SearchClientView({ initialProducts, categories }: SearchClientViewProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { addItem, openCart } = useCart()
+  const { items: cartItems, addItem, openCart } = useCart()
+  const behavior = useOptionalBehavior()
 
   const initialQuery = searchParams?.get('q') ?? ''
   const initialCategory = searchParams?.get('category') ?? 'all'
@@ -106,7 +110,17 @@ export function SearchClientView({ initialProducts, categories }: SearchClientVi
     [initialProducts, query, selectedCategory, selectedSort, isSubmitted]
   )
 
-  const popularPicks = useMemo(() => initialProducts.slice(0, 6), [initialProducts])
+  const popularPicks = useMemo(
+    () =>
+      getHomeRecommendations(
+        initialProducts,
+        behavior?.profile ?? EMPTY_BEHAVIOR_PROFILE,
+        cartItems,
+        {},
+        6
+      ).map((entry) => entry.product),
+    [initialProducts, behavior?.profile, cartItems]
+  )
 
   const pushSearchUrl = useCallback(
     (term: string, categoryHandle: string) => {
@@ -125,10 +139,11 @@ export function SearchClientView({ initialProducts, categories }: SearchClientVi
       if (!clean) return
       const activeCat = categoryOverride ?? selectedCategory
       saveRecentSearch(clean)
+      behavior?.trackSearchQuery(clean)
       setIsSubmitted(true)
       pushSearchUrl(clean, activeCat)
     },
-    [saveRecentSearch, selectedCategory, pushSearchUrl]
+    [saveRecentSearch, behavior, selectedCategory, pushSearchUrl]
   )
 
   const handleSelectSuggestion = useCallback(

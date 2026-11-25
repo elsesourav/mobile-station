@@ -217,7 +217,7 @@ export function WhatsAppSupportWidget() {
                 onChange={(e) => setMessageBody(e.target.value)}
                 placeholder="Describe your question or issue..."
                 aria-label="WhatsApp message"
-                className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-xs text-ink-primary placeholder:text-ink-muted focus:border-gold-500 focus:outline-none resize-none"
+                className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-xs text-ink-primary placeholder:text-ink-muted focus:border-gold-500 focus:outline-none resize-none ms-scrollbar"
               />
             </div>
 

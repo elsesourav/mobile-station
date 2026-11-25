@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import type { CartContextValue, CartItem, NewCartItemInput } from '@mobile-station/types'
 import { CartDrawer } from '@/components/cart/CartDrawer'
+import { useOptionalBehavior } from '@/context/BehaviorContext'
 
 const CartContext = createContext<CartContextValue | null>(null)
 const STORAGE_KEY = 'mobile_station_cart_v1'
@@ -10,6 +11,7 @@ const STORAGE_KEY = 'mobile_station_cart_v1'
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [isOpen, setIsOpen] = useState(false)
+  const behavior = useOptionalBehavior()
 
   useEffect(() => {
     try {
@@ -32,6 +34,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items])
 
   const addItem = (incomingItem: NewCartItemInput) => {
+    behavior?.trackCartAdd({
+      productHandle: incomingItem.productHandle,
+      brand: incomingItem.brand,
+    })
     setItems((prevItems) => {
       const existing = prevItems.find((item) => item.sku === incomingItem.sku)
       if (existing) {
@@ -97,6 +103,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         onClose={() => setIsOpen(false)}
         onUpdateQuantity={updateQuantity}
         onRemoveItem={removeItem}
+        onAddItem={addItem}
       />
     </CartContext.Provider>
   )

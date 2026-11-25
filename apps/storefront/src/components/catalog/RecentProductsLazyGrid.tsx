@@ -4,26 +4,58 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import type { StorefrontProduct } from '@mobile-station/types'
 import { MinimalProductCard } from '@/components/catalog/MinimalProductCard'
 
+const DESKTOP_MEDIA_QUERY = '(min-width: 1024px)'
+
+export function resolveRecentProductsLimit(
+  isDesktop: boolean,
+  availableCount: number,
+  mobileLimit = 50,
+  desktopLimit = 100
+): number {
+  const cap = isDesktop ? desktopLimit : mobileLimit
+  return Math.max(0, Math.min(availableCount, cap))
+}
+
 interface RecentProductsLazyGridProps {
   products: StorefrontProduct[]
-  maxProducts?: number
+  mobileLimit?: number
+  desktopLimit?: number
   batchSize?: number
   staggerMs?: number
 }
 
 /**
- * Displays up to 30 recently updated products lazily, unlocking batches on scroll
- * and revealing each card slowly one by one.
+ * Displays recently updated products lazily by device viewport (up to 50 on mobile/tablet
+ * and up to 100 on desktop when available), unlocking batches on scroll and revealing slowly one by one.
  */
 export function RecentProductsLazyGrid({
   products,
-  maxProducts = 30,
+  mobileLimit = 50,
+  desktopLimit = 100,
   batchSize = 8,
   staggerMs = 170,
 }: RecentProductsLazyGridProps) {
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return
+    const media = window.matchMedia(DESKTOP_MEDIA_QUERY)
+    const updateMatches = () => setIsDesktop(media.matches)
+    updateMatches()
+    media.addEventListener('change', updateMatches)
+    return () => media.removeEventListener('change', updateMatches)
+  }, [])
+
+  const targetLimit = resolveRecentProductsLimit(
+    isDesktop,
+    products.length,
+    mobileLimit,
+    desktopLimit
+  )
+
   const cappedProducts = useMemo(
-    () => products.slice(0, maxProducts),
-    [products, maxProducts]
+    () => products.slice(0, targetLimit),
+    [products, targetLimit]
   )
   const totalCount = cappedProducts.length
 
@@ -35,7 +67,7 @@ export function RecentProductsLazyGrid({
   const [batchLimit, setBatchLimit] = useState(0)
   const [revealedCount, setRevealedCount] = useState(0)
 
-  // Reset cleanly if product list shrinks/changes
+  // Keep counts bounded when viewport switches between mobile (50) and desktop (100)
   useEffect(() => {
     setBatchLimit((prev) => Math.min(prev, totalCount))
     setRevealedCount((prev) => Math.min(prev, totalCount))
@@ -127,19 +159,13 @@ export function RecentProductsLazyGrid({
       aria-label="Recently Updated Products"
       className="page-container scroll-mt-28 py-8 space-y-5"
     >
-      <div className="flex flex-wrap items-end justify-between gap-3 border-t border-chrome-200 pt-7">
-        <div>
-          <h2 className="font-display text-xl sm:text-2xl font-bold text-ink-primary">
-            Recently Updated Products
-          </h2>
-          <p className="text-xs sm:text-sm text-ink-muted mt-0.5">
-            Tap any product to view full specifications, variants &amp; availability
-          </p>
-        </div>
-
-        <span className="font-mono text-[11px] font-medium text-ink-muted tabular-nums">
-          {revealedCount} / {totalCount} Loaded
-        </span>
+      <div className="border-t border-chrome-200 pt-7">
+        <h2 className="font-display text-xl sm:text-2xl font-bold text-ink-primary">
+          Recently Updated Products
+        </h2>
+        <p className="text-xs sm:text-sm text-ink-muted mt-0.5">
+          Tap any product to view full specifications, variants &amp; availability
+        </p>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">

@@ -26,8 +26,8 @@ function SliderArrowButton({
       }}
       title={isPrev ? 'Previous slide' : 'Next slide'}
       aria-label={isPrev ? 'Previous banner slide' : 'Next banner slide'}
-      className={`hidden md:flex absolute top-1/2 -translate-y-1/2 z-30 items-center justify-center w-9 h-9 lg:w-10 lg:h-10 rounded-full bg-obsidian-900/90 text-ink-inverse border border-gold-500/40 shadow-card cursor-pointer hover:border-gold-500 hover:scale-105 active:scale-95 transition-transform duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 ${
-        isPrev ? 'left-3 lg:left-4' : 'right-3 lg:right-4'
+      className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 z-30 items-center justify-center w-9 h-9 rounded-full bg-obsidian-900/90 text-ink-inverse border border-gold-500/40 shadow-card cursor-pointer opacity-0 pointer-events-none transition-all duration-200 ease-out group-hover/hero-slider:opacity-100 group-hover/hero-slider:translate-x-0 group-hover/hero-slider:pointer-events-auto group-focus-within/hero-slider:opacity-100 group-focus-within/hero-slider:translate-x-0 group-focus-within/hero-slider:pointer-events-auto hover:border-gold-500 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 ${
+        isPrev ? 'left-3 lg:left-4 -translate-x-2' : 'right-3 lg:right-4 translate-x-2'
       }`}
     >
       {isPrev ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
@@ -244,7 +244,7 @@ export function HeroSpotlightSlider({
       onPointerLeave={(e) => {
         if (e.pointerType === 'mouse' && !isDragging) setIsPaused(false)
       }}
-      className={`w-full bg-surface-canvas pt-4 sm:pt-5 pb-1.5 select-none ${className}`}
+      className={`group/hero-slider w-full bg-surface-canvas pt-4 sm:pt-5 pb-1.5 select-none ${className}`}
     >
       <div className="page-container">
         <div

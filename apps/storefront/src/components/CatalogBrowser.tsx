@@ -19,6 +19,8 @@ import { MinimalProductCard } from '@/components/catalog/MinimalProductCard'
 import { CategoryProductRail } from '@/components/catalog/CategoryProductRail'
 import { RecentProductsLazyGrid } from '@/components/catalog/RecentProductsLazyGrid'
 import { CleanFeedbackSection } from '@/components/showcase/CleanFeedbackSection'
+import { PersonalizedHomeSection } from '@/components/recommendations/PersonalizedHomeSection'
+import { useOptionalBehavior } from '@/context/BehaviorContext'
 
 interface CatalogBrowserProps {
   products: StorefrontProduct[]
@@ -41,6 +43,7 @@ export function CatalogBrowser({
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [selectedBrand, setSelectedBrand] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const behavior = useOptionalBehavior()
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -127,6 +130,7 @@ export function CatalogBrowser({
   const handleCategorySelect = (categoryHandle: string) => {
     setSelectedCategory(categoryHandle)
     setSelectedBrand('all')
+    behavior?.trackCategoryBrowse(categoryHandle)
     const targetId = categoryHandle === 'all' ? 'categories' : 'catalog'
     const targetElement = document.getElementById(targetId)
     if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -349,6 +353,8 @@ export function CatalogBrowser({
         </>
       ) : (
         <>
+          <PersonalizedHomeSection products={products} />
+
           {/* Per-Category Horizontal Rails (Max 10 Recent Products Each) */}
           <div id="catalog" className="scroll-mt-28 divide-y divide-chrome-200/70">
             {categories.map((category) => (
@@ -360,8 +366,8 @@ export function CatalogBrowser({
             ))}
           </div>
 
-          {/* Lazy-Loading Recent 30 Products Revealed One by One */}
-          <RecentProductsLazyGrid products={recentProducts} maxProducts={30} />
+          {/* Lazy-Loading Recent Products (50 on Mobile/Tablet, 100 on Desktop) Revealed One by One */}
+          <RecentProductsLazyGrid products={recentProducts} />
         </>
       )}
 

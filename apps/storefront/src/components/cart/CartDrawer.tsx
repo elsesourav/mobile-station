@@ -1,10 +1,15 @@
 'use client'
 
+import { useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Minus, Plus, ShieldCheck, ShoppingBag, Trash2, X } from 'lucide-react'
-import type { CartItem } from '@mobile-station/types'
+import { Minus, Plus, ShieldCheck, ShoppingBag, Sparkles, Trash2, X } from 'lucide-react'
+import type { CartItem, NewCartItemInput, StorefrontProduct } from '@mobile-station/types'
+import { ALL_PRODUCTS } from '@/lib/catalog'
 import { formatINR } from '@/lib/format'
+import { EMPTY_BEHAVIOR_PROFILE } from '@/lib/recommendations/behavior'
+import { getCartCrossSellRecommendations } from '@/lib/recommendations/engine'
+import { useOptionalBehavior } from '@/context/BehaviorContext'
 
 interface CartDrawerProps {
   isOpen: boolean
@@ -15,6 +20,7 @@ interface CartDrawerProps {
   onClose: () => void
   onUpdateQuantity: (sku: string, delta: number) => void
   onRemoveItem: (sku: string) => void
+  onAddItem?: (incomingItem: NewCartItemInput) => void
 }
 
 export function CartDrawer({
@@ -26,7 +32,35 @@ export function CartDrawer({
   onClose,
   onUpdateQuantity,
   onRemoveItem,
+  onAddItem,
 }: CartDrawerProps) {
+  const behavior = useOptionalBehavior()
+  const crossSells = useMemo(() => {
+    if (!isOpen || items.length === 0) return []
+    return getCartCrossSellRecommendations(
+      items,
+      ALL_PRODUCTS,
+      behavior?.profile ?? EMPTY_BEHAVIOR_PROFILE,
+      3
+    )
+  }, [isOpen, items, behavior?.profile])
+
+  const handleQuickAddCrossSell = (product: StorefrontProduct) => {
+    const variant = product.variants[0]
+    if (!variant || !onAddItem) return
+    onAddItem({
+      sku: variant.sku,
+      productHandle: product.handle,
+      title: product.title,
+      variantTitle: variant.title,
+      brand: product.metadata.brand,
+      price_paise: variant.price_paise,
+      mrp_paise: variant.mrp_paise,
+      thumbnail: product.thumbnail,
+      requires_open_box_delivery: product.metadata.requires_open_box_delivery,
+    })
+  }
+
   if (!isOpen) return null
 
   return (
@@ -54,7 +88,7 @@ export function CartDrawer({
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        <div className="flex-1 overflow-y-auto ms-scrollbar p-4 space-y-3">
           {items.length === 0 ? (
             <div className="py-16 text-center space-y-3">
               <ShoppingBag className="h-10 w-10 mx-auto text-chrome-400" />
@@ -132,6 +166,59 @@ export function CartDrawer({
                 </div>
               </div>
             ))
+          )}
+
+          {items.length > 0 && crossSells.length > 0 && (
+            <div className="pt-3 mt-2 border-t border-chrome-200 space-y-2.5">
+              <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gold-700">
+                <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                <span>Recommended Accessories For Your Cart</span>
+              </div>
+
+              <div className="space-y-2">
+                {crossSells.map(({ product: acc, explanation }) => {
+                  const variant = acc.variants[0]
+                  if (!variant) return null
+                  return (
+                    <div
+                      key={acc.handle}
+                      className="flex items-center gap-2.5 rounded-md border border-chrome-200 bg-surface-card p-2"
+                    >
+                      <Image
+                        src={acc.thumbnail}
+                        alt={acc.title}
+                        width={44}
+                        height={44}
+                        className="w-11 h-11 rounded-xs border border-chrome-200 bg-surface-card object-contain p-0.5 shrink-0"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <Link
+                          href={`/products/${acc.handle}`}
+                          onClick={onClose}
+                          className="font-display text-[11.5px] font-bold text-ink-primary hover:text-gold-700 line-clamp-1"
+                        >
+                          {acc.title}
+                        </Link>
+                        <p className="text-[10px] text-ink-muted line-clamp-1">{explanation}</p>
+                        <p className="font-mono text-[11px] font-bold text-ink-primary tabular-nums mt-0.5">
+                          {formatINR(variant.price_paise)}
+                        </p>
+                      </div>
+                      {onAddItem && (
+                        <button
+                          type="button"
+                          onClick={() => handleQuickAddCrossSell(acc)}
+                          className="inline-flex min-h-[34px] items-center gap-1 rounded-sm bg-obsidian-900 px-2.5 py-1 text-[11px] font-bold text-gold-500 hover:bg-obsidian-800 transition shrink-0"
+                        >
+                          <Plus className="w-3 h-3" />
+                          <span>Add</span>
+                        </button>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
           )}
         </div>
 

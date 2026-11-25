@@ -78,7 +78,7 @@ export function MobileMenuDrawer({
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
+        <div className="flex-1 overflow-y-auto ms-scrollbar-dark px-4 py-4 space-y-6">
           <div>
             <p className="font-mono text-[11px] font-bold text-gold-500 uppercase tracking-wider px-2 mb-2">
               Shop Electronics Categories

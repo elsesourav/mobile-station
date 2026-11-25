@@ -1,9 +1,10 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Box, CheckCircle2, ShieldCheck } from 'lucide-react'
+import { useOptionalBehavior } from '@/context/BehaviorContext'
 import type {
   StorefrontBrand,
   StorefrontCategory,
@@ -28,6 +29,12 @@ export function CategoryPageClient({ category, products, brands }: CategoryPageC
   const [selectedSub, setSelectedSub] = useState<string>('all')
   const [selectedBrand, setSelectedBrand] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const behavior = useOptionalBehavior()
+  const trackCategoryBrowse = behavior?.trackCategoryBrowse
+
+  useEffect(() => {
+    trackCategoryBrowse?.(category.handle)
+  }, [category.handle, trackCategoryBrowse])
 
   const subScopedProducts = useMemo(() => {
     if (selectedSub === 'all') return products

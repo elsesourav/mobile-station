@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Box, CheckCircle2 } from 'lucide-react'
@@ -13,22 +13,22 @@ import { checkDeliveryServiceability, computeGstSplit } from '@/lib/catalog'
 import { discountPercent } from '@/lib/format'
 import { buildVariantSpecificationRows } from '@/lib/product-specs'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
-import { ProductCard } from '@/components/ProductCard'
 import { ProductPurchaseBox } from '@/components/product/ProductPurchaseBox'
+import { PdpRecommendationsSection } from '@/components/recommendations/PdpRecommendationsSection'
 import { ShowcaseSpotlightSection } from '@/components/showcase/ShowcaseSpotlightSection'
 import { useCart } from '@/components/CartContext'
+import { useOptionalBehavior } from '@/context/BehaviorContext'
 
 interface ProductDetailClientProps {
   product: StorefrontProduct
   category?: StorefrontCategory
-  relatedProducts: StorefrontProduct[]
+  relatedProducts?: StorefrontProduct[]
   productShowcase?: ShowcaseEntryDTO[]
 }
 
 export function ProductDetailClient({
   product,
   category,
-  relatedProducts,
   productShowcase = [],
 }: ProductDetailClientProps) {
   const [selectedVariantIdx, setSelectedVariantIdx] = useState(0)
@@ -36,6 +36,12 @@ export function ProductDetailClient({
   const [deliveryInfo, setDeliveryInfo] = useState(() => checkDeliveryServiceability('842001'))
   const [intraStateGst, setIntraStateGst] = useState(true)
   const { addItem, openCart } = useCart()
+  const behavior = useOptionalBehavior()
+  const trackProductView = behavior?.trackProductView
+
+  useEffect(() => {
+    trackProductView?.(product)
+  }, [product, trackProductView])
 
   const activeVariant = product.variants[selectedVariantIdx] ?? product.variants[0]
   const discountPct = discountPercent(activeVariant.mrp_paise, activeVariant.price_paise)
@@ -193,16 +199,7 @@ export function ProductDetailClient({
           </div>
         )}
 
-        {relatedProducts.length > 0 && (
-          <section className="space-y-4">
-            <h2 className="font-display text-xl font-bold">More in {category?.name}</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {relatedProducts.map((relatedProduct) => (
-                <ProductCard key={relatedProduct.handle} product={relatedProduct} />
-              ))}
-            </div>
-          </section>
-        )}
+        <PdpRecommendationsSection product={product} categoryName={category?.name} />
       </div>
     </StorefrontChrome>
   )

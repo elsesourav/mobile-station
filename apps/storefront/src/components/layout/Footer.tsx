@@ -45,7 +45,7 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
       aria-label="Site Footer"
       className={`w-full bg-obsidian-950 text-ink-inverse border-t border-obsidian-800 ${className}`}
     >
-      <div className="w-full px-4 sm:px-6 md:px-8 pb-24 pt-8 lg:pb-12 lg:pt-12">
+      <div className="w-full px-4 sm:px-6 md:px-8 pb-32 pt-8 lg:pb-12 lg:pt-12">
         <div className="max-w-content mx-auto">
           {/* Desktop Footer (>= 1024px) */}
           <div className="hidden lg:grid grid-cols-12 gap-8 xl:gap-16 pb-10">
