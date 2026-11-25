@@ -1,9 +1,14 @@
+import type { ReactNode } from 'react'
 import type {
   ShowcaseCategory,
   ShowcaseEntryDTO,
   ShowcaseEntryType,
   ShowcaseHubLocation,
   ShowcaseSummaryStats,
+  StorefrontAnnouncement,
+  StorefrontHeroBanner,
+  StorefrontOffer,
+  StorefrontTrustBadge,
 } from '@mobile-station/types'
 
 export interface ShowcaseQueryOptions {
@@ -47,4 +52,88 @@ export interface SpecificationRow {
   key: string
   label: string
   formattedValue: string
+}
+
+export interface HeaderScrollState {
+  isTopNavVisible: boolean
+  isBottomNavVisible: boolean
+  showIcons: boolean
+  showAnnouncement: boolean
+  isAtTop: boolean
+  selectedCategory: string
+}
+
+export interface HeaderScrollContextValue extends HeaderScrollState {
+  setSelectedCategory: (category: string) => void
+  resetHeaderScroll: () => void
+  isMobileMenuOpen: boolean
+  openMobileMenu: () => void
+  closeMobileMenu: () => void
+}
+
+export interface StorefrontShellProps {
+  children: ReactNode
+  activeCategoryHandle?: string
+  searchValue?: string
+  onSearchChange?: (query: string) => void
+  onCategorySelect?: (handle: string) => void
+}
+
+export interface AnnouncementBarProps {
+  items?: StorefrontAnnouncement[]
+  speedSeconds?: number
+  pauseOnHover?: boolean
+  className?: string
+}
+
+export interface StorefrontHeaderProps {
+  activeCategoryHandle?: string
+  searchValue?: string
+  onSearchChange?: (query: string) => void
+  onCategorySelect?: (handle: string) => void
+  onSearchSubmit: (event: React.FormEvent) => void
+  onOpenMobileMenu: () => void
+  className?: string
+}
+
+export interface StorefrontFooterProps {
+  className?: string
+}
+
+export interface MobileMenuDrawerProps {
+  isOpen: boolean
+  onClose: () => void
+  activeCategoryHandle?: string
+  onCategorySelect?: (handle: string) => void
+}
+
+export interface MobileBottomNavProps {
+  activeCategoryHandle?: string
+  onOpenMobileMenu: () => void
+  alwaysVisible?: boolean
+  className?: string
+}
+
+export interface RotatingSearchPlaceholderProps {
+  keywords: readonly string[]
+  isDesktop?: boolean
+  visible: boolean
+  isPaused?: boolean
+}
+
+export interface HeroSpotlightSliderProps {
+  heroBanners: StorefrontHeroBanner[]
+  activeHeroIdx?: number
+  onSelectHero?: (index: number) => void
+  offers: StorefrontOffer[]
+  categoryCount: number
+  trustBadges: StorefrontTrustBadge[]
+  autoPlayIntervalMs?: number
+  className?: string
+}
+
+export interface HeroValuePropsRibbonProps {
+  trustBadges: StorefrontTrustBadge[]
+  offers: StorefrontOffer[]
+  categoryCount: number
 }

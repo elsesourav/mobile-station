@@ -136,4 +136,24 @@
   .ms-spec-row:nth-child(odd) {
     background-color: var(--color-surface-muted);
   }
+
+  .ms-marquee-track {
+    will-change: transform;
+    contain: layout paint;
+  }
+
+  @keyframes heroProgressBar {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .hero-progress-bar {
+    animation-name: heroProgressBar;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
 }

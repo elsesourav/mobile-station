@@ -32,6 +32,27 @@
   --color-text-disabled:  #94A3B8;
   --color-text-inverse:   #F8FAFC; /* Text on obsidian dark sections */
 
+  /* ─── 3b. RGB Channels for Tailwind `<alpha-value>` Opacity Modifiers ───── */
+  --rgb-obsidian-950:     6 9 15;
+  --rgb-obsidian-900:     11 15 23;
+  --rgb-obsidian-800:     19 26 38;
+  --rgb-obsidian-700:     30 41 59;
+  --rgb-gold-100:         254 243 199;
+  --rgb-gold-500:         229 160 29;
+  --rgb-gold-600:         201 131 11;
+  --rgb-gold-700:         161 98 7;
+  --rgb-chrome-200:       226 232 240;
+  --rgb-chrome-300:       203 213 225;
+  --rgb-chrome-400:       148 163 184;
+  --rgb-surface-canvas:   248 250 252;
+  --rgb-surface-card:     255 255 255;
+  --rgb-surface-muted:    241 245 249;
+  --rgb-text-primary:     15 23 42;
+  --rgb-text-secondary:   51 65 85;
+  --rgb-text-muted:       100 116 139;
+  --rgb-text-disabled:    148 163 184;
+  --rgb-text-inverse:     248 250 252;
+
   /* ─── 4. E-Commerce Pricing, Stock & Trust Semantic Tokens ──────────────── */
   --color-price-active:   #0F172A;
   --color-price-savings:  #047857; /* "Save 28% / No-Cost EMI" emerald */

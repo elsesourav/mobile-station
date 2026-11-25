@@ -145,7 +145,7 @@ export function CatalogBrowser({
       />
 
       {/* Zero-Orphan Responsive 7-Category Showcase Grid */}
-      <section id="categories" className="page-container py-10 space-y-5">
+      <section id="categories" className="page-container scroll-mt-28 py-10 space-y-5">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="font-display text-2xl font-bold">Shop by Electronics Category</h2>
@@ -266,7 +266,7 @@ export function CatalogBrowser({
       </section>
 
       {/* Catalog Product Grid */}
-      <section id="catalog" className="page-container pb-14 space-y-5">
+      <section id="catalog" className="page-container scroll-mt-28 pb-14 space-y-5">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="font-display text-2xl font-bold">

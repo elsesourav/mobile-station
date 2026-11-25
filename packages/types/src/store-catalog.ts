@@ -105,6 +105,11 @@ export interface StorefrontHeroBanner {
   cta_text: string
   cta_route: string
   image_url?: string
+  mobile_image_url?: string
+  bg_color?: string
+  accent_color?: string
+  display_order?: number
+  is_active?: boolean
 }
 
 export interface StorefrontAnnouncement {

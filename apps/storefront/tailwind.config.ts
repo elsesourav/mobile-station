@@ -10,33 +10,33 @@ const config: Config = {
     extend: {
       colors: {
         obsidian: {
-          950: 'var(--color-obsidian-950)',
-          900: 'var(--color-obsidian-900)',
-          800: 'var(--color-obsidian-800)',
-          700: 'var(--color-obsidian-700)',
+          950: 'rgb(var(--rgb-obsidian-950) / <alpha-value>)',
+          900: 'rgb(var(--rgb-obsidian-900) / <alpha-value>)',
+          800: 'rgb(var(--rgb-obsidian-800) / <alpha-value>)',
+          700: 'rgb(var(--rgb-obsidian-700) / <alpha-value>)',
         },
         gold: {
-          100: 'var(--color-gold-100)',
-          500: 'var(--color-gold-500)',
-          600: 'var(--color-gold-600)',
-          700: 'var(--color-gold-700)',
+          100: 'rgb(var(--rgb-gold-100) / <alpha-value>)',
+          500: 'rgb(var(--rgb-gold-500) / <alpha-value>)',
+          600: 'rgb(var(--rgb-gold-600) / <alpha-value>)',
+          700: 'rgb(var(--rgb-gold-700) / <alpha-value>)',
         },
         chrome: {
-          200: 'var(--color-chrome-200)',
-          300: 'var(--color-chrome-300)',
-          400: 'var(--color-chrome-400)',
+          200: 'rgb(var(--rgb-chrome-200) / <alpha-value>)',
+          300: 'rgb(var(--rgb-chrome-300) / <alpha-value>)',
+          400: 'rgb(var(--rgb-chrome-400) / <alpha-value>)',
         },
         surface: {
-          canvas: 'var(--color-surface-canvas)',
-          card: 'var(--color-surface-card)',
-          muted: 'var(--color-surface-muted)',
+          canvas: 'rgb(var(--rgb-surface-canvas) / <alpha-value>)',
+          card: 'rgb(var(--rgb-surface-card) / <alpha-value>)',
+          muted: 'rgb(var(--rgb-surface-muted) / <alpha-value>)',
         },
         ink: {
-          primary: 'var(--color-text-primary)',
-          secondary: 'var(--color-text-secondary)',
-          muted: 'var(--color-text-muted)',
-          disabled: 'var(--color-text-disabled)',
-          inverse: 'var(--color-text-inverse)',
+          primary: 'rgb(var(--rgb-text-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--rgb-text-secondary) / <alpha-value>)',
+          muted: 'rgb(var(--rgb-text-muted) / <alpha-value>)',
+          disabled: 'rgb(var(--rgb-text-disabled) / <alpha-value>)',
+          inverse: 'rgb(var(--rgb-text-inverse) / <alpha-value>)',
         },
         commerce: {
           savings: 'var(--color-price-savings)',
@@ -84,6 +84,25 @@ const config: Config = {
         'mobile-max': { max: '640px' },
         tablet: '641px',
         desktop: '1025px',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translate3d(0, 0, 0)' },
+          '100%': { transform: 'translate3d(-50%, 0, 0)' },
+        },
+        hintSlideIn: {
+          '0%': { transform: 'translateY(75%)', opacity: '0' },
+          '100%': { transform: 'translateY(0%)', opacity: '1' },
+        },
+        hintSlideOut: {
+          '0%': { transform: 'translateY(0%)', opacity: '1' },
+          '100%': { transform: 'translateY(-75%)', opacity: '0' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 32s linear infinite',
+        'hint-in': 'hintSlideIn 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'hint-out': 'hintSlideOut 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
     },
   },
