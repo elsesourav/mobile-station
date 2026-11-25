@@ -83,8 +83,8 @@
 
   /* ─── 9. Z-Index Scale ─────────────────────────────────────────────────── */
   --z-header:  50;
-  --z-drawer:  60;
-  --z-modal:   70;
-  --z-toast:   80;
-  --z-tooltip: 90;
+  --z-drawer:  100000;
+  --z-modal:   100010;
+  --z-toast:   100020;
+  --z-tooltip: 100030;
 }

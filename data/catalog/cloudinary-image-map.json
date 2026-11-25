@@ -610,12 +610,12 @@
       "group": "products",
       "handle": "samsung-galaxy-watch7-bluetooth",
       "public_id": "mobile-station/products/samsung-galaxy-watch7-bluetooth",
-      "secure_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553687/mobile-station/products/samsung-galaxy-watch7-bluetooth.webp",
-      "width": 1440,
-      "height": 641,
-      "format": "webp",
+      "secure_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795570979/mobile-station/products/samsung-galaxy-watch7-bluetooth.png",
+      "width": 492,
+      "height": 492,
+      "format": "png",
       "bytes": 28156,
-      "source_url": "https://images.samsung.com/is/image/samsung/assets/us/2407/watches/fresh7/06272024/Watch7_FT02_performance-hero-stillframe_PC.jpg"
+      "source_url": "https://images.samsung.com/is/image/samsung/p6pim/ph/2407/gallery/ph-galaxy-watch7-l310-sm-l310nzgaasa-thumb-542245339?$492_492_PNG$"
     },
     "categories/smartphones": {
       "key": "categories/smartphones",
