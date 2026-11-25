@@ -221,17 +221,19 @@ export function Header({
           >
             <Image
               src={MOBILE_STATION_BRAND.assets.icon}
-              alt="MS emblem"
-              width={44}
+              alt="MS"
+              width={48}
               height={22}
+              unoptimized
               className="h-7 w-auto shrink-0 object-contain select-none"
               priority
             />
             <Image
               src={MOBILE_STATION_BRAND.assets.wordmark}
               alt="Mobile Station"
-              width={210}
+              width={236}
               height={24}
+              unoptimized
               className="h-6 w-auto object-contain select-none"
               priority
             />
@@ -294,17 +296,19 @@ export function Header({
           >
             <Image
               src={MOBILE_STATION_BRAND.assets.icon}
-              alt="MS emblem"
-              width={40}
+              alt="MS"
+              width={48}
               height={22}
+              unoptimized
               className="h-6 w-auto shrink-0 object-contain select-none"
               priority
             />
             <Image
               src={MOBILE_STATION_BRAND.assets.wordmark}
               alt="Mobile Station"
-              width={180}
-              height={22}
+              width={198}
+              height={20}
+              unoptimized
               className="hidden sm:block h-5 w-auto object-contain select-none"
               priority
             />

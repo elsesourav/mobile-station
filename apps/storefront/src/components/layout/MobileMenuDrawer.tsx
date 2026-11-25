@@ -55,16 +55,20 @@ export function MobileMenuDrawer({
           <Link href="/" onClick={onClose} className="flex items-center gap-2 min-w-0">
             <Image
               src={MOBILE_STATION_BRAND.assets.icon}
-              alt="MS emblem"
-              width={36}
+              alt="MS"
+              width={44}
               height={20}
+              unoptimized
+              loading="eager"
               className="h-6 w-auto shrink-0 object-contain"
             />
             <Image
               src={MOBILE_STATION_BRAND.assets.wordmark}
               alt="Mobile Station"
-              width={160}
-              height={20}
+              width={158}
+              height={16}
+              unoptimized
+              loading="eager"
               className="h-4 w-auto object-contain"
             />
           </Link>

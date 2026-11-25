@@ -22,24 +22,13 @@ import {
   SmartphonesIcon,
   TabletsIcon,
 } from '@/components/icons/CategoryIcons'
-import {
-  WhatsAppLogoIcon,
-  buildWhatsAppChatUrl,
-} from '@/components/support/WhatsAppSupportWidget'
 import type { StorefrontFooterProps } from '@/types/storefront'
 
 /**
- * Obsidian 3-column Desktop + compact 2-column Mobile/Tablet Footer with custom category SVG icons,
- * hub/policy icons, and direct WhatsApp support access.
+ * Obsidian 3-column Desktop + compact 2-column Mobile/Tablet Footer with custom category SVG icons
+ * and contrast-safe unoptimized static brand imagery.
  */
 export function Footer({ className = '' }: StorefrontFooterProps) {
-  const whatsappNumber =
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || MOBILE_STATION_BRAND.support.whatsappNumber
-  const whatsappHref = buildWhatsAppChatUrl(
-    whatsappNumber,
-    `Hello ${MOBILE_STATION_BRAND.name} Support, I need assistance.`
-  )
-
   return (
     <footer
       aria-label="Site Footer"
@@ -54,16 +43,20 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
               <Link href="/" aria-label="Mobile Station Home" className="inline-flex items-center gap-2.5">
                 <Image
                   src={MOBILE_STATION_BRAND.assets.icon}
-                  alt="MS emblem"
-                  width={44}
+                  alt="MS"
+                  width={48}
                   height={22}
+                  unoptimized
+                  loading="eager"
                   className="h-7 w-auto shrink-0 object-contain"
                 />
                 <Image
                   src={MOBILE_STATION_BRAND.assets.wordmark}
                   alt="Mobile Station"
-                  width={200}
+                  width={236}
                   height={24}
+                  unoptimized
+                  loading="eager"
                   className="h-6 w-auto object-contain"
                 />
               </Link>
@@ -89,15 +82,6 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
                   <Receipt className="w-3.5 h-3.5 text-gold-500 shrink-0" />
                   <span>18% GST Invoices</span>
                 </span>
-                <a
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-full bg-commerce-whatsapp/15 border border-commerce-whatsapp/40 px-3 py-1 text-commerce-whatsapp hover:bg-commerce-whatsapp hover:text-ink-inverse transition font-medium"
-                >
-                  <WhatsAppLogoIcon className="w-3.5 h-3.5 shrink-0" />
-                  <span>WhatsApp Support</span>
-                </a>
               </div>
             </div>
 
@@ -224,50 +208,37 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
                     <span>Open-Box Verification Guide</span>
                   </Link>
                 </li>
-                <li>
-                  <a
-                    href={whatsappHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
-                  >
-                    <WhatsAppLogoIcon className="w-4 h-4 text-commerce-whatsapp shrink-0" />
-                    <span>Chat on WhatsApp</span>
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
 
           {/* Mobile & Tablet Compact Footer (< 1024px) */}
           <div className="block lg:hidden space-y-4 pb-4">
-            <div className="flex items-center justify-between gap-2 flex-wrap">
-              <Link href="/" aria-label="Mobile Station Home" className="flex items-center gap-1.5 shrink-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <Link href="/" aria-label="Mobile Station Home" className="inline-flex items-center gap-1.5 shrink-0">
                 <Image
                   src={MOBILE_STATION_BRAND.assets.icon}
-                  alt="MS emblem"
-                  width={34}
+                  alt="MS"
+                  width={39}
                   height={18}
+                  unoptimized
+                  loading="eager"
                   className="h-5 w-auto shrink-0 object-contain"
                 />
                 <Image
                   src={MOBILE_STATION_BRAND.assets.wordmark}
                   alt="Mobile Station"
-                  width={150}
-                  height={18}
+                  width={158}
+                  height={16}
+                  unoptimized
+                  loading="eager"
                   className="h-4 w-auto object-contain"
                 />
               </Link>
-
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full bg-commerce-whatsapp/15 border border-commerce-whatsapp/40 px-2.5 py-1 text-[11px] font-semibold text-commerce-whatsapp"
-              >
-                <WhatsAppLogoIcon className="w-3.5 h-3.5 shrink-0" />
-                <span>WhatsApp Help</span>
-              </a>
+              <span className="w-1.5 h-1.5 rounded-full bg-gold-500 shrink-0" />
+              <span className="text-[11px] font-semibold text-gold-500">
+                Factory Sealed Tech
+              </span>
             </div>
 
             <p className="text-[11.5px] text-chrome-300 leading-snug">
@@ -352,7 +323,7 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
           <div aria-hidden="true" className="h-[1px] w-full bg-obsidian-800 my-3 md:my-6" />
 
           {/* Desktop Bottom Legal Bar (>= 1024px) */}
-          <div className="hidden lg:flex items-center justify-between gap-4 text-xs text-chrome-400 pt-1 lg:pr-20">
+          <div className="hidden lg:flex items-center justify-between gap-4 text-xs text-chrome-400 pt-1">
             <span>© 2026 {MOBILE_STATION_BRAND.name} Electronics Commerce. Muzaffarpur, Bihar. All rights reserved.</span>
             <div className="flex items-center gap-4 text-[11px] text-chrome-300">
               <Link href="/policies/warranty" className="underline hover:text-gold-500 transition-colors">
