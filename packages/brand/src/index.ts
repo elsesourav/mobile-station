@@ -18,6 +18,11 @@ export const MOBILE_STATION_BRAND = {
     state: 'Bihar',
     pincode: '842002',
   },
+  support: {
+    whatsappNumber: '919900000000',
+    displayPhone: '+91 99000 00000',
+    hours: '10:00 AM – 8:30 PM IST',
+  },
   palette: {
     obsidian: '#0B0F17',
     obsidianElevated: '#131A26',

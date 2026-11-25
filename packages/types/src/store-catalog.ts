@@ -54,6 +54,8 @@ export interface StorefrontProduct {
   images: string[]
   metadata: StorefrontProductMetadata
   variants: StorefrontVariant[]
+  created_at?: string
+  updated_at?: string
 }
 
 export interface CategoryInventoryPolicy {
@@ -99,15 +101,10 @@ export interface StorefrontBrand {
 
 export interface StorefrontHeroBanner {
   id: string
-  tag: string
-  title: string
-  subtitle: string
-  cta_text: string
-  cta_route: string
-  image_url?: string
+  image_url: string
   mobile_image_url?: string
-  bg_color?: string
-  accent_color?: string
+  cta_route?: string
+  alt?: string
   display_order?: number
   is_active?: boolean
 }

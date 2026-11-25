@@ -1,41 +1,26 @@
 [
   {
     "id": "hero_flagship_mobiles",
-    "tag": "AUTHORIZED TECH RETAILER",
-    "title": "Flagship Smartphones. Zero Compromise.",
-    "subtitle": "Factory-sealed 5G smartphones with official India warranty, insured Open-Box Delivery, and instant No-Cost EMI.",
-    "cta_text": "Shop 5G Smartphones",
+    "alt": "Flagship 5G Smartphones",
     "cta_route": "/categories/smartphones",
-    "bg_color": "#0B0F17",
-    "accent_color": "#E5A01D",
+    "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553698/mobile-station/banners/hero_flagship_mobiles.jpg",
     "display_order": 1,
-    "is_active": true,
-    "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553698/mobile-station/banners/hero_flagship_mobiles.jpg"
+    "is_active": true
   },
   {
     "id": "hero_laptops_workstation",
-    "tag": "PRO WORK & GAMING RIGS",
-    "title": "Laptops Built to Ship & Dominate.",
-    "subtitle": "Apple MacBook Air M3, Lenovo LOQ RTX Gaming, ASUS Vivobook OLED, and HP Aero with 18% GST Business Invoice.",
-    "cta_text": "Explore Laptops",
+    "alt": "Laptops & Workstations",
     "cta_route": "/categories/laptops",
-    "bg_color": "#131A26",
-    "accent_color": "#E5A01D",
+    "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553700/mobile-station/banners/hero_laptops_workstation.jpg",
     "display_order": 2,
-    "is_active": true,
-    "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553700/mobile-station/banners/hero_laptops_workstation.jpg"
+    "is_active": true
   },
   {
     "id": "hero_peripherals_audio",
-    "tag": "DESK & AUDIO UPGRADES",
-    "title": "Mechanical Precision & Pure ANC Audio.",
-    "subtitle": "Keychron QMK/VIA mechanical keyboards, Logitech MX & Lightspeed mice, Sony & Sennheiser ANC headphones, and GaN chargers.",
-    "cta_text": "Browse Peripherals",
+    "alt": "Mechanical Keyboards & ANC Audio",
     "cta_route": "/categories/keyboards-mice",
-    "bg_color": "#0F172A",
-    "accent_color": "#CBD5E1",
+    "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553702/mobile-station/banners/hero_peripherals_audio.jpg",
     "display_order": 3,
-    "is_active": true,
-    "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553702/mobile-station/banners/hero_peripherals_audio.jpg"
+    "is_active": true
   }
 ]

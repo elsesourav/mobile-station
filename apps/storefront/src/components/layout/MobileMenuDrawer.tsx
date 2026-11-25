@@ -9,11 +9,13 @@ import {
   MapPin,
   Percent,
   ShieldCheck,
+  User,
   Video,
   X,
 } from 'lucide-react'
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
 import { ALL_CATEGORIES } from '@/lib/catalog'
+import { CategoryIcon } from '@/components/icons/CategoryIcons'
 import type { MobileMenuDrawerProps } from '@/types/storefront'
 
 /**
@@ -99,8 +101,16 @@ export function MobileMenuDrawer({
                             : 'text-chrome-200 hover:bg-obsidian-800 hover:text-gold-500'
                         }`}
                       >
-                        <span>{category.name}</span>
-                        <ChevronRight className="w-4 h-4 text-chrome-400" />
+                        <span className="flex items-center gap-2.5 min-w-0">
+                          <CategoryIcon
+                            name={category.name}
+                            handle={category.handle}
+                            iconKey={category.icon}
+                            className="w-4 h-4 text-gold-500 shrink-0"
+                          />
+                          <span className="truncate">{category.name}</span>
+                        </span>
+                        <ChevronRight className="w-4 h-4 text-chrome-400 shrink-0" />
                       </button>
                     </li>
                   )
@@ -117,8 +127,16 @@ export function MobileMenuDrawer({
                           : 'text-chrome-200 hover:bg-obsidian-800 hover:text-gold-500'
                       }`}
                     >
-                      <span>{category.name}</span>
-                      <ChevronRight className="w-4 h-4 text-chrome-400" />
+                      <span className="flex items-center gap-2.5 min-w-0">
+                        <CategoryIcon
+                          name={category.name}
+                          handle={category.handle}
+                          iconKey={category.icon}
+                          className="w-4 h-4 text-gold-500 shrink-0"
+                        />
+                        <span className="truncate">{category.name}</span>
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-chrome-400 shrink-0" />
                     </Link>
                   </li>
                 )
@@ -128,9 +146,19 @@ export function MobileMenuDrawer({
 
           <div className="border-t border-obsidian-800 pt-4">
             <p className="font-mono text-[11px] font-bold text-gold-500 uppercase tracking-wider px-2 mb-2">
-              Store Proof &amp; Offers
+              Account, Proof &amp; Offers
             </p>
             <ul className="space-y-1 text-xs font-medium text-chrome-200">
+              <li>
+                <Link
+                  href="/account"
+                  onClick={onClose}
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-sm hover:bg-obsidian-800 hover:text-gold-500 transition"
+                >
+                  <User className="w-4 h-4 text-gold-500 shrink-0" />
+                  <span>My Account &amp; GST Profile</span>
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/feedback"

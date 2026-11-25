@@ -11,11 +11,13 @@ import React, {
 import { usePathname } from 'next/navigation'
 import type { HeaderScrollContextValue, HeaderScrollState } from '@/types/storefront'
 
+export const DEFAULT_SHOW_ANNOUNCEMENT_BAR = false
+
 const INITIAL_STATE: HeaderScrollState = {
   isTopNavVisible: true,
   isBottomNavVisible: false,
   showIcons: true,
-  showAnnouncement: true,
+  showAnnouncement: DEFAULT_SHOW_ANNOUNCEMENT_BAR,
   isAtTop: true,
   selectedCategory: '',
 }
@@ -119,7 +121,7 @@ export function HeaderScrollProvider({ children }: { children: React.ReactNode }
         }
 
         const nextShowIcons = nextAtTop
-        const nextShowAnnouncement = nextAtTop
+        const nextShowAnnouncement = DEFAULT_SHOW_ANNOUNCEMENT_BAR && nextAtTop
 
         lastScrollYRef.current = currentY
 

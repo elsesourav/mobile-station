@@ -4,34 +4,14 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import {
-  BatteryCharging,
-  Headphones,
-  Keyboard,
-  Laptop,
-  LayoutGrid,
-  Menu,
-  ShieldCheck,
-  ShoppingCart,
-  Smartphone,
-  Tablet,
-} from 'lucide-react'
+import { ShoppingCart, User } from 'lucide-react'
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
 import { ALL_CATEGORIES } from '@/lib/catalog'
 import { useCart } from '@/components/CartContext'
 import { useOptionalHeaderScroll } from '@/context/HeaderScrollContext'
+import { AllTechIcon, resolveCategoryIcon } from '@/components/icons/CategoryIcons'
 import { RotatingSearchBar } from '@/components/layout/RotatingSearchBar'
 import type { StorefrontHeaderProps } from '@/types/storefront'
-
-const CATEGORY_ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
-  Smartphone,
-  Tablet,
-  Laptop,
-  Headphones,
-  Keyboard,
-  BatteryCharging,
-  ShieldCheck,
-}
 
 const NAV_SHORT_NAMES: Record<string, string> = {
   smartphones: 'Smartphones',
@@ -44,10 +24,9 @@ const NAV_SHORT_NAMES: Record<string, string> = {
 }
 
 /**
- * Glorov-style 3-tier Obsidian Header:
- * 1. Top 3px brushed gold hairline bar.
- * 2. Top row with contrast-safe wordmark, pill search with rotating keywords, and right actions.
- * 3. Horizontally scrollable Category Strip with collapsible icon badges & edge fade gradients.
+ * 2-tier Obsidian Header:
+ * 1. Top row with contrast-safe wordmark, pill search with rotating keywords, and Account + Cart actions.
+ * 2. Horizontally scrollable Category Strip with collapsible icon badges & edge fade gradients.
  */
 export function Header({
   activeCategoryHandle,
@@ -55,7 +34,6 @@ export function Header({
   onSearchChange,
   onCategorySelect,
   onSearchSubmit,
-  onOpenMobileMenu,
   className = '',
 }: StorefrontHeaderProps) {
   const pathname = usePathname()
@@ -162,7 +140,7 @@ export function Header({
           }`}
         >
           <IconComponent
-            className={`w-[17px] h-[17px] transition-colors duration-150 ${
+            className={`w-[19px] h-[19px] transition-colors duration-150 ${
               isActive ? 'text-gold-500' : 'text-chrome-300 group-hover:text-gold-500'
             }`}
           />
@@ -229,8 +207,6 @@ export function Header({
 
   return (
     <header className={`w-full bg-obsidian-900 text-ink-inverse border-b border-obsidian-800 ${className}`}>
-      <div aria-hidden="true" className="h-[3px] w-full bg-gold-500 shrink-0" />
-
       {/* 1. Desktop Top Row (>= 1024px) */}
       <div className="hidden lg:flex w-full h-[60px] items-center bg-obsidian-900 px-6">
         <div className="w-full max-w-content mx-auto flex items-center justify-between gap-6">
@@ -273,33 +249,29 @@ export function Header({
 
           <div className="flex items-center gap-2 shrink-0">
             <Link
-              href="/feedback"
-              className="inline-flex items-center rounded-full border border-obsidian-700 bg-obsidian-800 px-3 py-1.5 text-xs font-medium text-chrome-200 hover:border-gold-500 hover:text-gold-500 transition whitespace-nowrap"
+              href="/account"
+              aria-label="Account"
+              title="Account & Orders"
+              className={`inline-flex items-center gap-2 h-10 rounded-full border px-3.5 text-xs font-medium transition whitespace-nowrap active:scale-95 ${
+                pathname === '/account'
+                  ? 'border-gold-500 bg-obsidian-800 text-gold-500'
+                  : 'border-obsidian-700 bg-obsidian-800 text-chrome-200 hover:border-gold-500 hover:text-gold-500'
+              }`}
             >
-              Video Reviews
-            </Link>
-            <Link
-              href="/gallery"
-              className="inline-flex items-center rounded-full border border-obsidian-700 bg-obsidian-800 px-3 py-1.5 text-xs font-medium text-chrome-200 hover:border-gold-500 hover:text-gold-500 transition whitespace-nowrap"
-            >
-              Store Gallery
-            </Link>
-            <Link
-              href="/offers"
-              className="inline-flex items-center rounded-full border border-obsidian-700 bg-obsidian-800 px-3 py-1.5 text-xs font-medium text-chrome-200 hover:border-gold-500 hover:text-gold-500 transition whitespace-nowrap"
-            >
-              Offers &amp; GST
+              <User className="w-[17px] h-[17px] shrink-0" />
+              <span>Account</span>
             </Link>
             <button
               type="button"
               onClick={openCart}
               aria-label={`Cart, ${totalCount} items`}
               title="Open Shopping Cart"
-              className="relative flex items-center justify-center w-10 h-10 rounded-full border border-obsidian-700 bg-obsidian-800 text-chrome-200 hover:border-gold-500 hover:text-gold-500 active:scale-90 transition"
+              className="relative inline-flex items-center gap-2 h-10 rounded-full border border-obsidian-700 bg-obsidian-800 px-3.5 text-xs font-medium text-chrome-200 hover:border-gold-500 hover:text-gold-500 active:scale-95 transition whitespace-nowrap"
             >
-              <ShoppingCart className="w-[19px] h-[19px]" />
+              <ShoppingCart className="w-[17px] h-[17px] shrink-0" />
+              <span>Cart</span>
               {totalCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-gold-500 text-obsidian-950 text-[10px] font-bold flex items-center justify-center">
+                <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-gold-500 text-obsidian-950 text-[10px] font-bold flex items-center justify-center tabular-nums">
                   {totalCount}
                 </span>
               )}
@@ -309,17 +281,8 @@ export function Header({
       </div>
 
       {/* 2. Mobile & Tablet Single Top Row (< 1024px) */}
-      <div className="flex lg:hidden w-full h-[52px] items-center bg-obsidian-900 px-2.5 sm:px-4">
+      <div className="flex lg:hidden w-full h-[52px] items-center bg-obsidian-900 px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-3 w-full">
-          <button
-            type="button"
-            onClick={onOpenMobileMenu}
-            aria-label="Open store navigation menu"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-chrome-200 hover:bg-obsidian-800 hover:text-gold-500 active:scale-90 transition shrink-0"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-
           <Link
             href="/"
             aria-label="Mobile Station Home"
@@ -357,19 +320,37 @@ export function Header({
             className="flex-1 min-w-0"
           />
 
-          <button
-            type="button"
-            onClick={openCart}
-            aria-label={`Cart, ${totalCount} items`}
-            className="relative flex items-center justify-center w-9 h-9 rounded-full text-chrome-200 hover:bg-obsidian-800 hover:text-gold-500 active:scale-90 transition shrink-0"
-          >
-            <ShoppingCart className="w-5 h-5" />
-            {totalCount > 0 && (
-              <span className="absolute top-0 right-0 min-w-[16px] h-[16px] px-1 rounded-full bg-gold-500 text-obsidian-950 text-[9.5px] font-bold flex items-center justify-center">
-                {totalCount}
-              </span>
-            )}
-          </button>
+          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+            <Link
+              href="/account"
+              aria-label="Account"
+              title="Account & Orders"
+              className={`inline-flex items-center justify-center min-w-[44px] min-h-[44px] sm:w-auto sm:h-9 sm:min-h-[36px] sm:px-3 sm:gap-1.5 rounded-full text-xs font-medium transition shrink-0 active:scale-95 ${
+                pathname === '/account'
+                  ? 'bg-obsidian-800 text-gold-500'
+                  : 'text-chrome-200 hover:bg-obsidian-800 hover:text-gold-500'
+              }`}
+            >
+              <User className="w-5 h-5 sm:w-4 sm:h-4 shrink-0" />
+              <span className="hidden sm:inline">Account</span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={openCart}
+              aria-label={`Cart, ${totalCount} items`}
+              title="Open Shopping Cart"
+              className="relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] sm:w-auto sm:h-9 sm:min-h-[36px] sm:px-3 sm:gap-1.5 rounded-full text-xs font-medium text-chrome-200 hover:bg-obsidian-800 hover:text-gold-500 active:scale-95 transition shrink-0"
+            >
+              <ShoppingCart className="w-5 h-5 sm:w-4 sm:h-4 shrink-0" />
+              <span className="hidden sm:inline">Cart</span>
+              {totalCount > 0 && (
+                <span className="absolute top-1 right-1 sm:static min-w-[16px] h-[16px] px-1 rounded-full bg-gold-500 text-obsidian-950 text-[9.5px] font-bold flex items-center justify-center tabular-nums">
+                  {totalCount}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -406,15 +387,19 @@ export function Header({
               'all',
               'All Tech',
               '/',
-              LayoutGrid,
+              AllTechIcon,
               activeCategoryHandle
                 ? activeCategoryHandle === 'all'
                 : pathname === '/' && (!selectedCategory || selectedCategory === 'all')
             )}
 
             {ALL_CATEGORIES.map((category) => {
-              const Icon = CATEGORY_ICON_MAP[category.icon] ?? Smartphone
               const label = NAV_SHORT_NAMES[category.handle] ?? category.name
+              const Icon = resolveCategoryIcon({
+                name: label,
+                handle: category.handle,
+                iconKey: category.icon,
+              })
               const isActive =
                 activeCategoryHandle === category.handle ||
                 pathname === `/categories/${category.handle}` ||

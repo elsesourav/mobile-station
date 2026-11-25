@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { MapPin, Receipt, ShieldCheck, Sparkles } from 'lucide-react'
 import type { StorefrontAnnouncement } from '@mobile-station/types'
 import { ALL_ANNOUNCEMENTS } from '@/lib/catalog'
-import { useOptionalHeaderScroll } from '@/context/HeaderScrollContext'
+import { useOptionalHeaderScroll, DEFAULT_SHOW_ANNOUNCEMENT_BAR } from '@/context/HeaderScrollContext'
 import type { AnnouncementBarProps } from '@/types/storefront'
 
 function AnnouncementIcon({ id }: { id: string }) {
@@ -41,24 +41,25 @@ function SingleAnnouncement({ item }: { item: StorefrontAnnouncement }) {
  * Continuous GPU-accelerated top announcement bar mirroring Glorov's collapsible marquee.
  */
 export function AnnouncementBar({
+  enabled = DEFAULT_SHOW_ANNOUNCEMENT_BAR,
   items = ALL_ANNOUNCEMENTS,
   speedSeconds = 32,
   pauseOnHover = true,
   className = '',
 }: AnnouncementBarProps) {
   const headerScroll = useOptionalHeaderScroll()
-  const showAnnouncement = headerScroll ? headerScroll.showAnnouncement : true
+  const showAnnouncement = enabled && (headerScroll ? headerScroll.showAnnouncement : true)
 
   const displayItems = useMemo(() => {
-    if (!items || items.length === 0) return []
+    if (!enabled || !items || items.length === 0) return []
     let list = [...items]
     while (list.length < 6) {
       list = [...list, ...items]
     }
     return list
-  }, [items])
+  }, [enabled, items])
 
-  if (displayItems.length === 0) return null
+  if (!enabled || displayItems.length === 0) return null
 
   return (
     <aside

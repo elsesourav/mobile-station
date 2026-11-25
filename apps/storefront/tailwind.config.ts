@@ -49,6 +49,8 @@ const config: Config = {
           warningText: 'var(--color-warning-text)',
           errorBg: 'var(--color-error-bg)',
           errorText: 'var(--color-error-text)',
+          whatsapp: 'var(--color-whatsapp)',
+          whatsappDark: 'var(--color-whatsapp-dark)',
         },
       },
       fontFamily: {
@@ -98,11 +100,16 @@ const config: Config = {
           '0%': { transform: 'translateY(0%)', opacity: '1' },
           '100%': { transform: 'translateY(-75%)', opacity: '0' },
         },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(4px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         marquee: 'marquee 32s linear infinite',
         'hint-in': 'hintSlideIn 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'hint-out': 'hintSlideOut 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        fadeIn: 'fadeIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
     },
   },

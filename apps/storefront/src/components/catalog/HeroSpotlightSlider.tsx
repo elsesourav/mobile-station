@@ -3,9 +3,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { HeroSpotlightSliderProps } from '@/types/storefront'
-import { HeroValuePropsRibbon } from '@/components/catalog/HeroValuePropsRibbon'
 
 function SliderArrowButton({
   direction,
@@ -27,34 +26,36 @@ function SliderArrowButton({
       }}
       title={isPrev ? 'Previous slide' : 'Next slide'}
       aria-label={isPrev ? 'Previous banner slide' : 'Next banner slide'}
-      className={`hidden md:flex absolute top-1/2 -translate-y-1/2 z-30 items-center justify-center w-[42px] h-[42px] rounded-full bg-obsidian-900/90 text-ink-inverse border border-gold-500/40 cursor-pointer hover:border-gold-500 hover:scale-110 active:scale-90 transition-transform duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 ${
-        isPrev ? 'left-4 lg:left-6' : 'right-4 lg:right-6'
+      className={`hidden md:flex absolute top-1/2 -translate-y-1/2 z-30 items-center justify-center w-9 h-9 lg:w-10 lg:h-10 rounded-full bg-obsidian-900/90 text-ink-inverse border border-gold-500/40 shadow-card cursor-pointer hover:border-gold-500 hover:scale-105 active:scale-95 transition-transform duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 ${
+        isPrev ? 'left-3 lg:left-4' : 'right-3 lg:right-4'
       }`}
     >
-      {isPrev ? <ChevronLeft className="w-6 h-6" /> : <ChevronRight className="w-6 h-6" />}
+      {isPrev ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
     </button>
   )
 }
 
 /**
- * Full-width responsive homepage carousel mirroring Glorov's infinite circular HeroBannerSlider
- * with 2-axis touch swipe disambiguation, floating desktop arrows, and animated progress pills.
+ * Pure image-only responsive card carousel whose height scales proportionally with card width
+ * across mobile, tablet, and multi-card desktop screens without cropping.
  */
 export function HeroSpotlightSlider({
   heroBanners,
   activeHeroIdx,
   onSelectHero,
-  offers,
-  categoryCount,
-  trustBadges,
   autoPlayIntervalMs = 6000,
   className = '',
 }: HeroSpotlightSliderProps) {
-  const slidesCount = heroBanners.length
+  const activeBanners = useMemo(
+    () => heroBanners.filter((banner) => banner.is_active !== false),
+    [heroBanners]
+  )
+  const slidesCount = activeBanners.length
   const extendedSlides = useMemo(() => {
-    if (slidesCount <= 1) return heroBanners
-    return [heroBanners[slidesCount - 1], ...heroBanners, heroBanners[0]]
-  }, [heroBanners, slidesCount])
+    if (slidesCount <= 1) return activeBanners
+    // Prefix last slide and duplicate full sequence on the right so multi-card desktop viewports never expose empty space during wraps.
+    return [activeBanners[slidesCount - 1], ...activeBanners, ...activeBanners]
+  }, [activeBanners, slidesCount])
 
   const initialDisplayIndex =
     slidesCount > 1
@@ -79,6 +80,7 @@ export function HeroSpotlightSlider({
   const startXRef = useRef<number>(0)
   const startYRef = useRef<number>(0)
   const dragDeltaRef = useRef<number>(0)
+  const didDragRef = useRef<boolean>(false)
   const isPointerDownRef = useRef<boolean>(false)
   const isLockedRef = useRef<'none' | 'horizontal' | 'vertical'>('none')
   const capturedPointerIdRef = useRef<number | null>(null)
@@ -111,16 +113,19 @@ export function HeroSpotlightSlider({
     [slidesCount]
   )
 
-  const handleTransitionEnd = useCallback(() => {
-    if (slidesCount <= 1) return
-    if (displayIndex >= slidesCount + 1) {
-      setIsTransitioning(false)
-      setDisplayIndex(1)
-    } else if (displayIndex <= 0) {
-      setIsTransitioning(false)
-      setDisplayIndex(slidesCount)
-    }
-  }, [displayIndex, slidesCount])
+  const handleTransitionEnd = useCallback(
+    (e: React.TransitionEvent<HTMLDivElement>) => {
+      if (e.target !== e.currentTarget || slidesCount <= 1) return
+      if (displayIndex >= slidesCount + 1) {
+        setIsTransitioning(false)
+        setDisplayIndex(1)
+      } else if (displayIndex <= 0) {
+        setIsTransitioning(false)
+        setDisplayIndex(slidesCount)
+      }
+    },
+    [displayIndex, slidesCount]
+  )
 
   useEffect(() => {
     if (!isTransitioning) {
@@ -144,13 +149,14 @@ export function HeroSpotlightSlider({
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (slidesCount <= 1) return
     if (e.button !== 0 && e.pointerType === 'mouse') return
-    if ((e.target as HTMLElement).closest('button, a')) return
+    if ((e.target as HTMLElement).closest('button')) return
 
     isPointerDownRef.current = true
     isLockedRef.current = 'none'
     startXRef.current = e.clientX
     startYRef.current = e.clientY
     dragDeltaRef.current = 0
+    didDragRef.current = false
     capturedPointerIdRef.current = null
   }
 
@@ -173,6 +179,7 @@ export function HeroSpotlightSlider({
       }
 
       isLockedRef.current = 'horizontal'
+      didDragRef.current = true
       setIsDragging(true)
       setIsPaused(true)
       setDragOffset(0)
@@ -224,24 +231,24 @@ export function HeroSpotlightSlider({
     finishDrag(e, false)
   }
 
-  if (heroBanners.length === 0) return null
+  if (slidesCount === 0) return null
 
   return (
-    <>
-      <section
-        role="region"
-        aria-roledescription="carousel"
-        aria-label="Homepage Spotlight Slider"
-        onPointerEnter={(e) => {
-          if (e.pointerType === 'mouse') setIsPaused(true)
-        }}
-        onPointerLeave={(e) => {
-          if (e.pointerType === 'mouse' && !isDragging) setIsPaused(false)
-        }}
-        className={`relative w-full overflow-hidden select-none bg-obsidian-950 ${className}`}
-      >
+    <section
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Homepage Spotlight Slider"
+      onPointerEnter={(e) => {
+        if (e.pointerType === 'mouse') setIsPaused(true)
+      }}
+      onPointerLeave={(e) => {
+        if (e.pointerType === 'mouse' && !isDragging) setIsPaused(false)
+      }}
+      className={`w-full bg-surface-canvas pt-4 sm:pt-5 pb-1.5 select-none ${className}`}
+    >
+      <div className="page-container">
         <div
-          className="relative w-full h-[430px] sm:h-[450px] md:h-[400px] lg:h-[450px] xl:h-[480px] overflow-hidden touch-pan-y"
+          className="relative -mx-1.5 sm:-mx-2 [--slide-step:100%] lg:[--slide-step:43.5%]"
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -249,177 +256,160 @@ export function HeroSpotlightSlider({
           onDragStart={(e) => e.preventDefault()}
           style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
         >
-          {/* Circular Infinite Track */}
-          <div
-            onTransitionEnd={handleTransitionEnd}
-            onDragStart={(e) => e.preventDefault()}
-            className="flex h-full w-full will-change-transform"
-            style={{
-              transform: `translateX(calc(-${displayIndex * 100}% + ${dragOffset}px))`,
-              transition:
-                isDragging || !isTransitioning
-                  ? 'none'
-                  : 'transform 500ms cubic-bezier(0.33, 1, 0.68, 1)',
-            }}
-          >
-            {extendedSlides.map((slide, idx) => {
-              const isClone =
-                slidesCount > 1 && (idx === 0 || idx === extendedSlides.length - 1)
-              const desktopImg = slide.image_url
-              const mobileImg = slide.mobile_image_url || slide.image_url
+          <div className="overflow-hidden touch-pan-y">
+            {/* Circular Infinite Card Track */}
+            <div
+              onTransitionEnd={handleTransitionEnd}
+              onDragStart={(e) => e.preventDefault()}
+              className="flex w-full will-change-transform items-stretch"
+              style={{
+                transform: `translateX(calc(-${displayIndex} * var(--slide-step) + ${dragOffset}px))`,
+                transition:
+                  isDragging || !isTransitioning
+                    ? 'none'
+                    : 'transform 500ms cubic-bezier(0.33, 1, 0.68, 1)',
+              }}
+            >
+              {extendedSlides.map((slide, idx) => {
+                const isClone =
+                  slidesCount > 1 && (idx === 0 || idx > slidesCount)
+                const desktopImg = slide.image_url
+                const mobileImg = slide.mobile_image_url || slide.image_url
+                const hasCustomMobileImg = Boolean(
+                  slide.mobile_image_url && slide.mobile_image_url !== slide.image_url
+                )
+                const label = slide.alt || `Promotional banner ${idx + 1}`
 
-              return (
-                <div
-                  key={`${slide.id}-${idx}`}
-                  aria-hidden={isClone ? 'true' : undefined}
-                  className="relative w-full h-full shrink-0 overflow-hidden bg-obsidian-900"
-                >
-                  {mobileImg && (
-                    <div className="block md:hidden w-full h-full relative">
-                      <Image
-                        src={mobileImg}
-                        alt={isClone ? '' : slide.title}
-                        fill
-                        priority={idx === 1}
-                        sizes="100vw"
-                        draggable={false}
-                        className="object-cover object-center select-none pointer-events-none"
-                      />
-                    </div>
-                  )}
-
-                  {desktopImg && (
-                    <div className="hidden md:block w-full h-full relative">
+                const cardMedia = (
+                  <div className="group relative w-full rounded-lg sm:rounded-xl overflow-hidden bg-obsidian-900 border border-chrome-200/80 shadow-card">
+                    {hasCustomMobileImg ? (
+                      <>
+                        <Image
+                          src={mobileImg}
+                          alt={isClone ? '' : label}
+                          width={1376}
+                          height={768}
+                          priority={idx === 1}
+                          sizes="95vw"
+                          draggable={false}
+                          className="block md:hidden w-full h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]"
+                        />
+                        <Image
+                          src={desktopImg}
+                          alt={isClone ? '' : label}
+                          width={1376}
+                          height={768}
+                          priority={idx <= 2}
+                          sizes="(max-width: 1023px) 95vw, 45vw"
+                          draggable={false}
+                          className="hidden md:block w-full h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]"
+                        />
+                      </>
+                    ) : (
                       <Image
                         src={desktopImg}
-                        alt={isClone ? '' : slide.title}
-                        fill
-                        priority={idx === 1}
-                        sizes="100vw"
+                        alt={isClone ? '' : label}
+                        width={1376}
+                        height={768}
+                        priority={idx <= 2}
+                        sizes="(max-width: 1023px) 95vw, 45vw"
                         draggable={false}
-                        className="object-cover object-center select-none pointer-events-none"
+                        className="block w-full h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]"
                       />
-                    </div>
-                  )}
-
-                  {/* Contrast-Safe Responsive Scrim */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/75 to-obsidian-950/25 md:bg-gradient-to-r md:from-obsidian-950/95 md:via-obsidian-950/75 md:to-transparent"
-                  />
-
-                  {/* Slide Content Safe Zone */}
-                  <div className="absolute inset-0 z-10 flex items-end md:items-center">
-                    <div className="w-full max-w-content mx-auto px-5 pb-14 pt-6 md:px-20 md:py-10">
-                      <div className="max-w-lg space-y-2.5 sm:space-y-3.5">
-                        <div className="inline-flex items-center gap-1.5 rounded-full bg-gold-500/20 border border-gold-500/40 px-3 py-1 text-[11px] font-mono font-semibold uppercase tracking-wider text-gold-500">
-                          <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                          <span>{slide.tag}</span>
-                        </div>
-
-                        {idx === 1 && !isClone ? (
-                          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-ink-inverse leading-tight">
-                            {slide.title}
-                          </h1>
-                        ) : (
-                          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-ink-inverse leading-tight">
-                            {slide.title}
-                          </h2>
-                        )}
-
-                        <p className="text-xs sm:text-sm md:text-base text-chrome-200 leading-relaxed line-clamp-2 sm:line-clamp-3">
-                          {slide.subtitle}
-                        </p>
-
-                        <div className="pt-1 flex flex-wrap items-center gap-3">
-                          <Link
-                            href={slide.cta_route}
-                            tabIndex={isClone ? -1 : 0}
-                            className="inline-flex min-h-[44px] items-center gap-2 rounded-sm bg-gold-500 px-5 py-2.5 text-xs sm:text-sm font-bold text-obsidian-950 hover:bg-gold-600 transition shadow-gold"
-                          >
-                            <span>{slide.cta_text}</span>
-                            <ArrowRight className="w-4 h-4 shrink-0" />
-                          </Link>
-
-                          <Link
-                            href="/offers"
-                            tabIndex={isClone ? -1 : 0}
-                            className="hidden sm:inline-flex min-h-[44px] items-center rounded-sm border border-chrome-300/35 bg-obsidian-900/75 px-4 py-2.5 text-xs font-semibold text-ink-inverse hover:border-gold-500 hover:text-gold-500 transition"
-                          >
-                            Bank Offers &amp; 18% GST
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
+                    )}
                   </div>
-                </div>
-              )
-            })}
+                )
+
+                return (
+                  <div
+                    key={`${slide.id}-${idx}`}
+                    aria-hidden={isClone ? 'true' : undefined}
+                    className="shrink-0 w-[var(--slide-step)] px-1.5 sm:px-2"
+                  >
+                    {slide.cta_route ? (
+                      <Link
+                        href={slide.cta_route}
+                        aria-label={isClone ? undefined : label}
+                        tabIndex={isClone ? -1 : 0}
+                        draggable={false}
+                        onClick={(e) => {
+                          if (didDragRef.current) {
+                            e.preventDefault()
+                            didDragRef.current = false
+                          }
+                        }}
+                        className="block rounded-lg sm:rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500"
+                      >
+                        {cardMedia}
+                      </Link>
+                    ) : (
+                      cardMedia
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           </div>
 
-          {/* Floating Circular Desktop Navigation Arrows */}
+          {/* Floating Circular Tablet & Desktop Navigation Arrows */}
           {slidesCount > 1 && (
             <>
               <SliderArrowButton direction="prev" onClick={handlePrev} />
               <SliderArrowButton direction="next" onClick={handleNext} />
             </>
           )}
+        </div>
 
-          {/* Bottom Animated Indicator Pills with Progress Bar */}
+          {/* Upgraded Obsidian Capsule Progress Indicator Dock */}
           {slidesCount > 1 && (
-            <div className="absolute bottom-4 sm:bottom-5 left-0 right-0 z-30 flex items-center justify-center pointer-events-auto">
+            <div className="mt-1.5 sm:mt-2 flex items-center justify-center">
               <div
-                className="flex items-center bg-obsidian-950/75 backdrop-blur-sm px-2.5 py-1 rounded-full border border-chrome-200/15"
+                className="inline-flex items-center rounded-full bg-obsidian-900 px-2.5 py-1 border border-obsidian-800 shadow-card"
                 onPointerDown={(e) => e.stopPropagation()}
                 onMouseDown={(e) => e.stopPropagation()}
               >
-                {heroBanners.map((slide, idx) => {
-                  const isActive = idx === activeRealIndex
-                  return (
-                    <button
-                      key={slide.id}
-                      type="button"
-                      onPointerDown={(e) => e.stopPropagation()}
-                      onMouseDown={(e) => e.stopPropagation()}
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleGoTo(idx)
-                      }}
-                      aria-label={`Go to slide ${idx + 1}: ${slide.title}`}
-                      className="group flex items-center justify-center p-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold-500 cursor-pointer rounded-full"
-                    >
-                      <div
-                        className={`h-[6px] rounded-full transition-all duration-300 ease-out ${
-                          isActive
-                            ? 'w-[34px] overflow-hidden relative bg-gold-500/35 ring-1 ring-gold-500/50'
-                            : 'w-2.5 bg-chrome-200/75 group-hover:bg-ink-inverse'
-                        }`}
+                <div className="flex items-center gap-1">
+                  {activeBanners.map((slide, idx) => {
+                    const isActive = idx === activeRealIndex
+                    return (
+                      <button
+                        key={slide.id}
+                        type="button"
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onMouseDown={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleGoTo(idx)
+                        }}
+                        aria-label={`Go to slide ${idx + 1}${slide.alt ? `: ${slide.alt}` : ''}`}
+                        className="group flex items-center justify-center py-1 px-0.5 cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold-500"
                       >
-                        {isActive && (
-                          <div
-                            key={`hero-progress-${displayIndex}`}
-                            className="h-full w-full bg-gold-500 origin-left rounded-full hero-progress-bar"
-                            style={{
-                              animationDuration: `${autoPlayIntervalMs}ms`,
-                              animationPlayState: isPaused || isDragging ? 'paused' : 'running',
-                            }}
-                          />
-                        )}
-                      </div>
-                    </button>
-                  )
-                })}
+                        <div
+                          className={`h-[7px] sm:h-[8px] rounded-full transition-all duration-300 ease-out ${
+                            isActive
+                              ? 'w-10 sm:w-12 overflow-hidden relative bg-obsidian-700 ring-1 ring-gold-500/40'
+                              : 'w-2.5 sm:w-3 bg-obsidian-700 group-hover:bg-chrome-400'
+                          }`}
+                        >
+                          {isActive && (
+                            <div
+                              key={`hero-progress-${displayIndex}`}
+                              className="h-full w-full bg-gradient-to-r from-gold-600 to-gold-500 origin-left rounded-full hero-progress-bar"
+                              style={{
+                                animationDuration: `${autoPlayIntervalMs}ms`,
+                                animationPlayState: isPaused || isDragging ? 'paused' : 'running',
+                              }}
+                            />
+                          )}
+                        </div>
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
             </div>
           )}
-        </div>
-      </section>
-
-      <HeroValuePropsRibbon
-        trustBadges={trustBadges}
-        offers={offers}
-        categoryCount={categoryCount}
-      />
-    </>
+      </div>
+    </section>
   )
 }

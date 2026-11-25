@@ -37,6 +37,33 @@ export function getProductsByCategory(categoryHandle: string): StorefrontProduct
   return ALL_PRODUCTS.filter((product) => product.category_handle === categoryHandle)
 }
 
+function getProductTimestampMs(product: StorefrontProduct): number {
+  const rawDate = product.updated_at || product.created_at
+  if (!rawDate) return 0
+  const parsed = Date.parse(rawDate)
+  return Number.isFinite(parsed) ? parsed : 0
+}
+
+/**
+ * Sorts products by most recently updated or created descending, falling back
+ * cleanly to source order when items lack explicit timestamps.
+ */
+export function sortProductsByRecency(products: readonly StorefrontProduct[]): StorefrontProduct[] {
+  return products
+    .map((product, index) => ({
+      product,
+      index,
+      timestampMs: getProductTimestampMs(product),
+    }))
+    .sort((a, b) => {
+      if (a.timestampMs !== b.timestampMs) {
+        return b.timestampMs - a.timestampMs
+      }
+      return a.index - b.index
+    })
+    .map((entry) => entry.product)
+}
+
 export function computeGstSplit(
   inclusivePaise: number,
   gstRatePercent = 18,

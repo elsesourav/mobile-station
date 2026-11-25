@@ -2,12 +2,16 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useOptionalHeaderScroll } from '@/context/HeaderScrollContext'
+import {
+  DEFAULT_SHOW_ANNOUNCEMENT_BAR,
+  useOptionalHeaderScroll,
+} from '@/context/HeaderScrollContext'
 import { AnnouncementBar } from '@/components/layout/AnnouncementBar'
 import { Header } from '@/components/layout/Header'
 import { MobileMenuDrawer } from '@/components/layout/MobileMenuDrawer'
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav'
 import { Footer } from '@/components/layout/Footer'
+import { WhatsAppSupportWidget } from '@/components/support/WhatsAppSupportWidget'
 import type { StorefrontShellProps } from '@/types/storefront'
 
 /**
@@ -21,6 +25,7 @@ export function StorefrontChrome({
   searchValue,
   onSearchChange,
   onCategorySelect,
+  showAnnouncementBar = DEFAULT_SHOW_ANNOUNCEMENT_BAR,
 }: StorefrontShellProps) {
   const router = useRouter()
   const headerScroll = useOptionalHeaderScroll()
@@ -74,14 +79,13 @@ export function StorefrontChrome({
           isTopNavVisible ? 'translate-y-0 pointer-events-auto' : '-translate-y-full pointer-events-none'
         }`}
       >
-        <AnnouncementBar />
+        <AnnouncementBar enabled={showAnnouncementBar} />
         <Header
           activeCategoryHandle={activeCategoryHandle}
           searchValue={effectiveSearch}
           onSearchChange={handleSearchInput}
           onCategorySelect={onCategorySelect}
           onSearchSubmit={handleSearchSubmit}
-          onOpenMobileMenu={openMobileMenu}
         />
       </div>
 
@@ -94,15 +98,24 @@ export function StorefrontChrome({
       />
 
       {/* Main Content with Constant Spacer Matching Top Stack At Rest */}
-      <main className="flex-1 pt-[152px] lg:pt-[160px]">{children}</main>
+      <main
+        className={`flex-1 ${
+          showAnnouncementBar ? 'pt-[149px] lg:pt-[157px]' : 'pt-[116px] lg:pt-[124px]'
+        }`}
+      >
+        {children}
+      </main>
 
       <Footer />
 
-      {/* Scroll-Reactive Mobile Bottom Dock (< 768px) */}
+      {/* Mobile & Tablet Bottom Dock (< 1024px) */}
       <MobileBottomNav
         activeCategoryHandle={activeCategoryHandle}
         onOpenMobileMenu={openMobileMenu}
       />
+
+      {/* Floating WhatsApp Support & Message Composer */}
+      <WhatsAppSupportWidget />
     </div>
   )
 }

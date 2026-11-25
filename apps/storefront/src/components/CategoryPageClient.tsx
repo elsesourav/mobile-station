@@ -29,15 +29,41 @@ export function CategoryPageClient({ category, products, brands }: CategoryPageC
   const [selectedBrand, setSelectedBrand] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
 
+  const subScopedProducts = useMemo(() => {
+    if (selectedSub === 'all') return products
+    return products.filter((p) => p.subcategory_handle === selectedSub)
+  }, [products, selectedSub])
+
   const availableBrands = useMemo(() => {
-    const names = new Set(products.map((p) => p.metadata.brand.toLowerCase()))
-    return brands.filter((b) => names.has(b.name.toLowerCase()))
-  }, [products, brands])
+    const counts = new Map<string, { name: string; count: number }>()
+    for (const product of subScopedProducts) {
+      const rawBrand = product.metadata.brand.trim()
+      const key = rawBrand.toLowerCase()
+      const existing = counts.get(key)
+      if (existing) {
+        existing.count += 1
+      } else {
+        counts.set(key, { name: rawBrand, count: 1 })
+      }
+    }
+
+    const ordered: { handle: string; name: string; count: number }[] = []
+    for (const brand of brands) {
+      const entry = counts.get(brand.name.toLowerCase())
+      if (entry) {
+        ordered.push({ handle: brand.handle, name: brand.name, count: entry.count })
+        counts.delete(brand.name.toLowerCase())
+      }
+    }
+    for (const [key, entry] of counts.entries()) {
+      ordered.push({ handle: key, name: entry.name, count: entry.count })
+    }
+    return ordered
+  }, [subScopedProducts, brands])
 
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase()
-    return products.filter((p) => {
-      if (selectedSub !== 'all' && p.subcategory_handle !== selectedSub) return false
+    return subScopedProducts.filter((p) => {
       if (
         selectedBrand !== 'all' &&
         p.metadata.brand.toLowerCase() !== selectedBrand.toLowerCase()
@@ -50,7 +76,7 @@ export function CategoryPageClient({ category, products, brands }: CategoryPageC
         .toLowerCase()
         .includes(q)
     })
-  }, [products, selectedSub, selectedBrand, searchQuery])
+  }, [subScopedProducts, selectedBrand, searchQuery])
 
   const tracking = category.inventory_policy?.tracking_mode ?? 'sku_quantity'
 
@@ -114,7 +140,10 @@ export function CategoryPageClient({ category, products, brands }: CategoryPageC
           <div className="flex flex-wrap gap-1.5 sm:gap-2">
             <button
               type="button"
-              onClick={() => setSelectedSub('all')}
+              onClick={() => {
+                setSelectedSub('all')
+                setSelectedBrand('all')
+              }}
               className={`rounded-sm border px-3 py-1.5 text-xs font-semibold transition ${
                 selectedSub === 'all'
                   ? 'border-obsidian-900 bg-obsidian-900 text-gold-500'
@@ -131,7 +160,10 @@ export function CategoryPageClient({ category, products, brands }: CategoryPageC
                 <button
                   key={sub.id}
                   type="button"
-                  onClick={() => setSelectedSub(active ? 'all' : sub.handle)}
+                  onClick={() => {
+                    setSelectedSub(active ? 'all' : sub.handle)
+                    setSelectedBrand('all')
+                  }}
                   className={`rounded-sm border px-3 py-1.5 text-xs font-medium transition ${
                     active
                       ? 'border-obsidian-900 bg-obsidian-900 text-gold-500'
@@ -144,8 +176,8 @@ export function CategoryPageClient({ category, products, brands }: CategoryPageC
             })}
           </div>
 
-          {/* Brand Filter Pills */}
-          {availableBrands.length > 1 && (
+          {/* Brand Filter Pills (Based on Available Products in Category) */}
+          {availableBrands.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               <button
                 type="button"
@@ -173,6 +205,7 @@ export function CategoryPageClient({ category, products, brands }: CategoryPageC
                   >
                     <CheckCircle2 className="h-3 w-3 text-commerce-savings" />
                     <span>{brand.name}</span>
+                    <span className="font-mono text-[10px] opacity-75">({brand.count})</span>
                   </button>
                 )
               })}

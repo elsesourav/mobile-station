@@ -7,8 +7,6 @@ import type {
   ShowcaseSummaryStats,
   StorefrontAnnouncement,
   StorefrontHeroBanner,
-  StorefrontOffer,
-  StorefrontTrustBadge,
 } from '@mobile-station/types'
 
 export interface ShowcaseQueryOptions {
@@ -77,9 +75,11 @@ export interface StorefrontShellProps {
   searchValue?: string
   onSearchChange?: (query: string) => void
   onCategorySelect?: (handle: string) => void
+  showAnnouncementBar?: boolean
 }
 
 export interface AnnouncementBarProps {
+  enabled?: boolean
   items?: StorefrontAnnouncement[]
   speedSeconds?: number
   pauseOnHover?: boolean
@@ -92,7 +92,7 @@ export interface StorefrontHeaderProps {
   onSearchChange?: (query: string) => void
   onCategorySelect?: (handle: string) => void
   onSearchSubmit: (event: React.FormEvent) => void
-  onOpenMobileMenu: () => void
+  onOpenMobileMenu?: () => void
   className?: string
 }
 
@@ -125,15 +125,6 @@ export interface HeroSpotlightSliderProps {
   heroBanners: StorefrontHeroBanner[]
   activeHeroIdx?: number
   onSelectHero?: (index: number) => void
-  offers: StorefrontOffer[]
-  categoryCount: number
-  trustBadges: StorefrontTrustBadge[]
   autoPlayIntervalMs?: number
   className?: string
-}
-
-export interface HeroValuePropsRibbonProps {
-  trustBadges: StorefrontTrustBadge[]
-  offers: StorefrontOffer[]
-  categoryCount: number
 }

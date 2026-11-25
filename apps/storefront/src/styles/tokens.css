@@ -67,6 +67,8 @@
   --color-warning-text:   #B45309;
   --color-error-bg:       #FEF2F2;
   --color-error-text:     #DC2626;
+  --color-whatsapp:       #16A34A; /* WhatsApp support action green */
+  --color-whatsapp-dark:  #15803D; /* Hover state for WhatsApp CTA */
 
   /* ─── 5. Spacing & Layout Scale ────────────────────────────────────────── */
   --space-xxs:  4px;

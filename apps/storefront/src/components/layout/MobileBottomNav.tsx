@@ -9,12 +9,12 @@ import { useOptionalHeaderScroll } from '@/context/HeaderScrollContext'
 import type { MobileBottomNavProps } from '@/types/storefront'
 
 /**
- * Scroll-reactive mobile bottom dock (< 768px) mirroring Glorov's MobileBottomNav behavior:
- * hides near top of page so the hero slider remains clear, and slides in while scrolling down.
+ * Mobile & Tablet bottom dock (< 1024px) keeping core store actions, cart, and menu
+ * cleanly accessible without cluttering the top header with a left-side menu button.
  */
 export function MobileBottomNav({
   onOpenMobileMenu,
-  alwaysVisible = false,
+  alwaysVisible = true,
   className = '',
 }: MobileBottomNavProps) {
   const pathname = usePathname() || ''
@@ -36,7 +36,7 @@ export function MobileBottomNav({
   return (
     <nav
       aria-label="Mobile Bottom Navigation"
-      className={`md:hidden fixed bottom-0 left-0 right-0 z-40 bg-obsidian-950/95 backdrop-blur-md border-t border-obsidian-800 pb-[env(safe-area-inset-bottom)] transition-all duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] will-change-transform ${
+      className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-obsidian-950/95 backdrop-blur-md border-t border-obsidian-800 pb-[env(safe-area-inset-bottom)] transition-all duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] will-change-transform ${
         isVisible
           ? 'translate-y-0 opacity-100 pointer-events-auto'
           : 'translate-y-[120%] opacity-0 pointer-events-none'

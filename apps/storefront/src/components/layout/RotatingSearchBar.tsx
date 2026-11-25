@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
-import { Search, X } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Search } from 'lucide-react'
 import type { RotatingSearchPlaceholderProps } from '@/types/storefront'
 
 export const DESKTOP_SEARCH_KEYWORDS: readonly string[] = [
@@ -54,11 +55,11 @@ function RotatingSearchPlaceholder({
   const textClass = isDesktop ? 'text-[13.5px]' : 'text-[12px]'
 
   return (
-    <div className="pointer-events-none select-none absolute inset-0 flex items-center pl-0.5 pr-2 overflow-hidden">
+    <div className="pointer-events-none select-none relative flex items-center w-full h-[22px] overflow-hidden pl-0.5 pr-2">
       <span className={`text-chrome-400 font-normal shrink-0 mr-1 whitespace-nowrap ${textClass}`}>
         Search for
       </span>
-      <div className="relative flex-1 min-w-0 h-[22px] overflow-hidden">
+      <div className="relative flex-1 min-w-0 h-full overflow-hidden">
         {prevIndex !== null && (
           <span
             key={`prev-${prevIndex}`}
@@ -81,83 +82,66 @@ function RotatingSearchPlaceholder({
 }
 
 interface RotatingSearchBarProps {
-  value: string
-  onChange: (query: string) => void
-  onSubmit: (event: React.FormEvent) => void
+  value?: string
+  onChange?: (query: string) => void
+  onSubmit?: (event: React.FormEvent) => void
   isDesktop?: boolean
   ariaLabel: string
-  clearAriaLabel: string
+  clearAriaLabel?: string
   className?: string
 }
 
 /**
- * Pill search input featuring Glorov's animated bottom-to-top placeholder keywords.
+ * Click-to-search pill link in the header matching Glorov's Header pattern:
+ * clicking anywhere navigates directly to the dedicated `/search` experience.
  */
 export function RotatingSearchBar({
-  value,
-  onChange,
-  onSubmit,
+  value = '',
   isDesktop = false,
   ariaLabel,
-  clearAriaLabel,
   className = '',
 }: RotatingSearchBarProps) {
-  const [isFocused, setIsFocused] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const showRotatingHint = !value && !isFocused
+  const trimmed = value.trim()
+  const targetHref = trimmed ? `/search?q=${encodeURIComponent(trimmed)}` : '/search'
 
   return (
-    <form onSubmit={onSubmit} className={`min-w-0 ${className}`}>
+    <Link
+      href={targetHref}
+      prefetch={true}
+      aria-label={ariaLabel}
+      className={`block min-w-0 cursor-pointer group ${className}`}
+    >
       <div
-        onClick={() => inputRef.current?.focus()}
-        className={`flex items-center rounded-full border bg-obsidian-800 border-obsidian-700 transition-colors cursor-text overflow-hidden focus-within:border-gold-500 ${
+        className={`flex items-center rounded-full border bg-obsidian-800 border-obsidian-700 group-hover:border-gold-500/80 group-hover:bg-obsidian-800/90 transition-colors overflow-hidden ${
           isDesktop ? 'h-[42px] px-3' : 'h-[38px] px-2.5'
         }`}
       >
-        <button
-          type="submit"
-          aria-label={ariaLabel}
-          className="text-gold-500 p-1 shrink-0 hover:scale-105 transition-transform focus-visible:outline-none"
+        <span
+          aria-hidden="true"
+          className="text-gold-500 p-1 shrink-0 group-hover:scale-105 transition-transform"
         >
           <Search className={isDesktop ? 'w-[18px] h-[18px]' : 'w-4 h-4'} />
-        </button>
+        </span>
 
-        <div className="relative flex-1 min-w-0 h-full flex items-center">
-          <RotatingSearchPlaceholder
-            keywords={isDesktop ? DESKTOP_SEARCH_KEYWORDS : MOBILE_SEARCH_KEYWORDS}
-            isDesktop={isDesktop}
-            visible={showRotatingHint}
-            isPaused={isFocused}
-          />
-          <input
-            ref={inputRef}
-            type="search"
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            aria-label={ariaLabel}
-            className={`w-full min-w-0 bg-transparent text-ink-inverse focus:outline-none ${
-              isDesktop ? 'text-[13.5px]' : 'text-xs'
-            }`}
-          />
+        <div className="relative flex-1 min-w-0 h-full flex items-center overflow-hidden">
+          {trimmed ? (
+            <span
+              className={`text-ink-inverse truncate pl-0.5 ${
+                isDesktop ? 'text-[13.5px]' : 'text-xs'
+              }`}
+            >
+              {trimmed}
+            </span>
+          ) : (
+            <RotatingSearchPlaceholder
+              keywords={isDesktop ? DESKTOP_SEARCH_KEYWORDS : MOBILE_SEARCH_KEYWORDS}
+              isDesktop={isDesktop}
+              visible={true}
+              isPaused={false}
+            />
+          )}
         </div>
-
-        {value && (
-          <button
-            type="button"
-            aria-label={clearAriaLabel}
-            onClick={(e) => {
-              e.stopPropagation()
-              onChange('')
-              inputRef.current?.focus()
-            }}
-            className="text-chrome-400 hover:text-ink-inverse shrink-0 p-1 rounded-full transition-colors"
-          >
-            <X className={isDesktop ? 'w-4 h-4' : 'w-3.5 h-3.5'} />
-          </button>
-        )}
       </div>
-    </form>
+    </Link>
   )
 }

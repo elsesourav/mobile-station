@@ -3,20 +3,49 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShieldCheck } from 'lucide-react'
+import {
+  Camera,
+  Film,
+  MapPin,
+  PackageCheck,
+  Receipt,
+  ShieldCheck,
+  Tag,
+} from 'lucide-react'
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
+import {
+  AudioIcon,
+  CasesWatchIcon,
+  KeyboardsMiceIcon,
+  LaptopsIcon,
+  PowerGaNIcon,
+  SmartphonesIcon,
+  TabletsIcon,
+} from '@/components/icons/CategoryIcons'
+import {
+  WhatsAppLogoIcon,
+  buildWhatsAppChatUrl,
+} from '@/components/support/WhatsAppSupportWidget'
 import type { StorefrontFooterProps } from '@/types/storefront'
 
 /**
- * Glorov-mirrored 3-column Desktop + compact 2-column Mobile/Tablet Obsidian Footer.
+ * Obsidian 3-column Desktop + compact 2-column Mobile/Tablet Footer with custom category SVG icons,
+ * hub/policy icons, and direct WhatsApp support access.
  */
 export function Footer({ className = '' }: StorefrontFooterProps) {
+  const whatsappNumber =
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || MOBILE_STATION_BRAND.support.whatsappNumber
+  const whatsappHref = buildWhatsAppChatUrl(
+    whatsappNumber,
+    `Hello ${MOBILE_STATION_BRAND.name} Support, I need assistance.`
+  )
+
   return (
     <footer
       aria-label="Site Footer"
       className={`w-full bg-obsidian-950 text-ink-inverse border-t border-obsidian-800 ${className}`}
     >
-      <div className="w-full px-4 sm:px-6 md:px-8 pb-20 pt-6 md:pb-12 md:pt-12">
+      <div className="w-full px-4 sm:px-6 md:px-8 pb-24 pt-8 lg:pb-12 lg:pt-12">
         <div className="max-w-content mx-auto">
           {/* Desktop Footer (>= 1024px) */}
           <div className="hidden lg:grid grid-cols-12 gap-8 xl:gap-16 pb-10">
@@ -41,20 +70,34 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
 
               <p className="text-[13px] text-chrome-300 leading-relaxed max-w-lg">
                 <strong className="text-ink-inverse font-semibold block mb-1">
-                  Factory Sealed Tech. Official Brand Warranty.
+                  Factory Sealed Tech. Genuine Indian Retail Units.
                 </strong>
                 {MOBILE_STATION_BRAND.name} operates flagship electronics centers in{' '}
-                {MOBILE_STATION_BRAND.flagshipLocation.city}, {MOBILE_STATION_BRAND.flagshipLocation.state} (
+                {MOBILE_STATION_BRAND.flagshipLocation.city},{' '}
+                {MOBILE_STATION_BRAND.flagshipLocation.state} (
                 {MOBILE_STATION_BRAND.flagshipLocation.pincode} &amp;{' '}
                 {MOBILE_STATION_BRAND.secondaryLocation.pincode}), delivering verified hardware with
                 18% GST tax invoices across India.
               </p>
 
-              <div className="flex items-center gap-2 pt-1 text-gold-500">
-                <ShieldCheck className="w-[18px] h-[18px] shrink-0" />
-                <span className="text-xs font-semibold text-ink-inverse tracking-tight">
-                  100% Authorized Warranty • IMEI/Serial Tracked • Insured Open-Box Delivery
+              <div className="flex flex-wrap items-center gap-3 pt-1 text-xs text-chrome-200">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-obsidian-900 border border-obsidian-800 px-3 py-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+                  <span>IMEI &amp; Serial Verified</span>
                 </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-obsidian-900 border border-obsidian-800 px-3 py-1">
+                  <Receipt className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+                  <span>18% GST Invoices</span>
+                </span>
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-commerce-whatsapp/15 border border-commerce-whatsapp/40 px-3 py-1 text-commerce-whatsapp hover:bg-commerce-whatsapp hover:text-ink-inverse transition font-medium"
+                >
+                  <WhatsAppLogoIcon className="w-3.5 h-3.5 shrink-0" />
+                  <span>WhatsApp Support</span>
+                </a>
               </div>
             </div>
 
@@ -63,30 +106,68 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
               <h3 className="font-display text-sm font-bold tracking-wider text-ink-inverse uppercase">
                 Electronics
               </h3>
-              <ul className="space-y-1.5 text-[13px] text-chrome-300">
+              <ul className="space-y-2 text-[13px] text-chrome-300">
                 <li>
-                  <Link href="/categories/smartphones" className="hover:text-gold-500 transition-colors block py-0.5">
-                    5G Smartphones
+                  <Link
+                    href="/categories/smartphones"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <SmartphonesIcon className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Mobiles &amp; Smartphones</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/categories/laptops" className="hover:text-gold-500 transition-colors block py-0.5">
-                    Laptops &amp; Monitors
+                  <Link
+                    href="/categories/tablets"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <TabletsIcon className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Tablets &amp; E-Readers</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/categories/tablets" className="hover:text-gold-500 transition-colors block py-0.5">
-                    Tablets &amp; iPads
+                  <Link
+                    href="/categories/laptops"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <LaptopsIcon className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Laptops &amp; Monitors</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/categories/audio" className="hover:text-gold-500 transition-colors block py-0.5">
-                    ANC Headphones &amp; TWS
+                  <Link
+                    href="/categories/audio"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <AudioIcon className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Audio &amp; TWS</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/categories/keyboards-mice" className="hover:text-gold-500 transition-colors block py-0.5">
-                    Keyboards, Mice &amp; GaN Gear
+                  <Link
+                    href="/categories/keyboards-mice"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <KeyboardsMiceIcon className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Keyboards &amp; Mice</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/categories/power-charging"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <PowerGaNIcon className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Chargers &amp; GaN Power</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/categories/accessories-storage"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <CasesWatchIcon className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Cases, Storage &amp; Watch</span>
                   </Link>
                 </li>
               </ul>
@@ -97,39 +178,70 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
               <h3 className="font-display text-sm font-bold tracking-wider text-ink-inverse uppercase">
                 Hubs &amp; Support
               </h3>
-              <ul className="space-y-1.5 text-[13px] text-chrome-300">
+              <ul className="space-y-2 text-[13px] text-chrome-300">
                 <li>
-                  <Link href="/stores/muzaffarpur" className="hover:text-gold-500 transition-colors block py-0.5">
-                    Muzaffarpur Hub Pickup (842001/02)
+                  <Link
+                    href="/stores/muzaffarpur"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <MapPin className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Muzaffarpur Hub (842001/02)</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/offers" className="hover:text-gold-500 transition-colors block py-0.5">
-                    Active Bank &amp; Promo Offers
+                  <Link
+                    href="/offers"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <Tag className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Active Bank &amp; Promo Offers</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/feedback" className="hover:text-gold-500 transition-colors block py-0.5">
-                    Customer Video Feedback
+                  <Link
+                    href="/feedback"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <Film className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Customer Video Feedback</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/gallery" className="hover:text-gold-500 transition-colors block py-0.5">
-                    Store Visit Gallery
+                  <Link
+                    href="/gallery"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <Camera className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Store Visit Gallery</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/policies/open-box-delivery" className="hover:text-gold-500 transition-colors block py-0.5">
-                    Open-Box Verification Guide
+                  <Link
+                    href="/policies/open-box-delivery"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <PackageCheck className="w-4 h-4 text-gold-500 shrink-0" />
+                    <span>Open-Box Verification Guide</span>
                   </Link>
+                </li>
+                <li>
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
+                  >
+                    <WhatsAppLogoIcon className="w-4 h-4 text-commerce-whatsapp shrink-0" />
+                    <span>Chat on WhatsApp</span>
+                  </a>
                 </li>
               </ul>
             </div>
           </div>
 
           {/* Mobile & Tablet Compact Footer (< 1024px) */}
-          <div className="block lg:hidden space-y-3 pb-4">
-            <div className="flex items-center gap-2 flex-wrap">
+          <div className="block lg:hidden space-y-4 pb-4">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
               <Link href="/" aria-label="Mobile Station Home" className="flex items-center gap-1.5 shrink-0">
                 <Image
                   src={MOBILE_STATION_BRAND.assets.icon}
@@ -146,53 +258,91 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
                   className="h-4 w-auto object-contain"
                 />
               </Link>
-              <span className="w-1.5 h-1.5 rounded-full bg-gold-500 shrink-0" />
-              <span className="text-[11px] font-semibold text-gold-500">
-                Factory Sealed Tech
-              </span>
+
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full bg-commerce-whatsapp/15 border border-commerce-whatsapp/40 px-2.5 py-1 text-[11px] font-semibold text-commerce-whatsapp"
+              >
+                <WhatsAppLogoIcon className="w-3.5 h-3.5 shrink-0" />
+                <span>WhatsApp Help</span>
+              </a>
             </div>
 
-            <p className="text-[11px] text-chrome-300 leading-snug">
+            <p className="text-[11.5px] text-chrome-300 leading-snug">
               Authorized electronics with 18% GST invoices &amp; insured shipping across India from Muzaffarpur (842001 / 842002).
             </p>
 
             <div className="grid grid-cols-2 gap-4 pt-1">
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <h4 className="font-display text-xs font-bold text-ink-inverse uppercase tracking-tight">
                   Collections
                 </h4>
-                <div className="flex flex-col space-y-1 text-[11.5px] text-chrome-300 pt-0.5">
-                  <Link href="/categories/smartphones" className="hover:text-gold-500 transition-colors">
-                    5G Smartphones
+                <div className="flex flex-col space-y-1.5 text-[11.5px] text-chrome-300 pt-0.5">
+                  <Link
+                    href="/categories/smartphones"
+                    className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
+                  >
+                    <SmartphonesIcon className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+                    <span>5G Smartphones</span>
                   </Link>
-                  <Link href="/categories/laptops" className="hover:text-gold-500 transition-colors">
-                    Laptops &amp; Workstations
+                  <Link
+                    href="/categories/laptops"
+                    className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
+                  >
+                    <LaptopsIcon className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+                    <span>Laptops &amp; Monitors</span>
                   </Link>
-                  <Link href="/categories/audio" className="hover:text-gold-500 transition-colors">
-                    ANC Audio &amp; TWS
+                  <Link
+                    href="/categories/audio"
+                    className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
+                  >
+                    <AudioIcon className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+                    <span>Audio &amp; TWS</span>
                   </Link>
-                  <Link href="/categories/keyboards-mice" className="hover:text-gold-500 transition-colors">
-                    Peripherals &amp; Gear
+                  <Link
+                    href="/categories/keyboards-mice"
+                    className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
+                  >
+                    <KeyboardsMiceIcon className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+                    <span>Peripherals &amp; GaN</span>
                   </Link>
                 </div>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <h4 className="font-display text-xs font-bold text-ink-inverse uppercase tracking-tight">
                   Hubs &amp; Proof
                 </h4>
-                <div className="flex flex-col space-y-1 text-[11.5px] text-chrome-300 pt-0.5">
-                  <Link href="/stores/muzaffarpur" className="hover:text-gold-500 transition-colors">
-                    Muzaffarpur Hubs
+                <div className="flex flex-col space-y-1.5 text-[11.5px] text-chrome-300 pt-0.5">
+                  <Link
+                    href="/stores/muzaffarpur"
+                    className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
+                  >
+                    <MapPin className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+                    <span>Muzaffarpur Hubs</span>
                   </Link>
-                  <Link href="/feedback" className="hover:text-gold-500 transition-colors">
-                    Video Feedback
+                  <Link
+                    href="/feedback"
+                    className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
+                  >
+                    <Film className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+                    <span>Video Feedback</span>
                   </Link>
-                  <Link href="/gallery" className="hover:text-gold-500 transition-colors">
-                    Store Visit Gallery
+                  <Link
+                    href="/gallery"
+                    className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
+                  >
+                    <Camera className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+                    <span>Store Visit Gallery</span>
                   </Link>
-                  <Link href="/offers" className="hover:text-gold-500 transition-colors">
-                    Bank Offers &amp; EMI
+                  <Link
+                    href="/offers"
+                    className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
+                  >
+                    <Tag className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+                    <span>Offers &amp; EMI</span>
                   </Link>
                 </div>
               </div>
@@ -202,7 +352,7 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
           <div aria-hidden="true" className="h-[1px] w-full bg-obsidian-800 my-3 md:my-6" />
 
           {/* Desktop Bottom Legal Bar (>= 1024px) */}
-          <div className="hidden lg:flex items-center justify-between gap-4 text-xs text-chrome-400 pt-1 lg:pr-44 2xl:pr-0">
+          <div className="hidden lg:flex items-center justify-between gap-4 text-xs text-chrome-400 pt-1 lg:pr-20">
             <span>© 2026 {MOBILE_STATION_BRAND.name} Electronics Commerce. Muzaffarpur, Bihar. All rights reserved.</span>
             <div className="flex items-center gap-4 text-[11px] text-chrome-300">
               <Link href="/policies/warranty" className="underline hover:text-gold-500 transition-colors">
