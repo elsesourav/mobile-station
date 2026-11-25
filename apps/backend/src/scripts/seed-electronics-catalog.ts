@@ -16,60 +16,18 @@ import {
 } from '@medusajs/medusa/core-flows'
 import fs from 'node:fs'
 import path from 'node:path'
+import type { CategorySeedDataset, ProductSeedDataset, SeedProductDefinition } from '../types/catalog-seed'
 
-interface CategoryJson {
-  root_categories: Array<{
-    handle: string
-    name: string
-    subtitle?: string
-    description: string
-    default_hsn: string
-    gst_rate_percent: number
-    image_url?: string
-    inventory_policy?: Record<string, unknown>
-    subcategories: Array<{
-      handle: string
-      name: string
-      hsn: string
-      tracking_mode?: string
-    }>
-  }>
-}
-
-interface SeedProduct {
-  handle: string
-  title: string
-  subtitle: string
-  category_handle: string
-  subcategory_handle: string
-  description: string
-  thumbnail?: string
-  images?: string[]
-  metadata: Record<string, unknown>
-  variants: Array<{
-    title: string
-    sku: string
-    price_paise: number
-    mrp_paise: number
-    stock: number
-    options: Record<string, string>
-  }>
-}
-
-interface SeedJson {
-  products: SeedProduct[]
-}
-
-export default async function seedElectronicsCatalog({ container }: ExecArgs) {
+export default async function seedElectronicsCatalog({ container }: ExecArgs): Promise<void> {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
   const link = container.resolve(ContainerRegistrationKeys.LINK)
 
   const repoRoot = path.resolve(process.cwd(), '../..')
-  const categoriesJson: CategoryJson = JSON.parse(
+  const categoriesJson: CategorySeedDataset = JSON.parse(
     fs.readFileSync(path.join(repoRoot, 'data/taxonomy/categories.json'), 'utf8')
   )
-  const productsJson: SeedJson = JSON.parse(
+  const productsJson: ProductSeedDataset = JSON.parse(
     fs.readFileSync(path.join(repoRoot, 'data/catalog/products-seed.json'), 'utf8')
   )
 
@@ -260,13 +218,18 @@ export default async function seedElectronicsCatalog({ container }: ExecArgs) {
   })
   const existingByHandle = new Map(existingProducts.map((p) => [p.handle, p.id]))
 
-  const resolveImages = (p: SeedProduct) => {
-    const thumb = p.thumbnail || cloudinaryMap[`products/${p.handle}`]?.secure_url
+  const resolveImages = (seedProduct: SeedProductDefinition) => {
+    const thumb =
+      seedProduct.thumbnail || cloudinaryMap[`products/${seedProduct.handle}`]?.secure_url
     const imgs =
-      p.images && p.images.length > 0 ? p.images : thumb ? [thumb] : []
+      seedProduct.images && seedProduct.images.length > 0
+        ? seedProduct.images
+        : thumb
+          ? [thumb]
+          : []
     return {
       thumbnail: thumb,
-      images: imgs.map((url) => ({ url })),
+      images: imgs.map((url: string) => ({ url })),
     }
   }
 

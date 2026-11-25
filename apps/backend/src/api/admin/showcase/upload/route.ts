@@ -1,6 +1,10 @@
 import type { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
 import { z } from 'zod'
-import { SHOWCASE_ENTRY_TYPES } from '@mobile-station/types'
+import {
+  SHOWCASE_ENTRY_TYPES,
+  type ApiErrorResponse,
+  type ShowcaseUploadMediaResult,
+} from '@mobile-station/types'
 import { ShowcaseCloudinaryMediaService } from '../../../../modules/showcase/cloudinary-media'
 
 const serverUploadSchema = z.object({
@@ -13,17 +17,22 @@ const serverUploadSchema = z.object({
 
 /**
  * POST /admin/showcase/upload
- * Server-side upload fallback for automation / headless callers.
+ * Server-side upload fallback for automation and API callers.
  */
-export const POST = async (req: MedusaRequest, res: MedusaResponse): Promise<void> => {
+export const POST = async (
+  req: MedusaRequest,
+  res: MedusaResponse<ShowcaseUploadMediaResult | ApiErrorResponse>
+): Promise<MedusaResponse<ShowcaseUploadMediaResult | ApiErrorResponse>> => {
   const parsed = serverUploadSchema.safeParse(req.body)
   if (!parsed.success) {
-    res.status(400).json({
+    return res.status(400).json({
       type: 'invalid_data',
       message: parsed.error.issues[0]?.message || 'Invalid media upload payload',
-      issues: parsed.error.issues,
+      issues: parsed.error.issues.map((issue) => ({
+        path: issue.path,
+        message: issue.message,
+      })),
     })
-    return
   }
 
   const rawBase64 = parsed.data.content_base64.includes(';base64,')
@@ -40,5 +49,5 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse): Promise<voi
     content: buffer,
   })
 
-  res.status(201).json(uploaded)
+  return res.status(201).json(uploaded)
 }

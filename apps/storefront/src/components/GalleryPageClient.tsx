@@ -9,8 +9,10 @@ import {
   type ShowcaseEntryDTO,
   type ShowcaseSummaryStats,
 } from '@mobile-station/types'
+import type { GalleryHubFilterTab } from '@/types/storefront'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
-import { ShowcaseEntryCard, ShowcaseMediaModal } from '@/components/ShowcaseCards'
+import { ShowcaseEntryCard } from '@/components/showcase/ShowcaseEntryCard'
+import { ShowcaseMediaModal } from '@/components/showcase/ShowcaseMediaModal'
 
 interface GalleryPageClientProps {
   initialItems: ShowcaseEntryDTO[]
@@ -26,16 +28,14 @@ const GALLERY_CATEGORY_OPTIONS: ShowcaseCategory[] = [
 ]
 
 export function GalleryPageClient({ initialItems, stats }: GalleryPageClientProps) {
-  const [hubFilter, setHubFilter] = useState<'all' | 'motijheel-842001' | 'club-road-842002'>(
-    'all'
-  )
+  const [hubFilter, setHubFilter] = useState<GalleryHubFilterTab>('all')
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
   const [activeMedia, setActiveMedia] = useState<ShowcaseEntryDTO | null>(null)
 
-  const filtered = useMemo(() => {
-    return initialItems.filter((item) => {
-      if (hubFilter !== 'all' && item.hub_location !== hubFilter) return false
-      if (categoryFilter !== 'all' && item.category !== categoryFilter) return false
+  const filteredItems = useMemo(() => {
+    return initialItems.filter((entry) => {
+      if (hubFilter !== 'all' && entry.hub_location !== hubFilter) return false
+      if (categoryFilter !== 'all' && entry.category !== categoryFilter) return false
       return true
     })
   }, [initialItems, hubFilter, categoryFilter])
@@ -91,7 +91,6 @@ export function GalleryPageClient({ initialItems, stats }: GalleryPageClientProp
       </section>
 
       <section className="page-container py-8 space-y-6">
-        {/* Hub & Category Filters */}
         <div className="space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap gap-2">
@@ -101,19 +100,19 @@ export function GalleryPageClient({ initialItems, stats }: GalleryPageClientProp
                   { id: 'motijheel-842001', label: 'Motijheel Flagship (842001)' },
                   { id: 'club-road-842002', label: 'Club Road Tech Center (842002)' },
                 ] as const
-              ).map((tab) => (
+              ).map((tabOption) => (
                 <button
-                  key={tab.id}
+                  key={tabOption.id}
                   type="button"
-                  onClick={() => setHubFilter(tab.id)}
+                  onClick={() => setHubFilter(tabOption.id)}
                   className={`inline-flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-xs font-semibold transition ${
-                    hubFilter === tab.id
+                    hubFilter === tabOption.id
                       ? 'border-obsidian-900 bg-obsidian-900 text-gold-500'
                       : 'border-chrome-200 bg-surface-card text-ink-primary hover:border-gold-500'
                   }`}
                 >
                   <Store className="h-3.5 w-3.5" />
-                  <span>{tab.label}</span>
+                  <span>{tabOption.label}</span>
                 </button>
               ))}
             </div>
@@ -131,24 +130,26 @@ export function GalleryPageClient({ initialItems, stats }: GalleryPageClientProp
             >
               All Visit Highlights
             </button>
-            {GALLERY_CATEGORY_OPTIONS.map((cat) => (
+            {GALLERY_CATEGORY_OPTIONS.map((categoryKey) => (
               <button
-                key={cat}
+                key={categoryKey}
                 type="button"
-                onClick={() => setCategoryFilter(categoryFilter === cat ? 'all' : cat)}
+                onClick={() =>
+                  setCategoryFilter(categoryFilter === categoryKey ? 'all' : categoryKey)
+                }
                 className={`rounded-full border px-2.5 py-1 text-[11px] font-medium ${
-                  categoryFilter === cat
+                  categoryFilter === categoryKey
                     ? 'border-gold-500 bg-gold-100 text-gold-700 font-semibold'
                     : 'border-chrome-200 bg-surface-card text-ink-muted hover:text-ink-primary'
                 }`}
               >
-                {SHOWCASE_CATEGORY_LABELS[cat]}
+                {SHOWCASE_CATEGORY_LABELS[categoryKey]}
               </button>
             ))}
           </div>
         </div>
 
-        {filtered.length === 0 ? (
+        {filteredItems.length === 0 ? (
           <div className="rounded-md border border-chrome-200 bg-surface-card p-10 text-center space-y-3">
             <p className="font-display text-base font-bold text-ink-primary">
               No store visit photos or clips match this filter yet.
@@ -166,7 +167,7 @@ export function GalleryPageClient({ initialItems, stats }: GalleryPageClientProp
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.map((item) => (
+            {filteredItems.map((item) => (
               <ShowcaseEntryCard key={item.id} item={item} onOpenMedia={setActiveMedia} />
             ))}
           </div>
@@ -174,7 +175,7 @@ export function GalleryPageClient({ initialItems, stats }: GalleryPageClientProp
       </section>
 
       <ShowcaseMediaModal
-        items={filtered.filter((i) => i.media_kind !== 'none' && i.media_url)}
+        items={filteredItems.filter((entry) => entry.media_kind !== 'none' && entry.media_url)}
         activeItem={activeMedia}
         onClose={() => setActiveMedia(null)}
         onSelect={setActiveMedia}

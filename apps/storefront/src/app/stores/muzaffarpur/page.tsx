@@ -4,7 +4,7 @@ import { ArrowLeft, Clock, MapPin, PackageCheck, ShieldCheck, Store } from 'luci
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
 import { fetchShowcaseFeed } from '@/lib/showcase'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
-import { ShowcaseSpotlightSection } from '@/components/ShowcaseSection'
+import { ShowcaseSpotlightSection } from '@/components/showcase/ShowcaseSpotlightSection'
 
 export const dynamic = 'force-dynamic'
 

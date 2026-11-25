@@ -96,6 +96,76 @@ export interface ShowcaseSummaryStats {
   avg_rating: number | null
 }
 
+export interface ShowcaseListQueryParams {
+  entry_type?: ShowcaseEntryType
+  category?: ShowcaseCategory
+  hub_location?: ShowcaseHubLocation
+  media_kind?: ShowcaseMediaKind
+  status?: ShowcaseStatus
+  product_handle?: string
+  is_featured?: boolean
+  search?: string
+  limit?: number
+  offset?: number
+}
+
+export interface ShowcaseListResponse {
+  items: ShowcaseEntryDTO[]
+  count: number
+  limit: number
+  offset: number
+  stats: ShowcaseSummaryStats
+}
+
+export interface ShowcaseMutationResponse {
+  item: ShowcaseEntryDTO
+}
+
+export interface ShowcaseDeleteResponse {
+  id: string
+  deleted: boolean
+}
+
+export interface PublicFeedbackSubmitResponse {
+  id: string
+  status: ShowcaseStatus
+  message: string
+}
+
+export interface ShowcaseSignedUploadPayload {
+  cloud_name: string
+  api_key: string
+  timestamp: number
+  signature: string
+  folder: string
+  resource_type: 'video' | 'image'
+  upload_url: string
+  tags: string
+  eager?: string
+  max_file_size_bytes: number
+}
+
+export interface ApiValidationIssue {
+  path: Array<string | number>
+  message: string
+}
+
+export interface ApiErrorResponse {
+  type: string
+  message: string
+  issues?: ApiValidationIssue[]
+}
+
+export interface ShowcaseUploadMediaResult {
+  media_url: string
+  media_public_id: string
+  thumbnail_url: string
+  duration_seconds: number | null
+  media_width: number | null
+  media_height: number | null
+  mime_type: string | null
+}
+
 export const createShowcaseEntrySchema = z
   .object({
     entry_type: z.enum(SHOWCASE_ENTRY_TYPES),

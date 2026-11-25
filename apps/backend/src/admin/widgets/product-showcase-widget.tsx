@@ -2,15 +2,17 @@ import { defineWidgetConfig } from '@medusajs/admin-sdk'
 import { Badge, Button, Container, Heading, Text } from '@medusajs/ui'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import type { ShowcaseEntryDTO } from '@mobile-station/types'
+import type { ShowcaseEntryDTO, ShowcaseListResponse } from '@mobile-station/types'
 import { SHOWCASE_CATEGORY_LABELS } from '@mobile-station/types'
 
+interface ProductWidgetDetail {
+  id: string
+  handle?: string
+  title?: string
+}
+
 interface ProductWidgetProps {
-  data: {
-    id: string
-    handle?: string
-    title?: string
-  }
+  data: ProductWidgetDetail
 }
 
 const ProductShowcaseWidget = ({ data }: ProductWidgetProps) => {
@@ -20,16 +22,20 @@ const ProductShowcaseWidget = ({ data }: ProductWidgetProps) => {
     if (!data?.handle) return
     const token =
       typeof window !== 'undefined' ? window.localStorage.getItem('medusa_auth_token') : null
-    const headers: Record<string, string> = {}
-    if (token) headers.Authorization = `Bearer ${token}`
+    const headers = new Headers()
+    if (token) headers.set('Authorization', `Bearer ${token}`)
 
     fetch(`/admin/showcase?product_handle=${encodeURIComponent(data.handle)}&limit=10`, {
       credentials: 'include',
       headers,
     })
-      .then((res) => (res.ok ? res.json() : { items: [] }))
+      .then((response) =>
+        response.ok
+          ? (response.json() as Promise<ShowcaseListResponse>)
+          : Promise.resolve({ items: [] as ShowcaseEntryDTO[] })
+      )
       .then((payload) => setEntries(payload.items || []))
-      .catch(() => {})
+      .catch(() => setEntries([]))
   }, [data?.handle])
 
   return (

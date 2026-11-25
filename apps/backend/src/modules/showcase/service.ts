@@ -1,32 +1,22 @@
 import { MedusaService } from '@medusajs/framework/utils'
+import type { ShowcaseSummaryStats } from '@mobile-station/types'
 import type {
-  ShowcaseCategory,
-  ShowcaseEntryType,
-  ShowcaseHubLocation,
-  ShowcaseMediaKind,
-  ShowcaseStatus,
-  ShowcaseSummaryStats,
-} from '@mobile-station/types'
+  ListShowcaseFilters,
+  PersistedShowcaseEntry,
+  ShowcaseQueryWhere,
+} from '../../types/showcase-backend'
 import { ShowcaseEntry } from './models/showcase-entry'
-
-export interface ListShowcaseFilters {
-  entry_type?: ShowcaseEntryType
-  category?: ShowcaseCategory
-  hub_location?: ShowcaseHubLocation
-  media_kind?: ShowcaseMediaKind
-  status?: ShowcaseStatus
-  product_handle?: string
-  is_featured?: boolean
-  q?: string
-  limit?: number
-  offset?: number
-}
 
 export class ShowcaseModuleService extends MedusaService({
   ShowcaseEntry,
 }) {
-  async listFiltered(filters: ListShowcaseFilters = {}) {
-    const where: Record<string, unknown> = {}
+  async listFiltered(filters: ListShowcaseFilters = {}): Promise<{
+    items: PersistedShowcaseEntry[]
+    count: number
+    limit: number
+    offset: number
+  }> {
+    const where: ShowcaseQueryWhere = {}
     if (filters.entry_type) where.entry_type = filters.entry_type
     if (filters.category) where.category = filters.category
     if (filters.hub_location) where.hub_location = filters.hub_location
@@ -35,28 +25,28 @@ export class ShowcaseModuleService extends MedusaService({
     if (filters.product_handle) where.product_handle = filters.product_handle
     if (filters.is_featured !== undefined) where.is_featured = filters.is_featured
 
-    const allMatching = await this.listShowcaseEntries(where, {
+    const allMatching = (await this.listShowcaseEntries(where, {
       order: {
         is_featured: 'DESC',
         display_order: 'ASC',
         created_at: 'DESC',
       },
-    })
+    })) as PersistedShowcaseEntry[]
 
-    const needle = (filters.q || '').trim().toLowerCase()
-    const searchFiltered = needle
-      ? allMatching.filter((item) =>
+    const searchNeedle = (filters.search || filters.q || '').trim().toLowerCase()
+    const matchingEntries = searchNeedle
+      ? allMatching.filter((entry) =>
           [
-            item.title,
-            item.quote_or_caption,
-            item.author_name,
-            item.author_city,
-            item.product_title || '',
-            item.product_handle || '',
+            entry.title,
+            entry.quote_or_caption,
+            entry.author_name,
+            entry.author_city,
+            entry.product_title || '',
+            entry.product_handle || '',
           ]
             .join(' ')
             .toLowerCase()
-            .includes(needle)
+            .includes(searchNeedle)
         )
       : allMatching
 
@@ -64,36 +54,36 @@ export class ShowcaseModuleService extends MedusaService({
     const offset = Math.max(filters.offset ?? 0, 0)
 
     return {
-      items: searchFiltered.slice(offset, offset + limit),
-      count: searchFiltered.length,
+      items: matchingEntries.slice(offset, offset + limit),
+      count: matchingEntries.length,
       limit,
       offset,
     }
   }
 
   async getSummaryStats(onlyPublished = false): Promise<ShowcaseSummaryStats> {
-    const where = onlyPublished ? { status: 'published' as const } : {}
-    const rows = await this.listShowcaseEntries(where)
+    const where: ShowcaseQueryWhere = onlyPublished ? { status: 'published' } : {}
+    const rows = (await this.listShowcaseEntries(where)) as PersistedShowcaseEntry[]
 
     const ratings = rows
-      .filter((r) => r.entry_type === 'customer_feedback' && typeof r.rating === 'number')
-      .map((r) => Number(r.rating))
+      .filter((entry) => entry.entry_type === 'customer_feedback' && typeof entry.rating === 'number')
+      .map((entry) => Number(entry.rating))
 
     const avgRating =
       ratings.length > 0
-        ? Math.round((ratings.reduce((sum, n) => sum + n, 0) / ratings.length) * 10) / 10
+        ? Math.round((ratings.reduce((sum, score) => sum + score, 0) / ratings.length) * 10) / 10
         : null
 
     return {
       total: rows.length,
-      published: rows.filter((r) => r.status === 'published').length,
-      drafts: rows.filter((r) => r.status === 'draft').length,
-      archived: rows.filter((r) => r.status === 'archived').length,
-      feedback_total: rows.filter((r) => r.entry_type === 'customer_feedback').length,
+      published: rows.filter((entry) => entry.status === 'published').length,
+      drafts: rows.filter((entry) => entry.status === 'draft').length,
+      archived: rows.filter((entry) => entry.status === 'archived').length,
+      feedback_total: rows.filter((entry) => entry.entry_type === 'customer_feedback').length,
       video_feedback_total: rows.filter(
-        (r) => r.entry_type === 'customer_feedback' && r.media_kind === 'video'
+        (entry) => entry.entry_type === 'customer_feedback' && entry.media_kind === 'video'
       ).length,
-      store_visit_total: rows.filter((r) => r.entry_type === 'store_visit').length,
+      store_visit_total: rows.filter((entry) => entry.entry_type === 'store_visit').length,
       avg_rating: avgRating,
     }
   }

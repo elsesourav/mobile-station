@@ -288,10 +288,10 @@ export function StorefrontChrome({
               Shop Categories
             </p>
             <ul className="space-y-1.5 text-chrome-400">
-              {ALL_CATEGORIES.map((c) => (
-                <li key={c.id}>
-                  <Link href={`/categories/${c.handle}`} className="hover:text-gold-500">
-                    {c.name}
+              {ALL_CATEGORIES.map((category) => (
+                <li key={category.id}>
+                  <Link href={`/categories/${category.handle}`} className="hover:text-gold-500">
+                    {category.name}
                   </Link>
                 </li>
               ))}

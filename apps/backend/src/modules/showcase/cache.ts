@@ -1,4 +1,5 @@
 import Redis from 'ioredis'
+import type { ShowcaseRateLimitStatus } from '../../types/showcase-backend'
 
 const CACHE_PREFIX = 'ms:showcase:'
 
@@ -32,30 +33,32 @@ export async function getCachedShowcasePayload<T>(cacheKey: string): Promise<T |
   const client = getRedisClient()
   if (!client) return null
   try {
-    const raw = await client.get(`${CACHE_PREFIX}${cacheKey}`)
-    return raw ? (JSON.parse(raw) as T) : null
+    const rawPayload = await client.get(`${CACHE_PREFIX}${cacheKey}`)
+    return rawPayload ? (JSON.parse(rawPayload) as T) : null
   } catch {
     return null
   }
 }
 
-export async function setCachedShowcasePayload(
+export async function setCachedShowcasePayload<T>(
   cacheKey: string,
-  value: unknown,
+  payload: T,
   ttlSeconds = 60
-): Promise<void> {
+): Promise<boolean> {
   const client = getRedisClient()
-  if (!client) return
+  if (!client) return false
   try {
-    await client.set(`${CACHE_PREFIX}${cacheKey}`, JSON.stringify(value), 'EX', ttlSeconds)
+    await client.set(`${CACHE_PREFIX}${cacheKey}`, JSON.stringify(payload), 'EX', ttlSeconds)
+    return true
   } catch {
-    // Non-fatal cache write
+    return false
   }
 }
 
-export async function invalidateShowcaseCache(): Promise<void> {
+export async function invalidateShowcaseCache(): Promise<number> {
   const client = getRedisClient()
-  if (!client) return
+  if (!client) return 0
+  let clearedCount = 0
   try {
     let cursor = '0'
     do {
@@ -68,19 +71,20 @@ export async function invalidateShowcaseCache(): Promise<void> {
       )
       cursor = nextCursor
       if (keys.length > 0) {
-        await client.del(...keys)
+        clearedCount += await client.del(...keys)
       }
     } while (cursor !== '0')
   } catch {
     // Non-fatal cache invalidation
   }
+  return clearedCount
 }
 
 export async function checkPublicSubmissionRateLimit(
   clientIp: string,
   maxPerWindow = 5,
   windowSeconds = 3600
-): Promise<{ allowed: boolean; remaining: number }> {
+): Promise<ShowcaseRateLimitStatus> {
   const client = getRedisClient()
   if (!client) return { allowed: true, remaining: maxPerWindow }
 

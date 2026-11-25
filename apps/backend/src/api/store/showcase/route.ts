@@ -1,5 +1,10 @@
 import type { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
-import { publicFeedbackSubmitSchema } from '@mobile-station/types'
+import {
+  publicFeedbackSubmitSchema,
+  type ApiErrorResponse,
+  type PublicFeedbackSubmitResponse,
+  type ShowcaseListResponse,
+} from '@mobile-station/types'
 import { SHOWCASE_MODULE } from '../../../modules/showcase'
 import type { ShowcaseModuleService } from '../../../modules/showcase/service'
 import {
@@ -14,15 +19,17 @@ import {
 
 export const AUTHENTICATE = false
 
-export const GET = async (req: MedusaRequest, res: MedusaResponse): Promise<void> => {
+export const GET = async (
+  req: MedusaRequest,
+  res: MedusaResponse<ShowcaseListResponse>
+): Promise<MedusaResponse<ShowcaseListResponse>> => {
   const filters = parseShowcaseListQuery(req, true)
   const cacheKey = `list:${JSON.stringify(filters)}`
 
-  const cached = await getCachedShowcasePayload<Record<string, unknown>>(cacheKey)
+  const cached = await getCachedShowcasePayload<ShowcaseListResponse>(cacheKey)
   if (cached) {
     res.setHeader('X-Cache', 'HIT')
-    res.status(200).json(cached)
-    return
+    return res.status(200).json(cached)
   }
 
   const showcaseService = req.scope.resolve<ShowcaseModuleService>(SHOWCASE_MODULE)
@@ -31,8 +38,8 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse): Promise<void
     showcaseService.getSummaryStats(true),
   ])
 
-  const payload = {
-    items: result.items.map((item) => formatShowcaseRecord(item as unknown as Record<string, unknown>)),
+  const payload: ShowcaseListResponse = {
+    items: result.items.map(formatShowcaseRecord),
     count: result.count,
     limit: result.limit,
     offset: result.offset,
@@ -41,10 +48,13 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse): Promise<void
 
   await setCachedShowcasePayload(cacheKey, payload, 60)
   res.setHeader('X-Cache', 'MISS')
-  res.status(200).json(payload)
+  return res.status(200).json(payload)
 }
 
-export const POST = async (req: MedusaRequest, res: MedusaResponse): Promise<void> => {
+export const POST = async (
+  req: MedusaRequest,
+  res: MedusaResponse<PublicFeedbackSubmitResponse | ApiErrorResponse>
+): Promise<MedusaResponse<PublicFeedbackSubmitResponse | ApiErrorResponse>> => {
   const clientIp =
     (typeof req.headers['x-forwarded-for'] === 'string'
       ? req.headers['x-forwarded-for'].split(',')[0]?.trim()
@@ -54,21 +64,22 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse): Promise<voi
 
   const rateLimit = await checkPublicSubmissionRateLimit(clientIp, 5, 3600)
   if (!rateLimit.allowed) {
-    res.status(429).json({
+    return res.status(429).json({
       type: 'rate_limit',
       message: 'Too many review submissions from this network. Please try again later.',
     })
-    return
   }
 
   const parsed = publicFeedbackSubmitSchema.safeParse(req.body)
   if (!parsed.success) {
-    res.status(400).json({
+    return res.status(400).json({
       type: 'invalid_data',
       message: parsed.error.issues[0]?.message || 'Invalid customer feedback submission',
-      issues: parsed.error.issues,
+      issues: parsed.error.issues.map((issue) => ({
+        path: issue.path,
+        message: issue.message,
+      })),
     })
-    return
   }
 
   const showcaseService = req.scope.resolve<ShowcaseModuleService>(SHOWCASE_MODULE)
@@ -89,7 +100,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse): Promise<voi
     visited_at: new Date(),
   })
 
-  res.status(201).json({
+  return res.status(201).json({
     id: created.id,
     status: created.status,
     message: 'Thank you! Your review has been received and queued for Hub verification.',

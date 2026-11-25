@@ -1,22 +1,10 @@
 import type {
   ShowcaseEntryDTO,
-  ShowcaseEntryType,
+  ShowcaseListResponse,
   ShowcaseSummaryStats,
 } from '@mobile-station/types'
 import showcaseSeedData from '../../../../data/showcase/showcase-seed.json'
-
-export interface ShowcaseQueryOptions {
-  entry_type?: ShowcaseEntryType
-  product_handle?: string
-  featured?: boolean
-  limit?: number
-}
-
-export interface ShowcaseFeedResult {
-  items: ShowcaseEntryDTO[]
-  stats: ShowcaseSummaryStats
-  source: 'backend' | 'seed'
-}
+import type { ShowcaseFeedResult, ShowcaseQueryOptions } from '@/types/storefront'
 
 const BACKEND_URL = (
   process.env.MEDUSA_BACKEND_URL ||
@@ -27,90 +15,86 @@ const BACKEND_URL = (
 const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || ''
 
 function computeStatsFromList(rows: ShowcaseEntryDTO[]): ShowcaseSummaryStats {
-  const publishedRows = rows.filter((r) => r.status === 'published')
+  const publishedRows = rows.filter((entry) => entry.status === 'published')
   const ratings = publishedRows
-    .filter((r) => r.entry_type === 'customer_feedback' && typeof r.rating === 'number')
-    .map((r) => Number(r.rating))
+    .filter((entry) => entry.entry_type === 'customer_feedback' && typeof entry.rating === 'number')
+    .map((entry) => Number(entry.rating))
 
   return {
     total: publishedRows.length,
     published: publishedRows.length,
     drafts: 0,
     archived: 0,
-    feedback_total: publishedRows.filter((r) => r.entry_type === 'customer_feedback').length,
+    feedback_total: publishedRows.filter((entry) => entry.entry_type === 'customer_feedback')
+      .length,
     video_feedback_total: publishedRows.filter(
-      (r) => r.entry_type === 'customer_feedback' && r.media_kind === 'video'
+      (entry) => entry.entry_type === 'customer_feedback' && entry.media_kind === 'video'
     ).length,
-    store_visit_total: publishedRows.filter((r) => r.entry_type === 'store_visit').length,
+    store_visit_total: publishedRows.filter((entry) => entry.entry_type === 'store_visit').length,
     avg_rating:
       ratings.length > 0
-        ? Math.round((ratings.reduce((sum, n) => sum + n, 0) / ratings.length) * 10) / 10
+        ? Math.round((ratings.reduce((sum, score) => sum + score, 0) / ratings.length) * 10) / 10
         : null,
   }
 }
 
-export function getSeedShowcaseEntries(opts: ShowcaseQueryOptions = {}): ShowcaseFeedResult {
-  const allRows = (showcaseSeedData as { entries: ShowcaseEntryDTO[] }).entries.filter(
-    (item) => item.status === 'published'
-  )
+export function getSeedShowcaseEntries(options: ShowcaseQueryOptions = {}): ShowcaseFeedResult {
+  const seedPayload = showcaseSeedData as { entries: ShowcaseEntryDTO[] }
+  const publishedRows = seedPayload.entries.filter((entry) => entry.status === 'published')
 
-  const filtered = allRows
-    .filter((item) => {
-      if (opts.entry_type && item.entry_type !== opts.entry_type) return false
-      if (opts.product_handle && item.product_handle !== opts.product_handle) return false
-      if (opts.featured !== undefined && item.is_featured !== opts.featured) return false
+  const filtered = publishedRows
+    .filter((entry) => {
+      if (options.entry_type && entry.entry_type !== options.entry_type) return false
+      if (options.product_handle && entry.product_handle !== options.product_handle) return false
+      if (options.featured !== undefined && entry.is_featured !== options.featured) return false
       return true
     })
-    .sort((a, b) => {
-      if (a.is_featured !== b.is_featured) return a.is_featured ? -1 : 1
-      return a.display_order - b.display_order
+    .sort((first, second) => {
+      if (first.is_featured !== second.is_featured) return first.is_featured ? -1 : 1
+      return first.display_order - second.display_order
     })
 
   return {
-    items: typeof opts.limit === 'number' ? filtered.slice(0, opts.limit) : filtered,
-    stats: computeStatsFromList(allRows),
+    items: typeof options.limit === 'number' ? filtered.slice(0, options.limit) : filtered,
+    stats: computeStatsFromList(publishedRows),
     source: 'seed',
   }
 }
 
 /**
- * Fetches live published Customer Feedback & Store Visit Gallery items from Medusa backend
- * `/store/showcase` (Supabase Postgres + Redis cache), cleanly falling back to curated seed data
- * if storefront is previewed offline without backend running.
+ * Fetches live published Customer Feedback and Store Visit Gallery items from Medusa backend
+ * `/store/showcase`, falling back to curated seed data if offline.
  */
 export async function fetchShowcaseFeed(
-  opts: ShowcaseQueryOptions = {}
+  options: ShowcaseQueryOptions = {}
 ): Promise<ShowcaseFeedResult> {
-  const qs = new URLSearchParams()
-  if (opts.entry_type) qs.set('entry_type', opts.entry_type)
-  if (opts.product_handle) qs.set('product_handle', opts.product_handle)
-  if (opts.featured !== undefined) qs.set('featured', String(opts.featured))
-  if (opts.limit) qs.set('limit', String(opts.limit))
+  const queryParams = new URLSearchParams()
+  if (options.entry_type) queryParams.set('entry_type', options.entry_type)
+  if (options.product_handle) queryParams.set('product_handle', options.product_handle)
+  if (options.featured !== undefined) queryParams.set('featured', String(options.featured))
+  if (options.limit) queryParams.set('limit', String(options.limit))
 
-  const url = `${BACKEND_URL}/store/showcase${qs.toString() ? `?${qs.toString()}` : ''}`
-  const headers: Record<string, string> = { Accept: 'application/json' }
+  const requestUrl = `${BACKEND_URL}/store/showcase${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  const headers = new Headers({ Accept: 'application/json' })
   if (PUBLISHABLE_KEY) {
-    headers['x-publishable-api-key'] = PUBLISHABLE_KEY
+    headers.set('x-publishable-api-key', PUBLISHABLE_KEY)
   }
 
   try {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 2500)
-    const res = await fetch(url, {
+    const response = await fetch(requestUrl, {
       headers,
       cache: 'no-store',
       signal: controller.signal,
     })
     clearTimeout(timeout)
 
-    if (!res.ok) {
-      return getSeedShowcaseEntries(opts)
+    if (!response.ok) {
+      return getSeedShowcaseEntries(options)
     }
 
-    const payload = (await res.json()) as {
-      items?: ShowcaseEntryDTO[]
-      stats?: ShowcaseSummaryStats
-    }
+    const payload = (await response.json()) as Partial<ShowcaseListResponse>
     if (Array.isArray(payload.items) && payload.items.length > 0) {
       return {
         items: payload.items,
@@ -119,10 +103,8 @@ export async function fetchShowcaseFeed(
       }
     }
 
-    // If backend DB hasn't been seeded yet with any published rows, preserve polished seed preview
-    const fallback = getSeedShowcaseEntries(opts)
-    return fallback
+    return getSeedShowcaseEntries(options)
   } catch {
-    return getSeedShowcaseEntries(opts)
+    return getSeedShowcaseEntries(options)
   }
 }

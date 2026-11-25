@@ -5,15 +5,7 @@ import type {
   ProviderSendNotificationResultsDTO,
 } from '@medusajs/framework/types'
 import { Resend } from 'resend'
-
-export interface ResendNotificationOptions {
-  channels?: string[]
-  api_key?: string
-  from_email?: string
-  from_name?: string
-  reply_to?: string
-  mock_mode?: boolean
-}
+import type { ResendEmailContentPayload, ResendNotificationOptions } from '../../types/media'
 
 type InjectedDependencies = {
   logger?: Logger
@@ -58,11 +50,9 @@ export class ResendNotificationService extends AbstractNotificationProviderServi
     const fromName = this.options.from_name || process.env.NOTIFICATION_FROM_NAME || 'Mobile Station'
     const from = `${fromName} <${fromEmail}>`
 
-    const content = (notification.content || {}) as {
-      subject?: string
-      html?: string
-      text?: string
-    }
+    const rawContent = notification.content
+    const content: ResendEmailContentPayload =
+      rawContent && typeof rawContent === 'object' ? rawContent : {}
     const subject = content.subject || `Mobile Station Update (${notification.template})`
     const html = content.html || `<p>${content.text || 'Order notification from Mobile Station.'}</p>`
 

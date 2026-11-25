@@ -1,7 +1,20 @@
 import { MedusaError } from '@medusajs/framework/utils'
 import { v2 as cloudinary } from 'cloudinary'
 import { Readable } from 'stream'
-import type { ShowcaseEntryType } from '@mobile-station/types'
+import type {
+  ShowcaseEntryType,
+  ShowcaseSignedUploadPayload,
+  ShowcaseUploadMediaResult,
+} from '@mobile-station/types'
+import type {
+  CloudinaryModuleOptions,
+  CloudinaryResolvedConfig,
+  OptimizedShowcaseUrls,
+  ShowcaseMediaBufferUploadInput,
+  ShowcaseMediaValidationInput,
+  ShowcaseMediaValidationOutcome,
+} from '../../types/media'
+import type { ShowcaseAssetDestructionResult } from '../../types/showcase-backend'
 
 const ALLOWED_IMAGE_MIME = /^image\/(webp|jpeg|jpg|png|avif|gif)$/i
 const ALLOWED_VIDEO_MIME = /^video\/(mp4|webm|quicktime|x-m4v)$/i
@@ -10,26 +23,9 @@ const ALLOWED_MEDIA_EXT = /\.(mp4|webm|mov|m4v|webp|png|jpe?g|avif|gif)$/i
 export const MAX_SHOWCASE_VIDEO_BYTES = 100 * 1024 * 1024 // 100 MB
 export const MAX_SHOWCASE_IMAGE_BYTES = 15 * 1024 * 1024 // 15 MB
 
-export interface ShowcaseSignedUploadPayload {
-  cloud_name: string
-  api_key: string
-  timestamp: number
-  signature: string
-  folder: string
-  resource_type: 'video' | 'image'
-  upload_url: string
-  tags: string
-  eager?: string
-  max_file_size_bytes: number
-}
-
 /**
  * Dedicated Cloudinary media pipeline for public Customer Video Feedback and
  * Muzaffarpur / Pan-India Store Visit Gallery assets.
- *
- * Strictly preserves Mobile Station's storage separation: ONLY public
- * image/* and video/* showcase media may enter Cloudinary. Private PDFs,
- * GST invoices, CSVs, DB backups, and private return proofs stay in S3/R2.
  */
 export class ShowcaseCloudinaryMediaService {
   private readonly cloudName: string
@@ -37,12 +33,7 @@ export class ShowcaseCloudinaryMediaService {
   private readonly apiSecret: string
   private readonly rootFolder: string
 
-  constructor(config?: {
-    cloud_name?: string
-    api_key?: string
-    api_secret?: string
-    folder?: string
-  }) {
+  constructor(config?: CloudinaryModuleOptions) {
     this.cloudName = config?.cloud_name || process.env.CLOUDINARY_CLOUD_NAME || ''
     this.apiKey = config?.api_key || process.env.CLOUDINARY_API_KEY || ''
     this.apiSecret = config?.api_secret || process.env.CLOUDINARY_API_SECRET || ''
@@ -58,21 +49,22 @@ export class ShowcaseCloudinaryMediaService {
     }
   }
 
-  private assertConfigured(): void {
+  private assertConfigured(): CloudinaryResolvedConfig {
     if (!this.cloudName || !this.apiKey || !this.apiSecret) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
         'Cloudinary credentials are not configured. Provide CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET.'
       )
     }
+    return {
+      cloudName: this.cloudName,
+      apiKey: this.apiKey,
+      apiSecret: this.apiSecret,
+      rootFolder: this.rootFolder,
+    }
   }
 
-  validateShowcaseFile(params: {
-    media_kind: 'video' | 'image'
-    mime_type?: string
-    filename?: string
-    file_size_bytes?: number
-  }): void {
+  validateShowcaseFile(params: ShowcaseMediaValidationInput): ShowcaseMediaValidationOutcome {
     const mime = (params.mime_type || '').trim()
     const filename = (params.filename || '').trim()
 
@@ -111,17 +103,18 @@ export class ShowcaseCloudinaryMediaService {
       )
     }
 
-    if (params.file_size_bytes !== undefined) {
-      const limit =
-        params.media_kind === 'video' ? MAX_SHOWCASE_VIDEO_BYTES : MAX_SHOWCASE_IMAGE_BYTES
-      if (params.file_size_bytes > limit) {
-        const mb = Math.round(limit / (1024 * 1024))
-        throw new MedusaError(
-          MedusaError.Types.INVALID_DATA,
-          `File size exceeds the ${mb} MB limit for ${params.media_kind} uploads.`
-        )
-      }
+    const maxAllowedBytes =
+      params.media_kind === 'video' ? MAX_SHOWCASE_VIDEO_BYTES : MAX_SHOWCASE_IMAGE_BYTES
+
+    if (params.file_size_bytes !== undefined && params.file_size_bytes > maxAllowedBytes) {
+      const maxMegabytes = Math.round(maxAllowedBytes / (1024 * 1024))
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        `File size exceeds the ${maxMegabytes} MB limit for ${params.media_kind} uploads.`
+      )
     }
+
+    return { mediaKind: params.media_kind, maxAllowedBytes }
   }
 
   getSubfolder(entryType: ShowcaseEntryType, mediaKind: 'video' | 'image'): string {
@@ -138,7 +131,7 @@ export class ShowcaseCloudinaryMediaService {
     public_id: string
     media_kind: 'video' | 'image'
     fallback_secure_url?: string
-  }): { media_url: string; thumbnail_url: string } {
+  }): OptimizedShowcaseUrls {
     const { public_id, media_kind, fallback_secure_url } = params
     if (!this.cloudName || !public_id) {
       return {
@@ -148,25 +141,23 @@ export class ShowcaseCloudinaryMediaService {
     }
 
     if (media_kind === 'video') {
-      const media_url = `https://res.cloudinary.com/${this.cloudName}/video/upload/q_auto:good,f_auto/${public_id}`
-      const thumbnail_url = `https://res.cloudinary.com/${this.cloudName}/video/upload/so_1,f_jpg,q_auto:good,w_900,c_limit/${public_id}.jpg`
-      return { media_url, thumbnail_url }
+      return {
+        media_url: `https://res.cloudinary.com/${this.cloudName}/video/upload/q_auto:good,f_auto/${public_id}`,
+        thumbnail_url: `https://res.cloudinary.com/${this.cloudName}/video/upload/so_1,f_jpg,q_auto:good,w_900,c_limit/${public_id}.jpg`,
+      }
     }
 
-    const media_url = `https://res.cloudinary.com/${this.cloudName}/image/upload/f_auto,q_auto:good,w_1400,c_limit/${public_id}`
-    const thumbnail_url = `https://res.cloudinary.com/${this.cloudName}/image/upload/f_auto,q_auto:good,w_800,c_limit/${public_id}`
-    return { media_url, thumbnail_url }
+    return {
+      media_url: `https://res.cloudinary.com/${this.cloudName}/image/upload/f_auto,q_auto:good,w_1400,c_limit/${public_id}`,
+      thumbnail_url: `https://res.cloudinary.com/${this.cloudName}/image/upload/f_auto,q_auto:good,w_800,c_limit/${public_id}`,
+    }
   }
 
-  createSignedUploadSignature(params: {
-    entry_type: ShowcaseEntryType
-    media_kind: 'video' | 'image'
-    filename?: string
-    mime_type?: string
-    file_size_bytes?: number
-  }): ShowcaseSignedUploadPayload {
-    this.validateShowcaseFile(params)
-    this.assertConfigured()
+  createSignedUploadSignature(
+    params: ShowcaseMediaValidationInput & { entry_type: ShowcaseEntryType }
+  ): ShowcaseSignedUploadPayload {
+    const { maxAllowedBytes } = this.validateShowcaseFile(params)
+    const config = this.assertConfigured()
 
     const timestamp = Math.floor(Date.now() / 1000)
     const folder = this.getSubfolder(params.entry_type, params.media_kind)
@@ -182,38 +173,25 @@ export class ShowcaseCloudinaryMediaService {
       paramsToSign.eager = 'q_auto:good,vc_auto|so_1,f_jpg,w_900,c_limit'
     }
 
-    const signature = cloudinary.utils.api_sign_request(paramsToSign, this.apiSecret)
+    const signature = cloudinary.utils.api_sign_request(paramsToSign, config.apiSecret)
 
     return {
-      cloud_name: this.cloudName,
-      api_key: this.apiKey,
+      cloud_name: config.cloudName,
+      api_key: config.apiKey,
       timestamp,
       signature,
       folder,
       resource_type: resourceType,
-      upload_url: `https://api.cloudinary.com/v1_1/${this.cloudName}/${resourceType}/upload`,
+      upload_url: `https://api.cloudinary.com/v1_1/${config.cloudName}/${resourceType}/upload`,
       tags,
       eager: typeof paramsToSign.eager === 'string' ? paramsToSign.eager : undefined,
-      max_file_size_bytes:
-        resourceType === 'video' ? MAX_SHOWCASE_VIDEO_BYTES : MAX_SHOWCASE_IMAGE_BYTES,
+      max_file_size_bytes: maxAllowedBytes,
     }
   }
 
-  async uploadMediaBuffer(params: {
-    entry_type: ShowcaseEntryType
-    media_kind: 'video' | 'image'
-    filename?: string
-    mime_type?: string
-    content: Buffer | Uint8Array | string
-  }): Promise<{
-    media_url: string
-    media_public_id: string
-    thumbnail_url: string
-    duration_seconds: number | null
-    media_width: number | null
-    media_height: number | null
-    mime_type: string | null
-  }> {
+  async uploadMediaBuffer(
+    params: ShowcaseMediaBufferUploadInput
+  ): Promise<ShowcaseUploadMediaResult> {
     const buffer = Buffer.isBuffer(params.content)
       ? params.content
       : typeof params.content === 'string'
@@ -251,16 +229,16 @@ export class ShowcaseCloudinaryMediaService {
             )
           }
 
-          const urls = this.buildOptimizedMediaUrls({
+          const optimizedUrls = this.buildOptimizedMediaUrls({
             public_id: result.public_id,
             media_kind: params.media_kind,
             fallback_secure_url: result.secure_url,
           })
 
           resolve({
-            media_url: urls.media_url,
+            media_url: optimizedUrls.media_url,
             media_public_id: result.public_id,
-            thumbnail_url: urls.thumbnail_url,
+            thumbnail_url: optimizedUrls.thumbnail_url,
             duration_seconds:
               typeof result.duration === 'number' ? Math.round(result.duration * 10) / 10 : null,
             media_width: typeof result.width === 'number' ? result.width : null,
@@ -279,14 +257,18 @@ export class ShowcaseCloudinaryMediaService {
     })
   }
 
-  async destroyAsset(publicId: string | null | undefined, mediaKind: 'video' | 'image' | 'none'): Promise<void> {
+  async destroyAsset(
+    publicId: string | null | undefined,
+    mediaKind: 'video' | 'image' | 'none'
+  ): Promise<ShowcaseAssetDestructionResult> {
     if (!publicId || mediaKind === 'none' || !this.cloudName || !this.apiKey || !this.apiSecret) {
-      return
+      return { deleted: false, publicId: publicId ?? null }
     }
     try {
       await cloudinary.uploader.destroy(publicId, { resource_type: mediaKind })
+      return { deleted: true, publicId }
     } catch {
-      // Non-fatal cleanup safeguard; DB state takes precedence
+      return { deleted: false, publicId }
     }
   }
 }

@@ -1,3 +1,5 @@
+import type { ProductSpecificationMap } from './store-catalog'
+
 export type ElectronicsRootCategory =
   | 'smartphones'
   | 'tablets'
@@ -152,6 +154,5 @@ export interface ElectronicsProductMetadata extends Partial<ElectronicsComplianc
     | KeyboardMouseSpecs
     | PowerChargerSpecs
     | AccessoryStorageSpecs
-    | Record<string, unknown>
-  [key: string]: unknown
+    | ProductSpecificationMap
 }

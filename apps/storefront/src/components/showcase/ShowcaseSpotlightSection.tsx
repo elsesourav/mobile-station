@@ -4,9 +4,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Camera, Film } from 'lucide-react'
 import type { ShowcaseEntryDTO } from '@mobile-station/types'
-import { ShowcaseEntryCard, ShowcaseMediaModal } from '@/components/ShowcaseCards'
+import { ShowcaseEntryCard } from '@/components/showcase/ShowcaseEntryCard'
+import { ShowcaseMediaModal } from '@/components/showcase/ShowcaseMediaModal'
 
-interface ShowcaseSpotlightProps {
+interface ShowcaseSpotlightSectionProps {
   title: string
   subtitle: string
   badgeLabel: string
@@ -28,7 +29,7 @@ export function ShowcaseSpotlightSection({
   primaryLabel,
   secondaryHref,
   secondaryLabel,
-}: ShowcaseSpotlightProps) {
+}: ShowcaseSpotlightSectionProps) {
   const [activeMedia, setActiveMedia] = useState<ShowcaseEntryDTO | null>(null)
 
   if (items.length === 0) return null
@@ -79,7 +80,7 @@ export function ShowcaseSpotlightSection({
       </div>
 
       <ShowcaseMediaModal
-        items={items.filter((i) => i.media_kind !== 'none' && i.media_url)}
+        items={items.filter((entry) => entry.media_kind !== 'none' && entry.media_url)}
         activeItem={activeMedia}
         onClose={() => setActiveMedia(null)}
         onSelect={setActiveMedia}

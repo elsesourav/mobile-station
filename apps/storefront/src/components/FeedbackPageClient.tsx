@@ -8,7 +8,6 @@ import {
   Film,
   MessageSquarePlus,
   Play,
-  ShieldCheck,
   Star,
 } from 'lucide-react'
 import {
@@ -17,16 +16,17 @@ import {
   SHOWCASE_HUB_LOCATIONS,
   type ShowcaseCategory,
   type ShowcaseEntryDTO,
-  type ShowcaseHubLocation,
   type ShowcaseSummaryStats,
 } from '@mobile-station/types'
+import type { FeedbackMediaFilterTab } from '@/types/storefront'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
+import { FeedbackSubmitForm } from '@/components/feedback/FeedbackSubmitForm'
 import {
   ShowcaseEntryCard,
-  ShowcaseMediaModal,
   StarRatingRow,
-  formatDuration,
-} from '@/components/ShowcaseCards'
+  formatShowcaseDuration,
+} from '@/components/showcase/ShowcaseEntryCard'
+import { ShowcaseMediaModal } from '@/components/showcase/ShowcaseMediaModal'
 
 interface FeedbackPageClientProps {
   initialItems: ShowcaseEntryDTO[]
@@ -42,105 +42,32 @@ const FEEDBACK_CATEGORY_OPTIONS: ShowcaseCategory[] = [
 ]
 
 export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientProps) {
-  const [mediaFilter, setMediaFilter] = useState<'all' | 'video' | 'written'>('all')
+  const [mediaFilter, setMediaFilter] = useState<FeedbackMediaFilterTab>('all')
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
   const [hubFilter, setHubFilter] = useState<string>('all')
   const [activeMedia, setActiveMedia] = useState<ShowcaseEntryDTO | null>(null)
-
   const [formOpen, setFormOpen] = useState(false)
-  const [submitting, setSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<{
-    ok: boolean
-    message: string
-  } | null>(null)
-  const [reviewForm, setReviewForm] = useState({
-    author_name: '',
-    author_city: 'Muzaffarpur, Bihar',
-    title: '',
-    quote_or_caption: '',
-    rating: 5,
-    hub_location: 'motijheel-842001' as ShowcaseHubLocation,
-    category: 'written_review' as 'written_review' | 'in_store_pickup' | 'open_box_check',
-    product_title: '',
-  })
 
-  const filtered = useMemo(() => {
-    return initialItems.filter((item) => {
-      if (mediaFilter === 'video' && item.media_kind !== 'video') return false
-      if (mediaFilter === 'written' && item.media_kind === 'video') return false
-      if (categoryFilter !== 'all' && item.category !== categoryFilter) return false
-      if (hubFilter !== 'all' && item.hub_location !== hubFilter) return false
+  const filteredItems = useMemo(() => {
+    return initialItems.filter((entry) => {
+      if (mediaFilter === 'video' && entry.media_kind !== 'video') return false
+      if (mediaFilter === 'written' && entry.media_kind === 'video') return false
+      if (categoryFilter !== 'all' && entry.category !== categoryFilter) return false
+      if (hubFilter !== 'all' && entry.hub_location !== hubFilter) return false
       return true
     })
   }, [initialItems, mediaFilter, categoryFilter, hubFilter])
 
   const featuredVideo = useMemo(
     () =>
-      filtered.find((item) => item.media_kind === 'video' && item.is_featured) ??
-      filtered.find((item) => item.media_kind === 'video') ??
+      filteredItems.find((entry) => entry.media_kind === 'video' && entry.is_featured) ??
+      filteredItems.find((entry) => entry.media_kind === 'video') ??
       null,
-    [filtered]
+    [filteredItems]
   )
-
-  const submitPublicFeedback = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitting(true)
-    setSubmitStatus(null)
-
-    try {
-      const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-      const pubKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
-      if (pubKey) headers['x-publishable-api-key'] = pubKey
-
-      const res = await fetch('/medusa/store/showcase', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          entry_type: 'customer_feedback',
-          category: reviewForm.category,
-          title: reviewForm.title.trim(),
-          quote_or_caption: reviewForm.quote_or_caption.trim(),
-          author_name: reviewForm.author_name.trim(),
-          author_city: reviewForm.author_city.trim(),
-          hub_location: reviewForm.hub_location,
-          rating: reviewForm.rating,
-          product_title: reviewForm.product_title.trim() || null,
-        }),
-      })
-      const payload = (await res.json().catch(() => ({}))) as { message?: string }
-      if (!res.ok) {
-        throw new Error(payload.message || 'Could not submit your feedback right now')
-      }
-
-      setSubmitStatus({
-        ok: true,
-        message:
-          payload.message ||
-          'Thank you! Your review has been queued for Muzaffarpur Hub moderation.',
-      })
-      setReviewForm({
-        author_name: '',
-        author_city: 'Muzaffarpur, Bihar',
-        title: '',
-        quote_or_caption: '',
-        rating: 5,
-        hub_location: 'motijheel-842001',
-        category: 'written_review',
-        product_title: '',
-      })
-    } catch (err) {
-      setSubmitStatus({
-        ok: false,
-        message: err instanceof Error ? err.message : 'Submission error. Try again shortly.',
-      })
-    } finally {
-      setSubmitting(false)
-    }
-  }
 
   return (
     <StorefrontChrome>
-      {/* Hero Banner */}
       <section className="bg-obsidian-900 text-ink-inverse border-b border-obsidian-800">
         <div className="page-container py-8 sm:py-12 space-y-4">
           <div>
@@ -155,7 +82,7 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-obsidian-800 border border-gold-500/40 px-3 py-1 font-mono text-[11px] font-semibold text-gold-500">
               <Film className="h-3.5 w-3.5" />
-              VERIFIED VIDEO & BUYER REVIEWS
+              VERIFIED VIDEO &amp; BUYER REVIEWS
             </span>
           </div>
 
@@ -173,7 +100,7 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
             <div className="flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={() => setFormOpen((v) => !v)}
+                onClick={() => setFormOpen((open) => !open)}
                 className="inline-flex min-h-[44px] items-center gap-2 rounded-sm bg-gold-500 px-4 py-2.5 text-xs font-bold text-obsidian-950 shadow-gold hover:bg-gold-600 transition"
               >
                 <MessageSquarePlus className="h-4 w-4" />
@@ -188,7 +115,6 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
             </div>
           </div>
 
-          {/* Summary KPI Strip */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
             <div className="rounded-sm border border-obsidian-700 bg-obsidian-800/70 p-3">
               <p className="font-mono text-[10px] uppercase text-chrome-400">Average Rating</p>
@@ -219,167 +145,8 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
       </section>
 
       <section className="page-container py-8 space-y-8">
-        {/* Optional Buyer Review Submission Form */}
-        {formOpen && (
-          <form
-            onSubmit={submitPublicFeedback}
-            className="rounded-md border border-chrome-200 bg-surface-card p-5 sm:p-6 shadow-card space-y-4"
-          >
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-chrome-200 pb-3">
-              <div>
-                <h2 className="font-display text-lg font-bold text-ink-primary">
-                  Share Your Mobile Station Purchase Experience
-                </h2>
-                <p className="text-xs text-ink-muted">
-                  Submitted feedback enters our Hub moderation queue for authenticity check before
-                  publishing.
-                </p>
-              </div>
-              <ShieldCheck className="h-5 w-5 text-commerce-savings shrink-0" />
-            </div>
+        {formOpen && <FeedbackSubmitForm />}
 
-            {submitStatus && (
-              <div
-                className={`rounded-sm p-3 text-xs font-medium ${
-                  submitStatus.ok
-                    ? 'bg-commerce-obdBg text-commerce-obdText'
-                    : 'bg-commerce-errorBg text-commerce-errorText'
-                }`}
-              >
-                {submitStatus.message}
-              </div>
-            )}
-
-            <div className="grid sm:grid-cols-3 gap-4 text-xs">
-              <label className="space-y-1">
-                <span className="font-semibold text-ink-primary">Your Name *</span>
-                <input
-                  required
-                  minLength={2}
-                  value={reviewForm.author_name}
-                  onChange={(e) => setReviewForm((p) => ({ ...p, author_name: e.target.value }))}
-                  placeholder="e.g. Ritu Raj"
-                  className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-ink-primary focus:border-gold-500 focus:outline-none"
-                />
-              </label>
-              <label className="space-y-1">
-                <span className="font-semibold text-ink-primary">City &amp; State *</span>
-                <input
-                  required
-                  minLength={2}
-                  value={reviewForm.author_city}
-                  onChange={(e) => setReviewForm((p) => ({ ...p, author_city: e.target.value }))}
-                  placeholder="Muzaffarpur, Bihar"
-                  className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-ink-primary focus:border-gold-500 focus:outline-none"
-                />
-              </label>
-              <label className="space-y-1">
-                <span className="font-semibold text-ink-primary">Order Hub *</span>
-                <select
-                  value={reviewForm.hub_location}
-                  onChange={(e) =>
-                    setReviewForm((p) => ({
-                      ...p,
-                      hub_location: e.target.value as ShowcaseHubLocation,
-                    }))
-                  }
-                  className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-ink-primary focus:border-gold-500 focus:outline-none"
-                >
-                  {SHOWCASE_HUB_LOCATIONS.map((h) => (
-                    <option key={h} value={h}>
-                      {SHOWCASE_HUB_LABELS[h]}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-4 text-xs">
-              <label className="sm:col-span-2 space-y-1">
-                <span className="font-semibold text-ink-primary">Review Headline *</span>
-                <input
-                  required
-                  minLength={4}
-                  value={reviewForm.title}
-                  onChange={(e) => setReviewForm((p) => ({ ...p, title: e.target.value }))}
-                  placeholder="e.g. Fast 2-hour pickup and sealed box GST bill at Motijheel Hub"
-                  className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-ink-primary focus:border-gold-500 focus:outline-none"
-                />
-              </label>
-              <label className="space-y-1">
-                <span className="font-semibold text-ink-primary">Rating *</span>
-                <select
-                  value={reviewForm.rating}
-                  onChange={(e) =>
-                    setReviewForm((p) => ({ ...p, rating: Number(e.target.value) || 5 }))
-                  }
-                  className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-ink-primary focus:border-gold-500 focus:outline-none"
-                >
-                  <option value={5}>5 Stars — Outstanding</option>
-                  <option value={4}>4 Stars — Very Good</option>
-                  <option value={3}>3 Stars — Satisfactory</option>
-                  <option value={2}>2 Stars — Fair</option>
-                  <option value={1}>1 Star — Needs Improvement</option>
-                </select>
-              </label>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 text-xs">
-              <label className="space-y-1">
-                <span className="font-semibold text-ink-primary">Device Purchased (Optional)</span>
-                <input
-                  value={reviewForm.product_title}
-                  onChange={(e) => setReviewForm((p) => ({ ...p, product_title: e.target.value }))}
-                  placeholder="e.g. Apple iPhone 16 Pro 5G / Keychron K2 Pro"
-                  className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-ink-primary focus:border-gold-500 focus:outline-none"
-                />
-              </label>
-              <label className="space-y-1">
-                <span className="font-semibold text-ink-primary">Experience Category</span>
-                <select
-                  value={reviewForm.category}
-                  onChange={(e) =>
-                    setReviewForm((p) => ({
-                      ...p,
-                      category: e.target.value as
-                        | 'written_review'
-                        | 'in_store_pickup'
-                        | 'open_box_check',
-                    }))
-                  }
-                  className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-ink-primary focus:border-gold-500 focus:outline-none"
-                >
-                  <option value="written_review">Verified Purchase Review</option>
-                  <option value="in_store_pickup">In-Store Hub Pickup</option>
-                  <option value="open_box_check">Doorstep Open-Box Verification</option>
-                </select>
-              </label>
-            </div>
-
-            <label className="block space-y-1 text-xs">
-              <span className="font-semibold text-ink-primary">Detailed Feedback *</span>
-              <textarea
-                required
-                minLength={10}
-                rows={3}
-                value={reviewForm.quote_or_caption}
-                onChange={(e) => setReviewForm((p) => ({ ...p, quote_or_caption: e.target.value }))}
-                placeholder="Tell fellow tech buyers about box sealing, delivery speed, GST invoice ITC, or store demo help..."
-                className="w-full rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-ink-primary focus:border-gold-500 focus:outline-none"
-              />
-            </label>
-
-            <button
-              type="submit"
-              disabled={submitting}
-              className="inline-flex min-h-[42px] items-center justify-center rounded-sm bg-obsidian-900 px-5 py-2 text-xs font-bold text-gold-500 hover:bg-obsidian-800 transition disabled:opacity-60"
-            >
-              {submitting ? 'Submitting Review...' : 'Submit Feedback for Moderation'}
-            </button>
-          </form>
-        )}
-
-        {/* Featured Video Spotlight */}
         {featuredVideo && featuredVideo.media_url && (
           <div className="grid lg:grid-cols-12 gap-5 rounded-lg border border-obsidian-800 bg-obsidian-900 text-ink-inverse overflow-hidden shadow-modal">
             <div className="lg:col-span-7 bg-obsidian-950 flex items-center justify-center">
@@ -397,7 +164,7 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="inline-flex items-center gap-1 rounded-full bg-gold-500 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase text-obsidian-950">
                     <Play className="h-3 w-3 fill-current" />
-                    FEATURED VIDEO · {formatDuration(featuredVideo.duration_seconds)}
+                    FEATURED VIDEO · {formatShowcaseDuration(featuredVideo.duration_seconds)}
                   </span>
                   {featuredVideo.rating && <StarRatingRow rating={featuredVideo.rating} />}
                 </div>
@@ -434,7 +201,6 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
           </div>
         )}
 
-        {/* Filters */}
         <div className="space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap gap-1.5">
@@ -444,18 +210,18 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
                   { id: 'video', label: 'Video Reels Only' },
                   { id: 'written', label: 'Photo & Text Reviews' },
                 ] as const
-              ).map((tab) => (
+              ).map((tabOption) => (
                 <button
-                  key={tab.id}
+                  key={tabOption.id}
                   type="button"
-                  onClick={() => setMediaFilter(tab.id)}
+                  onClick={() => setMediaFilter(tabOption.id)}
                   className={`rounded-sm border px-3 py-1.5 text-xs font-semibold transition ${
-                    mediaFilter === tab.id
+                    mediaFilter === tabOption.id
                       ? 'border-obsidian-900 bg-obsidian-900 text-gold-500'
                       : 'border-chrome-200 bg-surface-card text-ink-primary hover:border-gold-500'
                   }`}
                 >
-                  {tab.label}
+                  {tabOption.label}
                 </button>
               ))}
             </div>
@@ -472,20 +238,20 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
               >
                 All Hubs
               </button>
-              {SHOWCASE_HUB_LOCATIONS.map((h) => (
+              {SHOWCASE_HUB_LOCATIONS.map((hubLocation) => (
                 <button
-                  key={h}
+                  key={hubLocation}
                   type="button"
-                  onClick={() => setHubFilter(hubFilter === h ? 'all' : h)}
+                  onClick={() => setHubFilter(hubFilter === hubLocation ? 'all' : hubLocation)}
                   className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold ${
-                    hubFilter === h
+                    hubFilter === hubLocation
                       ? 'border-obsidian-900 bg-obsidian-900 text-gold-500'
                       : 'border-chrome-200 bg-surface-card text-ink-secondary hover:border-gold-500'
                   }`}
                 >
-                  {h === 'motijheel-842001'
+                  {hubLocation === 'motijheel-842001'
                     ? 'Motijheel (842001)'
-                    : h === 'club-road-842002'
+                    : hubLocation === 'club-road-842002'
                       ? 'Club Road (842002)'
                       : 'Pan-India'}
                 </button>
@@ -505,25 +271,26 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
             >
               All Feedback Types
             </button>
-            {FEEDBACK_CATEGORY_OPTIONS.map((cat) => (
+            {FEEDBACK_CATEGORY_OPTIONS.map((categoryKey) => (
               <button
-                key={cat}
+                key={categoryKey}
                 type="button"
-                onClick={() => setCategoryFilter(categoryFilter === cat ? 'all' : cat)}
+                onClick={() =>
+                  setCategoryFilter(categoryFilter === categoryKey ? 'all' : categoryKey)
+                }
                 className={`rounded-full border px-2.5 py-1 text-[11px] font-medium ${
-                  categoryFilter === cat
+                  categoryFilter === categoryKey
                     ? 'border-gold-500 bg-gold-100 text-gold-700 font-semibold'
                     : 'border-chrome-200 bg-surface-card text-ink-muted hover:text-ink-primary'
                 }`}
               >
-                {SHOWCASE_CATEGORY_LABELS[cat]}
+                {SHOWCASE_CATEGORY_LABELS[categoryKey]}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Grid */}
-        {filtered.length === 0 ? (
+        {filteredItems.length === 0 ? (
           <div className="rounded-md border border-chrome-200 bg-surface-card p-10 text-center space-y-3">
             <Star className="h-8 w-8 mx-auto text-gold-700" />
             <p className="font-display text-base font-bold text-ink-primary">
@@ -543,7 +310,7 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.map((item) => (
+            {filteredItems.map((item) => (
               <ShowcaseEntryCard key={item.id} item={item} onOpenMedia={setActiveMedia} />
             ))}
           </div>
@@ -551,7 +318,7 @@ export function FeedbackPageClient({ initialItems, stats }: FeedbackPageClientPr
       </section>
 
       <ShowcaseMediaModal
-        items={filtered.filter((i) => i.media_kind !== 'none' && i.media_url)}
+        items={filteredItems.filter((entry) => entry.media_kind !== 'none' && entry.media_url)}
         activeItem={activeMedia}
         onClose={() => setActiveMedia(null)}
         onSelect={setActiveMedia}

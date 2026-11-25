@@ -2,13 +2,12 @@ import { AbstractFileProviderService, MedusaError } from '@medusajs/framework/ut
 import type { Logger } from '@medusajs/framework/types'
 import { v2 as cloudinary } from 'cloudinary'
 import { Readable } from 'stream'
-
-export interface CloudinaryModuleOptions {
-  cloud_name?: string
-  api_key?: string
-  api_secret?: string
-  folder?: string
-}
+import type {
+  CloudinaryDeleteTarget,
+  CloudinaryFileKeyReference,
+  CloudinaryModuleOptions,
+  CloudinaryUploadFileInput,
+} from '../../types/media'
 
 type InjectedDependencies = {
   logger?: Logger
@@ -40,11 +39,7 @@ export class CloudinaryImageService extends AbstractFileProviderService {
     })
   }
 
-  async upload(file: {
-    filename?: string
-    mimeType?: string
-    content: Buffer | string | Uint8Array
-  }): Promise<{ url: string; key: string }> {
+  async upload(file: CloudinaryUploadFileInput): Promise<{ url: string; key: string }> {
     if (!file) {
       throw new MedusaError(MedusaError.Types.INVALID_DATA, 'No file provided')
     }
@@ -103,7 +98,7 @@ export class CloudinaryImageService extends AbstractFileProviderService {
     })
   }
 
-  async delete(files: string | { fileKey?: string; key?: string } | Array<string | { fileKey?: string; key?: string }>): Promise<void> {
+  async delete(files: CloudinaryDeleteTarget): Promise<void> {
     const fileList = Array.isArray(files) ? files : [files]
     for (const file of fileList) {
       const key = typeof file === 'string' ? file : file?.fileKey || file?.key
@@ -117,7 +112,7 @@ export class CloudinaryImageService extends AbstractFileProviderService {
     }
   }
 
-  async getPresignedDownloadUrl(fileData: string | { fileKey?: string; key?: string }): Promise<string> {
+  async getPresignedDownloadUrl(fileData: string | CloudinaryFileKeyReference): Promise<string> {
     const key = typeof fileData === 'string' ? fileData : fileData?.fileKey || fileData?.key
     if (!key) {
       throw new MedusaError(MedusaError.Types.INVALID_DATA, 'No fileKey provided')

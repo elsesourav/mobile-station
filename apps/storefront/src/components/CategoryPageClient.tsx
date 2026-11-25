@@ -4,7 +4,11 @@ import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Box, CheckCircle2, ShieldCheck } from 'lucide-react'
-import type { StorefrontBrand, StorefrontCategory, StorefrontProduct } from '@/lib/catalog'
+import type {
+  StorefrontBrand,
+  StorefrontCategory,
+  StorefrontProduct,
+} from '@mobile-station/types'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
 import { ProductCard } from '@/components/ProductCard'
 

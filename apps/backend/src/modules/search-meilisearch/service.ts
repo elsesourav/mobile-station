@@ -1,6 +1,11 @@
+import type {
+  MeilisearchIndexSettingsPayload,
+  MeilisearchIndexSyncResult,
+} from '../../types/media'
+
 interface MeilisearchIndexLike {
-  updateSettings(settings: Record<string, unknown>): Promise<unknown>
-  addDocuments(docs: unknown[], options?: { primaryKey?: string }): Promise<unknown>
+  updateSettings(settings: MeilisearchIndexSettingsPayload): Promise<unknown>
+  addDocuments(docs: SearchableElectronicsDocument[], options?: { primaryKey?: string }): Promise<unknown>
 }
 
 interface MeilisearchClient {
@@ -51,7 +56,7 @@ export class ElectronicsSearchService {
     return this.clientPromise
   }
 
-  async ensureIndexSettings(): Promise<void> {
+  async ensureIndexSettings(): Promise<MeilisearchIndexSyncResult> {
     const client = await this.getClient()
     const index = client.index(this.indexName)
     await index.updateSettings({
@@ -72,12 +77,14 @@ export class ElectronicsSearchService {
       ],
       sortableAttributes: ['price_paise', 'warranty_months'],
     })
+    return { indexName: this.indexName, status: 'configured' }
   }
 
-  async indexProducts(docs: SearchableElectronicsDocument[]): Promise<void> {
+  async indexProducts(docs: SearchableElectronicsDocument[]): Promise<MeilisearchIndexSyncResult> {
     await this.ensureIndexSettings()
     const client = await this.getClient()
     await client.index(this.indexName).addDocuments(docs, { primaryKey: 'id' })
+    return { indexName: this.indexName, status: 'indexed', count: docs.length }
   }
 
   async checkHealth(): Promise<boolean> {

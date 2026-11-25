@@ -87,13 +87,14 @@ export class PrivateDocumentStorageService {
     })
   }
 
-  async deletePrivateObject(key: string): Promise<void> {
+  async deletePrivateObject(key: string): Promise<{ deletedKey: string }> {
     await this.client.send(
       new DeleteObjectCommand({
         Bucket: this.bucket,
         Key: key,
       })
     )
+    return { deletedKey: key }
   }
 
   async checkBucketHealth(): Promise<boolean> {

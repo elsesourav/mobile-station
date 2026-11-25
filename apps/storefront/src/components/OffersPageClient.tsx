@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Check, Copy, Sparkles, Tag } from 'lucide-react'
-import type { StorefrontOffer, StorefrontProduct } from '@/lib/catalog'
+import type { StorefrontOffer, StorefrontProduct } from '@mobile-station/types'
 import { formatINR } from '@/lib/format'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
 import { ProductCard } from '@/components/ProductCard'

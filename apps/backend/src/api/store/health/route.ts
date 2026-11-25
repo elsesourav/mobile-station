@@ -1,11 +1,15 @@
 import type { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
+import type { BackendHealthResponse } from '@mobile-station/types'
 import { PrivateDocumentStorageService } from '../../../modules/storage-s3/service'
 import { ElectronicsSearchService } from '../../../modules/search-meilisearch/service'
 
 export const AUTHENTICATE = false
 
-export const GET = async (req: MedusaRequest, res: MedusaResponse): Promise<void> => {
+export const GET = async (
+  req: MedusaRequest,
+  res: MedusaResponse<BackendHealthResponse>
+): Promise<MedusaResponse<BackendHealthResponse>> => {
   const startedAt = Date.now()
 
   let dbHealthy = true
@@ -32,7 +36,7 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse): Promise<void
   ])
 
   const status = dbHealthy ? 'healthy' : 'unhealthy'
-  res.status(dbHealthy ? 200 : 503).json({
+  return res.status(dbHealthy ? 200 : 503).json({
     status,
     ready: dbHealthy,
     service: 'mobile-station-backend',

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Box, ShoppingCart } from 'lucide-react'
-import type { StorefrontProduct } from '@/lib/catalog'
+import type { StorefrontProduct } from '@mobile-station/types'
 import { discountPercent, formatINR, monthlyEmiPreview } from '@/lib/format'
 import { useCart } from '@/components/CartContext'
 

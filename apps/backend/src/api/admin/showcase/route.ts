@@ -1,5 +1,10 @@
 import type { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
-import { createShowcaseEntrySchema } from '@mobile-station/types'
+import {
+  createShowcaseEntrySchema,
+  type ApiErrorResponse,
+  type ShowcaseListResponse,
+  type ShowcaseMutationResponse,
+} from '@mobile-station/types'
 import { SHOWCASE_MODULE } from '../../../modules/showcase'
 import type { ShowcaseModuleService } from '../../../modules/showcase/service'
 import { ShowcaseCloudinaryMediaService } from '../../../modules/showcase/cloudinary-media'
@@ -8,8 +13,12 @@ import {
   formatShowcaseRecord,
   parseShowcaseListQuery,
 } from '../../../modules/showcase/query-helpers'
+import type { PersistedShowcaseEntry } from '../../../types/showcase-backend'
 
-export const GET = async (req: MedusaRequest, res: MedusaResponse): Promise<void> => {
+export const GET = async (
+  req: MedusaRequest,
+  res: MedusaResponse<ShowcaseListResponse>
+): Promise<MedusaResponse<ShowcaseListResponse>> => {
   const showcaseService = req.scope.resolve<ShowcaseModuleService>(SHOWCASE_MODULE)
   const filters = parseShowcaseListQuery(req, false)
   const [result, stats] = await Promise.all([
@@ -17,8 +26,8 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse): Promise<void
     showcaseService.getSummaryStats(false),
   ])
 
-  res.status(200).json({
-    items: result.items.map((item) => formatShowcaseRecord(item as unknown as Record<string, unknown>)),
+  return res.status(200).json({
+    items: result.items.map(formatShowcaseRecord),
     count: result.count,
     limit: result.limit,
     offset: result.offset,
@@ -26,15 +35,20 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse): Promise<void
   })
 }
 
-export const POST = async (req: MedusaRequest, res: MedusaResponse): Promise<void> => {
+export const POST = async (
+  req: MedusaRequest,
+  res: MedusaResponse<ShowcaseMutationResponse | ApiErrorResponse>
+): Promise<MedusaResponse<ShowcaseMutationResponse | ApiErrorResponse>> => {
   const parsed = createShowcaseEntrySchema.safeParse(req.body)
   if (!parsed.success) {
-    res.status(400).json({
+    return res.status(400).json({
       type: 'invalid_data',
       message: parsed.error.issues[0]?.message || 'Invalid showcase entry payload',
-      issues: parsed.error.issues,
+      issues: parsed.error.issues.map((issue) => ({
+        path: issue.path,
+        message: issue.message,
+      })),
     })
-    return
   }
 
   const input = parsed.data
@@ -55,7 +69,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse): Promise<voi
   }
 
   const showcaseService = req.scope.resolve<ShowcaseModuleService>(SHOWCASE_MODULE)
-  const created = await showcaseService.createShowcaseEntries({
+  const createdEntry: PersistedShowcaseEntry = await showcaseService.createShowcaseEntries({
     ...input,
     media_url: input.media_kind === 'none' ? null : mediaUrl,
     thumbnail_url: input.media_kind === 'none' ? null : thumbnailUrl,
@@ -64,7 +78,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse): Promise<voi
 
   await invalidateShowcaseCache()
 
-  res.status(201).json({
-    item: formatShowcaseRecord(created as unknown as Record<string, unknown>),
+  return res.status(201).json({
+    item: formatShowcaseRecord(createdEntry),
   })
 }

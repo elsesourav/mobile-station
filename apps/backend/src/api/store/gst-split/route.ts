@@ -1,5 +1,5 @@
 import type { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
-import { indianGstinSchema } from '@mobile-station/types'
+import { indianGstinSchema, type GstSplitApiResponse } from '@mobile-station/types'
 
 export const AUTHENTICATE = false
 
@@ -7,7 +7,10 @@ export const AUTHENTICATE = false
  * GET /store/gst-split?amount_paise=7490000&state=Bihar&gstin=...
  * Computes inclusive 18% GST tax breakdown (9% CGST + 9% SGST for Bihar; 18% IGST inter-state).
  */
-export const GET = async (req: MedusaRequest, res: MedusaResponse): Promise<void> => {
+export const GET = async (
+  req: MedusaRequest,
+  res: MedusaResponse<GstSplitApiResponse>
+): Promise<MedusaResponse<GstSplitApiResponse>> => {
   const amountPaise = Math.max(0, Number(req.query.amount_paise || 0))
   const state = String(req.query.state || '').trim().toLowerCase()
   const gstinRaw = String(req.query.gstin || '').trim()
@@ -29,7 +32,7 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse): Promise<void
   const sgstPaise = isIntraStateBihar ? totalTaxPaise - cgstPaise : 0
   const igstPaise = isIntraStateBihar ? 0 : totalTaxPaise
 
-  res.status(200).json({
+  return res.status(200).json({
     amount_paise: amountPaise,
     taxable_value_paise: taxableValuePaise,
     gst_rate_percent: gstRate,

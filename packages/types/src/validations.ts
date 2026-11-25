@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+const specScalarSchema = z.union([z.string(), z.number(), z.boolean(), z.array(z.string())])
+
 /**
  * Indian 6-digit PIN code validation (cannot begin with 0).
  */
@@ -91,7 +93,7 @@ export const electronicsMetadataSchema = z.object({
   cod_eligible: z.boolean().default(true),
   key_highlights: z.array(z.string().trim().min(1)).optional(),
   stock_details: electronicsStockDetailsSchema.optional(),
-  specs: z.record(z.unknown()).optional(),
+  specs: z.record(specScalarSchema).optional(),
 }).passthrough()
 
 export type IndianAddressInput = z.infer<typeof indianAddressSchema>
