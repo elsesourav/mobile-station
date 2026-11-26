@@ -227,7 +227,7 @@ export function ProductPurchaseBox({
         </button>
       </div>
 
-      {/* Compact Offers Strip */}
+      {/* Clean Offers Strip — Grid on Desktop (No Scrollbar), Smooth Swipe on Small Mobile */}
       {offers.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-center justify-between gap-2 text-xs">
@@ -241,7 +241,7 @@ export function ProductPurchaseBox({
               </span>
             )}
           </div>
-          <div className="flex gap-2.5 overflow-x-auto pb-1 ms-scrollbar-x">
+          <div className="flex sm:grid sm:grid-cols-3 gap-2.5 overflow-x-auto sm:overflow-visible pb-1 sm:pb-0 no-scrollbar">
             {offers.map((offer) => {
               const copied = copiedCode === offer.code
               return (
@@ -249,7 +249,7 @@ export function ProductPurchaseBox({
                   key={offer.id}
                   type="button"
                   onClick={() => handleCopyOffer(offer.code)}
-                  className="shrink-0 w-[215px] rounded-md border border-chrome-200 bg-surface-card p-2.5 text-left hover:border-gold-500 transition shadow-card"
+                  className="shrink-0 w-[196px] sm:w-auto rounded-md border border-chrome-200 bg-surface-card p-2.5 text-left hover:border-gold-500 transition shadow-card"
                 >
                   <div className="flex items-center justify-between gap-1.5">
                     <span className="rounded-xs bg-obsidian-900 px-2 py-0.5 font-mono text-[10px] font-bold text-gold-500">

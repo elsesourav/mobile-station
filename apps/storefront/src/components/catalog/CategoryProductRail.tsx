@@ -167,7 +167,7 @@ export function CategoryProductRail({ category, products }: CategoryProductRailP
           onMouseLeave={stopDrag}
           onClickCapture={handleTrackClickCapture}
           onDragStart={(e) => e.preventDefault()}
-          className="flex gap-3 sm:gap-4 overflow-x-auto touch-pan-x ms-scrollbar-x scroll-smooth snap-x snap-mandatory cursor-grab active:cursor-grabbing pt-0.5 pb-2.5"
+          className="flex gap-3 sm:gap-4 overflow-x-auto touch-pan-x no-scrollbar scroll-smooth snap-x snap-mandatory cursor-grab active:cursor-grabbing pt-0.5 pb-1.5"
         >
           {products.map((product) => (
             <MinimalProductCard

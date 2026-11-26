@@ -106,8 +106,8 @@ export function CategoryProductWorkspace({
   return (
     <>
       <section className="page-container py-6 sm:py-8 space-y-6">
-        {/* Subcategory Horizontal Switcher */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 ms-scrollbar-x">
+        {/* Subcategory Switcher (Wraps cleanly on desktop, swipeable without scrollbar on mobile) */}
+        <div className="flex items-center gap-2 overflow-x-auto lg:overflow-visible lg:flex-wrap pb-1 lg:pb-0 no-scrollbar">
           <button
             type="button"
             onClick={() => onSelectSingleSubcategory('all')}

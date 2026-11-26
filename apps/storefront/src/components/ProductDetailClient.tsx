@@ -193,7 +193,6 @@ export function ProductDetailClient({
               visualKey={visualKey}
               discountPercent={discountPct}
               stockCount={activeVariant.stock}
-              lowStockThreshold={product.metadata.stock_details?.low_stock_threshold}
             />
           </div>
 

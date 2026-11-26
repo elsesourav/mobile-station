@@ -12,14 +12,13 @@ interface ProductGalleryProps {
   visualKey: string
   discountPercent?: number
   stockCount?: number
-  lowStockThreshold?: number
 }
 
 /**
- * Sticky multi-image hardware gallery:
- * - Resets slide position only when `visualKey` changes (e.g. finish/color change)
- * - Fullscreen lightbox rendered cleanly via portal over the entire window (including header)
- * - Isolated `lightboxIndex` prevents fullscreen navigation from altering inline PDP slides
+ * Clean sticky multi-image product gallery:
+ * - Zero stock count clutter and zero "Product View 1/2" overlay pills
+ * - Preserves gallery slide across non-visual storage/memory updates
+ * - Full-window portal Lightbox with single close button and isolated slide state
  */
 export function ProductGallery({
   title,
@@ -27,7 +26,6 @@ export function ProductGallery({
   visualKey,
   discountPercent = 0,
   stockCount,
-  lowStockThreshold = 5,
 }: ProductGalleryProps) {
   const totalSlides = slides.length
   const extendedSlides = useMemo(() => {
@@ -56,7 +54,6 @@ export function ProductGallery({
     setIsPortalMounted(true)
   }, [])
 
-  // Only reset active gallery slide when the visual product/color changes, never on storage/RAM changes
   useEffect(() => {
     if (prevVisualKeyRef.current !== visualKey) {
       prevVisualKeyRef.current = visualKey
@@ -69,7 +66,6 @@ export function ProductGallery({
 
   const activeRealIndex =
     totalSlides > 1 ? (displayIndex - 1 + totalSlides) % totalSlides : 0
-  const activeSlide = slides[activeRealIndex] ?? slides[0]
   const activeLightboxSlide = slides[lightboxIndex] ?? slides[0]
 
   const openLightbox = () => {
@@ -212,8 +208,7 @@ export function ProductGallery({
     }
   }
 
-  const isLowStock =
-    typeof stockCount === 'number' && stockCount > 0 && stockCount <= lowStockThreshold
+  const isOutOfStock = typeof stockCount === 'number' && stockCount <= 0
 
   const lightboxModal =
     isLightboxOpen && activeLightboxSlide ? (
@@ -224,17 +219,11 @@ export function ProductGallery({
         onClick={() => setIsLightboxOpen(false)}
         className="fixed inset-0 z-[100050] bg-obsidian-950/92 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6"
       >
-        {/* Top Bar with ONLY ONE Close Button */}
         <div
           onClick={(e) => e.stopPropagation()}
           className="flex items-center justify-between gap-4 text-ink-inverse max-w-5xl w-full mx-auto"
         >
-          <div className="min-w-0">
-            <p className="font-display text-sm sm:text-base font-bold truncate">{title}</p>
-            <p className="font-mono text-[11px] text-gold-500">
-              {activeLightboxSlide.label} · {lightboxIndex + 1} of {totalSlides}
-            </p>
-          </div>
+          <p className="font-display text-sm sm:text-base font-bold truncate">{title}</p>
           <button
             type="button"
             onClick={() => setIsLightboxOpen(false)}
@@ -245,7 +234,6 @@ export function ProductGallery({
           </button>
         </div>
 
-        {/* Center Image Container (click outside closes modal, inside controls isolate state) */}
         <div className="relative flex-1 my-4 flex items-center justify-center">
           <div
             onClick={(e) => e.stopPropagation()}
@@ -289,11 +277,10 @@ export function ProductGallery({
           )}
         </div>
 
-        {/* Independent Lightbox Thumbnail Switcher */}
         {totalSlides > 1 && (
           <div
             onClick={(e) => e.stopPropagation()}
-            className="flex items-center justify-center gap-2 overflow-x-auto pb-1 max-w-2xl mx-auto"
+            className="flex items-center justify-center gap-2 overflow-x-auto pb-1 no-scrollbar max-w-2xl mx-auto"
           >
             {slides.map((slide, idx) => (
               <button
@@ -366,7 +353,7 @@ export function ProductGallery({
           ))}
         </div>
 
-        {/* Top Badges & Zoom Trigger */}
+        {/* Clean Top Deal / Out-of-Stock Badge & Zoom Trigger (Zero Stock Count Clutter) */}
         <div className="absolute top-3 left-3 right-3 z-10 flex items-center justify-between gap-2 pointer-events-none">
           <div className="flex items-center gap-1.5">
             {discountPercent > 0 && (
@@ -374,15 +361,9 @@ export function ProductGallery({
                 {discountPercent}% OFF
               </span>
             )}
-            {typeof stockCount === 'number' && (
-              <span
-                className={`rounded-full px-2.5 py-1 font-mono text-[10.5px] font-semibold border border-chrome-200/70 ${
-                  isLowStock
-                    ? 'bg-commerce-warningBg text-commerce-warningText'
-                    : 'bg-commerce-obdBg text-commerce-obdText'
-                }`}
-              >
-                {stockCount > 0 ? `${stockCount} In Stock` : 'Out of Stock'}
+            {isOutOfStock && (
+              <span className="rounded-full bg-commerce-errorBg px-2.5 py-1 font-mono text-[10.5px] font-semibold text-commerce-errorText">
+                Out of Stock
               </span>
             )}
           </div>
@@ -430,23 +411,9 @@ export function ProductGallery({
             </button>
           </>
         )}
-
-        {/* Bottom Subtle Counter */}
-        {activeSlide && (
-          <div className="absolute bottom-3 left-3 z-10 pointer-events-none">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-obsidian-900/85 backdrop-blur-xs px-2.5 py-1 font-mono text-[10px] font-medium text-gold-500 border border-gold-500/30">
-              <span>{activeSlide.label}</span>
-              {totalSlides > 1 && (
-                <span className="text-chrome-300">
-                  {activeRealIndex + 1}/{totalSlides}
-                </span>
-              )}
-            </span>
-          </div>
-        )}
       </div>
 
-      {/* Dots & Thumbnail Strip */}
+      {/* Minimal Dots & Thumbnail Strip without Chunky Scrollbar */}
       {totalSlides > 1 && (
         <div className="space-y-2">
           <div className="flex items-center justify-center gap-1.5">
@@ -468,7 +435,7 @@ export function ProductGallery({
           <div
             role="region"
             aria-label="Product gallery thumbnails"
-            className="flex items-center gap-2 overflow-x-auto pb-1 ms-scrollbar-x"
+            className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar"
           >
             {slides.map((slide, idx) => {
               const selected = idx === activeRealIndex

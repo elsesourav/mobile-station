@@ -109,11 +109,14 @@ describe('Redesigned Product Detail Page components, variant imagery, and GST gu
     expect(pdpClientSrc).not.toContain('warehouse_bin')
     expect(purchaseBoxSrc).toContain('product.metadata.gst_invoice_available === true')
     expect(purchaseBoxSrc).toContain('product.metadata.b2b_gst_available === true')
+    expect(variantSelSrc).toContain('variants.length <= 1')
     expect(variantSelSrc).not.toContain('{activeVariant.title}')
+    expect(variantSelSrc).toContain('h-16 sm:h-[72px]')
     expect(productCardSrc).not.toContain('HSN {product.metadata.hsn_code}')
+    expect(productCardSrc).not.toContain('In Stock')
   })
 
-  it('isolates fullscreen portal lightbox, uses smooth accordion transitions, and uses MinimalProductCard', () => {
+  it('isolates fullscreen portal lightbox, removes view counters, uses smooth accordions, and refines scrollbars', () => {
     const gallerySrc = readFileSync(
       path.resolve(__dirname, '../components/product/ProductGallery.tsx'),
       'utf8'
@@ -126,13 +129,20 @@ describe('Redesigned Product Detail Page components, variant imagery, and GST gu
       path.resolve(__dirname, '../components/recommendations/PdpRecommendationsSection.tsx'),
       'utf8'
     )
+    const globalsCss = readFileSync(
+      path.resolve(__dirname, '../styles/globals.css'),
+      'utf8'
+    )
 
     expect(gallerySrc).toContain('createPortal')
     expect(gallerySrc).toContain('z-[100050]')
     expect(gallerySrc).toContain('lightboxIndex')
+    expect(gallerySrc).not.toContain('In Stock')
+    expect(gallerySrc).not.toContain('{activeSlide.label}')
     expect(accordionSrc).toContain('grid-rows-[1fr]')
     expect(accordionSrc).toContain('grid-rows-[0fr]')
     expect(pdpRecSource).toContain('<MinimalProductCard')
     expect(pdpRecSource).not.toContain('<ProductCard')
+    expect(globalsCss).toContain('height: 3px;')
   })
 })

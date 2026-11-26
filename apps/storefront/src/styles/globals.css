@@ -138,27 +138,39 @@
   }
 
   .ms-scrollbar-x {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(11, 15, 23, 0.34) var(--color-chrome-200);
+    scrollbar-width: none;
   }
 
   .ms-scrollbar-x::-webkit-scrollbar {
-    height: 6px;
-    width: 6px;
+    height: 0px;
+    width: 0px;
+    display: none;
   }
 
-  .ms-scrollbar-x::-webkit-scrollbar-track {
-    background: var(--color-chrome-200);
-    border-radius: var(--radius-full);
-  }
+  @media (hover: hover) and (pointer: fine) {
+    .ms-scrollbar-x {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(11, 15, 23, 0.16) transparent;
+    }
 
-  .ms-scrollbar-x::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg, var(--color-obsidian-700), var(--color-obsidian-900));
-    border-radius: var(--radius-full);
-  }
+    .ms-scrollbar-x::-webkit-scrollbar {
+      display: block;
+      height: 3px;
+      width: 3px;
+    }
 
-  .ms-scrollbar-x::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(90deg, var(--color-gold-600), var(--color-gold-500));
+    .ms-scrollbar-x::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .ms-scrollbar-x::-webkit-scrollbar-thumb {
+      background: rgba(11, 15, 23, 0.15);
+      border-radius: var(--radius-full);
+    }
+
+    .ms-scrollbar-x:hover::-webkit-scrollbar-thumb {
+      background: rgba(11, 15, 23, 0.34);
+    }
   }
 
   .ms-scrollbar-dark {

@@ -15,8 +15,7 @@ export function ProductCard({ product }: { product: StorefrontProduct }) {
 
   const activeVariant = product.variants[variantIdx] ?? product.variants[0]
   const off = discountPercent(activeVariant.mrp_paise, activeVariant.price_paise)
-  const lowThreshold = product.metadata.stock_details?.low_stock_threshold ?? 5
-  const isLowStock = activeVariant.stock > 0 && activeVariant.stock <= lowThreshold
+  const isOutOfStock = activeVariant.stock <= 0
   const gstAvailable = product.metadata.gst_invoice_available === true
   const previewSrc = getVariantPreviewImage(product, activeVariant)
 
@@ -50,15 +49,11 @@ export function ProductCard({ product }: { product: StorefrontProduct }) {
             ) : (
               <span />
             )}
-            <span
-              className={`rounded-full px-2 py-0.5 font-mono text-[10px] font-semibold ${
-                isLowStock
-                  ? 'bg-commerce-warningBg text-commerce-warningText'
-                  : 'bg-commerce-obdBg text-commerce-obdText'
-              }`}
-            >
-              {activeVariant.stock > 0 ? `${activeVariant.stock} In Stock` : 'Out of Stock'}
-            </span>
+            {isOutOfStock && (
+              <span className="rounded-full bg-commerce-errorBg px-2 py-0.5 font-mono text-[10px] font-semibold text-commerce-errorText">
+                Out of Stock
+              </span>
+            )}
           </div>
           <div className="relative aspect-[5/4] sm:aspect-square w-full">
             <Image
