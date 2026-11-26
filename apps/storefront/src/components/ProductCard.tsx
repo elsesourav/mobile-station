@@ -23,6 +23,7 @@ export function ProductCard({ product }: { product: StorefrontProduct }) {
     addItem({
       sku: activeVariant.sku,
       productHandle: product.handle,
+      categoryHandle: product.category_handle,
       title: product.title,
       variantTitle: activeVariant.title,
       brand: product.metadata.brand,

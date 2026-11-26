@@ -33,6 +33,9 @@ export interface ElectronicsComplianceMetadata {
   gst_invoice_available?: boolean
   b2b_gst_available?: boolean
   color_images?: Record<string, string[]>
+  product_coupon_code?: string
+  product_coupon_percent?: number
+  product_coupon_min_paise?: number
   warranty_months: number
   warranty_type: WarrantyType
   warranty_summary: string

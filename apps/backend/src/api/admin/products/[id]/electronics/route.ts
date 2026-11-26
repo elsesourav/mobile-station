@@ -11,6 +11,14 @@ const updateElectronicsSettingsSchema = z.object({
   b2b_gst_available: z.boolean().optional(),
   gst_rate_percent: z.union([z.literal(5), z.literal(12), z.literal(18), z.literal(28)]).optional(),
   hsn_code: z.string().trim().regex(/^[0-9]{4,8}$/, 'HSN code must be 4 to 8 digits').optional(),
+  product_coupon_code: z
+    .string()
+    .trim()
+    .toUpperCase()
+    .refine((v) => v === '' || /^[A-Z0-9_-]{3,24}$/.test(v), 'Coupon code must be 3-24 uppercase letters/numbers')
+    .optional(),
+  product_coupon_percent: z.number().int().min(1).max(50).nullable().optional(),
+  product_coupon_min_paise: z.number().int().min(0).nullable().optional(),
   color_images: colorImagesSchema.optional(),
   upload_color_image: z
     .object({
@@ -46,7 +54,16 @@ export const GET = async (
 
   const { data } = await query.graph({
     entity: 'product',
-    fields: ['id', 'handle', 'title', 'metadata', 'variants.id', 'variants.title', 'variants.options.*', 'variants.options.option.*'],
+    fields: [
+      'id',
+      'handle',
+      'title',
+      'metadata',
+      'variants.id',
+      'variants.title',
+      'variants.options.*',
+      'variants.options.option.*',
+    ],
     filters: { id },
   })
 
@@ -65,6 +82,12 @@ export const GET = async (
     b2b_gst_available: Boolean(meta.b2b_gst_available),
     gst_rate_percent: typeof meta.gst_rate_percent === 'number' ? meta.gst_rate_percent : 18,
     hsn_code: typeof meta.hsn_code === 'string' ? meta.hsn_code : '',
+    product_coupon_code:
+      typeof meta.product_coupon_code === 'string' ? meta.product_coupon_code : '',
+    product_coupon_percent:
+      typeof meta.product_coupon_percent === 'number' ? meta.product_coupon_percent : null,
+    product_coupon_min_paise:
+      typeof meta.product_coupon_min_paise === 'number' ? meta.product_coupon_min_paise : null,
     color_images:
       meta.color_images && typeof meta.color_images === 'object'
         ? (meta.color_images as Record<string, string[]>)
@@ -119,6 +142,26 @@ export const POST = async (
     currentMeta.hsn_code = input.hsn_code
   }
 
+  if (input.product_coupon_code !== undefined) {
+    if (!input.product_coupon_code) {
+      delete currentMeta.product_coupon_code
+      delete currentMeta.product_coupon_percent
+      delete currentMeta.product_coupon_min_paise
+    } else {
+      currentMeta.product_coupon_code = input.product_coupon_code
+      if (input.product_coupon_percent != null) {
+        currentMeta.product_coupon_percent = input.product_coupon_percent
+      }
+      if (input.product_coupon_min_paise !== undefined) {
+        if (input.product_coupon_min_paise === null) {
+          delete currentMeta.product_coupon_min_paise
+        } else {
+          currentMeta.product_coupon_min_paise = input.product_coupon_min_paise
+        }
+      }
+    }
+  }
+
   const nextColorImages: Record<string, string[]> =
     input.color_images !== undefined
       ? { ...input.color_images }
@@ -158,6 +201,16 @@ export const POST = async (
     gst_rate_percent:
       typeof currentMeta.gst_rate_percent === 'number' ? currentMeta.gst_rate_percent : 18,
     hsn_code: typeof currentMeta.hsn_code === 'string' ? currentMeta.hsn_code : '',
+    product_coupon_code:
+      typeof currentMeta.product_coupon_code === 'string' ? currentMeta.product_coupon_code : '',
+    product_coupon_percent:
+      typeof currentMeta.product_coupon_percent === 'number'
+        ? currentMeta.product_coupon_percent
+        : null,
+    product_coupon_min_paise:
+      typeof currentMeta.product_coupon_min_paise === 'number'
+        ? currentMeta.product_coupon_min_paise
+        : null,
     color_images: nextColorImages,
     uploaded_url: uploadedImageUrl,
   })

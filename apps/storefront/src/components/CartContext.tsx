@@ -14,10 +14,10 @@ import type {
   CouponActionResult,
   NewCartItemInput,
 } from '@mobile-station/types'
-import { ALL_OFFERS } from '@/lib/catalog'
+import { ALL_OFFERS, ALL_PRODUCTS } from '@/lib/catalog'
 import {
   computeCartPricingSummary,
-  validateCouponForSubtotal,
+  validateCouponForCart,
 } from '@/lib/cart-pricing'
 import { CartDrawer } from '@/components/cart/CartDrawer'
 import { useOptionalBehavior } from '@/context/BehaviorContext'
@@ -110,19 +110,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const pricing = useMemo(
-    () => computeCartPricingSummary(items, appliedCoupon, ALL_OFFERS),
+    () => computeCartPricingSummary(items, appliedCoupon, ALL_OFFERS, ALL_PRODUCTS),
     [items, appliedCoupon]
   )
 
   const applyCoupon = useCallback(
     (rawCode: string): CouponActionResult => {
-      const result = validateCouponForSubtotal(pricing.subtotalPaise, rawCode, ALL_OFFERS)
+      const result = validateCouponForCart(items, rawCode, ALL_OFFERS, ALL_PRODUCTS)
       if (result.ok) {
         setAppliedCoupon(rawCode.trim().toUpperCase())
       }
       return result
     },
-    [pricing.subtotalPaise]
+    [items]
   )
 
   const removeCoupon = useCallback(() => {

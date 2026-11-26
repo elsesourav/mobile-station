@@ -2,12 +2,13 @@
 
 import React from 'react'
 import { ChevronRight } from 'lucide-react'
-import type { CartMilestoneNode, StorefrontOffer } from '@mobile-station/types'
-import { ALL_OFFERS } from '@/lib/catalog'
+import type { CartItem, CartMilestoneNode, StorefrontOffer } from '@mobile-station/types'
+import { ALL_OFFERS, ALL_PRODUCTS } from '@/lib/catalog'
 import { buildCartMilestoneRoadmap } from '@/lib/cart-pricing'
 import { formatINR } from '@/lib/format'
 
 interface CartMilestoneBarProps {
+  items: readonly CartItem[]
   subtotalPaise: number
   appliedCoupon: string | null
   offers?: readonly StorefrontOffer[]
@@ -19,10 +20,10 @@ interface CartMilestoneBarProps {
 }
 
 /**
- * Dynamic milestone savings & free-shipping progress meter mirroring Glorov's
- * FreeShippingProgressBar position at the top of the cart items column.
+ * Dynamic milestone savings & free-shipping progress meter tailored to matching cart items.
  */
 export function CartMilestoneBar({
+  items,
   subtotalPaise,
   appliedCoupon,
   offers = ALL_OFFERS,
@@ -32,20 +33,24 @@ export function CartMilestoneBar({
   hideViewOffersLink = false,
   className = '',
 }: CartMilestoneBarProps) {
-  const roadmap = buildCartMilestoneRoadmap(subtotalPaise, appliedCoupon, offers)
+  const roadmap = buildCartMilestoneRoadmap(items, appliedCoupon, offers, ALL_PRODUCTS)
 
   const handleNodeClick = (node: CartMilestoneNode) => {
     if (!node.isReached) {
       const needed = Math.max(0, node.minSpendPaise - subtotalPaise)
-      onNotice?.(`Add ${formatINR(needed)} more to unlock ${node.title}.`)
+      onNotice?.(
+        needed > 0
+          ? `Add ${formatINR(needed)} of qualifying items to unlock ${node.code}.`
+          : `Requires qualifying category/product items (${node.code}).`
+      )
       return
     }
     if (node.type === 'free_shipping') {
-      onNotice?.('Free Insured Express Shipping is active on your cart.')
+      onNotice?.('Free insured courier unlocked.')
       return
     }
     if (node.isApplied) {
-      onNotice?.(`${node.code} is already active on this order.`)
+      onNotice?.(`${node.code} active.`)
       return
     }
     onApplyCoupon?.(node.code)
@@ -73,7 +78,7 @@ export function CartMilestoneBar({
             }}
             className="inline-flex items-center gap-0.5 text-[11px] font-bold text-gold-700 hover:underline shrink-0"
           >
-            <span>View Offers</span>
+            <span>Offers</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         )}
@@ -106,7 +111,7 @@ export function CartMilestoneBar({
                 e.stopPropagation()
                 handleNodeClick(node)
               }}
-              title={`${node.title} (Min ${formatINR(node.minSpendPaise)})`}
+              title={`${node.title}${node.minSpendPaise > 0 ? ` (Min ${formatINR(node.minSpendPaise)})` : ''}`}
               className={`absolute z-10 cursor-pointer transition-transform active:scale-90 ${
                 isRightEdge ? 'right-0' : '-translate-x-1/2'
               }`}

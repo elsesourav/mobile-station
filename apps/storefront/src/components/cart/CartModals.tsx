@@ -2,15 +2,21 @@
 
 import React from 'react'
 import { CheckCircle2, Receipt, Sparkles, Tag, Truck, X } from 'lucide-react'
-import type { CouponActionResult, StorefrontOffer } from '@mobile-station/types'
-import { ALL_OFFERS, computeGstSplit } from '@/lib/catalog'
-import { FREE_SHIPPING_THRESHOLD_PAISE } from '@/lib/cart-pricing'
+import type { CartItem, CouponActionResult, StorefrontOffer } from '@mobile-station/types'
+import { ALL_OFFERS, ALL_PRODUCTS, computeGstSplit } from '@/lib/catalog'
+import {
+  buildEffectiveOffers,
+  evaluateCouponDiscount,
+  formatOfferScopeLabel,
+  FREE_SHIPPING_THRESHOLD_PAISE,
+} from '@/lib/cart-pricing'
 import { formatINR } from '@/lib/format'
 import { CartMilestoneBar } from '@/components/cart/CartMilestoneBar'
 
 interface CartAvailableOffersModalProps {
   isOpen: boolean
   onClose: () => void
+  items: readonly CartItem[]
   subtotalPaise: number
   appliedCoupon: string | null
   offers?: readonly StorefrontOffer[]
@@ -19,11 +25,12 @@ interface CartAvailableOffersModalProps {
 }
 
 /**
- * Available offers & milestone modal sheet mirroring Glorov's AvailableOffersModal.
+ * Available offers sheet displaying category-scoped & product-exclusive eligibility cleanly.
  */
 export function CartAvailableOffersModal({
   isOpen,
   onClose,
+  items,
   subtotalPaise,
   appliedCoupon,
   offers = ALL_OFFERS,
@@ -32,6 +39,7 @@ export function CartAvailableOffersModal({
 }: CartAvailableOffersModalProps) {
   if (!isOpen) return null
 
+  const effectiveOffers = buildEffectiveOffers(offers, ALL_PRODUCTS)
   const isFreeShipUnlocked = subtotalPaise >= FREE_SHIPPING_THRESHOLD_PAISE
   const shippingGap = Math.max(0, FREE_SHIPPING_THRESHOLD_PAISE - subtotalPaise)
 
@@ -51,7 +59,7 @@ export function CartAvailableOffersModal({
           <div className="flex items-center gap-2">
             <Tag className="w-4 h-4 text-gold-500" />
             <h3 className="font-display text-base font-bold text-ink-inverse">
-              Available Offers &amp; Milestones
+              Available Offers
             </h3>
           </div>
           <button
@@ -66,9 +74,10 @@ export function CartAvailableOffersModal({
 
         <div className="px-4 pt-3 pb-2 bg-surface-canvas border-b border-chrome-200">
           <CartMilestoneBar
+            items={items}
             subtotalPaise={subtotalPaise}
             appliedCoupon={appliedCoupon}
-            offers={offers}
+            offers={effectiveOffers}
             hideViewOffersLink
           />
         </div>
@@ -85,12 +94,11 @@ export function CartAvailableOffersModal({
               <div className="flex items-center gap-1.5">
                 <Truck className="w-4 h-4 text-commerce-savings shrink-0" />
                 <p className="font-display text-sm font-bold text-ink-primary">
-                  Free Insured Express Shipping
+                  Free Express Shipping
                 </p>
               </div>
               <p className="text-xs text-ink-secondary">
-                Automatic free air/surface insured courier on orders above{' '}
-                {formatINR(FREE_SHIPPING_THRESHOLD_PAISE)}.
+                Automatic on orders above {formatINR(FREE_SHIPPING_THRESHOLD_PAISE)}.
               </p>
               {!isFreeShipUnlocked && (
                 <p className="text-[11px] font-bold text-commerce-errorText">
@@ -105,17 +113,17 @@ export function CartAvailableOffersModal({
                   : 'bg-surface-muted text-ink-muted'
               }`}
             >
-              {isFreeShipUnlocked ? 'UNLOCKED' : 'GOAL 1'}
+              {isFreeShipUnlocked ? 'UNLOCKED' : 'LOCKED'}
             </span>
           </div>
 
-          {offers
+          {effectiveOffers
             .filter((o) => o.is_active !== false && o.discount_type !== 'free_shipping')
             .map((offer) => {
               const isApplied = appliedCoupon?.toUpperCase() === offer.code.toUpperCase()
-              const minSpend = offer.min_cart_paise ?? 0
-              const eligible = subtotalPaise >= minSpend
-              const shortfall = Math.max(0, minSpend - subtotalPaise)
+              const evalResult = evaluateCouponDiscount(items, offer.code, effectiveOffers, ALL_PRODUCTS)
+              const eligible = evalResult.valid
+              const scopeLabel = formatOfferScopeLabel(offer, ALL_PRODUCTS)
 
               return (
                 <div
@@ -132,12 +140,11 @@ export function CartAvailableOffersModal({
                     </h4>
                     <p className="text-xs text-ink-secondary">{offer.description}</p>
                     <p className="font-mono text-[11px] text-ink-primary">
-                      Code: <strong>{offer.code}</strong>
-                      {minSpend > 0 ? ` · Min ${formatINR(minSpend)}` : ''}
+                      Code: <strong>{offer.code}</strong> · {scopeLabel}
                     </p>
-                    {!eligible && (
-                      <p className="text-[11px] font-bold text-commerce-errorText">
-                        Add {formatINR(shortfall)} more to unlock
+                    {!eligible && evalResult.reason && (
+                      <p className="text-[11px] font-semibold text-commerce-errorText">
+                        {evalResult.reason}
                       </p>
                     )}
                   </div>
@@ -240,23 +247,23 @@ export function CartTaxBreakdownModal({
 
         <div className="space-y-2 text-xs tabular-nums">
           <div className="flex justify-between text-ink-secondary">
-            <span>Items Subtotal</span>
+            <span>Subtotal</span>
             <strong className="text-ink-primary">{formatINR(subtotalPaise)}</strong>
           </div>
           {mrpTotalPaise > subtotalPaise && (
             <div className="flex justify-between text-ink-secondary">
-              <span>Catalog MRP Value</span>
+              <span>Catalog MRP</span>
               <span className="text-ink-muted line-through">{formatINR(mrpTotalPaise)}</span>
             </div>
           )}
           {discountPaise > 0 && (
             <div className="flex justify-between text-ink-secondary">
-              <span>Coupon Savings ({appliedCoupon})</span>
+              <span>Discount ({appliedCoupon})</span>
               <strong className="text-commerce-savings">-{formatINR(discountPaise)}</strong>
             </div>
           )}
           <div className="flex justify-between text-ink-secondary">
-            <span>Insured Courier</span>
+            <span>Shipping</span>
             <strong className={shippingPaise === 0 ? 'text-commerce-savings' : 'text-ink-primary'}>
               {shippingPaise === 0 ? 'FREE' : formatINR(shippingPaise)}
             </strong>
@@ -287,13 +294,13 @@ export function CartTaxBreakdownModal({
         {totalSavingsPaise > 0 && (
           <div className="flex items-center justify-center gap-1.5 rounded-sm bg-commerce-obdBg px-3 py-2 text-xs font-bold text-commerce-obdText">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>You save {formatINR(totalSavingsPaise)} on this order</span>
+            <span>Total Savings: {formatINR(totalSavingsPaise)}</span>
           </div>
         )}
 
         <p className="flex items-center justify-center gap-1 text-[11px] text-ink-muted">
           <CheckCircle2 className="w-3.5 h-3.5 text-commerce-savings" />
-          <span>GSTIN input tax credit fields available during checkout confirmation.</span>
+          <span>Optional B2B GSTIN input available at checkout.</span>
         </p>
       </div>
     </div>

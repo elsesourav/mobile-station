@@ -10,24 +10,25 @@ import { discountPercent, formatINR, formatTitleWithoutBrand } from '@/lib/forma
 interface CartItemRowProps {
   item: CartItem
   appliedCoupon?: string | null
+  isCouponEligible?: boolean
   onUpdateQuantity: (sku: string, delta: number) => void
   onRemove: (sku: string) => void
 }
 
 /**
- * Compact cart line-item card structured after Glorov's CartItemRow:
- * square image left, title + top-right remove trash icon, variant pill,
- * unit pricing + savings badge, pill quantity stepper, and right-aligned item subtotal.
+ * Compact cart line-item card structured after Glorov's CartItemRow
+ * with normalized brand-stripped titles and per-item coupon eligibility tags.
  */
 export function CartItemRow({
   item,
   appliedCoupon,
+  isCouponEligible = false,
   onUpdateQuantity,
   onRemove,
 }: CartItemRowProps) {
   const unitPrice = item.price_paise
   const unitMrp = Math.max(item.mrp_paise, unitPrice)
-  const unitSavings = unitMrp - unitPrice
+  const hasSavings = unitMrp > unitPrice
   const off = discountPercent(unitMrp, unitPrice)
   const displayTitle = formatTitleWithoutBrand(item.title, item.brand)
   const showVariantChip =
@@ -75,14 +76,14 @@ export function CartItemRow({
             </button>
           </div>
 
-          {(showVariantChip || appliedCoupon) && (
+          {(showVariantChip || (appliedCoupon && isCouponEligible)) && (
             <div className="flex flex-wrap items-center gap-1.5">
               {showVariantChip && (
                 <span className="rounded-xs bg-surface-muted px-2 py-0.5 text-[10.5px] font-medium text-ink-secondary leading-none">
                   {item.variantTitle}
                 </span>
               )}
-              {appliedCoupon && (
+              {appliedCoupon && isCouponEligible && (
                 <span className="inline-flex items-center gap-0.5 rounded-xs bg-commerce-obdBg px-1.5 py-0.5 font-mono text-[9.5px] font-bold text-commerce-obdText leading-none">
                   <Zap className="w-2.5 h-2.5 shrink-0" />
                   <span>{appliedCoupon}</span>
@@ -95,15 +96,16 @@ export function CartItemRow({
             <span className="font-display text-sm sm:text-base font-bold text-ink-primary leading-none">
               {formatINR(unitPrice)}
             </span>
-            {unitSavings > 0 && (
+            {hasSavings && (
               <>
                 <span className="text-[11px] text-ink-muted line-through leading-none">
                   {formatINR(unitMrp)}
                 </span>
-                <span className="rounded-xs bg-commerce-obdBg px-1.5 py-0.5 font-mono text-[9.5px] font-bold text-commerce-savings leading-none">
-                  Save {formatINR(unitSavings)}
-                  {off > 0 ? ` · ${off}%` : ''}
-                </span>
+                {off > 0 && (
+                  <span className="rounded-xs bg-commerce-obdBg px-1.5 py-0.5 font-mono text-[9.5px] font-bold text-commerce-savings leading-none">
+                    -{off}%
+                  </span>
+                )}
               </>
             )}
           </div>

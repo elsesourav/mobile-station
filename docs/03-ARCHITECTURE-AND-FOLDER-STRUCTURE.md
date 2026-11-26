@@ -39,7 +39,7 @@ mobile-station/
 │   └── storefront/
 │       ├── announcements.json             # Top trust & offer ticker messages
 │       ├── hero-banners.json              # Flagship banner definitions
-│       ├── offers.json                    # Promo codes (TECH500, DESK10, FREESHIP)
+│       ├── offers.json                    # Promo codes (GEAR5, TECH10, AIRPODS5, S24ULTRA10, FREESHIP)
 │       └── trust-badges.json              # Warranty, OBD, GST ITC, Muzaffarpur Hub badges
 ├── docs/
 │   ├── 00-MASTER-PLAN.md                  # Phased build blueprint & GLOROV improvements

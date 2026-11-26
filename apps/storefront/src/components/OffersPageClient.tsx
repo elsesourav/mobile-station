@@ -4,6 +4,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Check, Copy, Sparkles, Tag } from 'lucide-react'
 import type { StorefrontOffer, StorefrontProduct } from '@mobile-station/types'
+import { ALL_PRODUCTS } from '@/lib/catalog'
+import { formatOfferScopeLabel } from '@/lib/cart-pricing'
 import { formatINR } from '@/lib/format'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
 import { ProductCard } from '@/components/ProductCard'
@@ -80,6 +82,9 @@ export function OffersPageClient({
                 </div>
                 <h2 className="font-display text-lg font-bold text-ink-primary">{offer.title}</h2>
                 <p className="text-xs text-ink-secondary">{offer.description}</p>
+                <p className="font-mono text-[10.5px] font-semibold text-gold-700">
+                  Applies to: {formatOfferScopeLabel(offer, ALL_PRODUCTS)}
+                </p>
               </div>
 
               <button

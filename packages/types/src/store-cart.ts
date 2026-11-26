@@ -1,6 +1,7 @@
 export interface CartItem {
   sku: string
   productHandle: string
+  categoryHandle?: string
   title: string
   variantTitle: string
   brand: string

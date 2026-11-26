@@ -68,7 +68,7 @@ export function CartPincodeBox({ onPincodeChange }: CartPincodeBoxProps) {
               <span className="text-commerce-savings font-semibold"> · {deliveryResult.eta}</span>
             </>
           ) : (
-            <span className="text-ink-muted">Check delivery PIN &amp; Muzaffarpur pickup</span>
+            <span className="text-ink-muted">Check PIN delivery ETA</span>
           )}
         </p>
 

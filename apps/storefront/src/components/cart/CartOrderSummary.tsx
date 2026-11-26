@@ -54,14 +54,14 @@ export function CartOrderSummary({
 
       <div className="space-y-2.5 text-xs tabular-nums">
         <div className="flex items-center justify-between text-ink-secondary">
-          <span>Items Subtotal</span>
+          <span>Subtotal</span>
           <span className="font-bold text-ink-primary">{formatINR(subtotalPaise)}</span>
         </div>
 
         {discountPaise > 0 && (
           <div className="flex items-center justify-between text-ink-secondary">
             <span className="truncate pr-2">
-              Coupon Discount {appliedCoupon ? `(${appliedCoupon})` : ''}
+              Discount {appliedCoupon ? `(${appliedCoupon})` : ''}
             </span>
             <span className="font-bold text-commerce-savings whitespace-nowrap">
               -{formatINR(discountPaise)}
@@ -70,7 +70,7 @@ export function CartOrderSummary({
         )}
 
         <div className="flex items-center justify-between text-ink-secondary">
-          <span>Insured Courier</span>
+          <span>Shipping</span>
           <span
             className={`font-bold ${
               shippingPaise === 0 ? 'text-commerce-savings' : 'text-ink-primary'
@@ -81,8 +81,8 @@ export function CartOrderSummary({
         </div>
 
         <div className="flex items-center justify-between text-ink-secondary">
-          <span>18% GST &amp; Safe Packing</span>
-          <span className="font-semibold text-ink-primary">Included in MRP</span>
+          <span>Taxes</span>
+          <span className="font-semibold text-ink-primary">18% GST Included</span>
         </div>
       </div>
 
@@ -91,7 +91,6 @@ export function CartOrderSummary({
       <div className="flex items-start justify-between gap-3 tabular-nums">
         <div>
           <p className="text-sm font-bold text-ink-primary">Total Payable</p>
-          <p className="text-[11px] text-ink-muted">Inclusive of all taxes</p>
           {showCompareMrp && (
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="text-xs text-ink-muted line-through">
@@ -112,7 +111,7 @@ export function CartOrderSummary({
       {totalSavingsPaise > 0 && (
         <div className="flex items-center justify-center gap-1.5 rounded-sm bg-commerce-obdBg px-3 py-2 text-xs font-semibold text-commerce-obdText tabular-nums">
           <Sparkles className="w-3.5 h-3.5 shrink-0" />
-          <span>You save {formatINR(totalSavingsPaise)} on this order</span>
+          <span>Total Savings: {formatINR(totalSavingsPaise)}</span>
         </div>
       )}
 
@@ -127,7 +126,7 @@ export function CartOrderSummary({
 
       <div className="flex items-center justify-center gap-1.5 text-[11px] text-ink-muted">
         <Lock className="w-3.5 h-3.5 shrink-0" />
-        <span>IMEI-Sealed Dispatch · UPI, Cards &amp; NetBanking</span>
+        <span>UPI, Cards &amp; NetBanking Accepted</span>
       </div>
     </section>
   )

@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, X } from 'lucide-react'
-import { ALL_OFFERS } from '@/lib/catalog'
+import { ALL_OFFERS, ALL_PRODUCTS } from '@/lib/catalog'
+import { buildEffectiveOffers, doesCartItemMatchOffer } from '@/lib/cart-pricing'
 import { useCart } from '@/components/CartContext'
 import { CartEmptyState } from '@/components/cart/CartEmptyState'
 import { CartMilestoneBar } from '@/components/cart/CartMilestoneBar'
@@ -23,7 +24,7 @@ import { CartCheckoutModal } from '@/components/cart/CartCheckoutModal'
 
 /**
  * Dedicated full-screen Cart page (`/cart`) matching Glorov's exact position and two-column /
- * mobile sticky-dock structure, rendered cleanly in Mobile Station's Obsidian & Gold tokens.
+ * mobile sticky-dock structure, enforcing category & product coupon scoping.
  */
 export function CartPageClient() {
   const router = useRouter()
@@ -52,6 +53,15 @@ export function CartPageClient() {
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
   const [noticeBanner, setNoticeBanner] = useState<string | null>(null)
 
+  const effectiveOffers = useMemo(() => buildEffectiveOffers(ALL_OFFERS, ALL_PRODUCTS), [])
+  const activeOfferObj = useMemo(
+    () =>
+      appliedCoupon
+        ? effectiveOffers.find((o) => o.code.toUpperCase() === appliedCoupon.toUpperCase()) ?? null
+        : null,
+    [appliedCoupon, effectiveOffers]
+  )
+
   const showNotice = useCallback((message: string) => {
     setNoticeBanner(message)
     window.setTimeout(() => {
@@ -69,7 +79,6 @@ export function CartPageClient() {
 
   return (
     <div className="min-h-screen w-full bg-surface-canvas text-ink-primary flex flex-col">
-      {/* 1. Dedicated Top Cart Bar (Back arrow + Cart title + count pill left; Close X right) */}
       <header className="w-full bg-obsidian-900 text-ink-inverse border-b border-obsidian-800 px-4 py-3 shrink-0 select-none">
         <div className="max-w-content mx-auto flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
@@ -110,25 +119,24 @@ export function CartPageClient() {
         </div>
       )}
 
-      {/* 2. Main Cart Content */}
       <main className="flex-1 w-full">
         {!isHydrated ? (
           <div className="max-w-content mx-auto px-4 py-16 flex flex-col items-center justify-center min-h-[360px]">
             <div className="w-9 h-9 rounded-full border-2 border-chrome-300 border-t-gold-500 animate-spin mb-3" />
-            <p className="text-xs font-medium text-ink-muted">Loading your tech cart...</p>
+            <p className="text-xs font-medium text-ink-muted">Loading cart...</p>
           </div>
         ) : items.length === 0 ? (
           <CartEmptyState onAddItem={addItem} />
         ) : (
           <div className="max-w-content mx-auto px-3 sm:px-6 py-3 sm:py-5">
-            {/* Desktop & Tablet Two-Column Layout (>= 640px, matching Glorov ratios & sticky sidebar) */}
+            {/* Desktop & Tablet Two-Column Layout (>= 640px) */}
             <div className="hidden sm:flex items-start gap-4 lg:gap-6">
-              {/* Left Column: Milestone Bar -> Item List -> Recommended Electronics */}
               <div className="flex-[12] lg:flex-[13] min-w-0 flex flex-col gap-3">
                 <CartMilestoneBar
+                  items={items}
                   subtotalPaise={subtotalPaise}
                   appliedCoupon={appliedCoupon}
-                  offers={ALL_OFFERS}
+                  offers={effectiveOffers}
                   onOpenOffers={() => setIsOffersModalOpen(true)}
                   onApplyCoupon={(code) => {
                     const res = applyCoupon(code)
@@ -143,6 +151,11 @@ export function CartPageClient() {
                       key={item.sku}
                       item={item}
                       appliedCoupon={appliedCoupon}
+                      isCouponEligible={
+                        activeOfferObj
+                          ? doesCartItemMatchOffer(item, activeOfferObj, ALL_PRODUCTS)
+                          : false
+                      }
                       onUpdateQuantity={updateQuantity}
                       onRemove={removeItem}
                     />
@@ -156,12 +169,12 @@ export function CartPageClient() {
                 />
               </div>
 
-              {/* Right Column: Coupon -> Pincode -> Order Summary -> Trust Guarantee */}
               <div className="flex-[9] lg:flex-[8] min-w-0 flex flex-col gap-3.5 sticky top-4">
                 <CartCouponVoucherCard
+                  items={items}
                   subtotalPaise={subtotalPaise}
                   appliedCoupon={appliedCoupon}
-                  offers={ALL_OFFERS}
+                  offers={effectiveOffers}
                   onApplyCoupon={applyCoupon}
                   onRemoveCoupon={removeCoupon}
                   onOpenOffersModal={() => setIsOffersModalOpen(true)}
@@ -186,12 +199,13 @@ export function CartPageClient() {
               </div>
             </div>
 
-            {/* Mobile Single-Column Layout (< 640px, matching Glorov item->recs->coupon->pin->trust flow) */}
+            {/* Mobile Single-Column Layout (< 640px) */}
             <div className="flex sm:hidden flex-col gap-2.5 pb-28">
               <CartMilestoneBar
+                items={items}
                 subtotalPaise={subtotalPaise}
                 appliedCoupon={appliedCoupon}
-                offers={ALL_OFFERS}
+                offers={effectiveOffers}
                 onOpenOffers={() => setIsOffersModalOpen(true)}
                 onApplyCoupon={(code) => {
                   const res = applyCoupon(code)
@@ -206,6 +220,11 @@ export function CartPageClient() {
                     key={item.sku}
                     item={item}
                     appliedCoupon={appliedCoupon}
+                    isCouponEligible={
+                      activeOfferObj
+                        ? doesCartItemMatchOffer(item, activeOfferObj, ALL_PRODUCTS)
+                        : false
+                    }
                     onUpdateQuantity={updateQuantity}
                     onRemove={removeItem}
                   />
@@ -219,9 +238,10 @@ export function CartPageClient() {
               />
 
               <CartCouponVoucherCard
+                items={items}
                 subtotalPaise={subtotalPaise}
                 appliedCoupon={appliedCoupon}
-                offers={ALL_OFFERS}
+                offers={effectiveOffers}
                 onApplyCoupon={applyCoupon}
                 onRemoveCoupon={removeCoupon}
                 onOpenOffersModal={() => setIsOffersModalOpen(true)}
@@ -235,7 +255,6 @@ export function CartPageClient() {
         )}
       </main>
 
-      {/* 3. Mobile Sticky Bottom Checkout Dock */}
       {items.length > 0 && (
         <CartStickyCheckoutBar
           totalPaise={totalPaise}
@@ -246,13 +265,13 @@ export function CartPageClient() {
         />
       )}
 
-      {/* 4. Sheets */}
       <CartAvailableOffersModal
         isOpen={isOffersModalOpen}
         onClose={() => setIsOffersModalOpen(false)}
+        items={items}
         subtotalPaise={subtotalPaise}
         appliedCoupon={appliedCoupon}
-        offers={ALL_OFFERS}
+        offers={effectiveOffers}
         onApplyCoupon={applyCoupon}
         onRemoveCoupon={removeCoupon}
       />

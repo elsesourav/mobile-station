@@ -5,7 +5,7 @@ import { OffersPageClient } from '@/components/OffersPageClient'
 export const metadata: Metadata = {
   title: 'Active Promo Codes & Offers',
   description:
-    'Save with TECH500, DESK10, FREESHIP, No-Cost EMI, and 18% GST Business Tax Credit on genuine electronics.',
+    'Save with category & product coupons (GEAR5, TECH10, AIRPODS5, FREESHIP), No-Cost EMI, and 18% GST credit.',
 }
 
 export default function OffersPage() {

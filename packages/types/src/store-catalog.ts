@@ -44,6 +44,9 @@ export interface StorefrontProductMetadata {
   requires_open_box_delivery: boolean
   emi_eligible: boolean
   cod_eligible?: boolean
+  product_coupon_code?: string
+  product_coupon_percent?: number
+  product_coupon_min_paise?: number
   key_highlights?: string[]
   stock_details?: ProductStockDetails
   specs?: ProductSpecificationMap
@@ -140,6 +143,8 @@ export interface StorefrontOffer {
   percentage?: number
   max_discount_paise?: number
   min_cart_paise?: number
+  applicable_categories?: string[]
+  applicable_products?: string[]
   is_active?: boolean
 }
 

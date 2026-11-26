@@ -42,6 +42,7 @@ export function PdpRecommendationsSection({
     addItem({
       sku: variant.sku,
       productHandle: accessory.handle,
+      categoryHandle: accessory.category_handle,
       title: accessory.title,
       variantTitle: variant.title,
       brand: accessory.metadata.brand,
@@ -59,6 +60,7 @@ export function PdpRecommendationsSection({
       addItem({
         sku: primaryVariant.sku,
         productHandle: product.handle,
+        categoryHandle: product.category_handle,
         title: product.title,
         variantTitle: primaryVariant.title,
         brand: product.metadata.brand,
@@ -74,6 +76,7 @@ export function PdpRecommendationsSection({
       addItem({
         sku: variant.sku,
         productHandle: entry.product.handle,
+        categoryHandle: entry.product.category_handle,
         title: entry.product.title,
         variantTitle: variant.title,
         brand: entry.product.metadata.brand,

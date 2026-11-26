@@ -15,6 +15,7 @@ import {
   computeGstSplit,
   getCategoryRoute,
 } from '@/lib/catalog'
+import { getEligibleOffersForProduct } from '@/lib/cart-pricing'
 import { discountPercent, formatTitleWithoutBrand } from '@/lib/format'
 import { buildProductGallerySlides } from '@/lib/product-gallery'
 import { buildVariantSpecificationRows } from '@/lib/product-specs'
@@ -124,6 +125,7 @@ export function ProductDetailClient({
     addItem({
       sku: activeVariant.sku,
       productHandle: product.handle,
+      categoryHandle: product.category_handle,
       title: product.title,
       variantTitle: activeVariant.title,
       brand: product.metadata.brand,
@@ -137,6 +139,11 @@ export function ProductDetailClient({
     }
     openCart()
   }
+
+  const eligibleOffers = useMemo(
+    () => getEligibleOffersForProduct(product, ALL_OFFERS),
+    [product]
+  )
 
   const handleShare = async () => {
     if (typeof window === 'undefined') return
@@ -243,7 +250,7 @@ export function ProductDetailClient({
               onSelectVariant={handleVariantChange}
               quantity={quantity}
               onChangeQuantity={setQuantity}
-              offers={ALL_OFFERS}
+              offers={eligibleOffers}
               gstBreakdown={gstBreakdown}
               intraStateGst={intraStateGst}
               onToggleGstMode={() => setIntraStateGst((intra) => !intra)}

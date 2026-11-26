@@ -221,6 +221,7 @@ export function SearchClientView({ initialProducts, categories }: SearchClientVi
       addItem({
         sku: variant.sku,
         productHandle: product.handle,
+        categoryHandle: product.category_handle,
         title: product.title,
         variantTitle: variant.title,
         brand: product.metadata.brand,

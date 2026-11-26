@@ -12,6 +12,9 @@ interface ElectronicsSettingsPayload {
   b2b_gst_available: boolean
   gst_rate_percent: number
   hsn_code: string
+  product_coupon_code?: string
+  product_coupon_percent?: number | null
+  product_coupon_min_paise?: number | null
   color_images: Record<string, string[]>
   detected_colors: string[]
 }
@@ -29,6 +32,9 @@ const ProductElectronicsSettingsWidget = ({ data }: { data: ProductSettingsDetai
   const [b2bGstAvailable, setB2bGstAvailable] = useState(false)
   const [gstRate, setGstRate] = useState('18')
   const [hsnCode, setHsnCode] = useState('')
+  const [productCouponCode, setProductCouponCode] = useState('')
+  const [productCouponPercent, setProductCouponPercent] = useState('5')
+  const [productCouponMinInr, setProductCouponMinInr] = useState('')
   const [colorImages, setColorImages] = useState<Record<string, string[]>>({})
   const [detectedColors, setDetectedColors] = useState<string[]>([])
   const [customColorName, setCustomColorName] = useState('')
@@ -49,6 +55,15 @@ const ProductElectronicsSettingsWidget = ({ data }: { data: ProductSettingsDetai
         setB2bGstAvailable(payload.b2b_gst_available)
         setGstRate(String(payload.gst_rate_percent || 18))
         setHsnCode(payload.hsn_code || '')
+        setProductCouponCode(payload.product_coupon_code || '')
+        setProductCouponPercent(
+          payload.product_coupon_percent ? String(payload.product_coupon_percent) : '5'
+        )
+        setProductCouponMinInr(
+          payload.product_coupon_min_paise
+            ? String(Math.round(payload.product_coupon_min_paise / 100))
+            : ''
+        )
         setColorImages(payload.color_images || {})
         setDetectedColors(payload.detected_colors || [])
       })
@@ -61,6 +76,9 @@ const ProductElectronicsSettingsWidget = ({ data }: { data: ProductSettingsDetai
     setSaving(true)
     setStatusMessage(null)
     try {
+      const cleanCouponCode = productCouponCode.trim().toUpperCase()
+      const parsedPercent = Number(productCouponPercent)
+      const parsedMinInr = Number(productCouponMinInr)
       const response = await fetch(`/admin/products/${data.id}/electronics`, {
         method: 'POST',
         credentials: 'include',
@@ -70,11 +88,21 @@ const ProductElectronicsSettingsWidget = ({ data }: { data: ProductSettingsDetai
           b2b_gst_available: gstAvailable ? b2bGstAvailable : false,
           gst_rate_percent: Number(gstRate) as 5 | 12 | 18 | 28,
           ...(hsnCode.trim() ? { hsn_code: hsnCode.trim() } : {}),
+          product_coupon_code: cleanCouponCode,
+          ...(cleanCouponCode && parsedPercent >= 1 && parsedPercent <= 50
+            ? {
+                product_coupon_percent: Math.round(parsedPercent),
+                product_coupon_min_paise:
+                  Number.isFinite(parsedMinInr) && parsedMinInr > 0
+                    ? Math.round(parsedMinInr * 100)
+                    : null,
+              }
+            : {}),
           color_images: colorImages,
         }),
       })
       setStatusMessage(
-        response.ok ? 'Saved GST & finish gallery settings.' : 'Failed to save settings.'
+        response.ok ? 'Saved storefront GST, coupon & media settings.' : 'Failed to save settings.'
       )
     } catch {
       setStatusMessage('Network error while saving settings.')
@@ -204,6 +232,47 @@ const ProductElectronicsSettingsWidget = ({ data }: { data: ProductSettingsDetai
               onChange={(e) => setHsnCode(e.target.value)}
               placeholder="e.g. 8517"
             />
+          </div>
+        </div>
+
+        <div className="space-y-3 border-t pt-4">
+          <div>
+            <Label>Product-Specific Percentage Coupon (Optional)</Label>
+            <Text size="xsmall" className="text-ui-fg-subtle">
+              Restrict a custom coupon code to this product only (e.g., 5% or 10% off). Clear code to disable.
+            </Text>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-3">
+            <div className="space-y-1.5">
+              <Label>Coupon Code</Label>
+              <Input
+                value={productCouponCode}
+                onChange={(e) => setProductCouponCode(e.target.value.toUpperCase())}
+                placeholder="e.g. XM5SAVE5"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Discount (%)</Label>
+              <Input
+                type="number"
+                min={1}
+                max={50}
+                value={productCouponPercent}
+                onChange={(e) => setProductCouponPercent(e.target.value)}
+                disabled={!productCouponCode.trim()}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Min Spend (₹)</Label>
+              <Input
+                type="number"
+                min={0}
+                value={productCouponMinInr}
+                onChange={(e) => setProductCouponMinInr(e.target.value)}
+                placeholder="0 (No minimum)"
+                disabled={!productCouponCode.trim()}
+              />
+            </div>
           </div>
         </div>
 

@@ -1,32 +1,59 @@
 [
   {
-    "id": "offer_welcome_500",
-    "code": "TECH500",
-    "title": "Flat ₹500 Off on Accessories & Peripherals",
-    "description": "Valid on earphones, mechanical keyboards, mice, GaN chargers, and cases on orders ₹2,999+.",
-    "discount_type": "fixed",
-    "amount_paise": 50000,
-    "min_cart_paise": 299900,
-    "is_active": true
-  },
-  {
-    "id": "offer_combo_10",
-    "code": "DESK10",
-    "title": "10% Off Keyboard + Mouse + Hub Combos",
-    "description": "Save 10% (up to ₹1,500) when bundling 2+ productivity accessories.",
-    "discount_type": "percentage",
-    "percentage": 10,
-    "max_discount_paise": 150000,
-    "min_cart_paise": 249900,
-    "is_active": true
-  },
-  {
     "id": "offer_free_insured_shipping",
     "code": "FREESHIP",
     "title": "Free Insured Express Shipping",
-    "description": "Automatically unlocked on all orders above ₹999 across India.",
+    "description": "Free courier dispatch across India on orders ₹999+.",
     "discount_type": "free_shipping",
     "min_cart_paise": 99900,
+    "applicable_categories": ["*"],
+    "is_active": true
+  },
+  {
+    "id": "offer_audio_acc_5",
+    "code": "GEAR5",
+    "title": "5% Off Audio & Tech Accessories",
+    "description": "5% off headphones, TWS, keyboards, chargers, and storage on orders ₹1,499+.",
+    "discount_type": "percentage",
+    "percentage": 5,
+    "max_discount_paise": 200000,
+    "min_cart_paise": 149900,
+    "applicable_categories": ["audio", "keyboards-mice", "power-charging", "accessories-storage"],
+    "is_active": true
+  },
+  {
+    "id": "offer_devices_10",
+    "code": "TECH10",
+    "title": "10% Off Phones, Tablets & Laptops",
+    "description": "10% off smartphones, tablets, and laptops (up to ₹5,000) on orders ₹14,999+.",
+    "discount_type": "percentage",
+    "percentage": 10,
+    "max_discount_paise": 500000,
+    "min_cart_paise": 1499900,
+    "applicable_categories": ["smartphones", "tablets", "laptops"],
+    "is_active": true
+  },
+  {
+    "id": "offer_product_airpods_5",
+    "code": "AIRPODS5",
+    "title": "5% Off AirPods Pro USB-C",
+    "description": "Product coupon: 5% instant off Apple AirPods Pro (2nd Gen) USB-C MagSafe.",
+    "discount_type": "percentage",
+    "percentage": 5,
+    "min_cart_paise": 0,
+    "applicable_products": ["apple-airpods-pro-2-usbc"],
+    "is_active": true
+  },
+  {
+    "id": "offer_product_s24u_10",
+    "code": "S24ULTRA10",
+    "title": "10% Off Galaxy S24 Ultra",
+    "description": "Product coupon: 10% off Samsung Galaxy S24 Ultra 5G (max ₹8,000).",
+    "discount_type": "percentage",
+    "percentage": 10,
+    "max_discount_paise": 800000,
+    "min_cart_paise": 0,
+    "applicable_products": ["samsung-galaxy-s24-ultra-5g"],
     "is_active": true
   }
 ]

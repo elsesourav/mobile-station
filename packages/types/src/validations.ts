@@ -85,6 +85,14 @@ export const electronicsMetadataSchema = z.object({
   gst_invoice_available: z.boolean().optional(),
   b2b_gst_available: z.boolean().optional(),
   color_images: z.record(z.array(z.string().url())).optional(),
+  product_coupon_code: z
+    .string()
+    .trim()
+    .toUpperCase()
+    .regex(/^[A-Z0-9_-]{3,24}$/)
+    .optional(),
+  product_coupon_percent: z.number().int().min(1).max(50).optional(),
+  product_coupon_min_paise: z.number().int().min(0).optional(),
   warranty_months: z.number().int().min(0).max(120),
   warranty_type: z.enum(['brand_authorized', 'seller_warranty', 'replacement_only', 'none']),
   warranty_summary: z.string().trim().min(1),

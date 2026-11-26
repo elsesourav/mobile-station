@@ -58,6 +58,7 @@ export function CartDrawer({
     onAddItem({
       sku: variant.sku,
       productHandle: product.handle,
+      categoryHandle: product.category_handle,
       title: product.title,
       variantTitle: variant.title,
       brand: product.metadata.brand,

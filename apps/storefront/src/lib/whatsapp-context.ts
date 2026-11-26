@@ -149,12 +149,12 @@ export function resolvePageWhatsAppContext(params: {
   } else if (cleanPath.startsWith('/offers')) {
     pageType = 'offers'
     badgeLabel = 'Offers & EMI Desk'
-    contextSummary = 'Promo Codes (TECH500 / DESK10) & No-Cost EMI'
+    contextSummary = 'Category Coupons (GEAR5 / TECH10) & No-Cost EMI'
     topics = [
       {
         id: 'offers_code',
         label: 'Promo Code Help',
-        template: 'I want to check promo code eligibility (TECH500 / DESK10) for my order.',
+        template: 'I want to check promo code eligibility (GEAR5 / TECH10) for my order.',
       },
       {
         id: 'offers_emi',
