@@ -147,14 +147,37 @@ export function buildVariantSpecificationRows(
   const mergedSpecs: ProductSpecificationMap = { ...(baseSpecs ?? {}) }
   const variantOptions = variant.options ?? {}
 
+  const applyStorageCapacity = (gb: number) => {
+    if ('storage_gb' in mergedSpecs) mergedSpecs.storage_gb = gb
+    else if ('ssd_gb' in mergedSpecs) mergedSpecs.ssd_gb = gb
+    else if ('capacity_gb' in mergedSpecs) mergedSpecs.capacity_gb = gb
+    else mergedSpecs.storage_gb = gb
+  }
+
+  const combinedSpecSource =
+    variantOptions['Memory / SSD'] ||
+    variantOptions.Variant ||
+    variantOptions.Config ||
+    variantOptions.Configuration ||
+    variantOptions.Capacity
+
+  if (combinedSpecSource) {
+    const capacityTokens = combinedSpecSource.match(/\d+(?:\.\d+)?\s*(?:GB|TB)/gi) ?? []
+    const parsedNumbers = capacityTokens
+      .map((tok) => parseCapacityGigabytes(tok))
+      .filter((n): n is number => n !== null)
+
+    if (parsedNumbers.length >= 2) {
+      mergedSpecs.ram_gb = parsedNumbers[0]
+      applyStorageCapacity(parsedNumbers[1])
+    } else if (parsedNumbers.length === 1) {
+      applyStorageCapacity(parsedNumbers[0])
+    }
+  }
+
   if (variantOptions.Storage) {
     const parsedStorageGb = parseCapacityGigabytes(variantOptions.Storage)
-    if (parsedStorageGb !== null) {
-      if ('storage_gb' in mergedSpecs) mergedSpecs.storage_gb = parsedStorageGb
-      else if ('ssd_gb' in mergedSpecs) mergedSpecs.ssd_gb = parsedStorageGb
-      else if ('capacity_gb' in mergedSpecs) mergedSpecs.capacity_gb = parsedStorageGb
-      else mergedSpecs.storage_gb = parsedStorageGb
-    }
+    if (parsedStorageGb !== null) applyStorageCapacity(parsedStorageGb)
   }
 
   if (variantOptions.RAM) {
@@ -162,7 +185,8 @@ export function buildVariantSpecificationRows(
     if (parsedRamGb !== null) mergedSpecs.ram_gb = parsedRamGb
   }
 
-  if (variantOptions.Color) mergedSpecs.variant_color = variantOptions.Color
+  const colorLabel = variantOptions.Color || variantOptions.Finish
+  if (colorLabel) mergedSpecs.variant_color = colorLabel
   if (variantOptions.Size) mergedSpecs.variant_size = variantOptions.Size
   mergedSpecs.variant_sku = variant.sku
 

@@ -20,7 +20,7 @@
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
     min-height: 100%;
     scrollbar-width: thin;
     scrollbar-color: rgba(11, 15, 23, 0.36) var(--color-surface-muted);
@@ -34,7 +34,7 @@
     line-height: 1.55;
     min-height: 100dvh;
     min-width: 320px;
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
