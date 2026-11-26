@@ -145,4 +145,21 @@ describe('Redesigned Product Detail Page components, variant imagery, and GST gu
     expect(pdpRecSource).not.toContain('<ProductCard')
     expect(globalsCss).toContain('height: 3px;')
   })
+
+  it('activates sticky Add to Cart bar on scroll while suppressing mobile bottom navigation', () => {
+    const pdpClientSrc = readFileSync(
+      path.resolve(__dirname, '../components/ProductDetailClient.tsx'),
+      'utf8'
+    )
+    const stickyBarSrc = readFileSync(
+      path.resolve(__dirname, '../components/product/MobileStickyPurchaseBar.tsx'),
+      'utf8'
+    )
+
+    expect(pdpClientSrc).toContain('suppressBottomNav={showStickyPurchaseBar}')
+    expect(pdpClientSrc).toContain('<MobileStickyPurchaseBar')
+    expect(pdpClientSrc).toContain('PDP_STICKY_CART_SCROLL_Y = 180')
+    expect(stickyBarSrc).toContain('lg:hidden fixed bottom-0')
+    expect(stickyBarSrc).toContain('Add to Cart')
+  })
 })

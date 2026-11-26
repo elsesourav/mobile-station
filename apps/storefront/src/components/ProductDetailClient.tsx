@@ -27,6 +27,7 @@ import { StorefrontChrome } from '@/components/StorefrontChrome'
 import { ProductGallery } from '@/components/product/ProductGallery'
 import { ProductPurchaseBox } from '@/components/product/ProductPurchaseBox'
 import { ProductSpecsAccordion } from '@/components/product/ProductSpecsAccordion'
+import { MobileStickyPurchaseBar } from '@/components/product/MobileStickyPurchaseBar'
 import { PdpRecommendationsSection } from '@/components/recommendations/PdpRecommendationsSection'
 import { ShowcaseSpotlightSection } from '@/components/showcase/ShowcaseSpotlightSection'
 import { useCart } from '@/components/CartContext'
@@ -39,6 +40,8 @@ interface ProductDetailClientProps {
   productShowcase?: ShowcaseEntryDTO[]
 }
 
+const PDP_STICKY_CART_SCROLL_Y = 180
+
 export function ProductDetailClient({
   product,
   category,
@@ -50,6 +53,7 @@ export function ProductDetailClient({
   const [deliveryInfo, setDeliveryInfo] = useState<DeliveryServiceabilityResult | null>(null)
   const [intraStateGst, setIntraStateGst] = useState(true)
   const [shareCopied, setShareCopied] = useState(false)
+  const [showStickyPurchaseBar, setShowStickyPurchaseBar] = useState(false)
 
   const { addItem, updateQuantity, openCart } = useCart()
   const behavior = useOptionalBehavior()
@@ -58,6 +62,32 @@ export function ProductDetailClient({
   useEffect(() => {
     trackProductView?.(product)
   }, [product, trackProductView])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    let rafId: number | null = null
+
+    const updateStickyBar = () => {
+      const scrollY = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0)
+      const nextVisible = scrollY > PDP_STICKY_CART_SCROLL_Y
+      setShowStickyPurchaseBar((prev) => (prev === nextVisible ? prev : nextVisible))
+    }
+
+    const handleScroll = () => {
+      if (rafId !== null) return
+      rafId = requestAnimationFrame(() => {
+        rafId = null
+        updateStickyBar()
+      })
+    }
+
+    updateStickyBar()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+    }
+  }, [])
 
   const activeVariant = product.variants[selectedVariantIdx] ?? product.variants[0]
   const activeTitle = buildActiveVariantProductTitle(product, activeVariant)
@@ -128,8 +158,16 @@ export function ProductDetailClient({
     }
   }
 
+  const stickySublabel =
+    product.variants.length > 1
+      ? `${activeVariant.title} · ${product.title}`
+      : product.title
+
   return (
-    <StorefrontChrome activeCategoryHandle={product.category_handle}>
+    <StorefrontChrome
+      activeCategoryHandle={product.category_handle}
+      suppressBottomNav={showStickyPurchaseBar}
+    >
       <div className="page-container py-5 sm:py-8 space-y-10">
         {/* Clean Breadcrumb & Share Action */}
         <div className="flex items-center justify-between gap-3">
@@ -239,6 +277,16 @@ export function ProductDetailClient({
 
         <PdpRecommendationsSection product={product} categoryName={category?.name} />
       </div>
+
+      <MobileStickyPurchaseBar
+        visible={showStickyPurchaseBar}
+        sublabel={stickySublabel}
+        pricePaise={activeVariant.price_paise * quantity}
+        mrpPaise={activeVariant.mrp_paise * quantity}
+        discountPercent={discountPct}
+        isAvailable={activeVariant.stock > 0}
+        onAddToCart={handleAddToCart}
+      />
     </StorefrontChrome>
   )
 }

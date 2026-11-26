@@ -203,7 +203,7 @@ export function WhatsAppSupportWidget() {
 
   return (
     <div
-      className={`fixed right-4 sm:right-6 bottom-[72px] lg:bottom-6 ${
+      className={`fixed right-4 sm:right-6 bottom-[78px] lg:bottom-6 ${
         isOpen ? 'z-modal' : 'z-40'
       } flex flex-col items-end gap-2.5`}
     >

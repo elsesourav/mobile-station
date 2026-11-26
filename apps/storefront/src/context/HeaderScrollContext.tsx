@@ -37,7 +37,6 @@ const BOTTOM_THRESHOLD = 240
 export function HeaderScrollProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [state, setState] = useState<HeaderScrollState>(INITIAL_STATE)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const stateRef = useRef<HeaderScrollState>(INITIAL_STATE)
   stateRef.current = state
@@ -45,9 +44,6 @@ export function HeaderScrollProvider({ children }: { children: React.ReactNode }
   const lastScrollYRef = useRef<number>(0)
   const scrollUpAccumulatorRef = useRef<number>(0)
   const scrollDownAccumulatorRef = useRef<number>(0)
-
-  const openMobileMenu = useCallback(() => setIsMobileMenuOpen(true), [])
-  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), [])
 
   const setSelectedCategory = useCallback((category: string) => {
     setState((prev) => ({ ...prev, selectedCategory: category }))
@@ -64,7 +60,6 @@ export function HeaderScrollProvider({ children }: { children: React.ReactNode }
   }, [])
 
   useEffect(() => {
-    setIsMobileMenuOpen(false)
     resetHeaderScroll()
   }, [pathname, resetHeaderScroll])
 
@@ -159,9 +154,6 @@ export function HeaderScrollProvider({ children }: { children: React.ReactNode }
         ...state,
         setSelectedCategory,
         resetHeaderScroll,
-        isMobileMenuOpen,
-        openMobileMenu,
-        closeMobileMenu,
       }}
     >
       {children}

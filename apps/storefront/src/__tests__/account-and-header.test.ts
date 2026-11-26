@@ -87,4 +87,35 @@ describe('Header chrome constraints', () => {
     expect(headerSource).not.toContain('Store Gallery')
     expect(headerSource).not.toContain('Offers &amp; GST')
   })
+
+  it('streamlines MobileBottomNav to Home, Offers, and dedicated Menu page without drawer or Reviews/Cart buttons', () => {
+    const bottomNavSource = readFileSync(
+      path.resolve(__dirname, '../components/layout/MobileBottomNav.tsx'),
+      'utf8'
+    )
+    const chromeSource = readFileSync(
+      path.resolve(__dirname, '../components/StorefrontChrome.tsx'),
+      'utf8'
+    )
+    const menuHubSource = readFileSync(
+      path.resolve(__dirname, '../components/menu/MenuHubClient.tsx'),
+      'utf8'
+    )
+
+    expect(bottomNavSource).toContain('href="/"')
+    expect(bottomNavSource).toContain('href="/offers"')
+    expect(bottomNavSource).toContain('href="/menu"')
+    expect(bottomNavSource).not.toContain('/feedback')
+    expect(bottomNavSource).not.toContain('>Reviews<')
+    expect(bottomNavSource).not.toContain('openCart')
+    expect(bottomNavSource).not.toContain('>Cart<')
+    expect(bottomNavSource).not.toContain('onOpenMobileMenu')
+
+    expect(chromeSource).toContain('suppressed={suppressBottomNav}')
+    expect(chromeSource).not.toContain('MobileMenuDrawer')
+
+    expect(menuHubSource).toContain('/account#orders')
+    expect(menuHubSource).toContain('/account#settings')
+    expect(menuHubSource).toContain('/stores/muzaffarpur')
+  })
 })

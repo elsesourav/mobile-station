@@ -64,9 +64,6 @@ export interface HeaderScrollState {
 export interface HeaderScrollContextValue extends HeaderScrollState {
   setSelectedCategory: (category: string) => void
   resetHeaderScroll: () => void
-  isMobileMenuOpen: boolean
-  openMobileMenu: () => void
-  closeMobileMenu: () => void
 }
 
 export interface StorefrontShellProps {
@@ -76,6 +73,7 @@ export interface StorefrontShellProps {
   onSearchChange?: (query: string) => void
   onCategorySelect?: (handle: string) => void
   showAnnouncementBar?: boolean
+  suppressBottomNav?: boolean
 }
 
 export interface AnnouncementBarProps {
@@ -92,7 +90,6 @@ export interface StorefrontHeaderProps {
   onSearchChange?: (query: string) => void
   onCategorySelect?: (handle: string) => void
   onSearchSubmit: (event: React.FormEvent) => void
-  onOpenMobileMenu?: () => void
   className?: string
 }
 
@@ -100,18 +97,20 @@ export interface StorefrontFooterProps {
   className?: string
 }
 
-export interface MobileMenuDrawerProps {
-  isOpen: boolean
-  onClose: () => void
-  activeCategoryHandle?: string
-  onCategorySelect?: (handle: string) => void
+export interface MobileBottomNavProps {
+  alwaysVisible?: boolean
+  suppressed?: boolean
+  className?: string
 }
 
-export interface MobileBottomNavProps {
-  activeCategoryHandle?: string
-  onOpenMobileMenu: () => void
-  alwaysVisible?: boolean
-  className?: string
+export interface MobileStickyPurchaseBarProps {
+  visible: boolean
+  sublabel: string
+  pricePaise: number
+  mrpPaise: number
+  discountPercent: number
+  isAvailable: boolean
+  onAddToCart: () => void
 }
 
 export interface RotatingSearchPlaceholderProps {

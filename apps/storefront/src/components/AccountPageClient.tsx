@@ -21,36 +21,18 @@ import {
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
 import { useCart } from '@/components/CartContext'
 import { formatINR } from '@/lib/format'
+import {
+  DEFAULT_ACCOUNT_PROFILE,
+  persistStoredAccountProfile,
+  readStoredAccountProfile,
+  type CustomerAccountProfile,
+  type PreferredHub,
+} from '@/lib/account'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
 
-const ACCOUNT_STORAGE_KEY = 'mobile_station_account_v1'
+export type { CustomerAccountProfile }
 
-type PreferredHub = 'motijheel-842001' | 'club-road-842002'
 type AuthMode = 'signin' | 'register'
-
-export interface CustomerAccountProfile {
-  fullName: string
-  email: string
-  phone: string
-  pincode: string
-  cityAddress: string
-  gstin: string
-  businessName: string
-  preferredHub: PreferredHub
-  signedInAt: string
-}
-
-const DEFAULT_PROFILE: CustomerAccountProfile = {
-  fullName: '',
-  email: '',
-  phone: '',
-  pincode: '842001',
-  cityAddress: '',
-  gstin: '',
-  businessName: '',
-  preferredHub: 'motijheel-842001',
-  signedInAt: '',
-}
 
 export function validateAccountProfileInput(input: {
   mode: AuthMode
@@ -112,37 +94,21 @@ export function AccountPageClient() {
   const [saveFeedback, setSaveFeedback] = useState<{ ok: boolean; text: string } | null>(null)
 
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(ACCOUNT_STORAGE_KEY)
-      if (raw) {
-        const parsed = JSON.parse(raw) as CustomerAccountProfile
-        if (parsed && parsed.email) {
-          setProfile(parsed)
-          setPincode(parsed.pincode || '842001')
-          setCityAddress(parsed.cityAddress || '')
-          setGstin(parsed.gstin || '')
-          setBusinessName(parsed.businessName || '')
-          setPreferredHub(parsed.preferredHub || 'motijheel-842001')
-        }
-      }
-    } catch {
-      // Ignore storage read failures cleanly
-    } finally {
-      setHydrated(true)
+    const parsed = readStoredAccountProfile()
+    if (parsed) {
+      setProfile(parsed)
+      setPincode(parsed.pincode)
+      setCityAddress(parsed.cityAddress)
+      setGstin(parsed.gstin)
+      setBusinessName(parsed.businessName)
+      setPreferredHub(parsed.preferredHub)
     }
+    setHydrated(true)
   }, [])
 
   const persistProfile = (next: CustomerAccountProfile | null) => {
     setProfile(next)
-    try {
-      if (next) {
-        window.localStorage.setItem(ACCOUNT_STORAGE_KEY, JSON.stringify(next))
-      } else {
-        window.localStorage.removeItem(ACCOUNT_STORAGE_KEY)
-      }
-    } catch {
-      // Ignore storage write failures cleanly
-    }
+    persistStoredAccountProfile(next)
   }
 
   const handleAuthSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -161,7 +127,7 @@ export function AccountPageClient() {
     const cleanEmail = email.trim().toLowerCase()
     const fallbackName = cleanEmail.split('@')[0] || 'Customer'
     const nextProfile: CustomerAccountProfile = {
-      ...DEFAULT_PROFILE,
+      ...DEFAULT_ACCOUNT_PROFILE,
       fullName: fullName.trim() || fallbackName,
       email: cleanEmail,
       phone: phone.trim(),
@@ -387,6 +353,7 @@ export function AccountPageClient() {
           <div className="grid lg:grid-cols-12 gap-6 items-start">
             <div className="lg:col-span-7 space-y-6">
               <form
+                id="settings"
                 onSubmit={handleSaveDetails}
                 className="rounded-md border border-chrome-200 bg-surface-card p-5 sm:p-6 shadow-card space-y-4"
               >
@@ -496,7 +463,10 @@ export function AccountPageClient() {
                 </button>
               </form>
 
-              <div className="rounded-md border border-chrome-200 bg-surface-card p-5 sm:p-6 shadow-card space-y-3">
+              <div
+                id="orders"
+                className="rounded-md border border-chrome-200 bg-surface-card p-5 sm:p-6 shadow-card space-y-3"
+              >
                 <h2 className="font-display text-lg font-bold text-ink-primary flex items-center gap-2">
                   <Package className="h-5 w-5 text-gold-700" />
                   <span>Orders &amp; GST Tax Invoices</span>

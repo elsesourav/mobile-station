@@ -8,16 +8,15 @@ import {
 } from '@/context/HeaderScrollContext'
 import { AnnouncementBar } from '@/components/layout/AnnouncementBar'
 import { Header } from '@/components/layout/Header'
-import { MobileMenuDrawer } from '@/components/layout/MobileMenuDrawer'
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav'
 import { Footer } from '@/components/layout/Footer'
 import { WhatsAppSupportWidget } from '@/components/support/WhatsAppSupportWidget'
 import type { StorefrontShellProps } from '@/types/storefront'
 
 /**
- * Shared responsive storefront chrome matching Glorov's floating auto-hide header,
- * collapsible announcement & category icon bar, slide-in menu drawer, 3-column footer,
- * and scroll-reactive mobile bottom dock.
+ * Shared responsive storefront chrome providing the floating auto-hide header,
+ * collapsible announcement & category strip, 3-column footer,
+ * and scroll-coordinated mobile bottom navigation dock.
  */
 export function StorefrontChrome({
   children,
@@ -26,31 +25,14 @@ export function StorefrontChrome({
   onSearchChange,
   onCategorySelect,
   showAnnouncementBar = DEFAULT_SHOW_ANNOUNCEMENT_BAR,
+  suppressBottomNav = false,
 }: StorefrontShellProps) {
   const router = useRouter()
   const headerScroll = useOptionalHeaderScroll()
   const [localSearch, setLocalSearch] = useState(searchValue ?? '')
-  const [localDrawerOpen, setLocalDrawerOpen] = useState(false)
 
   const effectiveSearch = searchValue !== undefined ? searchValue : localSearch
   const isTopNavVisible = headerScroll ? headerScroll.isTopNavVisible : true
-  const isDrawerOpen = headerScroll ? headerScroll.isMobileMenuOpen : localDrawerOpen
-
-  const openMobileMenu = () => {
-    if (headerScroll) {
-      headerScroll.openMobileMenu()
-    } else {
-      setLocalDrawerOpen(true)
-    }
-  }
-
-  const closeMobileMenu = () => {
-    if (headerScroll) {
-      headerScroll.closeMobileMenu()
-    } else {
-      setLocalDrawerOpen(false)
-    }
-  }
 
   const handleSearchInput = (query: string) => {
     if (onSearchChange) {
@@ -89,14 +71,6 @@ export function StorefrontChrome({
         />
       </div>
 
-      {/* Left Navigation Drawer on Mobile & Tablet */}
-      <MobileMenuDrawer
-        isOpen={isDrawerOpen}
-        onClose={closeMobileMenu}
-        activeCategoryHandle={activeCategoryHandle}
-        onCategorySelect={onCategorySelect}
-      />
-
       {/* Main Content with Constant Spacer Matching Top Stack At Rest */}
       <main
         className={`flex-1 ${
@@ -108,11 +82,8 @@ export function StorefrontChrome({
 
       <Footer />
 
-      {/* Mobile & Tablet Bottom Dock (< 1024px) */}
-      <MobileBottomNav
-        activeCategoryHandle={activeCategoryHandle}
-        onOpenMobileMenu={openMobileMenu}
-      />
+      {/* Mobile & Tablet Bottom Dock (< 1024px); suppressed on PDP when sticky cart bar appears */}
+      <MobileBottomNav suppressed={suppressBottomNav} />
 
       {/* Floating WhatsApp Support & Message Composer */}
       <WhatsAppSupportWidget />

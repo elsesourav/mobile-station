@@ -26,6 +26,7 @@ export interface ResolvedPageWhatsAppContext {
     | 'gallery'
     | 'search'
     | 'account'
+    | 'menu'
     | 'policy'
     | 'home'
   badgeLabel: string
@@ -205,6 +206,10 @@ export function resolvePageWhatsAppContext(params: {
     pageType = 'account'
     badgeLabel = 'Account & Order Help'
     contextSummary = 'Profile, Saved Addresses & Order Tracking'
+  } else if (cleanPath.startsWith('/menu')) {
+    pageType = 'menu'
+    badgeLabel = 'Services & Hub Desk'
+    contextSummary = 'Orders, GSTIN Billing & Local Hub Support'
   } else if (cleanPath.startsWith('/policies')) {
     pageType = 'policy'
     badgeLabel = 'Policy Clarification'
