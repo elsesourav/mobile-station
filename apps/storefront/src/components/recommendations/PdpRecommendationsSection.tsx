@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { ArrowRight, Plus, ShoppingCart, Sparkles } from 'lucide-react'
 import type { StorefrontProduct } from '@mobile-station/types'
 import { ALL_PRODUCTS, getCategoryRoute } from '@/lib/catalog'
-import { formatINR } from '@/lib/format'
+import { formatINR, formatTitleWithoutBrand } from '@/lib/format'
 import { EMPTY_BEHAVIOR_PROFILE } from '@/lib/recommendations/behavior'
 import { getPdpRecommendations } from '@/lib/recommendations/engine'
 import { useCart } from '@/components/CartContext'
@@ -139,11 +139,11 @@ export function PdpRecommendationsSection({
                       />
                     </div>
                     <div className="space-y-0.5">
-                      <p className="font-mono text-[10px] font-semibold uppercase tracking-wider text-ink-muted truncate">
+                      <p className="font-mono text-[10px] font-semibold uppercase tracking-wider text-gold-700 truncate">
                         {acc.metadata.brand}
                       </p>
                       <h3 className="font-display text-xs sm:text-sm font-bold text-ink-primary group-hover:text-gold-700 line-clamp-2 min-h-[2.25rem] sm:min-h-[2.5rem] leading-snug">
-                        {acc.title}
+                        {formatTitleWithoutBrand(acc.title, acc.metadata.brand)}
                       </h3>
                     </div>
                   </Link>

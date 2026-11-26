@@ -22,7 +22,7 @@ import type {
   StorefrontProduct,
   StorefrontVariant,
 } from '@mobile-station/types'
-import { discountPercent, formatINR, monthlyEmiPreview } from '@/lib/format'
+import { discountPercent, formatINR, formatTitleWithoutBrand, monthlyEmiPreview } from '@/lib/format'
 import { ProductVariantSelector } from '@/components/product/ProductVariantSelector'
 
 interface ProductPurchaseBoxProps {
@@ -91,7 +91,7 @@ export function ProductPurchaseBox({
           {product.metadata.brand}
         </span>
         <h1 className="text-2xl xl:text-3xl font-display font-bold text-ink-primary leading-tight">
-          {activeTitle}
+          {formatTitleWithoutBrand(activeTitle, product.metadata.brand)}
         </h1>
         <p className="text-sm text-ink-secondary">{product.subtitle}</p>
       </div>

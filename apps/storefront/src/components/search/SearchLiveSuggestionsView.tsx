@@ -13,7 +13,7 @@ import {
   ShoppingCart,
   Zap,
 } from 'lucide-react'
-import { formatINR } from '@/lib/format'
+import { formatINR, formatTitleWithoutBrand } from '@/lib/format'
 import {
   getPrimaryVariant,
   getProductBestDiscountPercent,
@@ -109,7 +109,7 @@ export function SearchLiveSuggestionsView({
                 </div>
 
                 <h3 className="font-display font-bold text-[15px] sm:text-base text-ink-primary line-clamp-2 leading-snug">
-                  {closestProduct.title}
+                  {formatTitleWithoutBrand(closestProduct.title, closestProduct.metadata.brand)}
                 </h3>
 
                 <p className="font-mono text-[11px] text-ink-muted mt-0.5 truncate">
@@ -247,7 +247,7 @@ export function SearchLiveSuggestionsView({
                       {product.metadata.brand} · {product.category_handle.replace('-', ' ')}
                     </span>
                     <h4 className="font-display font-bold text-[13.5px] text-ink-primary truncate group-hover:text-gold-700 transition-colors leading-snug">
-                      {product.title}
+                      {formatTitleWithoutBrand(product.title, product.metadata.brand)}
                     </h4>
                     <div className="flex items-baseline gap-1.5 mt-0.5 tabular-nums">
                       <span className="font-display font-extrabold text-sm text-ink-primary">

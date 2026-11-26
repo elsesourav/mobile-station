@@ -15,7 +15,7 @@ import {
   computeGstSplit,
   getCategoryRoute,
 } from '@/lib/catalog'
-import { discountPercent } from '@/lib/format'
+import { discountPercent, formatTitleWithoutBrand } from '@/lib/format'
 import { buildProductGallerySlides } from '@/lib/product-gallery'
 import { buildVariantSpecificationRows } from '@/lib/product-specs'
 import {
@@ -217,7 +217,7 @@ export function ProductDetailClient({
             {product.metadata.brand}
           </span>
           <h1 className="text-xl sm:text-2xl font-display font-bold text-ink-primary leading-tight">
-            {activeTitle}
+            {formatTitleWithoutBrand(activeTitle, product.metadata.brand)}
           </h1>
           <p className="text-xs sm:text-sm text-ink-secondary">{product.subtitle}</p>
         </div>

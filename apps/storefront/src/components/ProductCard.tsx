@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ShoppingCart } from 'lucide-react'
 import type { StorefrontProduct } from '@mobile-station/types'
-import { discountPercent, formatINR } from '@/lib/format'
+import { discountPercent, formatINR, formatTitleWithoutBrand } from '@/lib/format'
 import { getVariantPreviewImage } from '@/lib/product-variants'
 import { useCart } from '@/components/CartContext'
 
@@ -73,7 +73,7 @@ export function ProductCard({ product }: { product: StorefrontProduct }) {
           </span>
           <Link href={`/products/${product.handle}`} className="group block">
             <h3 className="font-display text-sm sm:text-base font-bold leading-snug text-ink-primary group-hover:text-gold-700 transition line-clamp-2 min-h-[2.4rem]">
-              {product.title}
+              {formatTitleWithoutBrand(product.title, product.metadata.brand)}
             </h3>
           </Link>
           <p className="text-xs text-ink-muted line-clamp-1">{product.subtitle}</p>

@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest'
+import { readFileSync } from 'node:fs'
+import path from 'node:path'
 import type { CartItem, UserBehaviorEvent } from '@mobile-station/types'
 import { ALL_PRODUCTS } from '@/lib/catalog'
 import {
@@ -160,5 +162,16 @@ describe('Mobile Station Hybrid Electronics Recommendation Engine', () => {
     const reranked = applyMmrDiversityRerank(pool, 4, 0.55)
     const uniqueCategories = new Set(reranked.map((r) => r.product.category_handle))
     expect(uniqueCategories.size).toBeGreaterThanOrEqual(2)
+  })
+
+  it('renders clean compact recommendation cards without duplicate brand prefixes or verbose badges', () => {
+    const recSectionSrc = readFileSync(
+      path.resolve(__dirname, '../components/recommendations/PersonalizedHomeSection.tsx'),
+      'utf8'
+    )
+    expect(recSectionSrc).toContain('formatTitleWithoutBrand(')
+    expect(recSectionSrc).toContain('COMPACT_REASON_LABELS')
+    expect(recSectionSrc).not.toContain('Smart Hybrid Recommendations')
+    expect(recSectionSrc).not.toContain('{explanation}')
   })
 })

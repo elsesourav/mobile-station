@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { discountPercent, formatINR, monthlyEmiPreview } from '../lib/format'
+import {
+  discountPercent,
+  formatINR,
+  formatTitleWithoutBrand,
+  monthlyEmiPreview,
+} from '../lib/format'
 import {
   electronicsMetadataSchema,
   electronicsStockDetailsSchema,
@@ -23,6 +28,16 @@ describe('Mobile Station pricing & formatting helpers', () => {
 
   it('computes monthly EMI preview', () => {
     expect(monthlyEmiPreview(7490000, 6)).toBe('₹12,484')
+  })
+
+  it('normalizes product titles to avoid duplicate brand prefixes beside brand badges', () => {
+    expect(formatTitleWithoutBrand('Apple EarPods (USB-C) Wired Lossless', 'Apple')).toBe(
+      'EarPods (USB-C) Wired Lossless'
+    )
+    expect(formatTitleWithoutBrand('Xiaomi 14 CIVI 5G (Leica Optics)', 'Xiaomi')).toBe(
+      '14 CIVI 5G (Leica Optics)'
+    )
+    expect(formatTitleWithoutBrand('Glas.tR EZ Fit', 'Spigen')).toBe('Glas.tR EZ Fit')
   })
 })
 

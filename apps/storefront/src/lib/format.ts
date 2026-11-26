@@ -16,3 +16,19 @@ export function monthlyEmiPreview(pricePaise: number, months = 6): string {
   const wholeRupeePaise = Math.ceil(pricePaise / months / 100) * 100
   return formatINR(wholeRupeePaise)
 }
+
+/**
+ * Strips a redundant leading brand prefix when the brand label is rendered right above the title
+ * (e.g., "APPLE" + "Apple EarPods (USB-C)" -> "EarPods (USB-C)").
+ */
+export function formatTitleWithoutBrand(title: string, brand?: string): string {
+  const cleanTitle = title.trim()
+  const cleanBrand = brand?.trim()
+  if (!cleanTitle || !cleanBrand) return cleanTitle
+
+  const escaped = cleanBrand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const stripped = cleanTitle
+    .replace(new RegExp(`^${escaped}(?:\\s+|[-–—:]+)\\s*`, 'i'), '')
+    .trim()
+  return stripped.length > 0 ? stripped : cleanTitle
+}
