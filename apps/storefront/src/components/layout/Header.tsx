@@ -37,7 +37,7 @@ export function Header({
   className = '',
 }: StorefrontHeaderProps) {
   const pathname = usePathname()
-  const { totalCount, openCart } = useCart()
+  const { totalCount } = useCart()
   const headerScroll = useOptionalHeaderScroll()
 
   const showIcons = headerScroll ? headerScroll.showIcons : true
@@ -263,12 +263,15 @@ export function Header({
               <User className="w-[17px] h-[17px] shrink-0" />
               <span>Account</span>
             </Link>
-            <button
-              type="button"
-              onClick={openCart}
+            <Link
+              href="/cart"
               aria-label={`Cart, ${totalCount} items`}
-              title="Open Shopping Cart"
-              className="relative inline-flex items-center gap-2 h-10 rounded-full border border-obsidian-700 bg-obsidian-800 px-3.5 text-xs font-medium text-chrome-200 hover:border-gold-500 hover:text-gold-500 active:scale-95 transition whitespace-nowrap"
+              title="View Shopping Cart"
+              className={`relative inline-flex items-center gap-2 h-10 rounded-full border px-3.5 text-xs font-medium active:scale-95 transition whitespace-nowrap ${
+                pathname === '/cart'
+                  ? 'border-gold-500 bg-obsidian-800 text-gold-500'
+                  : 'border-obsidian-700 bg-obsidian-800 text-chrome-200 hover:border-gold-500 hover:text-gold-500'
+              }`}
             >
               <ShoppingCart className="w-[17px] h-[17px] shrink-0" />
               <span>Cart</span>
@@ -277,7 +280,7 @@ export function Header({
                   {totalCount}
                 </span>
               )}
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -339,12 +342,15 @@ export function Header({
               <span className="hidden sm:inline">Account</span>
             </Link>
 
-            <button
-              type="button"
-              onClick={openCart}
+            <Link
+              href="/cart"
               aria-label={`Cart, ${totalCount} items`}
-              title="Open Shopping Cart"
-              className="relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] sm:w-auto sm:h-9 sm:min-h-[36px] sm:px-3 sm:gap-1.5 rounded-full text-xs font-medium text-chrome-200 hover:bg-obsidian-800 hover:text-gold-500 active:scale-95 transition shrink-0"
+              title="View Shopping Cart"
+              className={`relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] sm:w-auto sm:h-9 sm:min-h-[36px] sm:px-3 sm:gap-1.5 rounded-full text-xs font-medium active:scale-95 transition shrink-0 ${
+                pathname === '/cart'
+                  ? 'bg-obsidian-800 text-gold-500'
+                  : 'text-chrome-200 hover:bg-obsidian-800 hover:text-gold-500'
+              }`}
             >
               <ShoppingCart className="w-5 h-5 sm:w-4 sm:h-4 shrink-0" />
               <span className="hidden sm:inline">Cart</span>
@@ -353,7 +359,7 @@ export function Header({
                   {totalCount}
                 </span>
               )}
-            </button>
+            </Link>
           </div>
         </div>
       </div>

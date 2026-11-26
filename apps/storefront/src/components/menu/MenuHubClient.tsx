@@ -122,7 +122,7 @@ const ELECTRONICS_SERVICE_LINKS: readonly MenuServiceLinkItem[] = [
  * replacing slide-over navigation drawers with a dedicated Amazon/Croma-inspired destination.
  */
 export function MenuHubClient() {
-  const { totalCount, subtotalPaise, openCart } = useCart()
+  const { totalCount, subtotalPaise } = useCart()
   const [profile, setProfile] = useState<CustomerAccountProfile | null>(null)
   const [hydrated, setHydrated] = useState(false)
 
@@ -178,9 +178,8 @@ export function MenuHubClient() {
                 <User className="w-4 h-4 shrink-0" />
                 <span>{hydrated && profile ? 'Manage Profile' : 'Sign In / Profile'}</span>
               </Link>
-              <button
-                type="button"
-                onClick={openCart}
+              <Link
+                href="/cart"
                 className="flex-1 sm:flex-initial inline-flex min-h-[44px] items-center justify-center gap-2 rounded-sm border border-obsidian-700 bg-obsidian-800 px-4 py-2 text-xs font-semibold text-ink-inverse hover:border-gold-500 hover:text-gold-500 transition"
               >
                 <ShoppingCart className="w-4 h-4 text-gold-500 shrink-0" />
@@ -188,7 +187,7 @@ export function MenuHubClient() {
                   Cart ({totalCount})
                   {totalCount > 0 ? ` · ${formatINR(subtotalPaise)}` : ''}
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
 

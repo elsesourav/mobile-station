@@ -76,7 +76,7 @@ export function validateSavedBillingDetails(input: {
 }
 
 export function AccountPageClient() {
-  const { totalCount, subtotalPaise, openCart } = useCart()
+  const { totalCount, subtotalPaise } = useCart()
   const [hydrated, setHydrated] = useState(false)
   const [profile, setProfile] = useState<CustomerAccountProfile | null>(null)
   const [authMode, setAuthMode] = useState<AuthMode>('signin')
@@ -317,13 +317,12 @@ export function AccountPageClient() {
                     ? `Current subtotal: ${formatINR(subtotalPaise)} (Incl. 18% GST)`
                     : 'Your shopping cart is currently empty.'}
                 </p>
-                <button
-                  type="button"
-                  onClick={openCart}
-                  className="w-full min-h-[44px] rounded-sm bg-obsidian-900 px-4 py-2 text-xs font-bold text-gold-500 hover:bg-obsidian-800 transition"
+                <Link
+                  href="/cart"
+                  className="w-full inline-flex min-h-[44px] items-center justify-center rounded-sm bg-obsidian-900 px-4 py-2 text-xs font-bold text-gold-500 hover:bg-obsidian-800 transition"
                 >
                   Open Shopping Cart
-                </button>
+                </Link>
               </div>
 
               <div className="rounded-md border border-chrome-200 bg-surface-card p-5 shadow-card space-y-3">
@@ -508,13 +507,12 @@ export function AccountPageClient() {
                     ? `Subtotal ${formatINR(subtotalPaise)} (Incl. 18% GST).`
                     : 'Add devices or accessories to review delivery ETA and GST splits.'}
                 </p>
-                <button
-                  type="button"
-                  onClick={openCart}
-                  className="w-full min-h-[44px] rounded-sm bg-obsidian-900 px-4 py-2 text-xs font-bold text-gold-500 hover:bg-obsidian-800 transition"
+                <Link
+                  href="/cart"
+                  className="w-full inline-flex min-h-[44px] items-center justify-center rounded-sm bg-obsidian-900 px-4 py-2 text-xs font-bold text-gold-500 hover:bg-obsidian-800 transition"
                 >
                   Open Shopping Cart
-                </button>
+                </Link>
               </div>
 
               <div className="rounded-md border border-chrome-200 bg-surface-card p-5 shadow-card space-y-2.5 text-xs">

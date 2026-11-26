@@ -3,10 +3,11 @@
 import { useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Minus, Plus, ShieldCheck, ShoppingBag, Sparkles, Trash2, X } from 'lucide-react'
+import { ArrowRight, Minus, Plus, ShoppingBag, Sparkles, Trash2, Truck, X } from 'lucide-react'
 import type { CartItem, NewCartItemInput, StorefrontProduct } from '@mobile-station/types'
 import { ALL_PRODUCTS } from '@/lib/catalog'
-import { formatINR } from '@/lib/format'
+import { FREE_SHIPPING_THRESHOLD_PAISE } from '@/lib/cart-pricing'
+import { formatINR, formatTitleWithoutBrand } from '@/lib/format'
 import { EMPTY_BEHAVIOR_PROFILE } from '@/lib/recommendations/behavior'
 import { getCartCrossSellRecommendations } from '@/lib/recommendations/engine'
 import { useOptionalBehavior } from '@/context/BehaviorContext'
@@ -16,6 +17,7 @@ interface CartDrawerProps {
   items: CartItem[]
   totalCount: number
   subtotalPaise: number
+  shippingPaise: number
   totalSavingsPaise: number
   onClose: () => void
   onUpdateQuantity: (sku: string, delta: number) => void
@@ -23,11 +25,16 @@ interface CartDrawerProps {
   onAddItem?: (incomingItem: NewCartItemInput) => void
 }
 
+/**
+ * Quick-add slide-over cart drawer mirroring Glorov's CartDrawer positions
+ * (shipping progress banner -> compact item rows -> add-on upsells -> totals & /cart CTA).
+ */
 export function CartDrawer({
   isOpen,
   items,
   totalCount,
   subtotalPaise,
+  shippingPaise,
   totalSavingsPaise,
   onClose,
   onUpdateQuantity,
@@ -63,6 +70,10 @@ export function CartDrawer({
 
   if (!isOpen) return null
 
+  const isFreeShipping = subtotalPaise >= FREE_SHIPPING_THRESHOLD_PAISE
+  const shortfallPaise = Math.max(0, FREE_SHIPPING_THRESHOLD_PAISE - subtotalPaise)
+  const estimatedTotalPaise = subtotalPaise + shippingPaise
+
   return (
     <div
       className="fixed inset-0 z-drawer flex justify-end bg-obsidian-950/60 backdrop-blur-xs"
@@ -89,6 +100,20 @@ export function CartDrawer({
         </div>
 
         <div className="flex-1 overflow-y-auto ms-scrollbar p-4 space-y-3">
+          {items.length > 0 && (
+            <div className="flex items-center gap-2 rounded-md border border-commerce-savings/30 bg-commerce-obdBg px-3 py-2 text-xs font-semibold text-commerce-obdText">
+              <Truck className="w-4 h-4 shrink-0 text-commerce-savings" />
+              {isFreeShipping ? (
+                <span>Unlocked FREE Insured Express Delivery across India</span>
+              ) : (
+                <span>
+                  Add <strong className="font-mono">{formatINR(shortfallPaise)}</strong> more for
+                  FREE Express Delivery
+                </span>
+              )}
+            </div>
+          )}
+
           {items.length === 0 ? (
             <div className="py-16 text-center space-y-3">
               <ShoppingBag className="h-10 w-10 mx-auto text-chrome-400" />
@@ -114,9 +139,9 @@ export function CartDrawer({
                 <Image
                   src={item.thumbnail}
                   alt={item.title}
-                  width={64}
-                  height={64}
-                  className="h-16 w-16 shrink-0 rounded-xs border border-chrome-200 bg-surface-card object-contain p-1"
+                  width={56}
+                  height={56}
+                  className="h-14 w-14 shrink-0 rounded-xs border border-chrome-200 bg-surface-card object-contain p-1"
                 />
                 <div className="min-w-0 flex-1 space-y-1">
                   <div className="flex items-start justify-between gap-2">
@@ -125,7 +150,7 @@ export function CartDrawer({
                       onClick={onClose}
                       className="font-display text-xs font-bold text-ink-primary hover:text-gold-700 line-clamp-2"
                     >
-                      {item.title}
+                      {formatTitleWithoutBrand(item.title, item.brand)}
                     </Link>
                     <button
                       type="button"
@@ -172,11 +197,11 @@ export function CartDrawer({
             <div className="pt-3 mt-2 border-t border-chrome-200 space-y-2.5">
               <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gold-700">
                 <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                <span>Recommended Accessories For Your Cart</span>
+                <span>Recommended Accessories</span>
               </div>
 
               <div className="space-y-2">
-                {crossSells.map(({ product: acc, explanation }) => {
+                {crossSells.map(({ product: acc }) => {
                   const variant = acc.variants[0]
                   if (!variant) return null
                   return (
@@ -192,14 +217,16 @@ export function CartDrawer({
                         className="w-11 h-11 rounded-xs border border-chrome-200 bg-surface-card object-contain p-0.5 shrink-0"
                       />
                       <div className="min-w-0 flex-1">
+                        <p className="font-mono text-[9.5px] font-semibold uppercase tracking-wider text-gold-700 truncate">
+                          {acc.metadata.brand}
+                        </p>
                         <Link
                           href={`/products/${acc.handle}`}
                           onClick={onClose}
                           className="font-display text-[11.5px] font-bold text-ink-primary hover:text-gold-700 line-clamp-1"
                         >
-                          {acc.title}
+                          {formatTitleWithoutBrand(acc.title, acc.metadata.brand)}
                         </Link>
-                        <p className="text-[10px] text-ink-muted line-clamp-1">{explanation}</p>
                         <p className="font-mono text-[11px] font-bold text-ink-primary tabular-nums mt-0.5">
                           {formatINR(variant.price_paise)}
                         </p>
@@ -224,33 +251,36 @@ export function CartDrawer({
 
         {items.length > 0 && (
           <div className="border-t border-chrome-200 bg-surface-card p-4 pb-5 space-y-2.5">
-            <div className="space-y-1 text-xs">
+            <div className="space-y-1 text-xs tabular-nums">
               <div className="flex justify-between text-ink-secondary">
                 <span>Subtotal (Incl. 18% GST)</span>
-                <span className="font-display font-bold text-base text-ink-primary tabular-nums">
-                  {formatINR(subtotalPaise)}
+                <span className="font-semibold text-ink-primary">{formatINR(subtotalPaise)}</span>
+              </div>
+              <div className="flex justify-between text-ink-secondary">
+                <span>Insured Delivery</span>
+                <span className={shippingPaise === 0 ? 'font-bold text-commerce-savings' : 'font-semibold text-ink-primary'}>
+                  {shippingPaise === 0 ? 'FREE' : formatINR(shippingPaise)}
                 </span>
               </div>
               {totalSavingsPaise > 0 && (
                 <div className="flex justify-between text-commerce-savings font-medium">
-                  <span>Instant MRP Savings</span>
-                  <span className="tabular-nums">- {formatINR(totalSavingsPaise)}</span>
+                  <span>MRP Savings</span>
+                  <span>-{formatINR(totalSavingsPaise)}</span>
                 </div>
               )}
+              <div className="flex justify-between pt-1.5 border-t border-chrome-200 text-sm font-bold text-ink-primary">
+                <span>Estimated Total</span>
+                <span className="font-display text-base">{formatINR(estimatedTotalPaise)}</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2 rounded-xs bg-commerce-obdBg px-3 py-2 text-[11px] font-medium text-commerce-obdText">
-              <ShieldCheck className="h-4 w-4 shrink-0" />
-              <span>B2B GSTIN Input Tax Credit & Insured Courier Enabled</span>
-            </div>
-            <p className="font-mono text-[10px] text-center text-ink-muted">
-              Promo Codes: TECH500 · DESK1000 · FREESHIP
-            </p>
+
             <Link
-              href="/offers"
+              href="/cart"
               onClick={onClose}
-              className="w-full inline-flex min-h-[42px] items-center justify-center rounded-sm bg-gold-500 px-4 py-2 text-xs font-bold text-obsidian-950 hover:bg-gold-600 transition"
+              className="w-full inline-flex min-h-[44px] items-center justify-center gap-2 rounded-sm bg-gold-500 px-4 py-2 text-xs sm:text-sm font-bold text-obsidian-950 shadow-gold hover:bg-gold-600 transition"
             >
-              View &amp; Apply Promo Codes
+              <span>Go to Full Cart &amp; Checkout</span>
+              <ArrowRight className="w-4 h-4 shrink-0" />
             </Link>
           </div>
         )}

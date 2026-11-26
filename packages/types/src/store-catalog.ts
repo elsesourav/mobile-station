@@ -138,7 +138,9 @@ export interface StorefrontOffer {
   discount_type: string
   amount_paise?: number
   percentage?: number
+  max_discount_paise?: number
   min_cart_paise?: number
+  is_active?: boolean
 }
 
 export interface GstSplitBreakdown {
