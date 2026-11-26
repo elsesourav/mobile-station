@@ -11,6 +11,9 @@ export interface StorefrontVariant {
   mrp_paise: number
   stock: number
   options: Record<string, string>
+  display_title?: string
+  thumbnail?: string
+  images?: string[]
 }
 
 export interface ProductStockDetails {
@@ -29,6 +32,9 @@ export interface StorefrontProductMetadata {
   model_number: string
   hsn_code: string
   gst_rate_percent: number
+  gst_invoice_available?: boolean
+  b2b_gst_available?: boolean
+  color_images?: Record<string, string[]>
   warranty_months: number
   warranty_type?: string
   warranty_summary: string

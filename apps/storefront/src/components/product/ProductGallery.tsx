@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
 import type { ProductGallerySlide } from '@/lib/product-gallery'
@@ -8,20 +9,22 @@ import type { ProductGallerySlide } from '@/lib/product-gallery'
 interface ProductGalleryProps {
   title: string
   slides: readonly ProductGallerySlide[]
+  visualKey: string
   discountPercent?: number
   stockCount?: number
   lowStockThreshold?: number
 }
 
 /**
- * Sticky swipeable Multi-Image Product Gallery styled with Mobile Station Obsidian/Gold tokens:
- * - Touch/pointer drag carousel with 2-axis lock so vertical page scroll stays smooth
- * - Top-left deal pill, top-right stock/zoom controls, bottom subtle label bar
- * - Interactive horizontal thumbnail selector strip + fullscreen keyboard lightbox modal
+ * Sticky multi-image hardware gallery:
+ * - Resets slide position only when `visualKey` changes (e.g. finish/color change)
+ * - Fullscreen lightbox rendered cleanly via portal over the entire window (including header)
+ * - Isolated `lightboxIndex` prevents fullscreen navigation from altering inline PDP slides
  */
 export function ProductGallery({
   title,
   slides,
+  visualKey,
   discountPercent = 0,
   stockCount,
   lowStockThreshold = 5,
@@ -36,7 +39,10 @@ export function ProductGallery({
   const [isTransitioning, setIsTransitioning] = useState(true)
   const [isDragging, setIsDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState(0)
+
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
+  const [isPortalMounted, setIsPortalMounted] = useState(false)
 
   const startXRef = useRef(0)
   const startYRef = useRef(0)
@@ -44,15 +50,32 @@ export function ProductGallery({
   const isPointerDownRef = useRef(false)
   const isLockedRef = useRef<'none' | 'horizontal' | 'vertical'>('none')
   const capturedPointerIdRef = useRef<number | null>(null)
+  const prevVisualKeyRef = useRef<string>(visualKey)
 
   useEffect(() => {
-    setDisplayIndex(totalSlides > 1 ? 1 : 0)
-    setIsTransitioning(true)
-  }, [totalSlides, title])
+    setIsPortalMounted(true)
+  }, [])
+
+  // Only reset active gallery slide when the visual product/color changes, never on storage/RAM changes
+  useEffect(() => {
+    if (prevVisualKeyRef.current !== visualKey) {
+      prevVisualKeyRef.current = visualKey
+      setIsTransitioning(false)
+      setDisplayIndex(totalSlides > 1 ? 1 : 0)
+    } else if (totalSlides <= 1) {
+      setDisplayIndex(0)
+    }
+  }, [visualKey, totalSlides])
 
   const activeRealIndex =
     totalSlides > 1 ? (displayIndex - 1 + totalSlides) % totalSlides : 0
   const activeSlide = slides[activeRealIndex] ?? slides[0]
+  const activeLightboxSlide = slides[lightboxIndex] ?? slides[0]
+
+  const openLightbox = () => {
+    setLightboxIndex(activeRealIndex)
+    setIsLightboxOpen(true)
+  }
 
   const handleNext = useCallback(() => {
     if (totalSlides <= 1) return
@@ -74,6 +97,16 @@ export function ProductGallery({
     },
     [totalSlides]
   )
+
+  const handleLightboxPrev = useCallback(() => {
+    if (totalSlides <= 1) return
+    setLightboxIndex((prev) => (prev - 1 + totalSlides) % totalSlides)
+  }, [totalSlides])
+
+  const handleLightboxNext = useCallback(() => {
+    if (totalSlides <= 1) return
+    setLightboxIndex((prev) => (prev + 1) % totalSlides)
+  }, [totalSlides])
 
   const handleTransitionEnd = useCallback(() => {
     if (totalSlides <= 1) return
@@ -97,14 +130,19 @@ export function ProductGallery({
 
   useEffect(() => {
     if (!isLightboxOpen) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIsLightboxOpen(false)
-      else if (e.key === 'ArrowRight') handleNext()
-      else if (e.key === 'ArrowLeft') handlePrev()
+      else if (e.key === 'ArrowRight') handleLightboxNext()
+      else if (e.key === 'ArrowLeft') handleLightboxPrev()
     }
     window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [isLightboxOpen, handleNext, handlePrev])
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKey)
+    }
+  }, [isLightboxOpen, handleLightboxNext, handleLightboxPrev])
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (totalSlides <= 1) return
@@ -140,7 +178,7 @@ export function ProductGallery({
         e.currentTarget.setPointerCapture(e.pointerId)
         capturedPointerIdRef.current = e.pointerId
       } catch {
-        // Ignore pointer capture rejection
+        // Ignore pointer capture failure
       }
     }
 
@@ -156,7 +194,7 @@ export function ProductGallery({
       try {
         e.currentTarget.releasePointerCapture(capturedPointerIdRef.current)
       } catch {
-        // Ignore release errors
+        // Ignore release error
       }
       capturedPointerIdRef.current = null
     }
@@ -177,6 +215,113 @@ export function ProductGallery({
   const isLowStock =
     typeof stockCount === 'number' && stockCount > 0 && stockCount <= lowStockThreshold
 
+  const lightboxModal =
+    isLightboxOpen && activeLightboxSlide ? (
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${title} fullscreen preview`}
+        onClick={() => setIsLightboxOpen(false)}
+        className="fixed inset-0 z-[100050] bg-obsidian-950/92 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6"
+      >
+        {/* Top Bar with ONLY ONE Close Button */}
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="flex items-center justify-between gap-4 text-ink-inverse max-w-5xl w-full mx-auto"
+        >
+          <div className="min-w-0">
+            <p className="font-display text-sm sm:text-base font-bold truncate">{title}</p>
+            <p className="font-mono text-[11px] text-gold-500">
+              {activeLightboxSlide.label} · {lightboxIndex + 1} of {totalSlides}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsLightboxOpen(false)}
+            aria-label="Close fullscreen preview"
+            className="w-10 h-10 rounded-full border border-chrome-400/40 bg-obsidian-900 text-ink-inverse hover:border-gold-500 hover:text-gold-500 flex items-center justify-center shrink-0 transition"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Center Image Container (click outside closes modal, inside controls isolate state) */}
+        <div className="relative flex-1 my-4 flex items-center justify-center">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full h-full max-w-3xl max-h-[74vh] rounded-lg bg-surface-card overflow-hidden shadow-modal"
+          >
+            <Image
+              src={activeLightboxSlide.src}
+              alt={activeLightboxSlide.alt}
+              fill
+              unoptimized={activeLightboxSlide.isPreTransformed}
+              sizes="90vw"
+              className="object-contain p-4 sm:p-6"
+            />
+          </div>
+
+          {totalSlides > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handleLightboxPrev()
+                }}
+                aria-label="Previous image in lightbox"
+                className="absolute left-1 sm:left-4 w-10 h-10 rounded-full bg-obsidian-900/95 border border-chrome-400/40 text-ink-inverse hover:border-gold-500 hover:text-gold-500 flex items-center justify-center transition"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handleLightboxNext()
+                }}
+                aria-label="Next image in lightbox"
+                className="absolute right-1 sm:right-4 w-10 h-10 rounded-full bg-obsidian-900/95 border border-chrome-400/40 text-ink-inverse hover:border-gold-500 hover:text-gold-500 flex items-center justify-center transition"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Independent Lightbox Thumbnail Switcher */}
+        {totalSlides > 1 && (
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="flex items-center justify-center gap-2 overflow-x-auto pb-1 max-w-2xl mx-auto"
+          >
+            {slides.map((slide, idx) => (
+              <button
+                key={`lb-thumb-${slide.id}-${idx}`}
+                type="button"
+                onClick={() => setLightboxIndex(idx)}
+                aria-label={`Fullscreen ${slide.label}`}
+                className={`relative shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-sm overflow-hidden border-2 bg-surface-card transition ${
+                  idx === lightboxIndex
+                    ? 'border-gold-500 scale-105'
+                    : 'border-obsidian-700 opacity-65 hover:opacity-100'
+                }`}
+              >
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  unoptimized={slide.isPreTransformed}
+                  sizes="56px"
+                  className="object-contain p-0.5"
+                />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    ) : null
+
   return (
     <div className="w-full space-y-3">
       {/* Main Carousel Stage */}
@@ -186,7 +331,7 @@ export function ProductGallery({
         onPointerUp={finishDrag}
         onPointerCancel={finishDrag}
         style={{ cursor: totalSlides > 1 ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in' }}
-        className="relative aspect-square sm:aspect-[10/9] lg:aspect-square max-h-[490px] w-full rounded-lg overflow-hidden bg-surface-card border border-chrome-200 shadow-card group select-none touch-pan-y"
+        className="relative aspect-square sm:aspect-[10/9] lg:aspect-square max-h-[480px] w-full rounded-lg overflow-hidden bg-surface-card border border-chrome-200 shadow-card group select-none touch-pan-y"
       >
         <div
           onTransitionEnd={handleTransitionEnd}
@@ -203,7 +348,7 @@ export function ProductGallery({
             <div
               key={`${slide.id}-${idx}`}
               onClick={() => {
-                if (Math.abs(dragDeltaRef.current) < 5) setIsLightboxOpen(true)
+                if (Math.abs(dragDeltaRef.current) < 5) openLightbox()
               }}
               className="relative min-w-full w-full h-full shrink-0 flex items-center justify-center p-4 sm:p-7"
             >
@@ -247,7 +392,7 @@ export function ProductGallery({
             onPointerDown={(e) => e.stopPropagation()}
             onClick={(e) => {
               e.stopPropagation()
-              setIsLightboxOpen(true)
+              openLightbox()
             }}
             aria-label="Open fullscreen product photo"
             className="pointer-events-auto w-8 h-8 rounded-full bg-surface-card/90 hover:bg-surface-card border border-chrome-300 text-ink-primary flex items-center justify-center shadow-card hover:border-gold-500 transition"
@@ -286,7 +431,7 @@ export function ProductGallery({
           </>
         )}
 
-        {/* Bottom View Label */}
+        {/* Bottom Subtle Counter */}
         {activeSlide && (
           <div className="absolute bottom-3 left-3 z-10 pointer-events-none">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-obsidian-900/85 backdrop-blur-xs px-2.5 py-1 font-mono text-[10px] font-medium text-gold-500 border border-gold-500/30">
@@ -301,13 +446,13 @@ export function ProductGallery({
         )}
       </div>
 
-      {/* Carousel Dots & Multi-Image Thumbnails */}
+      {/* Dots & Thumbnail Strip */}
       {totalSlides > 1 && (
-        <div className="space-y-2.5">
+        <div className="space-y-2">
           <div className="flex items-center justify-center gap-1.5">
             {slides.map((slide, idx) => (
               <button
-                key={`dot-${slide.id}`}
+                key={`dot-${slide.id}-${idx}`}
                 type="button"
                 onClick={() => handleGoTo(idx)}
                 aria-label={`View ${slide.label}`}
@@ -329,7 +474,7 @@ export function ProductGallery({
               const selected = idx === activeRealIndex
               return (
                 <button
-                  key={`thumb-${slide.id}`}
+                  key={`thumb-${slide.id}-${idx}`}
                   type="button"
                   onClick={() => handleGoTo(idx)}
                   aria-label={`Select ${slide.label}`}
@@ -355,93 +500,7 @@ export function ProductGallery({
         </div>
       )}
 
-      {/* Fullscreen Lightbox Modal */}
-      {isLightboxOpen && activeSlide && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${title} fullscreen viewer`}
-          className="fixed inset-0 z-modal bg-obsidian-950/92 backdrop-blur-sm flex flex-col justify-between p-4 sm:p-6"
-        >
-          <div className="flex items-center justify-between gap-4 text-ink-inverse">
-            <div className="min-w-0">
-              <p className="font-display text-sm sm:text-base font-bold truncate">{title}</p>
-              <p className="font-mono text-[11px] text-gold-500">
-                {activeSlide.label} · {activeRealIndex + 1} of {totalSlides}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setIsLightboxOpen(false)}
-              aria-label="Close fullscreen gallery"
-              className="w-9 h-9 rounded-full border border-obsidian-700 bg-obsidian-900 text-chrome-200 hover:border-gold-500 hover:text-gold-500 flex items-center justify-center shrink-0"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          <div className="relative flex-1 my-4 flex items-center justify-center">
-            <div className="relative w-full h-full max-w-3xl max-h-[72vh] rounded-lg bg-surface-card overflow-hidden">
-              <Image
-                src={activeSlide.src}
-                alt={activeSlide.alt}
-                fill
-                unoptimized={activeSlide.isPreTransformed}
-                sizes="90vw"
-                className="object-contain p-4"
-              />
-            </div>
-
-            {totalSlides > 1 && (
-              <>
-                <button
-                  type="button"
-                  onClick={handlePrev}
-                  aria-label="Previous image in lightbox"
-                  className="absolute left-1 sm:left-4 w-10 h-10 rounded-full bg-obsidian-900/90 border border-chrome-400/40 text-ink-inverse hover:border-gold-500 flex items-center justify-center"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  aria-label="Next image in lightbox"
-                  className="absolute right-1 sm:right-4 w-10 h-10 rounded-full bg-obsidian-900/90 border border-chrome-400/40 text-ink-inverse hover:border-gold-500 flex items-center justify-center"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </>
-            )}
-          </div>
-
-          {totalSlides > 1 && (
-            <div className="flex items-center justify-center gap-2 overflow-x-auto pb-1">
-              {slides.map((slide, idx) => (
-                <button
-                  key={`lb-thumb-${slide.id}`}
-                  type="button"
-                  onClick={() => handleGoTo(idx)}
-                  aria-label={`Jump to ${slide.label}`}
-                  className={`relative shrink-0 w-12 h-12 rounded-sm overflow-hidden border-2 bg-surface-card transition ${
-                    idx === activeRealIndex
-                      ? 'border-gold-500 scale-105'
-                      : 'border-obsidian-700 opacity-65 hover:opacity-100'
-                  }`}
-                >
-                  <Image
-                    src={slide.src}
-                    alt={slide.alt}
-                    fill
-                    unoptimized={slide.isPreTransformed}
-                    sizes="48px"
-                    className="object-contain p-0.5"
-                  />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+      {isPortalMounted && lightboxModal ? createPortal(lightboxModal, document.body) : null}
     </div>
   )
 }

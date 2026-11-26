@@ -1,81 +1,123 @@
 'use client'
 
-import { Check } from 'lucide-react'
-import type { StorefrontVariant } from '@mobile-station/types'
+import Image from 'next/image'
+import type { StorefrontProduct } from '@mobile-station/types'
 import { discountPercent, formatINR } from '@/lib/format'
+import {
+  analyzeVariantDimensions,
+  getVariantColorLabel,
+  getVariantPreviewImage,
+} from '@/lib/product-variants'
 
 interface ProductVariantSelectorProps {
-  variants: readonly StorefrontVariant[]
+  product: StorefrontProduct
   selectedVariantIdx: number
   onSelectVariant: (variantIndex: number) => void
 }
 
-function resolveColorSwatchClass(variant: StorefrontVariant): string | null {
-  const hint = (
-    variant.options?.Color ||
-    variant.options?.Finish ||
-    variant.title
-  ).toLowerCase()
-
-  if (hint.includes('ultramarine') || hint.includes('blue') || hint.includes('iceblue') || hint.includes('navy')) {
-    return 'bg-sky-700'
-  }
-  if (hint.includes('desert') || hint.includes('gold') || hint.includes('sand')) {
-    return 'bg-gold-500'
-  }
-  if (hint.includes('natural titanium') || hint.includes('silver') || hint.includes('porcelain') || hint.includes('starlight') || hint.includes('mist')) {
-    return 'bg-chrome-300'
-  }
-  if (hint.includes('green') || hint.includes('trail') || hint.includes('emerald') || hint.includes('teal')) {
-    return 'bg-emerald-700'
-  }
-  if (
-    hint.includes('black') ||
-    hint.includes('obsidian') ||
-    hint.includes('noir') ||
-    hint.includes('gray') ||
-    hint.includes('grey') ||
-    hint.includes('graphite') ||
-    hint.includes('midnight') ||
-    hint.includes('space')
-  ) {
-    return 'bg-obsidian-900'
-  }
-  if (hint.includes('white') || hint.includes('ivory')) {
-    return 'bg-surface-card border border-chrome-300'
-  }
-  if (hint.includes('red') || hint.includes('rose') || hint.includes('pink')) {
-    return 'bg-commerce-deal'
-  }
-  return null
-}
-
 /**
- * Organized variant configuration grid showing finish/color swatches,
- * structured option attributes, individual variant savings, and live stock availability.
+ * Industry-standard Electronics Variant Selector:
+ * - Separate Finish/Color thumbnail cards from non-visual Storage/RAM options when multi-dimensional
+ * - Single-axis configuration cards show clean mini product/variant preview + concise title + price
+ * - Eliminates redundant "Model: ..." subtitle and top duplicate selected-name repetition
  */
 export function ProductVariantSelector({
-  variants,
+  product,
   selectedVariantIdx,
   onSelectVariant,
 }: ProductVariantSelectorProps) {
+  const variants = product.variants
   if (variants.length === 0) return null
 
   const activeVariant = variants[selectedVariantIdx] ?? variants[0]
+  const matrix = analyzeVariantDimensions(product, selectedVariantIdx)
+  const activeColor = getVariantColorLabel(activeVariant)
+
+  if (matrix.hasTrueMatrix) {
+    return (
+      <div className="space-y-4">
+        {/* Visual Color / Finish Selector with Product Thumbnails */}
+        <div className="space-y-2">
+          <p className="text-xs font-bold uppercase tracking-wider text-ink-muted">
+            Select Finish
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {matrix.colorOptions.map((opt) => {
+              const selected = activeColor === opt.color
+              return (
+                <button
+                  key={opt.color}
+                  type="button"
+                  onClick={() => onSelectVariant(opt.representativeIndex)}
+                  aria-pressed={selected}
+                  className={`inline-flex items-center gap-2 rounded-md border px-2.5 py-1.5 text-left transition ${
+                    selected
+                      ? 'border-obsidian-900 bg-obsidian-900/5 ring-1 ring-obsidian-900 shadow-card'
+                      : 'border-chrome-300 bg-surface-card hover:border-gold-500'
+                  }`}
+                >
+                  <span className="relative w-8 h-8 rounded-xs border border-chrome-200 bg-surface-card shrink-0 overflow-hidden">
+                    <Image
+                      src={opt.previewSrc}
+                      alt={opt.color}
+                      fill
+                      sizes="32px"
+                      className="object-contain p-0.5"
+                    />
+                  </span>
+                  <span className="font-display text-xs font-bold text-ink-primary">
+                    {opt.color}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Non-Visual Specification Tiers (Storage / Memory) without Separate Photos */}
+        <div className="space-y-2">
+          <p className="text-xs font-bold uppercase tracking-wider text-ink-muted">
+            Select {matrix.nonVisualOptionName}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {matrix.specOptions.map((specOpt) => {
+              const activeVal = activeVariant.options?.[matrix.nonVisualOptionName]
+              const selected = activeVal === specOpt.label
+              return (
+                <button
+                  key={specOpt.label}
+                  type="button"
+                  disabled={!specOpt.availableForColor && specOpt.stock <= 0}
+                  onClick={() => onSelectVariant(specOpt.variantIndex)}
+                  aria-pressed={selected}
+                  className={`rounded-md border px-3 py-2 text-left transition tabular-nums ${
+                    selected
+                      ? 'border-obsidian-900 bg-obsidian-900 text-gold-500 shadow-card'
+                      : 'border-chrome-300 bg-surface-card text-ink-primary hover:border-gold-500'
+                  } ${specOpt.stock <= 0 ? 'opacity-45 cursor-not-allowed' : ''}`}
+                >
+                  <span className="block font-display text-xs font-bold">{specOpt.label}</span>
+                  <span
+                    className={`block font-mono text-[11px] ${
+                      selected ? 'text-chrome-200' : 'text-ink-muted'
+                    }`}
+                  >
+                    {formatINR(specOpt.pricePaise)}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="space-y-2.5">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-xs">
-          <span className="font-bold uppercase tracking-wider text-ink-muted">
-            Configuration
-          </span>
-          <span className="font-semibold text-ink-primary">{activeVariant.title}</span>
-        </div>
-        <span className="font-mono text-[10.5px] text-ink-muted">
-          SKU {activeVariant.sku}
-        </span>
-      </div>
+    <div className="space-y-2">
+      <p className="text-xs font-bold uppercase tracking-wider text-ink-muted">
+        Select Configuration
+      </p>
 
       <div
         role="radiogroup"
@@ -87,9 +129,8 @@ export function ProductVariantSelector({
         {variants.map((variant, index) => {
           const isSelected = index === selectedVariantIdx
           const isAvailable = variant.stock > 0
-          const swatchClass = resolveColorSwatchClass(variant)
+          const previewSrc = getVariantPreviewImage(product, variant)
           const off = discountPercent(variant.mrp_paise, variant.price_paise)
-          const optionEntries = Object.entries(variant.options ?? {})
 
           return (
             <button
@@ -99,58 +140,43 @@ export function ProductVariantSelector({
               aria-checked={isSelected}
               disabled={!isAvailable}
               onClick={() => onSelectVariant(index)}
-              className={`group rounded-md border p-3 text-left transition flex items-center justify-between gap-3 ${
+              className={`rounded-md border p-2.5 text-left transition flex items-center justify-between gap-2.5 ${
                 isSelected
                   ? 'border-obsidian-900 bg-obsidian-900/5 ring-1 ring-obsidian-900 shadow-card'
                   : 'border-chrome-300 bg-surface-card hover:border-gold-500'
               } ${!isAvailable ? 'opacity-45 cursor-not-allowed' : 'cursor-pointer'}`}
             >
-              <div className="flex items-start gap-2.5 min-w-0">
-                {swatchClass ? (
-                  <span
-                    aria-hidden="true"
-                    className={`mt-1 w-3.5 h-3.5 rounded-full shrink-0 ${swatchClass} ${
-                      isSelected ? 'ring-2 ring-gold-500 ring-offset-1' : ''
-                    }`}
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="relative w-9 h-9 rounded-xs border border-chrome-200 bg-surface-card shrink-0 overflow-hidden">
+                  <Image
+                    src={previewSrc}
+                    alt={variant.title}
+                    fill
+                    sizes="36px"
+                    className="object-contain p-0.5"
                   />
-                ) : (
-                  <span
-                    className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center border shrink-0 ${
-                      isSelected
-                        ? 'border-obsidian-900 bg-obsidian-900 text-gold-500'
-                        : 'border-chrome-300 bg-surface-muted text-transparent'
-                    }`}
-                  >
-                    <Check className="w-2.5 h-2.5 stroke-[3]" />
-                  </span>
-                )}
+                </span>
 
-                <div className="min-w-0 space-y-0.5">
-                  <p className="font-display text-xs sm:text-[13px] font-bold text-ink-primary truncate">
-                    {variant.title}
-                  </p>
-                  {optionEntries.length > 0 && (
-                    <p className="text-[11px] text-ink-muted truncate">
-                      {optionEntries.map(([k, v]) => `${k}: ${v}`).join(' · ')}
-                    </p>
-                  )}
-                </div>
+                <span className="font-display text-xs sm:text-[13px] font-bold text-ink-primary line-clamp-2 leading-snug">
+                  {variant.title}
+                </span>
               </div>
 
               <div className="text-right shrink-0 tabular-nums space-y-0.5">
                 <p className="font-display text-xs sm:text-sm font-bold text-ink-primary">
                   {formatINR(variant.price_paise)}
                 </p>
-                <div className="flex items-center justify-end gap-1">
-                  {off > 0 && (
-                    <span className="font-mono text-[10px] font-bold text-commerce-savings">
+                {isAvailable ? (
+                  off > 0 && (
+                    <span className="block font-mono text-[10px] font-bold text-commerce-savings">
                       -{off}%
                     </span>
-                  )}
-                  <span className="font-mono text-[10px] text-ink-muted">
-                    {isAvailable ? `${variant.stock} left` : 'Out'}
+                  )
+                ) : (
+                  <span className="block font-mono text-[10px] text-commerce-errorText">
+                    Out of stock
                   </span>
-                </div>
+                )}
               </div>
             </button>
           )

@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import {
   ALL_PRODUCTS,
+  fetchLiveProductByHandle,
   getCategoryByHandle,
   getProductByHandle,
   getProductsByCategory,
@@ -35,7 +36,7 @@ export default async function ProductPage({
   params: Promise<{ handle: string }>
 }) {
   const { handle } = await params
-  const product = getProductByHandle(handle)
+  const product = await fetchLiveProductByHandle(handle)
   if (!product) notFound()
 
   const category = getCategoryByHandle(product.category_handle)

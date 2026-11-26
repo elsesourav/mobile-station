@@ -29,26 +29,38 @@ function AccordionCard({
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="w-full flex items-center justify-between gap-3 px-4 py-3.5 bg-obsidian-900 text-ink-inverse hover:bg-obsidian-800 transition text-left"
+        className="w-full flex items-center justify-between gap-3 px-4 py-3.5 bg-obsidian-900 text-ink-inverse hover:bg-obsidian-800 transition-colors text-left"
       >
         <span className="flex items-center gap-2.5 text-sm font-display font-bold tracking-tight">
           <span className="text-gold-500 shrink-0">{icon}</span>
           <span>{title}</span>
         </span>
         <ChevronDown
-          className={`w-4 h-4 text-gold-500 shrink-0 transition-transform duration-200 ${
+          className={`w-4 h-4 text-gold-500 shrink-0 transition-transform duration-300 ease-out ${
             open ? 'rotate-180' : 'rotate-0'
           }`}
         />
       </button>
 
-      {open && <div className="p-4 sm:p-5">{children}</div>}
+      {/* Smooth 60fps CSS Grid height + opacity collapse */}
+      <div
+        aria-hidden={!open}
+        inert={!open}
+        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+        }`}
+      >
+        <div className="overflow-hidden min-h-0">
+          <div className="p-4 sm:p-5">{children}</div>
+        </div>
+      </div>
     </div>
   )
 }
 
 /**
- * Organized collapsible sections for Technical Specifications and Retail Box Contents + Overview.
+ * Organized collapsible sections with smooth CSS height transitions
+ * for Technical Specifications and Overview / Retail Box Contents.
  */
 export function ProductSpecsAccordion({
   product,
@@ -90,7 +102,7 @@ export function ProductSpecsAccordion({
 
           <div className="border-t border-chrome-200/80 pt-3.5 space-y-2.5">
             <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-ink-muted">
-              Included in Sealed Retail Box
+              Included in Retail Box
             </p>
             <ul className="grid sm:grid-cols-2 gap-2 text-xs text-ink-secondary">
               {product.metadata.in_the_box.map((boxItem) => (

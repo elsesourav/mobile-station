@@ -9,6 +9,11 @@ export default defineMiddlewares({
       methods: ['POST'],
       bodyParser: { sizeLimit: '50mb' },
     },
+    {
+      matcher: '/admin/products/*/electronics',
+      methods: ['POST'],
+      bodyParser: { sizeLimit: '15mb' },
+    },
   ],
   errorHandler: async (
     err: Error & { status?: number; statusCode?: number },

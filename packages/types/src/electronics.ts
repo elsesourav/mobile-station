@@ -30,6 +30,9 @@ export interface ElectronicsComplianceMetadata {
   model_number: string
   hsn_code: string
   gst_rate_percent: 18 | 28 | 12 | 5
+  gst_invoice_available?: boolean
+  b2b_gst_available?: boolean
+  color_images?: Record<string, string[]>
   warranty_months: number
   warranty_type: WarrantyType
   warranty_summary: string

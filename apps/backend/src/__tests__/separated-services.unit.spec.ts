@@ -5,6 +5,7 @@ import {
   MAX_SHOWCASE_VIDEO_BYTES,
 } from '../modules/showcase/cloudinary-media'
 import { validateProductionConfig } from '../../medusa-config'
+import { electronicsMetadataSchema } from '@mobile-station/types'
 
 describe('Mobile Station separated storage & security guards', () => {
   it('blocks PDF invoice uploads to CloudinaryImageService', async () => {
@@ -88,5 +89,28 @@ describe('Mobile Station separated storage & security guards', () => {
     })
     expect(urls.media_url).toContain('/video/upload/q_auto:good,f_auto/')
     expect(urls.thumbnail_url).toContain('/video/upload/so_1,f_jpg,q_auto:good,w_900,c_limit/')
+  })
+
+  it('validates seller-controlled GST flags and per-color images in electronics metadata schema', () => {
+    const valid = electronicsMetadataSchema.parse({
+      category_type: 'smartphones',
+      brand: 'Apple',
+      model_number: 'MYEC3HN/A',
+      hsn_code: '8517',
+      gst_rate_percent: 18,
+      gst_invoice_available: true,
+      b2b_gst_available: false,
+      color_images: {
+        Ultramarine: ['https://res.cloudinary.com/ekbuxdbd/image/upload/v1/mobile-station/ultramarine.webp'],
+      },
+      warranty_months: 12,
+      warranty_type: 'brand_authorized',
+      warranty_summary: '1 Year Apple Warranty',
+      in_the_box: ['iPhone 16', 'USB-C Cable'],
+    })
+
+    expect(valid.gst_invoice_available).toBe(true)
+    expect(valid.b2b_gst_available).toBe(false)
+    expect(valid.color_images?.Ultramarine).toHaveLength(1)
   })
 })

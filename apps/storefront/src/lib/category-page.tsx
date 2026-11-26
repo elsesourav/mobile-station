@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation'
 import type { ElectronicsRootCategory, StorefrontCategory, StorefrontProduct } from '@mobile-station/types'
 import {
   ALL_BRANDS,
+  fetchLiveCatalogProducts,
   getCategoryByHandle,
-  getProductsByCategory,
   sortProductsByRecency,
 } from '@/lib/catalog'
 import { getCategoryExperienceProfile } from '@/lib/category-experience'
@@ -19,11 +19,14 @@ export function buildCategoryMetadata(handle: ElectronicsRootCategory): Metadata
   }
 }
 
-export function renderCategoryRoutePage(handle: ElectronicsRootCategory) {
+export async function renderCategoryRoutePage(handle: ElectronicsRootCategory) {
   const category = getCategoryByHandle(handle)
   if (!category) notFound()
 
-  const products = sortProductsByRecency(getProductsByCategory(category.handle))
+  const catalogProducts = await fetchLiveCatalogProducts()
+  const products = sortProductsByRecency(
+    catalogProducts.filter((product) => product.category_handle === category.handle)
+  )
   const experience = getCategoryExperienceProfile(category.handle)
 
   const pairingCategories: StorefrontCategory[] = experience.pairingCategoryHandles
@@ -32,7 +35,9 @@ export function renderCategoryRoutePage(handle: ElectronicsRootCategory) {
 
   const pairingProducts: StorefrontProduct[] = []
   for (const pairingCat of pairingCategories) {
-    const items = sortProductsByRecency(getProductsByCategory(pairingCat.handle)).slice(0, 2)
+    const items = sortProductsByRecency(
+      catalogProducts.filter((product) => product.category_handle === pairingCat.handle)
+    ).slice(0, 2)
     for (const item of items) {
       if (pairingProducts.length < 5) {
         pairingProducts.push(item)

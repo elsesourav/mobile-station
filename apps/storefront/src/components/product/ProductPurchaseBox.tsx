@@ -27,6 +27,7 @@ import { ProductVariantSelector } from '@/components/product/ProductVariantSelec
 
 interface ProductPurchaseBoxProps {
   product: StorefrontProduct
+  activeTitle: string
   activeVariant: StorefrontVariant
   selectedVariantIdx: number
   onSelectVariant: (variantIndex: number) => void
@@ -39,12 +40,13 @@ interface ProductPurchaseBoxProps {
   pincode: string
   onChangePincode: (nextPincode: string) => void
   onCheckPincode: () => void
-  deliveryInfo: DeliveryServiceabilityResult
+  deliveryInfo: DeliveryServiceabilityResult | null
   onAddToCart: () => void
 }
 
 export function ProductPurchaseBox({
   product,
+  activeTitle,
   activeVariant,
   selectedVariantIdx,
   onSelectVariant,
@@ -67,6 +69,10 @@ export function ProductPurchaseBox({
   const off = discountPercent(activeVariant.mrp_paise, activeVariant.price_paise)
   const isAvailable = activeVariant.stock > 0
 
+  // GST & B2B UI details render ONLY when enabled on the product in the backend admin portal
+  const showGstBadge = product.metadata.gst_invoice_available === true
+  const showB2bGstSplit = showGstBadge && product.metadata.b2b_gst_available === true
+
   const handleCopyOffer = async (code: string) => {
     try {
       await navigator.clipboard.writeText(code)
@@ -79,24 +85,19 @@ export function ProductPurchaseBox({
 
   return (
     <div className="space-y-5">
-      {/* Desktop Product Header (Mobile renders above gallery) */}
+      {/* Clean Desktop Header without duplicate Model/HSN clutter */}
       <div className="hidden lg:block space-y-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full bg-obsidian-900 px-3 py-0.5 font-mono text-[10.5px] font-semibold uppercase tracking-wider text-gold-500">
-            {product.metadata.brand} Official
-          </span>
-          <span className="font-mono text-xs text-ink-muted">
-            Model {product.metadata.model_number} · HSN {product.metadata.hsn_code}
-          </span>
-        </div>
+        <span className="inline-block rounded-full bg-obsidian-900 px-3 py-0.5 font-mono text-[10.5px] font-semibold uppercase tracking-wider text-gold-500">
+          {product.metadata.brand}
+        </span>
         <h1 className="text-2xl xl:text-3xl font-display font-bold text-ink-primary leading-tight">
-          {product.title}
+          {activeTitle}
         </h1>
         <p className="text-sm text-ink-secondary">{product.subtitle}</p>
       </div>
 
-      {/* Pricing & Concise 18% GST Disclosure Card */}
-      <div className="rounded-md border border-chrome-200 bg-surface-card p-4 space-y-2.5 shadow-card">
+      {/* Pricing Card (GST shown strictly when backend metadata enables it) */}
+      <div className="rounded-md border border-chrome-200 bg-surface-card p-4 space-y-2 shadow-card">
         <div className="flex flex-wrap items-baseline gap-2.5 tabular-nums">
           <span className="font-display text-2xl sm:text-3xl font-bold text-ink-primary">
             {formatINR(activeVariant.price_paise)}
@@ -113,30 +114,40 @@ export function ProductPurchaseBox({
           )}
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-          <span className="text-ink-muted">
-            Inclusive of {product.metadata.gst_rate_percent}% GST
-            {product.metadata.emi_eligible && (
-              <strong className="ml-2 text-commerce-savings font-semibold">
-                · No-Cost EMI {monthlyEmiPreview(activeVariant.price_paise)}/mo
-              </strong>
+        {(product.metadata.emi_eligible || showGstBadge || showB2bGstSplit) && (
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs pt-0.5">
+            <span className="text-ink-muted">
+              {product.metadata.emi_eligible && (
+                <strong className="text-commerce-savings font-semibold">
+                  No-Cost EMI from {monthlyEmiPreview(activeVariant.price_paise)}/mo
+                </strong>
+              )}
+              {showGstBadge && (
+                <span className={product.metadata.emi_eligible ? 'ml-2' : ''}>
+                  · {product.metadata.gst_rate_percent}% GST Invoice Available
+                </span>
+              )}
+            </span>
+
+            {showB2bGstSplit && (
+              <button
+                type="button"
+                onClick={() => setShowGstDetails((v) => !v)}
+                className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold text-gold-700 hover:underline"
+              >
+                <Receipt className="w-3.5 h-3.5" />
+                <span>B2B GST Split</span>
+                <ChevronDown
+                  className={`w-3 h-3 transition-transform duration-200 ${
+                    showGstDetails ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
             )}
-          </span>
+          </div>
+        )}
 
-          <button
-            type="button"
-            onClick={() => setShowGstDetails((v) => !v)}
-            className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold text-gold-700 hover:underline"
-          >
-            <Receipt className="w-3.5 h-3.5" />
-            <span>B2B GST Split</span>
-            <ChevronDown
-              className={`w-3 h-3 transition-transform ${showGstDetails ? 'rotate-180' : ''}`}
-            />
-          </button>
-        </div>
-
-        {showGstDetails && (
+        {showB2bGstSplit && showGstDetails && (
           <div className="rounded-xs bg-surface-muted p-3 text-xs space-y-1.5 border border-chrome-200">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="font-semibold text-ink-primary">
@@ -147,32 +158,32 @@ export function ProductPurchaseBox({
                 onClick={onToggleGstMode}
                 className="font-mono text-[10.5px] font-semibold text-gold-700 hover:underline"
               >
-                Switch to {intraStateGst ? 'Inter-State IGST' : 'Bihar Intra-State CGST+SGST'}
+                Switch to {intraStateGst ? 'Inter-State IGST' : 'Intra-State CGST+SGST'}
               </button>
             </div>
             <div className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] text-ink-secondary tabular-nums">
               <span>Taxable: {formatINR(gstBreakdown.taxablePaise)}</span>
               {intraStateGst ? (
                 <>
-                  <span>CGST 9%: {formatINR(gstBreakdown.cgstPaise)}</span>
-                  <span>SGST 9%: {formatINR(gstBreakdown.sgstPaise)}</span>
+                  <span>CGST {(product.metadata.gst_rate_percent / 2).toFixed(0)}%: {formatINR(gstBreakdown.cgstPaise)}</span>
+                  <span>SGST {(product.metadata.gst_rate_percent / 2).toFixed(0)}%: {formatINR(gstBreakdown.sgstPaise)}</span>
                 </>
               ) : (
-                <span>IGST 18%: {formatINR(gstBreakdown.igstPaise)}</span>
+                <span>IGST {product.metadata.gst_rate_percent}%: {formatINR(gstBreakdown.igstPaise)}</span>
               )}
             </div>
           </div>
         )}
       </div>
 
-      {/* Organized Configuration Selector */}
+      {/* Color Thumbnail Cards + Configuration Options */}
       <ProductVariantSelector
-        variants={product.variants}
+        product={product}
         selectedVariantIdx={selectedVariantIdx}
         onSelectVariant={onSelectVariant}
       />
 
-      {/* Quantity Stepper + Primary Add to Cart Console */}
+      {/* Quantity Stepper + Primary Add to Cart CTA */}
       <div className="flex items-stretch gap-2 sm:gap-3 pt-1 min-w-0">
         <div
           aria-label="Select quantity"
@@ -216,7 +227,7 @@ export function ProductPurchaseBox({
         </button>
       </div>
 
-      {/* Compact Active Store Offers Carousel */}
+      {/* Compact Offers Strip */}
       {offers.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-center justify-between gap-2 text-xs">
@@ -259,11 +270,17 @@ export function ProductPurchaseBox({
         </div>
       )}
 
-      {/* Pincode Serviceability Checker */}
-      <div className="rounded-md border border-chrome-200 bg-surface-card p-3.5 space-y-2.5 shadow-card">
+      {/* Real Pincode Serviceability Check (No Default Fake PIN Pre-filled) */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          onCheckPincode()
+        }}
+        className="rounded-md border border-chrome-200 bg-surface-card p-3.5 space-y-2.5 shadow-card"
+      >
         <div className="flex items-center gap-2 text-xs font-bold text-ink-primary">
           <Truck className="h-4 w-4 text-gold-700 shrink-0" />
-          <span>Delivery &amp; Muzaffarpur Hub Pickup Check</span>
+          <span>Check Delivery Availability</span>
         </div>
         <div className="flex gap-2">
           <input
@@ -273,33 +290,34 @@ export function ProductPurchaseBox({
             value={pincode}
             onChange={(e) => onChangePincode(e.target.value)}
             aria-label="Enter 6-digit Indian PIN code"
-            placeholder="PIN (e.g. 842001)"
-            className="flex-1 min-w-0 rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 font-mono text-xs text-ink-primary focus:border-gold-500 focus:outline-none"
+            placeholder="Enter 6-digit PIN code"
+            className="flex-1 min-w-0 rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 font-mono text-xs text-ink-primary placeholder:font-sans placeholder:text-ink-muted focus:border-gold-500 focus:outline-none"
           />
           <button
-            type="button"
-            onClick={onCheckPincode}
+            type="submit"
             className="rounded-sm bg-obsidian-900 px-4 py-2 text-xs font-semibold text-ink-inverse hover:bg-obsidian-700 transition shrink-0"
           >
             Check
           </button>
         </div>
-        <div
-          className={`flex items-start gap-2 text-xs rounded-xs p-2.5 ${
-            deliveryInfo.valid
-              ? 'bg-commerce-obdBg text-commerce-obdText'
-              : 'bg-commerce-errorBg text-commerce-errorText'
-          }`}
-        >
-          <MapPin className="h-4 w-4 shrink-0 mt-0.5" />
-          <div>
-            <p className="font-semibold">{deliveryInfo.label}</p>
-            {deliveryInfo.eta && <p className="text-[11px] mt-0.5">{deliveryInfo.eta}</p>}
+        {deliveryInfo && (
+          <div
+            className={`flex items-start gap-2 text-xs rounded-xs p-2.5 ${
+              deliveryInfo.valid
+                ? 'bg-commerce-obdBg text-commerce-obdText'
+                : 'bg-commerce-errorBg text-commerce-errorText'
+            }`}
+          >
+            <MapPin className="h-4 w-4 shrink-0 mt-0.5" />
+            <div>
+              <p className="font-semibold">{deliveryInfo.label}</p>
+              {deliveryInfo.eta && <p className="text-[11px] mt-0.5">{deliveryInfo.eta}</p>}
+            </div>
           </div>
-        </div>
-      </div>
+        )}
+      </form>
 
-      {/* Compact Trust Badges */}
+      {/* Compact Warranty & Open-Box Badges */}
       <div className="flex flex-wrap gap-2">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-commerce-warrantyBg px-3 py-1 text-xs font-semibold text-commerce-warrantyText">
           <ShieldCheck className="h-3.5 w-3.5" />

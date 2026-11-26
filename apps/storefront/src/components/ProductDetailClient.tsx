@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Check, MapPin, Share2 } from 'lucide-react'
+import { ArrowLeft, Check, Share2 } from 'lucide-react'
 import type {
+  DeliveryServiceabilityResult,
   ShowcaseEntryDTO,
   StorefrontCategory,
   StorefrontProduct,
@@ -17,6 +18,11 @@ import {
 import { discountPercent } from '@/lib/format'
 import { buildProductGallerySlides } from '@/lib/product-gallery'
 import { buildVariantSpecificationRows } from '@/lib/product-specs'
+import {
+  buildActiveVariantProductTitle,
+  getVariantPreviewImage,
+  getVariantVisualKey,
+} from '@/lib/product-variants'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
 import { ProductGallery } from '@/components/product/ProductGallery'
 import { ProductPurchaseBox } from '@/components/product/ProductPurchaseBox'
@@ -40,8 +46,8 @@ export function ProductDetailClient({
 }: ProductDetailClientProps) {
   const [selectedVariantIdx, setSelectedVariantIdx] = useState(0)
   const [quantity, setQuantity] = useState(1)
-  const [pincode, setPincode] = useState('842001')
-  const [deliveryInfo, setDeliveryInfo] = useState(() => checkDeliveryServiceability('842001'))
+  const [pincode, setPincode] = useState('')
+  const [deliveryInfo, setDeliveryInfo] = useState<DeliveryServiceabilityResult | null>(null)
   const [intraStateGst, setIntraStateGst] = useState(true)
   const [shareCopied, setShareCopied] = useState(false)
 
@@ -54,6 +60,7 @@ export function ProductDetailClient({
   }, [product, trackProductView])
 
   const activeVariant = product.variants[selectedVariantIdx] ?? product.variants[0]
+  const activeTitle = buildActiveVariantProductTitle(product, activeVariant)
   const discountPct = discountPercent(activeVariant.mrp_paise, activeVariant.price_paise)
   const gstBreakdown = computeGstSplit(
     activeVariant.price_paise,
@@ -62,9 +69,10 @@ export function ProductDetailClient({
   )
   const specificationRows = buildVariantSpecificationRows(product.metadata.specs, activeVariant)
 
+  const visualKey = getVariantVisualKey(product, activeVariant)
   const gallerySlides = useMemo(
-    () => buildProductGallerySlides(product, category, productShowcase),
-    [product, category, productShowcase]
+    () => buildProductGallerySlides(product, activeVariant),
+    [product, activeVariant]
   )
 
   const handleVariantChange = (nextIdx: number) => {
@@ -72,6 +80,13 @@ export function ProductDetailClient({
     const nextVariant = product.variants[nextIdx]
     if (nextVariant && quantity > nextVariant.stock) {
       setQuantity(Math.max(1, nextVariant.stock))
+    }
+  }
+
+  const handlePincodeChange = (nextValue: string) => {
+    setPincode(nextValue)
+    if (!nextValue.trim()) {
+      setDeliveryInfo(null)
     }
   }
 
@@ -84,7 +99,7 @@ export function ProductDetailClient({
       brand: product.metadata.brand,
       price_paise: activeVariant.price_paise,
       mrp_paise: activeVariant.mrp_paise,
-      thumbnail: product.thumbnail,
+      thumbnail: getVariantPreviewImage(product, activeVariant),
       requires_open_box_delivery: product.metadata.requires_open_box_delivery,
     })
     if (quantity > 1) {
@@ -98,10 +113,10 @@ export function ProductDetailClient({
     const shareUrl = window.location.href
     if (typeof navigator !== 'undefined' && navigator.share) {
       try {
-        await navigator.share({ title: product.title, url: shareUrl })
+        await navigator.share({ title: activeTitle, url: shareUrl })
         return
       } catch {
-        // Fallback cleanly to copy link
+        // Fallback to clipboard copy
       }
     }
     try {
@@ -109,14 +124,14 @@ export function ProductDetailClient({
       setShareCopied(true)
       window.setTimeout(() => setShareCopied(false), 2000)
     } catch {
-      // Ignore clipboard failures
+      // Ignore clipboard permission failures
     }
   }
 
   return (
     <StorefrontChrome activeCategoryHandle={product.category_handle}>
       <div className="page-container py-5 sm:py-8 space-y-10">
-        {/* Top Breadcrumb & Quick Share */}
+        {/* Clean Breadcrumb & Share Action */}
         <div className="flex items-center justify-between gap-3">
           <nav
             aria-label="Breadcrumb"
@@ -135,7 +150,7 @@ export function ProductDetailClient({
                 <span>/</span>
               </>
             )}
-            <span className="text-ink-primary font-medium truncate">{product.title}</span>
+            <span className="text-ink-primary font-medium truncate">{activeTitle}</span>
           </nav>
 
           <button
@@ -160,47 +175,32 @@ export function ProductDetailClient({
 
         {/* Mobile/Tablet Title Above Gallery */}
         <div className="lg:hidden space-y-1.5">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-obsidian-900 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-gold-500">
-              {product.metadata.brand}
-            </span>
-            <span className="font-mono text-[11px] text-ink-muted">
-              {product.metadata.model_number} · HSN {product.metadata.hsn_code}
-            </span>
-          </div>
+          <span className="inline-block rounded-full bg-obsidian-900 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-gold-500">
+            {product.metadata.brand}
+          </span>
           <h1 className="text-xl sm:text-2xl font-display font-bold text-ink-primary leading-tight">
-            {product.title}
+            {activeTitle}
           </h1>
           <p className="text-xs sm:text-sm text-ink-secondary">{product.subtitle}</p>
         </div>
 
-        {/* 2-Column Sticky Gallery + Right Organized Purchase & Spec Flow */}
+        {/* 2-Column Sticky Gallery + Clean Right Purchase & Specs Console */}
         <section className="grid lg:grid-cols-12 gap-6 lg:gap-9 items-start">
-          <div className="lg:col-span-5 lg:sticky lg:top-[128px] self-start space-y-3">
+          <div className="lg:col-span-5 lg:sticky lg:top-[128px] self-start">
             <ProductGallery
-              title={product.title}
+              title={activeTitle}
               slides={gallerySlides}
+              visualKey={visualKey}
               discountPercent={discountPct}
               stockCount={activeVariant.stock}
               lowStockThreshold={product.metadata.stock_details?.low_stock_threshold}
             />
-
-            <div className="rounded-md border border-chrome-200 bg-surface-card px-3.5 py-2.5 flex items-center justify-between gap-2 text-xs">
-              <span className="inline-flex items-center gap-1.5 text-ink-secondary truncate">
-                <MapPin className="w-3.5 h-3.5 text-gold-700 shrink-0" />
-                <span className="truncate">
-                  {product.metadata.stock_details?.warehouse_hub ?? 'Muzaffarpur Flagship Hub (842001)'}
-                </span>
-              </span>
-              <span className="font-mono text-[10.5px] font-semibold text-gold-700 shrink-0">
-                {product.metadata.stock_details?.warehouse_bin ?? 'MZP-MAIN-01'}
-              </span>
-            </div>
           </div>
 
           <div className="lg:col-span-7 space-y-6 min-w-0">
             <ProductPurchaseBox
               product={product}
+              activeTitle={activeTitle}
               activeVariant={activeVariant}
               selectedVariantIdx={selectedVariantIdx}
               onSelectVariant={handleVariantChange}
@@ -211,7 +211,7 @@ export function ProductDetailClient({
               intraStateGst={intraStateGst}
               onToggleGstMode={() => setIntraStateGst((intra) => !intra)}
               pincode={pincode}
-              onChangePincode={setPincode}
+              onChangePincode={handlePincodeChange}
               onCheckPincode={() => setDeliveryInfo(checkDeliveryServiceability(pincode))}
               deliveryInfo={deliveryInfo}
               onAddToCart={handleAddToCart}
@@ -228,12 +228,12 @@ export function ProductDetailClient({
           <div className="rounded-lg border border-chrome-200 bg-surface-muted/40 overflow-hidden">
             <ShowcaseSpotlightSection
               title={`Customer Proof for ${product.title}`}
-              subtitle="Verified buyer unboxings and Muzaffarpur / Pan-India impressions."
-              badgeLabel="Customer Video & Buyer Proof"
+              subtitle="Verified buyer reviews and unboxing moments."
+              badgeLabel="Verified Customer Proof"
               badgeKind="feedback"
               items={productShowcase}
               primaryHref="/feedback"
-              primaryLabel="View All Video Reviews"
+              primaryLabel="View All Reviews"
             />
           </div>
         )}
