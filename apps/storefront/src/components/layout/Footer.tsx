@@ -93,7 +93,7 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
               <ul className="space-y-2 text-[13px] text-chrome-300">
                 <li>
                   <Link
-                    href="/categories/smartphones"
+                    href="/smartphones"
                     className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
                   >
                     <SmartphonesIcon className="w-4 h-4 text-gold-500 shrink-0" />
@@ -102,7 +102,7 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
                 </li>
                 <li>
                   <Link
-                    href="/categories/tablets"
+                    href="/tablets"
                     className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
                   >
                     <TabletsIcon className="w-4 h-4 text-gold-500 shrink-0" />
@@ -111,7 +111,7 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
                 </li>
                 <li>
                   <Link
-                    href="/categories/laptops"
+                    href="/laptops"
                     className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
                   >
                     <LaptopsIcon className="w-4 h-4 text-gold-500 shrink-0" />
@@ -120,7 +120,7 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
                 </li>
                 <li>
                   <Link
-                    href="/categories/audio"
+                    href="/audio"
                     className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
                   >
                     <AudioIcon className="w-4 h-4 text-gold-500 shrink-0" />
@@ -129,7 +129,7 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
                 </li>
                 <li>
                   <Link
-                    href="/categories/keyboards-mice"
+                    href="/keyboards-mice"
                     className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
                   >
                     <KeyboardsMiceIcon className="w-4 h-4 text-gold-500 shrink-0" />
@@ -138,7 +138,7 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
                 </li>
                 <li>
                   <Link
-                    href="/categories/power-charging"
+                    href="/power-charging"
                     className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
                   >
                     <PowerGaNIcon className="w-4 h-4 text-gold-500 shrink-0" />
@@ -147,7 +147,7 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
                 </li>
                 <li>
                   <Link
-                    href="/categories/accessories-storage"
+                    href="/accessories-storage"
                     className="inline-flex items-center gap-2 hover:text-gold-500 transition-colors"
                   >
                     <CasesWatchIcon className="w-4 h-4 text-gold-500 shrink-0" />
@@ -252,28 +252,28 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
                 </h4>
                 <div className="flex flex-col space-y-1.5 text-[11.5px] text-chrome-300 pt-0.5">
                   <Link
-                    href="/categories/smartphones"
+                    href="/smartphones"
                     className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
                   >
                     <SmartphonesIcon className="w-3.5 h-3.5 text-gold-500 shrink-0" />
                     <span>5G Smartphones</span>
                   </Link>
                   <Link
-                    href="/categories/laptops"
+                    href="/laptops"
                     className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
                   >
                     <LaptopsIcon className="w-3.5 h-3.5 text-gold-500 shrink-0" />
                     <span>Laptops &amp; Monitors</span>
                   </Link>
                   <Link
-                    href="/categories/audio"
+                    href="/audio"
                     className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
                   >
                     <AudioIcon className="w-3.5 h-3.5 text-gold-500 shrink-0" />
                     <span>Audio &amp; TWS</span>
                   </Link>
                   <Link
-                    href="/categories/keyboards-mice"
+                    href="/keyboards-mice"
                     className="inline-flex items-center gap-1.5 hover:text-gold-500 transition-colors"
                   >
                     <KeyboardsMiceIcon className="w-3.5 h-3.5 text-gold-500 shrink-0" />

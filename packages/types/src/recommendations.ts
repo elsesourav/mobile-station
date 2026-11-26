@@ -99,5 +99,4 @@ export interface BehaviorContextValue {
     categoryHandle?: string
   }) => void
   trackPurchase: (productHandles: string[]) => void
-  clearBehaviorHistory: () => void
 }

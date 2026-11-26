@@ -29,6 +29,11 @@ export function getProductByHandle(handle: string): StorefrontProduct | undefine
   return ALL_PRODUCTS.find((product) => product.handle === handle)
 }
 
+export function getCategoryRoute(handle: string): string {
+  const cleanHandle = handle.trim().replace(/^\/+/, '')
+  return cleanHandle ? `/${cleanHandle}` : '/'
+}
+
 export function getCategoryByHandle(handle: string): StorefrontCategory | undefined {
   return ALL_CATEGORIES.find((category) => category.handle === handle)
 }

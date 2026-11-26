@@ -1,12 +1,10 @@
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import {
-  ALL_BRANDS,
   ALL_CATEGORIES,
   getCategoryByHandle,
-  getProductsByCategory,
+  getCategoryRoute,
 } from '@/lib/catalog'
-import { CategoryPageClient } from '@/components/CategoryPageClient'
 
 export function generateStaticParams() {
   return ALL_CATEGORIES.map((c) => ({ handle: c.handle }))
@@ -26,7 +24,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function CategoryPage({
+export default async function LegacyCategoryRedirectPage({
   params,
 }: {
   params: Promise<{ handle: string }>
@@ -34,7 +32,5 @@ export default async function CategoryPage({
   const { handle } = await params
   const category = getCategoryByHandle(handle)
   if (!category) notFound()
-
-  const products = getProductsByCategory(category.handle)
-  return <CategoryPageClient category={category} products={products} brands={ALL_BRANDS} />
+  permanentRedirect(getCategoryRoute(category.handle))
 }

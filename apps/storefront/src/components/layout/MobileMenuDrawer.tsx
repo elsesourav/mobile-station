@@ -14,7 +14,7 @@ import {
   X,
 } from 'lucide-react'
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
-import { ALL_CATEGORIES } from '@/lib/catalog'
+import { ALL_CATEGORIES, getCategoryRoute } from '@/lib/catalog'
 import { CategoryIcon } from '@/components/icons/CategoryIcons'
 import type { MobileMenuDrawerProps } from '@/types/storefront'
 
@@ -123,7 +123,7 @@ export function MobileMenuDrawer({
                 return (
                   <li key={category.id}>
                     <Link
-                      href={`/categories/${category.handle}`}
+                      href={getCategoryRoute(category.handle)}
                       onClick={onClose}
                       className={`flex items-center justify-between px-3 py-2.5 rounded-sm text-sm font-medium transition ${
                         isActive

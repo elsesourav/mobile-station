@@ -11,7 +11,6 @@ import type {
 import { ALL_PRODUCTS } from '@/lib/catalog'
 import {
   buildBehaviorProfile,
-  clearStoredBehaviorEvents,
   loadBehaviorEvents,
   MAX_STORED_EVENTS,
   saveBehaviorEvents,
@@ -163,11 +162,6 @@ export function BehaviorProvider({ children }: { children: React.ReactNode }) {
     [productsByHandle, recordEvent]
   )
 
-  const clearBehaviorHistory = useCallback(() => {
-    setEvents([])
-    clearStoredBehaviorEvents()
-  }, [])
-
   const profile = useMemo(
     () => buildBehaviorProfile(events, productsByHandle),
     [events, productsByHandle]
@@ -183,7 +177,6 @@ export function BehaviorProvider({ children }: { children: React.ReactNode }) {
         trackSearchQuery,
         trackCartAdd,
         trackPurchase,
-        clearBehaviorHistory,
       }}
     >
       {children}

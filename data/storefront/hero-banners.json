@@ -2,7 +2,7 @@
   {
     "id": "hero_flagship_mobiles",
     "alt": "Flagship 5G Smartphones",
-    "cta_route": "/categories/smartphones",
+    "cta_route": "/smartphones",
     "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553698/mobile-station/banners/hero_flagship_mobiles.jpg",
     "display_order": 1,
     "is_active": true
@@ -10,7 +10,7 @@
   {
     "id": "hero_laptops_workstation",
     "alt": "Laptops & Workstations",
-    "cta_route": "/categories/laptops",
+    "cta_route": "/laptops",
     "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553700/mobile-station/banners/hero_laptops_workstation.jpg",
     "display_order": 2,
     "is_active": true
@@ -18,7 +18,7 @@
   {
     "id": "hero_peripherals_audio",
     "alt": "Mechanical Keyboards & ANC Audio",
-    "cta_route": "/categories/keyboards-mice",
+    "cta_route": "/keyboards-mice",
     "image_url": "https://res.cloudinary.com/ekbuxdbd/image/upload/v1795553702/mobile-station/banners/hero_peripherals_audio.jpg",
     "display_order": 3,
     "is_active": true

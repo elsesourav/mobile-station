@@ -1,34 +1,43 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { ArrowLeft, Box, CheckCircle2, ShieldCheck } from 'lucide-react'
 import { useOptionalBehavior } from '@/context/BehaviorContext'
-import type {
-  StorefrontBrand,
-  StorefrontCategory,
-  StorefrontProduct,
-} from '@mobile-station/types'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
-import { ProductCard } from '@/components/ProductCard'
+import { CategoryHeroSection } from '@/components/category/CategoryHeroSection'
+import { CategoryProductWorkspace } from '@/components/category/CategoryProductWorkspace'
+import {
+  applyCategoryQuickPreset,
+  buildActiveFilterChips,
+  DEFAULT_CATEGORY_FILTER_STATE,
+  extractCategoryBrandOptions,
+  extractCategoryFacetGroups,
+  filterAndSortCategoryProducts,
+  getEffectiveProductPricePaise,
+} from '@/lib/category-filters'
+import type {
+  CategoryActiveFilterChip,
+  CategoryFilterState,
+  CategoryPageViewProps,
+  CategoryQuickPreset,
+  CategorySortOption,
+} from '@/types/category'
 
-const TRACKING_DESC: Record<string, string> = {
-  imei_serialized: 'IMEI Serialized · Insured Open-Box Check',
-  serial_tracked: 'Serial Number Verified at Dispatch',
-  sku_quantity: 'Ready Stock at Muzaffarpur Flagship & Club Road Hubs',
+function toggleValue(list: readonly string[], item: string): string[] {
+  return list.includes(item) ? list.filter((x) => x !== item) : [...list, item]
 }
 
-interface CategoryPageClientProps {
-  category: StorefrontCategory
-  products: StorefrontProduct[]
-  brands: StorefrontBrand[]
-}
-
-export function CategoryPageClient({ category, products, brands }: CategoryPageClientProps) {
-  const [selectedSub, setSelectedSub] = useState<string>('all')
-  const [selectedBrand, setSelectedBrand] = useState<string>('all')
-  const [searchQuery, setSearchQuery] = useState('')
+export function CategoryPageClient({
+  category,
+  products,
+  brands,
+  experience,
+  pairingCategories,
+  pairingProducts,
+}: CategoryPageViewProps) {
+  const [filterState, setFilterState] = useState<CategoryFilterState>(
+    DEFAULT_CATEGORY_FILTER_STATE
+  )
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
   const behavior = useOptionalBehavior()
   const trackCategoryBrowse = behavior?.trackCategoryBrowse
 
@@ -36,200 +45,173 @@ export function CategoryPageClient({ category, products, brands }: CategoryPageC
     trackCategoryBrowse?.(category.handle)
   }, [category.handle, trackCategoryBrowse])
 
-  const subScopedProducts = useMemo(() => {
-    if (selectedSub === 'all') return products
-    return products.filter((p) => p.subcategory_handle === selectedSub)
-  }, [products, selectedSub])
+  const brandOptions = useMemo(
+    () => extractCategoryBrandOptions(products, brands),
+    [products, brands]
+  )
 
-  const availableBrands = useMemo(() => {
-    const counts = new Map<string, { name: string; count: number }>()
-    for (const product of subScopedProducts) {
-      const rawBrand = product.metadata.brand.trim()
-      const key = rawBrand.toLowerCase()
-      const existing = counts.get(key)
-      if (existing) {
-        existing.count += 1
-      } else {
-        counts.set(key, { name: rawBrand, count: 1 })
-      }
-    }
+  const facetGroups = useMemo(
+    () => extractCategoryFacetGroups(products, experience),
+    [products, experience]
+  )
 
-    const ordered: { handle: string; name: string; count: number }[] = []
-    for (const brand of brands) {
-      const entry = counts.get(brand.name.toLowerCase())
-      if (entry) {
-        ordered.push({ handle: brand.handle, name: brand.name, count: entry.count })
-        counts.delete(brand.name.toLowerCase())
-      }
+  const subcategoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const product of products) {
+      counts[product.subcategory_handle] = (counts[product.subcategory_handle] ?? 0) + 1
     }
-    for (const [key, entry] of counts.entries()) {
-      ordered.push({ handle: key, name: entry.name, count: entry.count })
-    }
-    return ordered
-  }, [subScopedProducts, brands])
+    return counts
+  }, [products])
 
-  const filtered = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase()
-    return subScopedProducts.filter((p) => {
-      if (
-        selectedBrand !== 'all' &&
-        p.metadata.brand.toLowerCase() !== selectedBrand.toLowerCase()
-      ) {
-        return false
-      }
-      if (!q) return true
-      return [p.title, p.subtitle, p.metadata.brand, p.metadata.model_number]
-        .join(' ')
-        .toLowerCase()
-        .includes(q)
+  const priceBandCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const band of experience.priceBands) {
+      counts[band.id] = products.filter((product) => {
+        const price = getEffectiveProductPricePaise(product)
+        return price >= band.minPaise && (band.maxPaise === null || price < band.maxPaise)
+      }).length
+    }
+    return counts
+  }, [products, experience.priceBands])
+
+  const lowestPricePaise = useMemo(() => {
+    const prices = products.map(getEffectiveProductPricePaise).filter((p) => p > 0)
+    return prices.length > 0 ? Math.min(...prices) : 0
+  }, [products])
+
+  const filteredProducts = useMemo(
+    () => filterAndSortCategoryProducts(products, experience, filterState),
+    [products, experience, filterState]
+  )
+
+  const activeChips = useMemo(
+    () => buildActiveFilterChips(filterState, experience, category),
+    [filterState, experience, category]
+  )
+
+  const handleResetFilters = () => {
+    setFilterState(DEFAULT_CATEGORY_FILTER_STATE)
+  }
+
+  const handleApplyPreset = (preset: CategoryQuickPreset) => {
+    setFilterState(applyCategoryQuickPreset(preset))
+  }
+
+  const handleToggleSpecValue = (specKey: string, value: string) => {
+    setFilterState((prev) => {
+      const current = prev.selectedSpecs[specKey] ?? []
+      const next = toggleValue(current, value)
+      const nextSpecs = { ...prev.selectedSpecs }
+      if (next.length === 0) delete nextSpecs[specKey]
+      else nextSpecs[specKey] = next
+      return { ...prev, selectedSpecs: nextSpecs }
     })
-  }, [subScopedProducts, selectedBrand, searchQuery])
+  }
 
-  const tracking = category.inventory_policy?.tracking_mode ?? 'sku_quantity'
+  const handleRemoveChip = (chip: CategoryActiveFilterChip) => {
+    setFilterState((prev) => {
+      if (chip.groupKey === 'search') return { ...prev, searchQuery: '' }
+      if (chip.groupKey === 'subcategory') {
+        return {
+          ...prev,
+          selectedSubcategories: prev.selectedSubcategories.filter((s) => s !== chip.value),
+        }
+      }
+      if (chip.groupKey === 'brand') {
+        return {
+          ...prev,
+          selectedBrands: prev.selectedBrands.filter((b) => b !== chip.value),
+        }
+      }
+      if (chip.groupKey === 'price') {
+        return {
+          ...prev,
+          selectedPriceBands: prev.selectedPriceBands.filter((id) => id !== chip.value),
+        }
+      }
+      if (chip.groupKey === 'spec' && chip.specKey) {
+        const current = prev.selectedSpecs[chip.specKey] ?? []
+        const updated = current.filter((v) => v !== chip.value)
+        const nextSpecs = { ...prev.selectedSpecs }
+        if (updated.length === 0) delete nextSpecs[chip.specKey]
+        else nextSpecs[chip.specKey] = updated
+        return { ...prev, selectedSpecs: nextSpecs }
+      }
+      if (chip.groupKey === 'toggle') {
+        return { ...prev, [chip.value]: false }
+      }
+      return prev
+    })
+  }
 
   return (
     <StorefrontChrome
       activeCategoryHandle={category.handle}
-      searchValue={searchQuery}
-      onSearchChange={setSearchQuery}
+      searchValue={filterState.searchQuery}
+      onSearchChange={(q) => setFilterState((prev) => ({ ...prev, searchQuery: q }))}
     >
-      {/* Category Header Banner */}
-      <section className="bg-obsidian-900 text-ink-inverse border-b border-obsidian-800">
-        <div className="page-container py-8 sm:py-10 grid md:grid-cols-12 gap-6 items-center">
-          <div className="md:col-span-8 space-y-3">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-chrome-300 hover:text-gold-500 transition"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" />
-              <span>Back to All Electronics</span>
-            </Link>
-            <h1 className="text-2xl sm:text-4xl font-display font-bold text-ink-inverse">
-              {category.name}
-            </h1>
-            <p className="text-sm text-chrome-300 max-w-2xl">{category.description}</p>
-            <div className="flex flex-wrap gap-2 pt-1 text-[11px]">
-              <span className="inline-flex items-center gap-1 rounded-md sm:rounded-full bg-obsidian-800 border border-gold-500/40 px-3 py-1 font-mono text-gold-500">
-                HSN {category.default_hsn} · {category.gst_rate_percent}% GST Invoice
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-md sm:rounded-full bg-obsidian-800 border border-obsidian-700 px-3 py-1.5 sm:py-1 leading-snug text-chrome-200">
-                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-commerce-savings" />
-                <span>{TRACKING_DESC[tracking]}</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-md sm:rounded-full bg-obsidian-800 border border-obsidian-700 px-3 py-1 text-chrome-300">
-                <Box className="h-3.5 w-3.5 shrink-0 text-gold-500" />
-                <span>{category.inventory_policy?.return_window_days ?? 7}-Day Replacement Window</span>
-              </span>
-            </div>
-          </div>
+      <CategoryHeroSection
+        category={category}
+        experience={experience}
+        totalCount={products.length}
+        brandCount={brandOptions.length}
+        lowestPricePaise={lowestPricePaise}
+        filterState={filterState}
+        onApplyPreset={handleApplyPreset}
+        onResetFilters={handleResetFilters}
+      />
 
-          {category.image_url && (
-            <div className="md:col-span-4">
-              <div className="relative h-40 sm:h-48 w-full overflow-hidden rounded-lg bg-surface-card ms-gold-ring">
-                <Image
-                  src={category.image_url}
-                  alt={category.name}
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 340px"
-                  className="object-contain p-3"
-                />
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Filters + Grid */}
-      <section className="page-container py-8 space-y-6">
-        <div className="space-y-3">
-          {/* Subcategory Tabs */}
-          <div className="flex flex-wrap gap-1.5 sm:gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedSub('all')
-                setSelectedBrand('all')
-              }}
-              className={`rounded-sm border px-3 py-1.5 text-xs font-semibold transition ${
-                selectedSub === 'all'
-                  ? 'border-obsidian-900 bg-obsidian-900 text-gold-500'
-                  : 'border-chrome-200 bg-surface-card text-ink-primary hover:border-gold-500'
-              }`}
-            >
-              All {category.name} ({products.length})
-            </button>
-            {category.subcategories.map((sub) => {
-              const count = products.filter((p) => p.subcategory_handle === sub.handle).length
-              if (count === 0) return null
-              const active = selectedSub === sub.handle
-              return (
-                <button
-                  key={sub.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedSub(active ? 'all' : sub.handle)
-                    setSelectedBrand('all')
-                  }}
-                  className={`rounded-sm border px-3 py-1.5 text-xs font-medium transition ${
-                    active
-                      ? 'border-obsidian-900 bg-obsidian-900 text-gold-500'
-                      : 'border-chrome-200 bg-surface-card text-ink-secondary hover:border-gold-500'
-                  }`}
-                >
-                  {sub.name} ({count})
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Brand Filter Pills (Based on Available Products in Category) */}
-          {availableBrands.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              <button
-                type="button"
-                onClick={() => setSelectedBrand('all')}
-                className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold transition ${
-                  selectedBrand === 'all'
-                    ? 'border-obsidian-900 bg-obsidian-900 text-ink-inverse'
-                    : 'border-chrome-200 bg-surface-card text-ink-primary'
-                }`}
-              >
-                All Brands
-              </button>
-              {availableBrands.map((brand) => {
-                const active = selectedBrand.toLowerCase() === brand.name.toLowerCase()
-                return (
-                  <button
-                    key={brand.handle}
-                    type="button"
-                    onClick={() => setSelectedBrand(active ? 'all' : brand.name)}
-                    className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-semibold transition ${
-                      active
-                        ? 'border-obsidian-900 bg-obsidian-900 text-gold-500'
-                        : 'border-chrome-200 bg-surface-card text-ink-primary hover:border-gold-500'
-                    }`}
-                  >
-                    <CheckCircle2 className="h-3 w-3 text-commerce-savings" />
-                    <span>{brand.name}</span>
-                    <span className="font-mono text-[10px] opacity-75">({brand.count})</span>
-                  </button>
-                )
-              })}
-            </div>
-          )}
-        </div>
-
-        <p className="text-xs text-ink-muted">
-          Showing {filtered.length} authentic units in {category.name}
-        </p>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {filtered.map((product) => (
-            <ProductCard key={product.handle} product={product} />
-          ))}
-        </div>
-      </section>
+      <CategoryProductWorkspace
+        category={category}
+        experience={experience}
+        allProductsCount={products.length}
+        filteredProducts={filteredProducts}
+        state={filterState}
+        brandOptions={brandOptions}
+        priceBandCounts={priceBandCounts}
+        subcategoryCounts={subcategoryCounts}
+        facetGroups={facetGroups}
+        activeChips={activeChips}
+        pairingCategories={pairingCategories}
+        pairingProducts={pairingProducts}
+        isMobileFiltersOpen={isMobileFiltersOpen}
+        onOpenMobileFilters={() => setIsMobileFiltersOpen(true)}
+        onCloseMobileFilters={() => setIsMobileFiltersOpen(false)}
+        onChangeSearch={(q) => setFilterState((prev) => ({ ...prev, searchQuery: q }))}
+        onSelectSingleSubcategory={(subHandle) =>
+          setFilterState((prev) => ({
+            ...prev,
+            selectedSubcategories: subHandle === 'all' ? [] : [subHandle],
+          }))
+        }
+        onToggleSubcategory={(subHandle) =>
+          setFilterState((prev) => ({
+            ...prev,
+            selectedSubcategories: toggleValue(prev.selectedSubcategories, subHandle),
+          }))
+        }
+        onToggleBrand={(brandName) =>
+          setFilterState((prev) => ({
+            ...prev,
+            selectedBrands: toggleValue(prev.selectedBrands, brandName),
+          }))
+        }
+        onTogglePriceBand={(bandId) =>
+          setFilterState((prev) => ({
+            ...prev,
+            selectedPriceBands: toggleValue(prev.selectedPriceBands, bandId),
+          }))
+        }
+        onToggleSpecValue={handleToggleSpecValue}
+        onToggleBooleanFlag={(flag) =>
+          setFilterState((prev) => ({ ...prev, [flag]: !prev[flag] }))
+        }
+        onChangeSort={(sortBy: CategorySortOption) =>
+          setFilterState((prev) => ({ ...prev, sortBy }))
+        }
+        onRemoveChip={handleRemoveChip}
+        onResetAll={handleResetFilters}
+      />
     </StorefrontChrome>
   )
 }

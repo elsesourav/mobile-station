@@ -59,7 +59,7 @@ export function HeaderScrollProvider({ children }: { children: React.ReactNode }
     lastScrollYRef.current = 0
     setState((prev) => ({
       ...INITIAL_STATE,
-      selectedCategory: prev.selectedCategory,
+      selectedCategory: prev.selectedCategory === 'all' ? 'all' : '',
     }))
   }, [])
 

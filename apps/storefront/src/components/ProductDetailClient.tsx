@@ -9,7 +9,7 @@ import type {
   StorefrontCategory,
   StorefrontProduct,
 } from '@mobile-station/types'
-import { checkDeliveryServiceability, computeGstSplit } from '@/lib/catalog'
+import { checkDeliveryServiceability, computeGstSplit, getCategoryRoute } from '@/lib/catalog'
 import { discountPercent } from '@/lib/format'
 import { buildVariantSpecificationRows } from '@/lib/product-specs'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
@@ -81,7 +81,7 @@ export function ProductDetailClient({
           <span>/</span>
           {category && (
             <>
-              <Link href={`/categories/${category.handle}`} className="hover:text-gold-700">
+              <Link href={getCategoryRoute(category.handle)} className="hover:text-gold-700">
                 {category.name}
               </Link>
               <span>/</span>

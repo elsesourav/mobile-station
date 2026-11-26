@@ -115,7 +115,7 @@ export function buildBehaviorProfile(
     events: orderedNewestFirst.slice(0, MAX_STORED_EVENTS),
     preferredCategories,
     preferredBrands,
-    recentlyViewedHandles: recentlyViewedHandles.slice(0, 8),
+    recentlyViewedHandles: recentlyViewedHandles.slice(0, 10),
     searchKeywords: Array.from(searchSet).slice(0, 6),
     priceBand,
     totalWeightedScore,
@@ -150,14 +150,5 @@ export function saveBehaviorEvents(events: readonly UserBehaviorEvent[]): void {
     )
   } catch {
     // Ignore storage quota / private-browsing failures safely
-  }
-}
-
-export function clearStoredBehaviorEvents(): void {
-  if (typeof window === 'undefined') return
-  try {
-    window.localStorage.removeItem(BEHAVIOR_STORAGE_KEY)
-  } catch {
-    // Ignore storage failures cleanly
   }
 }

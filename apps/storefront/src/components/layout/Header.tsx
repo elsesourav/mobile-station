@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ShoppingCart, User } from 'lucide-react'
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
-import { ALL_CATEGORIES } from '@/lib/catalog'
+import { ALL_CATEGORIES, getCategoryRoute } from '@/lib/catalog'
 import { useCart } from '@/components/CartContext'
 import { useOptionalHeaderScroll } from '@/context/HeaderScrollContext'
 import { AllTechIcon, resolveCategoryIcon } from '@/components/icons/CategoryIcons'
@@ -404,8 +404,10 @@ export function Header({
                 handle: category.handle,
                 iconKey: category.icon,
               })
+              const categoryRoute = getCategoryRoute(category.handle)
               const isActive =
                 activeCategoryHandle === category.handle ||
+                pathname === categoryRoute ||
                 pathname === `/categories/${category.handle}` ||
                 selectedCategory === category.handle
 
@@ -413,7 +415,7 @@ export function Header({
                 category.id,
                 category.handle,
                 label,
-                `/categories/${category.handle}`,
+                categoryRoute,
                 Icon,
                 isActive
               )

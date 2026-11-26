@@ -59,6 +59,16 @@ describe('WhatsApp support message & context system', () => {
   })
 
   it('resolves Category and Search query page contexts cleanly', () => {
+    const smartCtx = resolvePageWhatsAppContext({
+      pathname: '/smartphones',
+      allProducts: ALL_PRODUCTS,
+      allCategories: ALL_CATEGORIES,
+      recentlyViewedHandles: [],
+      cartItems: [],
+    })
+    expect(smartCtx.pageType).toBe('category')
+    expect(smartCtx.contextSummary).toContain('Smartphones')
+
     const catCtx = resolvePageWhatsAppContext({
       pathname: '/categories/laptops',
       allProducts: ALL_PRODUCTS,

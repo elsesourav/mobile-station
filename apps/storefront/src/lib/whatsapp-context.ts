@@ -145,28 +145,6 @@ export function resolvePageWhatsAppContext(params: {
         },
       ]
     }
-  } else if (cleanPath.startsWith('/categories/')) {
-    const catHandle = cleanPath.replace('/categories/', '').split('/')[0] ?? ''
-    const matchedCat = categoryByHandle.get(catHandle)
-    if (matchedCat) {
-      pageType = 'category'
-      activeCategoryName = matchedCat.name
-      badgeLabel = 'Category Browsing'
-      contextSummary = matchedCat.name
-      topics = [
-        {
-          id: 'cat_best',
-          label: `Recommend in ${matchedCat.name.split('&')[0].trim()}`,
-          template: `I am browsing ${matchedCat.name} and need a recommendation for my budget.`,
-        },
-        {
-          id: 'cat_stock',
-          label: 'Same-Day Hub Stock',
-          template: `Which ${matchedCat.name} models are in stock right now at Muzaffarpur Hub?`,
-        },
-        ...DEFAULT_SUPPORT_TOPICS.slice(2),
-      ]
-    }
   } else if (cleanPath.startsWith('/offers')) {
     pageType = 'offers'
     badgeLabel = 'Offers & EMI Desk'
@@ -231,6 +209,32 @@ export function resolvePageWhatsAppContext(params: {
     pageType = 'policy'
     badgeLabel = 'Policy Clarification'
     contextSummary = cleanPath.replace('/policies/', '').replace(/-/g, ' ').toUpperCase()
+  } else {
+    const legacyCat = cleanPath.startsWith('/categories/')
+      ? cleanPath.replace('/categories/', '').split('/')[0] ?? ''
+      : ''
+    const topSegment = cleanPath.replace(/^\/+/, '').split('/')[0] ?? ''
+    const catHandle = legacyCat || topSegment
+    const matchedCat = catHandle ? categoryByHandle.get(catHandle) : undefined
+    if (matchedCat) {
+      pageType = 'category'
+      activeCategoryName = matchedCat.name
+      badgeLabel = 'Category Browsing'
+      contextSummary = matchedCat.name
+      topics = [
+        {
+          id: 'cat_best',
+          label: `Recommend in ${matchedCat.name.split('&')[0].trim()}`,
+          template: `I am browsing ${matchedCat.name} and need a recommendation for my budget.`,
+        },
+        {
+          id: 'cat_stock',
+          label: 'Same-Day Hub Stock',
+          template: `Which ${matchedCat.name} models are in stock right now at Muzaffarpur Hub?`,
+        },
+        ...DEFAULT_SUPPORT_TOPICS.slice(2),
+      ]
+    }
   }
 
   for (const cartItem of params.cartItems) {

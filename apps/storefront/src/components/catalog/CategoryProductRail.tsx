@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import type { StorefrontCategory, StorefrontProduct } from '@mobile-station/types'
+import { getCategoryRoute } from '@/lib/catalog'
 import { CategoryIcon } from '@/components/icons/CategoryIcons'
 import { MinimalProductCard } from '@/components/catalog/MinimalProductCard'
 
@@ -132,7 +133,7 @@ export function CategoryProductRail({ category, products }: CategoryProductRailP
         </div>
 
         <Link
-          href={`/categories/${category.handle}`}
+          href={getCategoryRoute(category.handle)}
           className="inline-flex items-center gap-1 text-xs font-semibold text-gold-700 hover:underline whitespace-nowrap shrink-0"
         >
           <span>View All</span>
