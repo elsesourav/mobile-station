@@ -32,7 +32,7 @@ FROM base AS prod-deps
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY apps/backend/.medusa/server/package.json ./apps/backend/package.json
+COPY --from=builder /app/apps/backend/.medusa/server/package.json ./apps/backend/package.json
 COPY apps/storefront/package.json ./apps/storefront/package.json
 COPY packages/brand/package.json ./packages/brand/package.json
 COPY packages/config/package.json ./packages/config/package.json
