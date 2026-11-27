@@ -9,6 +9,10 @@ node_modules
 **/.next-verify
 .medusa
 **/.medusa
+.open-next
+**/.open-next
+.wrangler
+**/.wrangler
 dist
 **/dist
 build

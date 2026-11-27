@@ -4,6 +4,9 @@ node_modules/
 .turbo/
 .next/
 .medusa/
+.open-next/
+.wrangler/
+.dev.vars
 dist/
 build/
 coverage/

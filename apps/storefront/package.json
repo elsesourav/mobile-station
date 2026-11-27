@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
+    "build:cf": "opennextjs-cloudflare build",
+    "preview:cf": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy:cf": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "lint": "next lint",
@@ -15,6 +18,7 @@
   "dependencies": {
     "@mobile-station/brand": "workspace:*",
     "@mobile-station/types": "workspace:*",
+    "@opennextjs/cloudflare": "^1.20.19",
     "@sentry/nextjs": "^11.17.0",
     "lucide-react": "^0.475.0",
     "next": "15.5.29",
@@ -31,7 +35,8 @@
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2",
-    "vitest": "^2.0.0"
+    "vitest": "^2.0.0",
+    "wrangler": "^4.169.0"
   },
   "engines": {
     "node": ">=20.0.0 <=24.x"
