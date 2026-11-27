@@ -47,23 +47,23 @@ export const CATEGORY_EXPERIENCE_PROFILES: Record<
     quickPresets: [
       {
         id: 'flagship_pro',
-        label: 'Flagship ₹90k+',
-        priceBandIds: ['above_90k'],
+        label: 'Flagship (₹50k+)',
+        priceBandIds: ['50k_90k', 'above_90k'],
       },
       {
-        id: '120hz_amoled',
-        label: '120Hz Smooth Display',
-        specs: { refresh_rate_hz: ['120'] },
+        id: 'mid_range',
+        label: 'Mid-Range',
+        priceBandIds: ['25k_50k'],
       },
       {
         id: '12gb_multitask',
-        label: '12GB+ RAM Power',
+        label: '12GB+ RAM',
         specs: { ram_gb: ['12'] },
       },
       {
-        id: 'under_50k',
-        label: 'Value Under ₹50,000',
-        priceBandIds: ['under_25k', '25k_50k'],
+        id: '120hz_amoled',
+        label: '120Hz Display',
+        specs: { refresh_rate_hz: ['120'] },
       },
     ],
     pairingCategoryHandles: ['audio', 'power-charging', 'accessories-storage'],
@@ -210,7 +210,7 @@ export const CATEGORY_EXPERIENCE_PROFILES: Record<
     quickPresets: [
       {
         id: 'anc_active',
-        label: 'Active Noise Cancelling',
+        label: 'ANC Audio',
         specs: { anc: ['true'] },
       },
       {
@@ -220,7 +220,7 @@ export const CATEGORY_EXPERIENCE_PROFILES: Record<
       },
       {
         id: 'over_ear',
-        label: 'Over-Ear ANC',
+        label: 'Over-Ear',
         specs: { form_factor: ['over_ear'] },
       },
       {

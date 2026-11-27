@@ -258,47 +258,6 @@ export function sortCategoryProducts(
   })
 }
 
-/**
- * Selects up to `limit` (default 10) top trending products for a category,
- * prioritizing in-stock discounts & recent releases while balancing brand variety.
- */
-export function getTrendingCategoryProducts(
-  products: readonly StorefrontProduct[],
-  limit = 10
-): StorefrontProduct[] {
-  if (products.length === 0 || limit <= 0) return []
-
-  const inStock = products.filter((p) => getProductTotalStock(p) > 0)
-  const pool = inStock.length > 0 ? inStock : [...products]
-
-  const ranked = [...pool].sort((a, b) => {
-    const scoreA = getProductBestDiscount(a) * 1.5 + getProductRecencyMs(a) / 1e11
-    const scoreB = getProductBestDiscount(b) * 1.5 + getProductRecencyMs(b) / 1e11
-    return scoreB - scoreA
-  })
-
-  // Round-robin by brand so Top 10 spans flagship and popular brands evenly
-  const byBrand = new Map<string, StorefrontProduct[]>()
-  for (const product of ranked) {
-    const brandKey = product.metadata.brand.trim().toLowerCase()
-    const list = byBrand.get(brandKey) ?? []
-    list.push(product)
-    byBrand.set(brandKey, list)
-  }
-
-  const picked: StorefrontProduct[] = []
-  const queues = Array.from(byBrand.values())
-  while (picked.length < limit && queues.some((q) => q.length > 0)) {
-    for (const queue of queues) {
-      if (picked.length >= limit) break
-      const next = queue.shift()
-      if (next) picked.push(next)
-    }
-  }
-
-  return picked
-}
-
 export function filterAndSortCategoryProducts(
   products: readonly StorefrontProduct[],
   experience: CategoryExperienceProfile,

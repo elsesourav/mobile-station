@@ -169,6 +169,10 @@ describe('Mobile Station percentage-only, category-scoped & product-specific cou
       path.resolve(__dirname, '../components/cart/CartPageClient.tsx'),
       'utf8'
     )
+    const cartRecSrc = readFileSync(
+      path.resolve(__dirname, '../components/cart/CartRecommendedCarousel.tsx'),
+      'utf8'
+    )
     const headerSrc = readFileSync(
       path.resolve(__dirname, '../components/layout/Header.tsx'),
       'utf8'
@@ -177,6 +181,8 @@ describe('Mobile Station percentage-only, category-scoped & product-specific cou
     expect(cartClientSrc).toContain('hidden sm:flex items-start gap-4 lg:gap-6')
     expect(cartClientSrc).toContain('flex sm:hidden flex-col gap-2.5 pb-28')
     expect(cartClientSrc).toContain('<CartStickyCheckoutBar')
+    expect(cartRecSrc).toContain('<Plus')
+    expect(cartRecSrc).not.toContain('<ShoppingBag')
     expect(headerSrc).toContain('href="/cart"')
   })
 })

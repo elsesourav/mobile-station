@@ -106,17 +106,8 @@ export function CategoryProductWorkspace({
     <>
       <section
         aria-label={`All ${category.name}`}
-        className="page-container py-5 sm:py-7 space-y-5"
+        className="page-container py-5 sm:py-6 space-y-5"
       >
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="font-display text-base sm:text-xl font-bold text-ink-primary">
-            All {category.name}
-          </h2>
-          <span className="font-mono text-xs text-ink-muted tabular-nums">
-            {allProductsCount} total
-          </span>
-        </div>
-
         {/* Subcategory Switcher (Wraps cleanly on desktop, swipeable without scrollbar on mobile) */}
         <div className="flex items-center gap-2 overflow-x-auto lg:overflow-visible lg:flex-wrap pb-1 lg:pb-0 no-scrollbar">
           <button

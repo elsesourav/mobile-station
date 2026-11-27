@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Check, ChevronLeft, ChevronRight, ShoppingBag, Sparkles } from 'lucide-react'
+import { Check, ChevronLeft, ChevronRight, Plus, Sparkles } from 'lucide-react'
 import type { CartItem, NewCartItemInput, StorefrontProduct } from '@mobile-station/types'
 import { ALL_PRODUCTS } from '@/lib/catalog'
 import { FREE_SHIPPING_THRESHOLD_PAISE } from '@/lib/cart-pricing'
@@ -246,7 +246,7 @@ export function CartRecommendedCarousel({
                       : 'bg-obsidian-900 text-gold-500 hover:bg-obsidian-800'
                   }`}
                 >
-                  {added ? <Check className="w-4 h-4" /> : <ShoppingBag className="w-3.5 h-3.5" />}
+                  {added ? <Check className="w-4 h-4 stroke-[2.5]" /> : <Plus className="w-4 h-4 stroke-[2.5]" />}
                 </button>
               </div>
             </div>

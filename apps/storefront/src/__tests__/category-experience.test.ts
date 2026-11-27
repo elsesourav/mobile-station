@@ -11,7 +11,6 @@ import {
   DEFAULT_CATEGORY_FILTER_STATE,
   extractCategoryFacetGroups,
   filterAndSortCategoryProducts,
-  getTrendingCategoryProducts,
 } from '@/lib/category-filters'
 
 describe('Dedicated category routes, filter engine, and permanent history guards', () => {
@@ -95,23 +94,35 @@ describe('Dedicated category routes, filter engine, and permanent history guards
     expect(contextSrc).not.toContain('clearBehaviorHistory')
   })
 
-  it('selects up to 10 brand-diversified trending products and uses minimal cards without inline detail clutter on category pages', () => {
-    const trendingSmartphones = getTrendingCategoryProducts(
-      getProductsByCategory('smartphones'),
-      10
-    )
-    expect(trendingSmartphones).toHaveLength(10)
-    expect(new Set(trendingSmartphones.map((p) => p.metadata.brand)).size).toBeGreaterThanOrEqual(5)
+  it('separates top category sections by tiers (Flagship, Mid-Range) and uses minimal cards without inline detail bloat', () => {
+    const smartphoneExp = getCategoryExperienceProfile('smartphones')
+    const smartphones = getProductsByCategory('smartphones')
+    const flagshipPreset = smartphoneExp.quickPresets.find((q) => q.id === 'flagship_pro')
+    const midRangePreset = smartphoneExp.quickPresets.find((q) => q.id === 'mid_range')
 
-    const trendingTablets = getTrendingCategoryProducts(getProductsByCategory('tablets'), 10)
-    expect(trendingTablets).toHaveLength(getProductsByCategory('tablets').length)
+    expect(flagshipPreset?.label).toContain('Flagship')
+    expect(midRangePreset?.label).toContain('Mid-Range')
+    expect(
+      filterAndSortCategoryProducts(
+        smartphones,
+        smartphoneExp,
+        applyCategoryQuickPreset(flagshipPreset!)
+      ).length
+    ).toBeGreaterThanOrEqual(4)
+    expect(
+      filterAndSortCategoryProducts(
+        smartphones,
+        smartphoneExp,
+        applyCategoryQuickPreset(midRangePreset!)
+      ).length
+    ).toBeGreaterThanOrEqual(4)
 
     const heroSrc = readFileSync(
       path.resolve(__dirname, '../components/category/CategoryHeroSection.tsx'),
       'utf8'
     )
-    const trendingSrc = readFileSync(
-      path.resolve(__dirname, '../components/category/CategoryTrendingSection.tsx'),
+    const tierBarSrc = readFileSync(
+      path.resolve(__dirname, '../components/category/CategoryTierBar.tsx'),
       'utf8'
     )
     const workspaceSrc = readFileSync(
@@ -120,11 +131,8 @@ describe('Dedicated category routes, filter engine, and permanent history guards
     )
 
     expect(heroSrc).not.toContain('buyerAssurances')
-    expect(heroSrc).not.toContain('quickPresets')
-    expect(trendingSrc).toContain('<MinimalProductCard')
-    expect(trendingSrc).toContain('grid-rows-2')
-    expect(trendingSrc).toContain('lg:grid-cols-5')
-    expect(trendingSrc).not.toContain('<ProductCard')
+    expect(tierBarSrc).toContain('quickPresets')
+    expect(tierBarSrc).toContain('All Models')
     expect(workspaceSrc).toContain('<MinimalProductCard')
     expect(workspaceSrc).not.toContain('<ProductCard')
   })
