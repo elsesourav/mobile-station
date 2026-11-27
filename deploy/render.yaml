@@ -1,0 +1,67 @@
+services:
+  - type: web
+    name: mobile-station-backend
+    runtime: image
+    plan: free
+    image:
+      url: ghcr.io/REPLACE_WITH_GITHUB_OWNER/mobile-station-backend:latest
+    healthCheckPath: /store/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: MEDUSA_ADMIN_DISABLED
+        value: "true"
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=384"
+      - key: DB_POOL_MIN
+        value: "1"
+      - key: DB_POOL_MAX
+        value: "4"
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: MEDUSA_BACKEND_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: COOKIE_SECRET
+        sync: false
+      - key: STORE_CORS
+        sync: false
+      - key: ADMIN_CORS
+        sync: false
+      - key: AUTH_CORS
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_FOLDER
+        value: mobile-station
+      - key: STORAGE_S3_PROVIDER
+        value: supabase
+      - key: STORAGE_S3_ENDPOINT
+        sync: false
+      - key: STORAGE_S3_REGION
+        sync: false
+      - key: STORAGE_S3_BUCKET
+        value: mobile-station-private
+      - key: STORAGE_S3_ACCESS_KEY_ID
+        sync: false
+      - key: STORAGE_S3_SECRET_ACCESS_KEY
+        sync: false
+      - key: RAZORPAY_MOCK_MODE
+        value: "false"
+      - key: SHIPROCKET_MOCK_MODE
+        value: "false"
+      - key: NOTIFICATION_MOCK_MODE
+        value: "true"
+      - key: SMS_MOCK_MODE
+        value: "true"
+      - key: GSTIN_MOCK_MODE
+        value: "true"

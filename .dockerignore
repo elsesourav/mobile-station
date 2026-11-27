@@ -1,0 +1,39 @@
+# Dependencies & build caches
+node_modules
+**/node_modules
+.pnpm-store
+.turbo
+.next
+**/.next
+.next-verify
+**/.next-verify
+.medusa
+**/.medusa
+dist
+**/dist
+build
+coverage
+playwright-report
+test-results
+tmp
+
+# Git & local secrets
+.git
+.env
+.env.*
+!.env.example
+apps/*/.env
+apps/*/.env.*
+!apps/*/.env.example
+
+# Logs, local DBs & large non-backend root assets
+*.log
+*.tsbuildinfo
+*.db
+*.sqlite
+*.sqlite3
+.DS_Store
+mobile-station-icon.png
+mobile-station-name.png
+apps/storefront/src
+apps/storefront/public

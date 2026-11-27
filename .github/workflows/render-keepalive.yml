@@ -1,0 +1,23 @@
+name: Render Backend Health Keep-Alive
+
+on:
+  schedule:
+    # Render Free sleeps after 15m of inactivity (750 free instance hours/month total).
+    # Set repository variable RENDER_HEALTH_URL (e.g. https://your-app.onrender.com/store/health)
+    # to enable periodic pings. Leave unset if using UptimeRobot / cron-job.org instead.
+    - cron: "*/12 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping-health:
+    runs-on: ubuntu-latest
+    if: ${{ vars.RENDER_HEALTH_URL != '' }}
+    steps:
+      - name: Ping Render backend health endpoint
+        env:
+          HEALTH_URL: ${{ vars.RENDER_HEALTH_URL }}
+        run: |
+          status=$(curl -sS -o /tmp/health.json -w "%{http_code}" --max-time 60 "$HEALTH_URL" || true)
+          echo "HTTP status: $status"
+          cat /tmp/health.json || true
+          test "$status" = "200" -o "$status" = "503"
