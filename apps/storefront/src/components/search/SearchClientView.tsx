@@ -25,7 +25,7 @@ import type { SearchClientViewProps, SearchSortOption } from '@/types/search'
  * - Sticky top navigation bar with Back button, auto-focused Search Pill, Clear & Submit actions
  * - Zero-Query discovery view (Recent searches, Trending, Browse categories, Popular picks)
  * - Live As-You-Type view (Closest Result card, highlighted autocomplete queries, preview matches)
- * - Submitted Results Grid view (Results count, Sort selector, Category chips, ProductCard grid)
+ * - Submitted Results Grid view (Results count, Sort selector, Category chips, MinimalProductCard grid)
  */
 export function SearchClientView({ initialProducts, categories }: SearchClientViewProps) {
   const router = useRouter()

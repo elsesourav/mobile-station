@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { ALL_PRODUCTS } from '@/lib/catalog'
@@ -100,8 +100,12 @@ describe('Redesigned Product Detail Page components, variant imagery, and GST gu
       path.resolve(__dirname, '../components/product/ProductVariantSelector.tsx'),
       'utf8'
     )
-    const productCardSrc = readFileSync(
-      path.resolve(__dirname, '../components/ProductCard.tsx'),
+    const searchSubmittedSrc = readFileSync(
+      path.resolve(__dirname, '../components/search/SearchSubmittedResultsView.tsx'),
+      'utf8'
+    )
+    const offersClientSrc = readFileSync(
+      path.resolve(__dirname, '../components/OffersPageClient.tsx'),
       'utf8'
     )
 
@@ -112,8 +116,11 @@ describe('Redesigned Product Detail Page components, variant imagery, and GST gu
     expect(variantSelSrc).toContain('variants.length <= 1')
     expect(variantSelSrc).not.toContain('{activeVariant.title}')
     expect(variantSelSrc).toContain('h-16 sm:h-[72px]')
-    expect(productCardSrc).not.toContain('HSN {product.metadata.hsn_code}')
-    expect(productCardSrc).not.toContain('In Stock')
+    expect(existsSync(path.resolve(__dirname, '../components/ProductCard.tsx'))).toBe(false)
+    expect(searchSubmittedSrc).toContain('<MinimalProductCard')
+    expect(searchSubmittedSrc).not.toContain('<ProductCard')
+    expect(offersClientSrc).toContain('<MinimalProductCard')
+    expect(offersClientSrc).not.toContain('<ProductCard')
   })
 
   it('isolates fullscreen portal lightbox, removes view counters, uses smooth accordions, and refines scrollbars', () => {

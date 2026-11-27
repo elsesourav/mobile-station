@@ -1,13 +1,13 @@
 'use client'
 
 import React from 'react'
-import { ProductCard } from '@/components/ProductCard'
+import { MinimalProductCard } from '@/components/catalog/MinimalProductCard'
 import { SearchNoResultsView } from '@/components/search/SearchNoResultsView'
 import type { SearchSortOption, SearchSubmittedResultsViewProps } from '@/types/search'
 
 /**
- * Glorov View 3: Full submitted results grid with results count, sort selector,
- * horizontally scrollable category filter pills, and signature ProductCard grid.
+ * Full submitted search results grid with results count, sort selector,
+ * horizontally scrollable category filter pills, and clean MinimalProductCard grid.
  */
 export function SearchSubmittedResultsView({
   query,
@@ -69,9 +69,9 @@ export function SearchSubmittedResultsView({
       {rankedProducts.length === 0 ? (
         <SearchNoResultsView query={query} onSelectRecoveryChip={onSelectRecoveryChip} />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {rankedProducts.map((product) => (
-            <ProductCard key={product.handle} product={product} />
+            <MinimalProductCard key={product.handle} product={product} />
           ))}
         </div>
       )}
