@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { ArrowRight, RotateCcw, SlidersHorizontal, X } from 'lucide-react'
 import type { StorefrontCategory, StorefrontProduct } from '@mobile-station/types'
 import { getCategoryRoute } from '@/lib/catalog'
-import { ProductCard } from '@/components/ProductCard'
 import { MinimalProductCard } from '@/components/catalog/MinimalProductCard'
 import { CategoryIcon } from '@/components/icons/CategoryIcons'
 import type {
@@ -105,7 +104,19 @@ export function CategoryProductWorkspace({
 
   return (
     <>
-      <section className="page-container py-6 sm:py-8 space-y-6">
+      <section
+        aria-label={`All ${category.name}`}
+        className="page-container py-5 sm:py-7 space-y-5"
+      >
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="font-display text-base sm:text-xl font-bold text-ink-primary">
+            All {category.name}
+          </h2>
+          <span className="font-mono text-xs text-ink-muted tabular-nums">
+            {allProductsCount} total
+          </span>
+        </div>
+
         {/* Subcategory Switcher (Wraps cleanly on desktop, swipeable without scrollbar on mobile) */}
         <div className="flex items-center gap-2 overflow-x-auto lg:overflow-visible lg:flex-wrap pb-1 lg:pb-0 no-scrollbar">
           <button
@@ -171,7 +182,7 @@ export function CategoryProductWorkspace({
                 </button>
                 <p className="text-xs sm:text-sm font-medium text-ink-secondary truncate tabular-nums">
                   Showing <strong className="text-ink-primary">{filteredProducts.length}</strong> of{' '}
-                  {allProductsCount} verified items
+                  {allProductsCount} items
                 </p>
               </div>
 
@@ -238,9 +249,9 @@ export function CategoryProductWorkspace({
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
                 {filteredProducts.map((product) => (
-                  <ProductCard key={product.handle} product={product} />
+                  <MinimalProductCard key={product.handle} product={product} />
                 ))}
               </div>
             )}

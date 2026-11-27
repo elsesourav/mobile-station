@@ -11,6 +11,7 @@ import {
   DEFAULT_CATEGORY_FILTER_STATE,
   extractCategoryFacetGroups,
   filterAndSortCategoryProducts,
+  getTrendingCategoryProducts,
 } from '@/lib/category-filters'
 
 describe('Dedicated category routes, filter engine, and permanent history guards', () => {
@@ -92,5 +93,39 @@ describe('Dedicated category routes, filter engine, and permanent history guards
     expect(recentlyViewedSrc).not.toContain('Clear History')
     expect(personalizedSrc).not.toContain('Clear History')
     expect(contextSrc).not.toContain('clearBehaviorHistory')
+  })
+
+  it('selects up to 10 brand-diversified trending products and uses minimal cards without inline detail clutter on category pages', () => {
+    const trendingSmartphones = getTrendingCategoryProducts(
+      getProductsByCategory('smartphones'),
+      10
+    )
+    expect(trendingSmartphones).toHaveLength(10)
+    expect(new Set(trendingSmartphones.map((p) => p.metadata.brand)).size).toBeGreaterThanOrEqual(5)
+
+    const trendingTablets = getTrendingCategoryProducts(getProductsByCategory('tablets'), 10)
+    expect(trendingTablets).toHaveLength(getProductsByCategory('tablets').length)
+
+    const heroSrc = readFileSync(
+      path.resolve(__dirname, '../components/category/CategoryHeroSection.tsx'),
+      'utf8'
+    )
+    const trendingSrc = readFileSync(
+      path.resolve(__dirname, '../components/category/CategoryTrendingSection.tsx'),
+      'utf8'
+    )
+    const workspaceSrc = readFileSync(
+      path.resolve(__dirname, '../components/category/CategoryProductWorkspace.tsx'),
+      'utf8'
+    )
+
+    expect(heroSrc).not.toContain('buyerAssurances')
+    expect(heroSrc).not.toContain('quickPresets')
+    expect(trendingSrc).toContain('<MinimalProductCard')
+    expect(trendingSrc).toContain('grid-rows-2')
+    expect(trendingSrc).toContain('lg:grid-cols-5')
+    expect(trendingSrc).not.toContain('<ProductCard')
+    expect(workspaceSrc).toContain('<MinimalProductCard')
+    expect(workspaceSrc).not.toContain('<ProductCard')
   })
 })

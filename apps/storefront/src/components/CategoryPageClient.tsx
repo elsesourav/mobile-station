@@ -4,21 +4,21 @@ import { useEffect, useMemo, useState } from 'react'
 import { useOptionalBehavior } from '@/context/BehaviorContext'
 import { StorefrontChrome } from '@/components/StorefrontChrome'
 import { CategoryHeroSection } from '@/components/category/CategoryHeroSection'
+import { CategoryTrendingSection } from '@/components/category/CategoryTrendingSection'
 import { CategoryProductWorkspace } from '@/components/category/CategoryProductWorkspace'
 import {
-  applyCategoryQuickPreset,
   buildActiveFilterChips,
   DEFAULT_CATEGORY_FILTER_STATE,
   extractCategoryBrandOptions,
   extractCategoryFacetGroups,
   filterAndSortCategoryProducts,
   getEffectiveProductPricePaise,
+  getTrendingCategoryProducts,
 } from '@/lib/category-filters'
 import type {
   CategoryActiveFilterChip,
   CategoryFilterState,
   CategoryPageViewProps,
-  CategoryQuickPreset,
   CategorySortOption,
 } from '@/types/category'
 
@@ -74,10 +74,10 @@ export function CategoryPageClient({
     return counts
   }, [products, experience.priceBands])
 
-  const lowestPricePaise = useMemo(() => {
-    const prices = products.map(getEffectiveProductPricePaise).filter((p) => p > 0)
-    return prices.length > 0 ? Math.min(...prices) : 0
-  }, [products])
+  const trendingProducts = useMemo(
+    () => getTrendingCategoryProducts(products, 10),
+    [products]
+  )
 
   const filteredProducts = useMemo(
     () => filterAndSortCategoryProducts(products, experience, filterState),
@@ -91,10 +91,6 @@ export function CategoryPageClient({
 
   const handleResetFilters = () => {
     setFilterState(DEFAULT_CATEGORY_FILTER_STATE)
-  }
-
-  const handleApplyPreset = (preset: CategoryQuickPreset) => {
-    setFilterState(applyCategoryQuickPreset(preset))
   }
 
   const handleToggleSpecValue = (specKey: string, value: string) => {
@@ -152,13 +148,12 @@ export function CategoryPageClient({
     >
       <CategoryHeroSection
         category={category}
-        experience={experience}
         totalCount={products.length}
-        brandCount={brandOptions.length}
-        lowestPricePaise={lowestPricePaise}
-        filterState={filterState}
-        onApplyPreset={handleApplyPreset}
-        onResetFilters={handleResetFilters}
+      />
+
+      <CategoryTrendingSection
+        category={category}
+        trendingProducts={trendingProducts}
       />
 
       <CategoryProductWorkspace
