@@ -5,7 +5,12 @@ import {
   MAX_SHOWCASE_VIDEO_BYTES,
 } from '../modules/showcase/cloudinary-media'
 import { validateProductionConfig } from '../../medusa-config'
-import { electronicsMetadataSchema } from '@mobile-station/types'
+import {
+  createLegalDocumentSchema,
+  electronicsMetadataSchema,
+  sanitizeMarkdownUrl,
+  updateLegalDocumentSchema,
+} from '@mobile-station/types'
 
 describe('Mobile Station separated storage & security guards', () => {
   it('blocks PDF invoice uploads to CloudinaryImageService', async () => {
@@ -112,5 +117,23 @@ describe('Mobile Station separated storage & security guards', () => {
     expect(valid.gst_invoice_available).toBe(true)
     expect(valid.b2b_gst_available).toBe(false)
     expect(valid.color_images?.Ultramarine).toHaveLength(1)
+  })
+
+  it('validates legal Markdown document payloads and neutralizes unsafe link schemes', () => {
+    const created = createLegalDocumentSchema.parse({
+      slug: 'Privacy Policy!!',
+      title: 'Privacy Policy',
+      category: 'privacy',
+      summary: 'Customer privacy guarantees across Mobile Station hubs and storefront.',
+      content_markdown: '## Privacy\n\nYour data stays protected under DPDP Act 2023.',
+    })
+    expect(created.slug).toBe('privacy-policy')
+
+    const patched = updateLegalDocumentSchema.parse({
+      status: 'draft',
+      version_label: 'v1.1',
+    })
+    expect(patched.status).toBe('draft')
+    expect(sanitizeMarkdownUrl('javascript:alert(1)')).toBe('#')
   })
 })

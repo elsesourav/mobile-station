@@ -116,6 +116,9 @@ export default defineConfig({
       resolve: './src/modules/showcase',
     },
     {
+      resolve: './src/modules/legal',
+    },
+    {
       resolve: '@medusajs/medusa/file',
       options: {
         providers: [

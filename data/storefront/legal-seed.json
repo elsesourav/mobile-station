@@ -1,0 +1,88 @@
+{
+  "documents": [
+    {
+      "slug": "privacy-policy",
+      "title": "Privacy Policy",
+      "badge": "DATA & PRIVACY",
+      "category": "privacy",
+      "summary": "How Mobile Station Electronics Commerce collects, encrypts, uses, and safeguards your order details, GSTIN, device IMEI records, and delivery data under India DPDP Act 2023.",
+      "status": "published",
+      "show_in_footer": true,
+      "display_order": 1,
+      "version_label": "v1.0",
+      "effective_date": "2026-11-01",
+      "updated_by": "Mobile Station Compliance",
+      "content_markdown": "## 1. Who We Are & Scope\n\nMobile Station Electronics Commerce (**Mobile Station**) operates authorized flagship retail & fulfillment centers at **Motijheel (842001)** and **Club Road (842002), Muzaffarpur, Bihar** alongside our online storefront across India. This Privacy Policy explains how personal data is processed in alignment with the **Digital Personal Data Protection (DPDP) Act, 2023** and Indian e-commerce rules.\n\n## 2. Information We Collect\n\n- **Order & Fulfillment Details**: Full name, delivery street address, 6-digit Indian PIN code, mobile number, and alternate contact reference.\n- **Tax & Warranty Compliance**: Serial / IMEI identifiers printed on GST tax invoices, and optional 15-character **B2B GSTIN & Registered Business Name** when GST Input Tax Credit is requested.\n- **Payment Verification**: Transaction status and tokenized payment references from **Razorpay** (we never store full card numbers, CVVs, or UPI PINs on Mobile Station servers).\n- **On-Device Storefront Preferences**: Local browsing recency, cart items, and saved delivery PIN stored locally in your browser storage to improve pickup and compatibility recommendations.\n\n## 3. Strict Infrastructure & Third-Party Boundaries\n\n| Layer | Purpose | Storage Boundary |\n| --- | --- | --- |\n| PostgreSQL Database | Orders, GST tax splits, IMEI/serial warranty ledgers | Encrypted server-side persistence |\n| S3 / R2 Private Bucket | Generated GST Tax Invoice PDFs & unboxing proof | Short-lived signed URLs only (`<= 15 mins`) |\n| Shiprocket Courier API | Airway bill & Open-Box Delivery doorstep OTP verification | Shared strictly for shipment fulfillment |\n| Razorpay Checkout | UPI, RuPay, Card & No-Cost EMI authorization | PCI-DSS compliant payment gateway |\n\nWe **never sell, rent, or trade** customer phone numbers or email addresses to third-party telemarketers or data brokers.\n\n## 4. Data Retention & Your Rights\n\n- Statutory tax invoices and IMEI warranty logs are retained as mandated under **Indian GST law** (typically 6–8 financial years).\n- You may request correction of address/contact details or deletion of non-statutory marketing profile records at any time.\n\n## 5. Grievance Officer & Privacy Support\n\n> For privacy inquiries, data correction requests, or grievance redressal, contact **support@mobilestation.in** or visit our Motijheel Flagship Hub desk in Muzaffarpur (`842001`), Monday to Saturday (10:30 AM – 7:30 PM)."
+    },
+    {
+      "slug": "terms-and-conditions",
+      "title": "Terms & Conditions",
+      "badge": "TERMS OF SERVICE",
+      "category": "terms",
+      "summary": "Governing terms for purchasing factory-sealed smartphones, laptops, audio gear, GST billing, Open-Box verification, and Pan-India shipping from Mobile Station.",
+      "status": "published",
+      "show_in_footer": true,
+      "display_order": 2,
+      "version_label": "v1.0",
+      "effective_date": "2026-11-01",
+      "updated_by": "Mobile Station Compliance",
+      "content_markdown": "## 1. Acceptance of Terms\n\nBy accessing **Mobile Station** or placing an order online or at our Muzaffarpur hubs (`842001` / `842002`), you agree to these Terms & Conditions. All hardware is intended strictly for lawful end-user or registered Indian enterprise procurement.\n\n## 2. Pricing, INR Currency & GST Inclusivity\n\n- All listed prices are in **Indian Rupees (INR)** and inclusive of applicable **GST** (default **18% GST** across electronics HSN classifications unless explicitly noted otherwise).\n- Promotional coupon codes apply strictly to eligible categories or SKUs as stated in coupon scope terms.\n- B2B GSTIN details entered prior to dispatch cannot be retro-amended after GST GSTR-1 filing.\n\n## 3. Product Authenticity & Sealed Packaging\n\n1. Every unit sold is genuine, Indian-authorized retail inventory.\n2. Factory seals remain intact until either doorstep **Open-Box Delivery** verification in front of the courier or in-store unboxing inspection at Motijheel / Club Road.\n3. Once an active SIM card is inserted or OEM software activation is completed on an undisputed device, post-activation hardware claims follow official OEM warranty procedures.\n\n## 4. Order Cancellation & Jurisdiction\n\n- Orders may be cancelled prior to AWB handoff without penalty.\n- High-value flagged transactions may require secondary OTP verification to prevent unauthorized orders.\n- Disputes are subject to competent jurisdiction in **Muzaffarpur, Bihar, India**."
+    },
+    {
+      "slug": "warranty",
+      "title": "100% Official Brand Authorized Warranty",
+      "badge": "BRAND AUTHORIZED CARE",
+      "category": "warranty",
+      "summary": "Every smartphone, tablet, laptop, monitor, audio gear, and accessory sold by Mobile Station is a factory-sealed Indian retail unit covered directly by official brand service networks across India.",
+      "status": "published",
+      "show_in_footer": true,
+      "display_order": 3,
+      "version_label": "v1.0",
+      "effective_date": "2026-11-01",
+      "updated_by": "Mobile Station Compliance",
+      "content_markdown": "## Standard Authorized Brand Coverage\n\nEvery electronic device sold at Mobile Station carries valid **Official Brand Warranty** redeemable at authorized service centers Pan-India.\n\n- **Zero Grey-Market Units**: Only GST-paid Indian retail units with valid OEM serial/IMEI registration.\n- **Serialized Tax Invoice**: Includes exact **HSN code** and device **IMEI / Serial Number** required for Apple, Samsung, OnePlus, Sony, Vivo, Oppo, Xiaomi, Nothing, Google, Lenovo, HP, ASUS, and SanDisk service claims.\n- **7-Day Hub Replacement Support**: Immediate replacement assistance at our Muzaffarpur Hub in the rare case of certified Dead-on-Arrival (DOA) hardware defects reported within 7 days.\n\n### Cross-Link Resources\n\n- Review [Insured Open-Box Delivery](/policies/open-box-delivery)\n- Read [18% GST Tax Invoice Rules](/policies/gst-invoicing)"
+    },
+    {
+      "slug": "open-box-delivery",
+      "title": "Insured Open-Box Delivery Policy",
+      "badge": "SAFE TECH VERIFICATION",
+      "category": "shipping",
+      "summary": "High-value smartphones, tablets, and laptops (orders ₹25,000+) undergo an assisted doorstep unboxing check before OTP handover so you never assume transit risk.",
+      "status": "published",
+      "show_in_footer": true,
+      "display_order": 4,
+      "version_label": "v1.0",
+      "effective_date": "2026-11-01",
+      "updated_by": "Mobile Station Compliance",
+      "content_markdown": "## Doorstep Unboxing Protocol\n\nFor eligible smartphones, laptops, and flagship tablets (`₹25,000+`), your shipment arrives under **Insured Open-Box Delivery (OBD)** protection:\n\n1. **Inspect Outer Tamper Seal**: Confirm carton security tape and retail box factory seal with the delivery executive.\n2. **Verify Physical Condition & IMEI**: Inspect the display, camera glass, chassis, and confirm the box IMEI / Serial number matches your invoice.\n3. **Confirm Inbox Accessories**: Verify included cables, charging adapters (where bundled by OEM), or S Pen / accessories.\n4. **Share OTP Only After Verification**: Once OTP is shared and signed, physical transit damage cannot be claimed post-handoff.\n\n> Never share your Open-Box Delivery OTP over phone call before inspecting the opened device in person."
+    },
+    {
+      "slug": "gst-invoicing",
+      "title": "18% GST Tax Invoice & B2B Input Tax Credit",
+      "badge": "B2B GSTIN READY",
+      "category": "tax_gst",
+      "summary": "All prices displayed on Mobile Station include GST (default 18% across phones, computers, audio, and chargers). Eligible businesses can enter a 15-digit GSTIN to claim full Input Tax Credit.",
+      "status": "published",
+      "show_in_footer": true,
+      "display_order": 5,
+      "version_label": "v1.0",
+      "effective_date": "2026-11-01",
+      "updated_by": "Mobile Station Compliance",
+      "content_markdown": "## Tax Breakdown & B2B Input Tax Credit\n\nMobile Station generates compliant B2C and B2B tax invoices with exact CGST / SGST / IGST breakdowns:\n\n- **Intra-State Bihar Orders** (`842001` / `842002` hub dispatch): Automatic **9% CGST + 9% SGST** split.\n- **Inter-State Pan-India Deliveries**: Automatic **18% IGST** split.\n- **Private PDF Archive**: Generated GST Tax Invoice PDFs are stored privately in encrypted S3/R2 storage and accessible strictly via time-limited signed links.\n- **Seller-Controlled GST Eligibility**: Each catalog item explicitly indicates whether B2B GSTIN input credit is enabled.\n\n| Electronics Category | Standard HSN | Default GST Rate |\n| --- | --- | --- |\n| 5G Smartphones | `8517` | 18% GST |\n| Laptops, Tablets & Monitors | `8471` / `8528` | 18% GST |\n| Audio & TWS Earbuds | `8518` | 18% GST |\n| GaN Fast Chargers & Power Banks | `8504` / `8507` | 18% GST |"
+    },
+    {
+      "slug": "returns-and-refunds",
+      "title": "Returns, Refunds & Cancellation Policy",
+      "badge": "7-DAY REPLACEMENT",
+      "category": "returns",
+      "summary": "Clear return windows, sealed-accessory return eligibility, DOA inspection requirements, and refund timelines for prepaid UPI/card and pickup orders.",
+      "status": "published",
+      "show_in_footer": true,
+      "display_order": 6,
+      "version_label": "v1.0",
+      "effective_date": "2026-11-01",
+      "updated_by": "Mobile Station Compliance",
+      "content_markdown": "## Return & Replacement Windows\n\n- **Phones, Tablets & Laptops (`7 Days`)**: Eligible strictly for **Transit Defect / Missing Item** refused at Open-Box Delivery, wrong model shipped, or OEM-certified **DOA** defect with a brand service center job sheet.\n- **Peripherals, Chargers & Sealed Accessories (`7–10 Days`)**: Must remain unused with intact serial barcode, manuals, and retail packaging.\n\n## Non-Returnable Scenarios\n\n- Change-of-mind returns once an OEM smartphone/laptop retail seal has been opened and activated.\n- Physical damage, liquid ingress, bent pins, or tampered IMEI stickers caused after customer handover.\n\n## Refund Settlement Timelines\n\n1. **Razorpay UPI / Wallets**: **2–4 business days** after hub inspection.\n2. **Debit / Credit Cards & EMI**: **5–7 business days** depending on card issuer settlement cycle.\n3. **In-Store Hub Returns**: Instant replacement verification or same-day UPI reversal at Motijheel (`842001`) & Club Road (`842002`)."
+    }
+  ]
+}

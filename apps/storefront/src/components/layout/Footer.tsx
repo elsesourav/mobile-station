@@ -325,9 +325,15 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
           {/* Desktop Bottom Legal Bar (>= 1024px) */}
           <div className="hidden lg:flex items-center justify-between gap-4 text-xs text-chrome-400 pt-1">
             <span>© 2026 {MOBILE_STATION_BRAND.name} Electronics Commerce. Muzaffarpur, Bihar. All rights reserved.</span>
-            <div className="flex items-center gap-4 text-[11px] text-chrome-300">
+            <div className="flex flex-wrap items-center gap-4 text-[11px] text-chrome-300">
+              <Link href="/policies/privacy-policy" className="underline hover:text-gold-500 transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/policies/terms-and-conditions" className="underline hover:text-gold-500 transition-colors">
+                Terms &amp; Conditions
+              </Link>
               <Link href="/policies/warranty" className="underline hover:text-gold-500 transition-colors">
-                Brand Warranty Policy
+                Brand Warranty
               </Link>
               <Link href="/policies/open-box-delivery" className="underline hover:text-gold-500 transition-colors">
                 Open-Box Delivery
@@ -335,14 +341,25 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
               <Link href="/policies/gst-invoicing" className="underline hover:text-gold-500 transition-colors">
                 18% GST Invoicing
               </Link>
+              <Link href="/policies/returns-and-refunds" className="underline hover:text-gold-500 transition-colors">
+                Returns &amp; Refunds
+              </Link>
             </div>
           </div>
 
           {/* Mobile & Tablet Bottom Legal Bar (< 1024px) */}
           <div className="block lg:hidden text-center space-y-1.5 pt-1 text-[11px] text-chrome-300">
             <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+              <Link href="/policies/privacy-policy" className="underline hover:text-gold-500 transition-colors">
+                Privacy Policy
+              </Link>
+              <span className="text-chrome-400/40 text-[10px]">•</span>
+              <Link href="/policies/terms-and-conditions" className="underline hover:text-gold-500 transition-colors">
+                Terms
+              </Link>
+              <span className="text-chrome-400/40 text-[10px]">•</span>
               <Link href="/policies/warranty" className="underline hover:text-gold-500 transition-colors">
-                Warranty Policy
+                Warranty
               </Link>
               <span className="text-chrome-400/40 text-[10px]">•</span>
               <Link href="/policies/open-box-delivery" className="underline hover:text-gold-500 transition-colors">
@@ -350,7 +367,11 @@ export function Footer({ className = '' }: StorefrontFooterProps) {
               </Link>
               <span className="text-chrome-400/40 text-[10px]">•</span>
               <Link href="/policies/gst-invoicing" className="underline hover:text-gold-500 transition-colors">
-                18% GST Credit
+                18% GST
+              </Link>
+              <span className="text-chrome-400/40 text-[10px]">•</span>
+              <Link href="/policies/returns-and-refunds" className="underline hover:text-gold-500 transition-colors">
+                Returns
               </Link>
             </div>
             <p className="text-[10.5px] text-chrome-400">
