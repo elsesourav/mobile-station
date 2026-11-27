@@ -8,6 +8,7 @@ import { ShoppingCart, User } from 'lucide-react'
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
 import { ALL_CATEGORIES, getCategoryRoute } from '@/lib/catalog'
 import { useCart } from '@/components/CartContext'
+import { useOptionalCustomerAuth } from '@/context/CustomerAuthContext'
 import { useOptionalHeaderScroll } from '@/context/HeaderScrollContext'
 import { AllTechIcon, resolveCategoryIcon } from '@/components/icons/CategoryIcons'
 import { RotatingSearchBar } from '@/components/layout/RotatingSearchBar'
@@ -38,7 +39,9 @@ export function Header({
 }: StorefrontHeaderProps) {
   const pathname = usePathname()
   const { totalCount } = useCart()
+  const auth = useOptionalCustomerAuth()
   const headerScroll = useOptionalHeaderScroll()
+  const isSignedIn = Boolean(auth?.isAuthenticated && auth.customer)
 
   const showIcons = headerScroll ? headerScroll.showIcons : true
   const selectedCategory = headerScroll?.selectedCategory ?? ''
@@ -330,9 +333,9 @@ export function Header({
           <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             <Link
               href="/account"
-              aria-label="Account"
-              title="Account & Orders"
-              className={`inline-flex items-center justify-center min-w-[44px] min-h-[44px] sm:w-auto sm:h-9 sm:min-h-[36px] sm:px-3 sm:gap-1.5 rounded-full text-xs font-medium transition shrink-0 active:scale-95 ${
+              aria-label={isSignedIn ? `Account (${auth?.customer?.firstName})` : 'Account'}
+              title={isSignedIn ? `Signed in as ${auth?.customer?.email}` : 'Account & Sign In'}
+              className={`relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] sm:w-auto sm:h-9 sm:min-h-[36px] sm:px-3 sm:gap-1.5 rounded-full text-xs font-medium transition shrink-0 active:scale-95 ${
                 pathname === '/account'
                   ? 'bg-obsidian-800 text-gold-500'
                   : 'text-chrome-200 hover:bg-obsidian-800 hover:text-gold-500'
@@ -340,6 +343,12 @@ export function Header({
             >
               <User className="w-5 h-5 sm:w-4 sm:h-4 shrink-0" />
               <span className="hidden sm:inline">Account</span>
+              {isSignedIn ? (
+                <span
+                  aria-hidden="true"
+                  className="w-2 h-2 rounded-full bg-commerce-savings ring-1 ring-obsidian-900"
+                />
+              ) : null}
             </Link>
 
             <Link

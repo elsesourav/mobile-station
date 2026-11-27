@@ -31,6 +31,7 @@ import {
 import { StorefrontChrome } from '@/components/StorefrontChrome'
 import { CategoryIcon } from '@/components/icons/CategoryIcons'
 import { useCart } from '@/components/CartContext'
+import { useOptionalCustomerAuth } from '@/context/CustomerAuthContext'
 import type { LucideIcon } from 'lucide-react'
 
 interface MenuServiceLinkItem {
@@ -139,13 +140,34 @@ const ELECTRONICS_SERVICE_LINKS: readonly MenuServiceLinkItem[] = [
  */
 export function MenuHubClient() {
   const { totalCount, subtotalPaise } = useCart()
-  const [profile, setProfile] = useState<CustomerAccountProfile | null>(null)
-  const [hydrated, setHydrated] = useState(false)
+  const auth = useOptionalCustomerAuth()
+  const [localProfile, setLocalProfile] = useState<CustomerAccountProfile | null>(null)
+  const [localHydrated, setLocalHydrated] = useState(false)
 
   useEffect(() => {
-    setProfile(readStoredAccountProfile())
-    setHydrated(true)
+    setLocalProfile(readStoredAccountProfile())
+    setLocalHydrated(true)
   }, [])
+
+  const authCustomer = auth?.customer ?? null
+  const hydrated = auth ? auth.isHydrated : localHydrated
+  const profile: CustomerAccountProfile | null = auth
+    ? authCustomer
+      ? {
+          fullName:
+            [authCustomer.firstName, authCustomer.lastName].filter(Boolean).join(' ').trim() ||
+            authCustomer.email,
+          email: authCustomer.email,
+          phone: authCustomer.phone || '',
+          pincode: authCustomer.pincode || '842001',
+          cityAddress: authCustomer.cityAddress || '',
+          gstin: authCustomer.gstin || '',
+          businessName: authCustomer.businessName || '',
+          preferredHub: authCustomer.preferredHub || 'motijheel-842001',
+          signedInAt: localProfile?.signedInAt || new Date().toISOString(),
+        }
+      : null
+    : localProfile
 
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {}
@@ -188,11 +210,11 @@ export function MenuHubClient() {
 
             <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
               <Link
-                href="/account"
+                href={hydrated && profile ? '/account' : '/auth/login?redirect=/account'}
                 className="flex-1 sm:flex-initial inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-sm bg-gold-500 px-4 py-2 text-xs font-bold text-obsidian-950 shadow-gold hover:bg-gold-600 transition"
               >
                 <User className="w-4 h-4 shrink-0" />
-                <span>{hydrated && profile ? 'Manage Profile' : 'Sign In / Profile'}</span>
+                <span>{hydrated && profile ? 'Manage Profile' : 'Sign In'}</span>
               </Link>
               <Link
                 href="/cart"

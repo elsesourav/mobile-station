@@ -4,6 +4,7 @@ import React from 'react'
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
 import { CartProvider } from '@/components/CartContext'
 import { BehaviorProvider } from '@/context/BehaviorContext'
+import { CustomerAuthProvider } from '@/context/CustomerAuthContext'
 import { HeaderScrollProvider } from '@/context/HeaderScrollContext'
 import '../styles/globals.css'
 
@@ -87,11 +88,13 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-surface-canvas text-ink-primary antialiased">
-        <BehaviorProvider>
-          <CartProvider>
-            <HeaderScrollProvider>{children}</HeaderScrollProvider>
-          </CartProvider>
-        </BehaviorProvider>
+        <CustomerAuthProvider>
+          <BehaviorProvider>
+            <CartProvider>
+              <HeaderScrollProvider>{children}</HeaderScrollProvider>
+            </CartProvider>
+          </BehaviorProvider>
+        </CustomerAuthProvider>
       </body>
     </html>
   )

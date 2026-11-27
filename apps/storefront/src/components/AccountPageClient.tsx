@@ -1,17 +1,21 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import {
   ArrowLeft,
+  ArrowRight,
   Building2,
   CheckCircle2,
+  KeyRound,
+  LogIn,
   LogOut,
   MapPin,
   Package,
   ShieldCheck,
   ShoppingCart,
   User,
+  UserPlus,
 } from 'lucide-react'
 import {
   indianGstinSchema,
@@ -20,6 +24,7 @@ import {
 } from '@mobile-station/types'
 import { MOBILE_STATION_BRAND } from '@mobile-station/brand'
 import { useCart } from '@/components/CartContext'
+import { useOptionalCustomerAuth } from '@/context/CustomerAuthContext'
 import { formatINR } from '@/lib/format'
 import {
   DEFAULT_ACCOUNT_PROFILE,
@@ -77,75 +82,61 @@ export function validateSavedBillingDetails(input: {
 
 export function AccountPageClient() {
   const { totalCount, subtotalPaise } = useCart()
-  const [hydrated, setHydrated] = useState(false)
-  const [profile, setProfile] = useState<CustomerAccountProfile | null>(null)
-  const [authMode, setAuthMode] = useState<AuthMode>('signin')
+  const auth = useOptionalCustomerAuth()
 
-  const [fullName, setFullName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [authError, setAuthError] = useState<string | null>(null)
+  const [localHydrated, setLocalHydrated] = useState(false)
+  const [localProfile, setLocalProfile] = useState<CustomerAccountProfile | null>(null)
 
   const [pincode, setPincode] = useState('842001')
   const [cityAddress, setCityAddress] = useState('')
   const [gstin, setGstin] = useState('')
   const [businessName, setBusinessName] = useState('')
   const [preferredHub, setPreferredHub] = useState<PreferredHub>('motijheel-842001')
+  const [saving, setSaving] = useState(false)
   const [saveFeedback, setSaveFeedback] = useState<{ ok: boolean; text: string } | null>(null)
 
   useEffect(() => {
     const parsed = readStoredAccountProfile()
     if (parsed) {
-      setProfile(parsed)
-      setPincode(parsed.pincode)
-      setCityAddress(parsed.cityAddress)
-      setGstin(parsed.gstin)
-      setBusinessName(parsed.businessName)
-      setPreferredHub(parsed.preferredHub)
+      setLocalProfile(parsed)
     }
-    setHydrated(true)
+    setLocalHydrated(true)
   }, [])
 
-  const persistProfile = (next: CustomerAccountProfile | null) => {
-    setProfile(next)
-    persistStoredAccountProfile(next)
-  }
+  const authCustomer = auth?.customer ?? null
+  const hydrated = auth ? auth.isHydrated : localHydrated
 
-  const handleAuthSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const error = validateAccountProfileInput({
-      mode: authMode,
-      fullName,
-      email,
-      phone,
-    })
-    if (error) {
-      setAuthError(error)
-      return
-    }
-
-    const cleanEmail = email.trim().toLowerCase()
-    const fallbackName = cleanEmail.split('@')[0] || 'Customer'
-    const nextProfile: CustomerAccountProfile = {
+  const activeProfile = useMemo<CustomerAccountProfile | null>(() => {
+    if (!auth) return localProfile
+    if (!authCustomer) return null
+    return {
       ...DEFAULT_ACCOUNT_PROFILE,
-      fullName: fullName.trim() || fallbackName,
-      email: cleanEmail,
-      phone: phone.trim(),
-      signedInAt: new Date().toISOString(),
+      fullName:
+        [authCustomer.firstName, authCustomer.lastName].filter(Boolean).join(' ').trim() ||
+        authCustomer.email,
+      email: authCustomer.email,
+      phone: authCustomer.phone || '',
+      pincode: authCustomer.pincode || '842001',
+      cityAddress: authCustomer.cityAddress || '',
+      gstin: authCustomer.gstin || '',
+      businessName: authCustomer.businessName || '',
+      preferredHub: authCustomer.preferredHub || 'motijheel-842001',
+      signedInAt: localProfile?.signedInAt || new Date().toISOString(),
     }
+  }, [auth, authCustomer, localProfile])
 
-    setAuthError(null)
-    setPincode(nextProfile.pincode)
-    setCityAddress(nextProfile.cityAddress)
-    setGstin(nextProfile.gstin)
-    setBusinessName(nextProfile.businessName)
-    setPreferredHub(nextProfile.preferredHub)
-    persistProfile(nextProfile)
-  }
+  useEffect(() => {
+    if (!activeProfile) return
+    setPincode(activeProfile.pincode || '842001')
+    setCityAddress(activeProfile.cityAddress || '')
+    setGstin(activeProfile.gstin || '')
+    setBusinessName(activeProfile.businessName || '')
+    setPreferredHub(activeProfile.preferredHub || 'motijheel-842001')
+  }, [activeProfile])
 
-  const handleSaveDetails = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSaveDetails = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!profile) return
+    if (!activeProfile) return
 
     const validationError = validateSavedBillingDetails({ pincode, gstin })
     if (validationError) {
@@ -153,26 +144,59 @@ export function AccountPageClient() {
       return
     }
 
-    const updated: CustomerAccountProfile = {
-      ...profile,
-      pincode: pincode.trim() || '842001',
-      cityAddress: cityAddress.trim(),
-      gstin: gstin.trim().toUpperCase(),
-      businessName: businessName.trim(),
-      preferredHub,
+    const cleanedPin = pincode.trim() || '842001'
+    const cleanedGstin = gstin.trim().toUpperCase()
+    const cleanedCityAddress = cityAddress.trim()
+    const cleanedBusinessName = businessName.trim()
+
+    setSaving(true)
+    setSaveFeedback(null)
+
+    if (auth?.isAuthenticated) {
+      const res = await auth.updateProfile({
+        pincode: cleanedPin,
+        cityAddress: cleanedCityAddress,
+        gstin: cleanedGstin,
+        businessName: cleanedBusinessName,
+        preferredHub,
+      })
+
+      setSaving(false)
+      if (!res.success) {
+        setSaveFeedback({
+          ok: false,
+          text: res.error || 'Could not sync preferences to server. Please try again.',
+        })
+        return
+      }
+    } else {
+      const updated: CustomerAccountProfile = {
+        ...activeProfile,
+        pincode: cleanedPin,
+        cityAddress: cleanedCityAddress,
+        gstin: cleanedGstin,
+        businessName: cleanedBusinessName,
+        preferredHub,
+      }
+      persistStoredAccountProfile(updated)
+      setLocalProfile(updated)
+      setSaving(false)
     }
-    persistProfile(updated)
-    setGstin(updated.gstin)
+
+    setGstin(cleanedGstin)
     setSaveFeedback({
       ok: true,
       text: 'Delivery PIN, hub preference, and B2B GSTIN details saved.',
     })
   }
 
-  const handleSignOut = () => {
-    persistProfile(null)
+  const handleSignOut = async () => {
     setSaveFeedback(null)
-    setAuthError(null)
+    if (auth) {
+      await auth.logout()
+    }
+    persistStoredAccountProfile(null)
+    setLocalProfile(null)
   }
 
   return (
@@ -195,7 +219,7 @@ export function AccountPageClient() {
             </span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-display font-bold text-ink-inverse">
-            {profile ? `Welcome, ${profile.fullName}` : 'Your Mobile Station Account'}
+            {activeProfile ? `Welcome, ${activeProfile.fullName}` : 'Your Mobile Station Account'}
           </h1>
           <p className="text-sm text-chrome-300 max-w-2xl">
             Manage your delivery PIN code, Muzaffarpur Hub pickup preference, 18% GST Business Input
@@ -207,98 +231,48 @@ export function AccountPageClient() {
       <section className="page-container py-8">
         {!hydrated ? (
           <div className="rounded-md border border-chrome-200 bg-surface-card p-8 text-center text-sm text-ink-muted">
-            Loading account preferences...
+            Checking account session...
           </div>
-        ) : !profile ? (
+        ) : !activeProfile ? (
           <div className="grid lg:grid-cols-12 gap-6 items-start">
-            <div className="lg:col-span-7 rounded-md border border-chrome-200 bg-surface-card p-5 sm:p-6 shadow-card space-y-5">
-              <div className="flex items-center gap-2 border-b border-chrome-200 pb-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthMode('signin')
-                    setAuthError(null)
-                  }}
-                  className={`min-h-[44px] rounded-full px-4 text-xs font-bold transition ${
-                    authMode === 'signin'
-                      ? 'bg-obsidian-900 text-gold-500'
-                      : 'bg-surface-muted text-ink-secondary hover:text-ink-primary'
-                  }`}
-                >
-                  Sign In
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthMode('register')
-                    setAuthError(null)
-                  }}
-                  className={`min-h-[44px] rounded-full px-4 text-xs font-bold transition ${
-                    authMode === 'register'
-                      ? 'bg-obsidian-900 text-gold-500'
-                      : 'bg-surface-muted text-ink-secondary hover:text-ink-primary'
-                  }`}
-                >
-                  Create Account
-                </button>
+            <div className="lg:col-span-7 rounded-md border border-chrome-200 bg-surface-card p-6 sm:p-7 shadow-card space-y-5">
+              <div className="space-y-2">
+                <h2 className="font-display text-lg sm:text-xl font-bold text-ink-primary">
+                  Sign in or create your customer account
+                </h2>
+                <p className="text-xs sm:text-sm text-ink-secondary leading-relaxed">
+                  Sign in with your verified email and password to sync your 15-digit B2B GSTIN,
+                  track IMEI-serialized invoices, and speed up Muzaffarpur Express Hub pickup.
+                </p>
               </div>
 
-              {authError && (
-                <div className="rounded-sm bg-commerce-errorBg px-3.5 py-2.5 text-xs font-medium text-commerce-errorText">
-                  {authError}
-                </div>
-              )}
-
-              <form onSubmit={handleAuthSubmit} className="space-y-4 text-xs">
-                {authMode === 'register' && (
-                  <label className="block space-y-1.5">
-                    <span className="font-semibold text-ink-primary">Full Name *</span>
-                    <input
-                      type="text"
-                      required
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      placeholder="e.g. Aarav Kumar"
-                      className="w-full min-h-[44px] rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-sm text-ink-primary focus:border-gold-500 focus:outline-none"
-                    />
-                  </label>
-                )}
-
-                <label className="block space-y-1.5">
-                  <span className="font-semibold text-ink-primary">Email Address *</span>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    className="w-full min-h-[44px] rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 text-sm text-ink-primary focus:border-gold-500 focus:outline-none"
-                  />
-                </label>
-
-                <label className="block space-y-1.5">
-                  <span className="font-semibold text-ink-primary">
-                    10-Digit Mobile Number {authMode === 'register' ? '*' : '(Optional for OTP updates)'}
-                  </span>
-                  <input
-                    type="tel"
-                    inputMode="numeric"
-                    maxLength={10}
-                    required={authMode === 'register'}
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                    placeholder="9876543210"
-                    className="w-full min-h-[44px] rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-2 font-mono text-sm text-ink-primary focus:border-gold-500 focus:outline-none"
-                  />
-                </label>
-
-                <button
-                  type="submit"
-                  className="w-full min-h-[44px] rounded-sm bg-gold-500 px-5 py-2.5 text-sm font-bold text-obsidian-950 shadow-gold hover:bg-gold-600 transition"
+              <div className="grid sm:grid-cols-2 gap-3 pt-1">
+                <Link
+                  href="/auth/login?redirect=/account"
+                  className="min-h-[46px] inline-flex items-center justify-center gap-2 rounded-sm bg-obsidian-900 hover:bg-obsidian-800 px-5 py-2.5 text-sm font-bold text-gold-500 shadow-card transition"
                 >
-                  {authMode === 'signin' ? 'Continue to Account' : 'Create Mobile Station Account'}
-                </button>
-              </form>
+                  <LogIn className="h-4 w-4 shrink-0" />
+                  <span>Sign In to Account</span>
+                </Link>
+                <Link
+                  href="/auth/signup?redirect=/account"
+                  className="min-h-[46px] inline-flex items-center justify-center gap-2 rounded-sm bg-gold-500 hover:bg-gold-600 px-5 py-2.5 text-sm font-bold text-obsidian-950 shadow-gold transition"
+                >
+                  <UserPlus className="h-4 w-4 shrink-0" />
+                  <span>Create Account</span>
+                </Link>
+              </div>
+
+              <div className="pt-3 border-t border-chrome-200 flex flex-wrap items-center justify-between gap-2 text-xs text-ink-secondary">
+                <span>Forgot your login password?</span>
+                <Link
+                  href="/auth/forgot-password"
+                  className="inline-flex items-center gap-1 font-bold text-gold-700 hover:underline"
+                >
+                  <span>Recover Account Access</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
             </div>
 
             <aside className="lg:col-span-5 space-y-4">
@@ -341,7 +315,8 @@ export function AccountPageClient() {
                   <li className="flex items-start gap-2">
                     <MapPin className="h-4 w-4 text-gold-700 shrink-0 mt-0.5" />
                     <span>
-                      Fast pickup at {MOBILE_STATION_BRAND.flagshipLocation.city} Hubs (842001 &amp; 842002).
+                      Fast pickup at {MOBILE_STATION_BRAND.flagshipLocation.city} Hubs (842001 &amp;
+                      842002).
                     </span>
                   </li>
                 </ul>
@@ -362,21 +337,32 @@ export function AccountPageClient() {
                       Delivery &amp; B2B GSTIN Settings
                     </h2>
                     <p className="text-xs text-ink-muted">
-                      Signed in as <span className="font-semibold text-ink-primary">{profile.email}</span>
-                      {profile.phone ? ` · +91 ${profile.phone}` : ''}
+                      Signed in as{' '}
+                      <span className="font-semibold text-ink-primary">{activeProfile.email}</span>
+                      {activeProfile.phone ? ` · +91 ${activeProfile.phone}` : ''}
+                      {authCustomer?.memberSince ? ` · Since ${authCustomer.memberSince}` : ''}
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={handleSignOut}
-                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-1.5 text-xs font-semibold text-ink-secondary hover:border-gold-500 hover:text-ink-primary transition"
-                  >
-                    <LogOut className="h-3.5 w-3.5" />
-                    <span>Sign Out</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/auth/reset-password?email=${encodeURIComponent(activeProfile.email)}`}
+                      className="inline-flex min-h-[40px] items-center gap-1.5 rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-1.5 text-xs font-semibold text-ink-secondary hover:border-gold-500 hover:text-ink-primary transition"
+                    >
+                      <KeyRound className="h-3.5 w-3.5" />
+                      <span>Password</span>
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={handleSignOut}
+                      className="inline-flex min-h-[40px] items-center gap-1.5 rounded-sm border border-chrome-300 bg-surface-canvas px-3 py-1.5 text-xs font-semibold text-ink-secondary hover:border-gold-500 hover:text-ink-primary transition cursor-pointer"
+                    >
+                      <LogOut className="h-3.5 w-3.5" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
                 </div>
 
-                {saveFeedback && (
+                {saveFeedback ? (
                   <div
                     className={`rounded-sm px-3.5 py-2.5 text-xs font-medium ${
                       saveFeedback.ok
@@ -386,7 +372,7 @@ export function AccountPageClient() {
                   >
                     {saveFeedback.text}
                   </div>
-                )}
+                ) : null}
 
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <label className="space-y-1.5">
@@ -456,9 +442,10 @@ export function AccountPageClient() {
 
                 <button
                   type="submit"
-                  className="min-h-[44px] rounded-sm bg-gold-500 px-5 py-2.5 text-xs font-bold text-obsidian-950 shadow-gold hover:bg-gold-600 transition"
+                  disabled={saving}
+                  className="min-h-[44px] rounded-sm bg-gold-500 px-5 py-2.5 text-xs font-bold text-obsidian-950 shadow-gold hover:bg-gold-600 transition disabled:opacity-60 cursor-pointer"
                 >
-                  Save Profile &amp; GST Details
+                  {saving ? 'Saving Preferences...' : 'Save Profile & GST Details'}
                 </button>
               </form>
 
